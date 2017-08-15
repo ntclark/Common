@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="Compiler Options"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="\Common\include;\Visio Logger\Common\include"
+		PreprocessorDefinitions="_WIN32_IE=_WIN32_IE_IE60SP2;_WIN32_WINNT=0x0601;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalLibraryDirectories="D:\Common\lib"
+	/>
+	<Tool
+		Name="VCMIDLTool"
+		AdditionalIncludeDirectories="\Common\include;\Visio Logger\Common\odl"
+	/>
+	<Tool
+		Name="VCResourceCompilerTool"
+		AdditionalIncludeDirectories="\Common\include;\Common\resources"
+	/>
+</VisualStudioPropertySheet>
