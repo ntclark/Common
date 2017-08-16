@@ -8,17 +8,17 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Common\include;$(SolutionDir)..\Visio Logger\Common\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Common\include;$(SolutionDir)..\Visio Logger\Common\include;$(SolutionDir)..\..\Common\include;$(SolutionDir)..\..\Visio Logger\Common\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32_IE=_WIN32_IE_IE60SP2;_WIN32_WINNT=0x0601;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\Common\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\Common\lib;$(SolutionDir)..\..\Common\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Common\include;$(SolutionDir)..\Visio Logger\Common\odl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Common\include;$(SolutionDir)..\Visio Logger\Common\odl;$(SolutionDir)..\..\Common\include;$(SolutionDir)..\..\Visio Logger\Common\odl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </Midl>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Common\include;$(SolutionDir)..\Common\resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\Common\include;$(SolutionDir)..\Common\resources;$(SolutionDir)..\..\Common\include;$(SolutionDir)..\..\Common\resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
