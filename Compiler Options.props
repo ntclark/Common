@@ -5,21 +5,32 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>14.0.24720.0</_ProjectFileVersion>
+    <OutDir>\Common\Artifacts\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Common\include;$(SolutionDir)..\Visio Logger\Common\include;$(SolutionDir)..\..\Common\include;$(SolutionDir)..\..\Visio Logger\Common\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WIN32_IE=_WIN32_IE_IE60SP2;_WIN32_WINNT=0x0601;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>\Common\include;\Visio Logger\Common\include;\Common\include\pdfEnabler;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0603;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\Common\lib;$(SolutionDir)..\..\Common\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>\Common\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>\Common\lib\$(Platform)\$(TargetName).lib</ImportLibrary>
+      <TargetMachine>NotSet</TargetMachine>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Common\include;$(SolutionDir)..\Visio Logger\Common\odl;$(SolutionDir)..\..\Common\include;$(SolutionDir)..\..\Visio Logger\Common\odl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\Common\include;\Visio Logger\Common\odl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>\Common\Include</OutputDirectory>
+      <HeaderFileName>\Common\Include\%(Filename)_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>\Common\Include\%(Filename)_i.c</InterfaceIdentifierFileName>
+      <TypeLibraryName>\Common\Include\%(Filename).tlb</TypeLibraryName>
     </Midl>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Common\include;$(SolutionDir)..\Common\resources;$(SolutionDir)..\..\Common\include;$(SolutionDir)..\..\Common\resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\Common\include;\Common\resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
+    <Lib>
+      <OutputFile>\Common\lib\$(Platform)\$(TargetName)$(TargetExt)</OutputFile>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

@@ -60,7 +60,7 @@
 // Binary characters can be sent in here, and whether a '\0' character might be recieved is unknown.
 //
    long cb = sprintf(szOutput,"%04ld,%04ld,%04ld,%04ld:%04ld%s%c",
-                        pRectPDF -> left,pRectPDF -> bottom,pRectPDF -> right,pRectPDF -> top,strlen(pszText),pszText,0x0A);
+                        pRectPDF -> left,pRectPDF -> bottom,pRectPDF -> right,pRectPDF -> top,(long)strlen(pszText),pszText,0x0A);
    fwrite(szOutput,cb,1,fProfile);
    countFound++;
    return S_OK;
