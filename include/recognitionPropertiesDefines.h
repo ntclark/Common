@@ -44,7 +44,7 @@
    SetROP2(hdc,R2_XORPEN);                                     \
    RECT rc;                                                    \
    memcpy(&rc,(pr),sizeof(RECT));                              \
-   pTemplateDocumentUI -> convertToWindows(&rc);               \
+   pTemplateDocumentUI -> convertToPixels(&rc);                \
    MoveToEx(hdc,rc.left,rc.top,NULL);                          \
    LineTo(hdc,rc.right,rc.top);                                \
    LineTo(hdc,rc.right,rc.bottom);                             \

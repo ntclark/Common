@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Sep 12 09:16:16 2017
+/* at Mon Sep 25 19:37:12 2017
  */
 /* Compiler settings for COM Implementation\PDFiumControl.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -52,25 +52,11 @@ typedef interface PDFium_DWebBrowserEvents2 PDFium_DWebBrowserEvents2;
 #endif 	/* __PDFium_DWebBrowserEvents2_FWD_DEFINED__ */
 
 
-#ifndef __IPDFiumDocument_FWD_DEFINED__
-#define __IPDFiumDocument_FWD_DEFINED__
-typedef interface IPDFiumDocument IPDFiumDocument;
-
-#endif 	/* __IPDFiumDocument_FWD_DEFINED__ */
-
-
 #ifndef __IPDFiumControl_FWD_DEFINED__
 #define __IPDFiumControl_FWD_DEFINED__
 typedef interface IPDFiumControl IPDFiumControl;
 
 #endif 	/* __IPDFiumControl_FWD_DEFINED__ */
-
-
-#ifndef __IPDFiumControl_IAcroAXDocShim_FWD_DEFINED__
-#define __IPDFiumControl_IAcroAXDocShim_FWD_DEFINED__
-typedef interface IPDFiumControl_IAcroAXDocShim IPDFiumControl_IAcroAXDocShim;
-
-#endif 	/* __IPDFiumControl_IAcroAXDocShim_FWD_DEFINED__ */
 
 
 #ifndef __PDFiumControl_FWD_DEFINED__
@@ -224,92 +210,6 @@ EXTERN_C const IID IID_PDFium_DWebBrowserEvents2;
 
 EXTERN_C const IID LIBID_PDFiumControl;
 
-#ifndef __IPDFiumDocument_INTERFACE_DEFINED__
-#define __IPDFiumDocument_INTERFACE_DEFINED__
-
-/* interface IPDFiumDocument */
-/* [object][helpstring][uuid] */ 
-
-
-EXTERN_C const IID IID_IPDFiumDocument;
-
-#if defined(__cplusplus) && !defined(CINTERFACE)
-    
-    MIDL_INTERFACE("B5FF6E92-F84E-432C-AACB-0982C940E533")
-    IPDFiumDocument : public IUnknown
-    {
-    public:
-        virtual HRESULT STDMETHODCALLTYPE GenerateHTML( 
-            COLORREF backgroundColor,
-            long cxImagePixels,
-            long cyImagePixels,
-            BSTR htmlFileName) = 0;
-        
-    };
-    
-    
-#else 	/* C style interface */
-
-    typedef struct IPDFiumDocumentVtbl
-    {
-        BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
-            IPDFiumDocument * This,
-            /* [in] */ REFIID riid,
-            /* [annotation][iid_is][out] */ 
-            _COM_Outptr_  void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
-            IPDFiumDocument * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
-            IPDFiumDocument * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GenerateHTML )( 
-            IPDFiumDocument * This,
-            COLORREF backgroundColor,
-            long cxImagePixels,
-            long cyImagePixels,
-            BSTR htmlFileName);
-        
-        END_INTERFACE
-    } IPDFiumDocumentVtbl;
-
-    interface IPDFiumDocument
-    {
-        CONST_VTBL struct IPDFiumDocumentVtbl *lpVtbl;
-    };
-
-    
-
-#ifdef COBJMACROS
-
-
-#define IPDFiumDocument_QueryInterface(This,riid,ppvObject)	\
-    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
-
-#define IPDFiumDocument_AddRef(This)	\
-    ( (This)->lpVtbl -> AddRef(This) ) 
-
-#define IPDFiumDocument_Release(This)	\
-    ( (This)->lpVtbl -> Release(This) ) 
-
-
-#define IPDFiumDocument_GenerateHTML(This,backgroundColor,cxImagePixels,cyImagePixels,htmlFileName)	\
-    ( (This)->lpVtbl -> GenerateHTML(This,backgroundColor,cxImagePixels,cyImagePixels,htmlFileName) ) 
-
-#endif /* COBJMACROS */
-
-
-#endif 	/* C style interface */
-
-
-
-
-#endif 	/* __IPDFiumDocument_INTERFACE_DEFINED__ */
-
-
 #ifndef __IPDFiumControl_INTERFACE_DEFINED__
 #define __IPDFiumControl_INTERFACE_DEFINED__
 
@@ -343,27 +243,93 @@ EXTERN_C const IID IID_IPDFiumControl;
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFHeight( 
             /* [retval][out] */ long *pcxPDFHeightInPixels) = 0;
         
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFPagesVisible( 
+            /* [retval][out] */ BSTR *pPagesVisible) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFPageMostVisible( 
+            /* [retval][out] */ long *pPageNumber) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFPageXPixels( 
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pX) = 0;
+        
+        virtual /* [propget][helpstring] */ HRESULT STDMETHODCALLTYPE get_PDFPageXPixelsInView( 
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pX) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFPageYPixels( 
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pY) = 0;
+        
+        virtual /* [propget][helpstring] */ HRESULT STDMETHODCALLTYPE get_PDFPageYPixelsInView( 
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pY) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFPageWidthPixels( 
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pWidth) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFPageHeightPixels( 
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pHeight) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFPageXPoints( 
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pX) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFPageYPoints( 
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pY) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFPageWidthPoints( 
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pWidth) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFPageHeightPoints( 
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pHeight) = 0;
+        
+        virtual /* [propget][helpstring] */ HRESULT STDMETHODCALLTYPE get_PDFPageNumberAtY( 
+            /* [in] */ long yValue,
+            /* [in] */ long seekHeight,
+            /* [retval][out] */ long *pPageNumber) = 0;
+        
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_Document( 
             /* [in] */ BSTR fileName) = 0;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Document( 
             /* [retval][out] */ BSTR *pFileName) = 0;
         
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_IsPDF( 
+            /* [retval][out] */ BOOL *__MIDL__IPDFiumControl0000) = 0;
+        
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_ScrollBarVisible( 
+            /* [in] */ BOOL __MIDL__IPDFiumControl0001) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ScrollBarVisible( 
+            /* [retval][out] */ BOOL *__MIDL__IPDFiumControl0002) = 0;
+        
         virtual HRESULT STDMETHODCALLTYPE OpenDocument( 
             BSTR documentFileName,
-            IPDFiumDocument **ppDocument) = 0;
+            GUID *pDocumentID) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE CloseDocument( 
-            IPDFiumDocument *pDocument) = 0;
+            GUID *pDocumentID) = 0;
         
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE DisplayDocument( 
             COLORREF backgroundColor,
             long cxImagePixels,
             long cyImagePixels,
-            BSTR pdfOrHTMLFileName) = 0;
+            BSTR pdfOrHTMLFileName,
+            long pageNumber) = 0;
         
-        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_IsPDF( 
-            /* [retval][out] */ BOOL *__MIDL__IPDFiumControl0000) = 0;
+        virtual HRESULT STDMETHODCALLTYPE GoToPage( 
+            long pageNumber) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE PrintDocument( 
+            BOOL showPrinterSelection) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Cleanup( void) = 0;
         
     };
     
@@ -447,6 +413,70 @@ EXTERN_C const IID IID_IPDFiumControl;
             IPDFiumControl * This,
             /* [retval][out] */ long *pcxPDFHeightInPixels);
         
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPagesVisible )( 
+            IPDFiumControl * This,
+            /* [retval][out] */ BSTR *pPagesVisible);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPageMostVisible )( 
+            IPDFiumControl * This,
+            /* [retval][out] */ long *pPageNumber);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPageXPixels )( 
+            IPDFiumControl * This,
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pX);
+        
+        /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPageXPixelsInView )( 
+            IPDFiumControl * This,
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pX);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPageYPixels )( 
+            IPDFiumControl * This,
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pY);
+        
+        /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPageYPixelsInView )( 
+            IPDFiumControl * This,
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pY);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPageWidthPixels )( 
+            IPDFiumControl * This,
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pWidth);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPageHeightPixels )( 
+            IPDFiumControl * This,
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pHeight);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPageXPoints )( 
+            IPDFiumControl * This,
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pX);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPageYPoints )( 
+            IPDFiumControl * This,
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pY);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPageWidthPoints )( 
+            IPDFiumControl * This,
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pWidth);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPageHeightPoints )( 
+            IPDFiumControl * This,
+            /* [in] */ long pageNumber,
+            /* [retval][out] */ long *pHeight);
+        
+        /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPageNumberAtY )( 
+            IPDFiumControl * This,
+            /* [in] */ long yValue,
+            /* [in] */ long seekHeight,
+            /* [retval][out] */ long *pPageNumber);
+        
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Document )( 
             IPDFiumControl * This,
             /* [in] */ BSTR fileName);
@@ -455,25 +485,45 @@ EXTERN_C const IID IID_IPDFiumControl;
             IPDFiumControl * This,
             /* [retval][out] */ BSTR *pFileName);
         
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_IsPDF )( 
+            IPDFiumControl * This,
+            /* [retval][out] */ BOOL *__MIDL__IPDFiumControl0000);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ScrollBarVisible )( 
+            IPDFiumControl * This,
+            /* [in] */ BOOL __MIDL__IPDFiumControl0001);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ScrollBarVisible )( 
+            IPDFiumControl * This,
+            /* [retval][out] */ BOOL *__MIDL__IPDFiumControl0002);
+        
         HRESULT ( STDMETHODCALLTYPE *OpenDocument )( 
             IPDFiumControl * This,
             BSTR documentFileName,
-            IPDFiumDocument **ppDocument);
+            GUID *pDocumentID);
         
         HRESULT ( STDMETHODCALLTYPE *CloseDocument )( 
             IPDFiumControl * This,
-            IPDFiumDocument *pDocument);
+            GUID *pDocumentID);
         
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *DisplayDocument )( 
             IPDFiumControl * This,
             COLORREF backgroundColor,
             long cxImagePixels,
             long cyImagePixels,
-            BSTR pdfOrHTMLFileName);
+            BSTR pdfOrHTMLFileName,
+            long pageNumber);
         
-        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_IsPDF )( 
+        HRESULT ( STDMETHODCALLTYPE *GoToPage )( 
             IPDFiumControl * This,
-            /* [retval][out] */ BOOL *__MIDL__IPDFiumControl0000);
+            long pageNumber);
+        
+        HRESULT ( STDMETHODCALLTYPE *PrintDocument )( 
+            IPDFiumControl * This,
+            BOOL showPrinterSelection);
+        
+        HRESULT ( STDMETHODCALLTYPE *Cleanup )( 
+            IPDFiumControl * This);
         
         END_INTERFACE
     } IPDFiumControlVtbl;
@@ -529,23 +579,77 @@ EXTERN_C const IID IID_IPDFiumControl;
 #define IPDFiumControl_get_PDFHeight(This,pcxPDFHeightInPixels)	\
     ( (This)->lpVtbl -> get_PDFHeight(This,pcxPDFHeightInPixels) ) 
 
+#define IPDFiumControl_get_PDFPagesVisible(This,pPagesVisible)	\
+    ( (This)->lpVtbl -> get_PDFPagesVisible(This,pPagesVisible) ) 
+
+#define IPDFiumControl_get_PDFPageMostVisible(This,pPageNumber)	\
+    ( (This)->lpVtbl -> get_PDFPageMostVisible(This,pPageNumber) ) 
+
+#define IPDFiumControl_get_PDFPageXPixels(This,pageNumber,pX)	\
+    ( (This)->lpVtbl -> get_PDFPageXPixels(This,pageNumber,pX) ) 
+
+#define IPDFiumControl_get_PDFPageXPixelsInView(This,pageNumber,pX)	\
+    ( (This)->lpVtbl -> get_PDFPageXPixelsInView(This,pageNumber,pX) ) 
+
+#define IPDFiumControl_get_PDFPageYPixels(This,pageNumber,pY)	\
+    ( (This)->lpVtbl -> get_PDFPageYPixels(This,pageNumber,pY) ) 
+
+#define IPDFiumControl_get_PDFPageYPixelsInView(This,pageNumber,pY)	\
+    ( (This)->lpVtbl -> get_PDFPageYPixelsInView(This,pageNumber,pY) ) 
+
+#define IPDFiumControl_get_PDFPageWidthPixels(This,pageNumber,pWidth)	\
+    ( (This)->lpVtbl -> get_PDFPageWidthPixels(This,pageNumber,pWidth) ) 
+
+#define IPDFiumControl_get_PDFPageHeightPixels(This,pageNumber,pHeight)	\
+    ( (This)->lpVtbl -> get_PDFPageHeightPixels(This,pageNumber,pHeight) ) 
+
+#define IPDFiumControl_get_PDFPageXPoints(This,pageNumber,pX)	\
+    ( (This)->lpVtbl -> get_PDFPageXPoints(This,pageNumber,pX) ) 
+
+#define IPDFiumControl_get_PDFPageYPoints(This,pageNumber,pY)	\
+    ( (This)->lpVtbl -> get_PDFPageYPoints(This,pageNumber,pY) ) 
+
+#define IPDFiumControl_get_PDFPageWidthPoints(This,pageNumber,pWidth)	\
+    ( (This)->lpVtbl -> get_PDFPageWidthPoints(This,pageNumber,pWidth) ) 
+
+#define IPDFiumControl_get_PDFPageHeightPoints(This,pageNumber,pHeight)	\
+    ( (This)->lpVtbl -> get_PDFPageHeightPoints(This,pageNumber,pHeight) ) 
+
+#define IPDFiumControl_get_PDFPageNumberAtY(This,yValue,seekHeight,pPageNumber)	\
+    ( (This)->lpVtbl -> get_PDFPageNumberAtY(This,yValue,seekHeight,pPageNumber) ) 
+
 #define IPDFiumControl_put_Document(This,fileName)	\
     ( (This)->lpVtbl -> put_Document(This,fileName) ) 
 
 #define IPDFiumControl_get_Document(This,pFileName)	\
     ( (This)->lpVtbl -> get_Document(This,pFileName) ) 
 
-#define IPDFiumControl_OpenDocument(This,documentFileName,ppDocument)	\
-    ( (This)->lpVtbl -> OpenDocument(This,documentFileName,ppDocument) ) 
-
-#define IPDFiumControl_CloseDocument(This,pDocument)	\
-    ( (This)->lpVtbl -> CloseDocument(This,pDocument) ) 
-
-#define IPDFiumControl_DisplayDocument(This,backgroundColor,cxImagePixels,cyImagePixels,pdfOrHTMLFileName)	\
-    ( (This)->lpVtbl -> DisplayDocument(This,backgroundColor,cxImagePixels,cyImagePixels,pdfOrHTMLFileName) ) 
-
 #define IPDFiumControl_get_IsPDF(This,__MIDL__IPDFiumControl0000)	\
     ( (This)->lpVtbl -> get_IsPDF(This,__MIDL__IPDFiumControl0000) ) 
+
+#define IPDFiumControl_put_ScrollBarVisible(This,__MIDL__IPDFiumControl0001)	\
+    ( (This)->lpVtbl -> put_ScrollBarVisible(This,__MIDL__IPDFiumControl0001) ) 
+
+#define IPDFiumControl_get_ScrollBarVisible(This,__MIDL__IPDFiumControl0002)	\
+    ( (This)->lpVtbl -> get_ScrollBarVisible(This,__MIDL__IPDFiumControl0002) ) 
+
+#define IPDFiumControl_OpenDocument(This,documentFileName,pDocumentID)	\
+    ( (This)->lpVtbl -> OpenDocument(This,documentFileName,pDocumentID) ) 
+
+#define IPDFiumControl_CloseDocument(This,pDocumentID)	\
+    ( (This)->lpVtbl -> CloseDocument(This,pDocumentID) ) 
+
+#define IPDFiumControl_DisplayDocument(This,backgroundColor,cxImagePixels,cyImagePixels,pdfOrHTMLFileName,pageNumber)	\
+    ( (This)->lpVtbl -> DisplayDocument(This,backgroundColor,cxImagePixels,cyImagePixels,pdfOrHTMLFileName,pageNumber) ) 
+
+#define IPDFiumControl_GoToPage(This,pageNumber)	\
+    ( (This)->lpVtbl -> GoToPage(This,pageNumber) ) 
+
+#define IPDFiumControl_PrintDocument(This,showPrinterSelection)	\
+    ( (This)->lpVtbl -> PrintDocument(This,showPrinterSelection) ) 
+
+#define IPDFiumControl_Cleanup(This)	\
+    ( (This)->lpVtbl -> Cleanup(This) ) 
 
 #endif /* COBJMACROS */
 
@@ -556,418 +660,6 @@ EXTERN_C const IID IID_IPDFiumControl;
 
 
 #endif 	/* __IPDFiumControl_INTERFACE_DEFINED__ */
-
-
-#ifndef __IPDFiumControl_IAcroAXDocShim_INTERFACE_DEFINED__
-#define __IPDFiumControl_IAcroAXDocShim_INTERFACE_DEFINED__
-
-/* interface IPDFiumControl_IAcroAXDocShim */
-/* [object][unique][nonextensible][oleautomation][dual][helpstring][uuid] */ 
-
-
-EXTERN_C const IID IID_IPDFiumControl_IAcroAXDocShim;
-
-#if defined(__cplusplus) && !defined(CINTERFACE)
-    
-    MIDL_INTERFACE("B5FF6E92-F84E-432C-AACB-0982C940E531")
-    IPDFiumControl_IAcroAXDocShim : public IDispatch
-    {
-    public:
-        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_src( 
-            /* [in] */ BSTR sourceDocument) = 0;
-        
-        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_src( 
-            /* [retval][out] */ BSTR *pSourceDocument) = 0;
-        
-        virtual VARIANT_BOOL STDMETHODCALLTYPE LoadFile( 
-            BSTR fileName) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setShowToolbar( 
-            VARIANT_BOOL On) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE gotoFirstPage( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE gotoLastPage( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE gotoNextPage( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE gotoPreviousPage( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setCurrentPage( 
-            long n) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE goForwardStack( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE goBackwardStack( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setPageMode( 
-            BSTR pageMode) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setLayoutMode( 
-            BSTR layoutMode) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setNamedDest( 
-            BSTR namedDest) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Print( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE printWithDialog( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setZoom( 
-            float percent) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setZoomScroll( 
-            float percent,
-            float left,
-            float top) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setView( 
-            BSTR viewMode) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setViewScroll( 
-            BSTR viewMode,
-            float offset) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setViewRect( 
-            float left,
-            float top,
-            float width,
-            float height) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE printPages( 
-            long from,
-            long to) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE printPagesFit( 
-            long from,
-            long to,
-            VARIANT_BOOL shrinkToFit) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE printAll( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE printAllFit( 
-            VARIANT_BOOL shrinkToFit) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setShowScrollbars( 
-            VARIANT_BOOL On) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setCurrentHightlight( 
-            long a,
-            long b,
-            long c,
-            long d) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE setCurrentHighlight( 
-            long a,
-            long b,
-            long c,
-            long d) = 0;
-        
-    };
-    
-    
-#else 	/* C style interface */
-
-    typedef struct IPDFiumControl_IAcroAXDocShimVtbl
-    {
-        BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            /* [in] */ REFIID riid,
-            /* [annotation][iid_is][out] */ 
-            _COM_Outptr_  void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
-            IPDFiumControl_IAcroAXDocShim * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
-            IPDFiumControl_IAcroAXDocShim * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            /* [out] */ UINT *pctinfo);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            /* [in] */ UINT iTInfo,
-            /* [in] */ LCID lcid,
-            /* [out] */ ITypeInfo **ppTInfo);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            /* [in] */ REFIID riid,
-            /* [size_is][in] */ LPOLESTR *rgszNames,
-            /* [range][in] */ UINT cNames,
-            /* [in] */ LCID lcid,
-            /* [size_is][out] */ DISPID *rgDispId);
-        
-        /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            /* [annotation][in] */ 
-            _In_  DISPID dispIdMember,
-            /* [annotation][in] */ 
-            _In_  REFIID riid,
-            /* [annotation][in] */ 
-            _In_  LCID lcid,
-            /* [annotation][in] */ 
-            _In_  WORD wFlags,
-            /* [annotation][out][in] */ 
-            _In_  DISPPARAMS *pDispParams,
-            /* [annotation][out] */ 
-            _Out_opt_  VARIANT *pVarResult,
-            /* [annotation][out] */ 
-            _Out_opt_  EXCEPINFO *pExcepInfo,
-            /* [annotation][out] */ 
-            _Out_opt_  UINT *puArgErr);
-        
-        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_src )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            /* [in] */ BSTR sourceDocument);
-        
-        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_src )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            /* [retval][out] */ BSTR *pSourceDocument);
-        
-        VARIANT_BOOL ( STDMETHODCALLTYPE *LoadFile )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            BSTR fileName);
-        
-        HRESULT ( STDMETHODCALLTYPE *setShowToolbar )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            VARIANT_BOOL On);
-        
-        HRESULT ( STDMETHODCALLTYPE *gotoFirstPage )( 
-            IPDFiumControl_IAcroAXDocShim * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *gotoLastPage )( 
-            IPDFiumControl_IAcroAXDocShim * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *gotoNextPage )( 
-            IPDFiumControl_IAcroAXDocShim * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *gotoPreviousPage )( 
-            IPDFiumControl_IAcroAXDocShim * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *setCurrentPage )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            long n);
-        
-        HRESULT ( STDMETHODCALLTYPE *goForwardStack )( 
-            IPDFiumControl_IAcroAXDocShim * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *goBackwardStack )( 
-            IPDFiumControl_IAcroAXDocShim * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *setPageMode )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            BSTR pageMode);
-        
-        HRESULT ( STDMETHODCALLTYPE *setLayoutMode )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            BSTR layoutMode);
-        
-        HRESULT ( STDMETHODCALLTYPE *setNamedDest )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            BSTR namedDest);
-        
-        HRESULT ( STDMETHODCALLTYPE *Print )( 
-            IPDFiumControl_IAcroAXDocShim * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *printWithDialog )( 
-            IPDFiumControl_IAcroAXDocShim * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *setZoom )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            float percent);
-        
-        HRESULT ( STDMETHODCALLTYPE *setZoomScroll )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            float percent,
-            float left,
-            float top);
-        
-        HRESULT ( STDMETHODCALLTYPE *setView )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            BSTR viewMode);
-        
-        HRESULT ( STDMETHODCALLTYPE *setViewScroll )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            BSTR viewMode,
-            float offset);
-        
-        HRESULT ( STDMETHODCALLTYPE *setViewRect )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            float left,
-            float top,
-            float width,
-            float height);
-        
-        HRESULT ( STDMETHODCALLTYPE *printPages )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            long from,
-            long to);
-        
-        HRESULT ( STDMETHODCALLTYPE *printPagesFit )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            long from,
-            long to,
-            VARIANT_BOOL shrinkToFit);
-        
-        HRESULT ( STDMETHODCALLTYPE *printAll )( 
-            IPDFiumControl_IAcroAXDocShim * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *printAllFit )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            VARIANT_BOOL shrinkToFit);
-        
-        HRESULT ( STDMETHODCALLTYPE *setShowScrollbars )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            VARIANT_BOOL On);
-        
-        HRESULT ( STDMETHODCALLTYPE *setCurrentHightlight )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            long a,
-            long b,
-            long c,
-            long d);
-        
-        HRESULT ( STDMETHODCALLTYPE *setCurrentHighlight )( 
-            IPDFiumControl_IAcroAXDocShim * This,
-            long a,
-            long b,
-            long c,
-            long d);
-        
-        END_INTERFACE
-    } IPDFiumControl_IAcroAXDocShimVtbl;
-
-    interface IPDFiumControl_IAcroAXDocShim
-    {
-        CONST_VTBL struct IPDFiumControl_IAcroAXDocShimVtbl *lpVtbl;
-    };
-
-    
-
-#ifdef COBJMACROS
-
-
-#define IPDFiumControl_IAcroAXDocShim_QueryInterface(This,riid,ppvObject)	\
-    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_AddRef(This)	\
-    ( (This)->lpVtbl -> AddRef(This) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_Release(This)	\
-    ( (This)->lpVtbl -> Release(This) ) 
-
-
-#define IPDFiumControl_IAcroAXDocShim_GetTypeInfoCount(This,pctinfo)	\
-    ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
-    ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
-    ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
-    ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
-
-
-#define IPDFiumControl_IAcroAXDocShim_put_src(This,sourceDocument)	\
-    ( (This)->lpVtbl -> put_src(This,sourceDocument) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_get_src(This,pSourceDocument)	\
-    ( (This)->lpVtbl -> get_src(This,pSourceDocument) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_LoadFile(This,fileName)	\
-    ( (This)->lpVtbl -> LoadFile(This,fileName) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setShowToolbar(This,On)	\
-    ( (This)->lpVtbl -> setShowToolbar(This,On) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_gotoFirstPage(This)	\
-    ( (This)->lpVtbl -> gotoFirstPage(This) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_gotoLastPage(This)	\
-    ( (This)->lpVtbl -> gotoLastPage(This) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_gotoNextPage(This)	\
-    ( (This)->lpVtbl -> gotoNextPage(This) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_gotoPreviousPage(This)	\
-    ( (This)->lpVtbl -> gotoPreviousPage(This) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setCurrentPage(This,n)	\
-    ( (This)->lpVtbl -> setCurrentPage(This,n) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_goForwardStack(This)	\
-    ( (This)->lpVtbl -> goForwardStack(This) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_goBackwardStack(This)	\
-    ( (This)->lpVtbl -> goBackwardStack(This) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setPageMode(This,pageMode)	\
-    ( (This)->lpVtbl -> setPageMode(This,pageMode) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setLayoutMode(This,layoutMode)	\
-    ( (This)->lpVtbl -> setLayoutMode(This,layoutMode) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setNamedDest(This,namedDest)	\
-    ( (This)->lpVtbl -> setNamedDest(This,namedDest) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_Print(This)	\
-    ( (This)->lpVtbl -> Print(This) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_printWithDialog(This)	\
-    ( (This)->lpVtbl -> printWithDialog(This) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setZoom(This,percent)	\
-    ( (This)->lpVtbl -> setZoom(This,percent) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setZoomScroll(This,percent,left,top)	\
-    ( (This)->lpVtbl -> setZoomScroll(This,percent,left,top) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setView(This,viewMode)	\
-    ( (This)->lpVtbl -> setView(This,viewMode) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setViewScroll(This,viewMode,offset)	\
-    ( (This)->lpVtbl -> setViewScroll(This,viewMode,offset) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setViewRect(This,left,top,width,height)	\
-    ( (This)->lpVtbl -> setViewRect(This,left,top,width,height) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_printPages(This,from,to)	\
-    ( (This)->lpVtbl -> printPages(This,from,to) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_printPagesFit(This,from,to,shrinkToFit)	\
-    ( (This)->lpVtbl -> printPagesFit(This,from,to,shrinkToFit) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_printAll(This)	\
-    ( (This)->lpVtbl -> printAll(This) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_printAllFit(This,shrinkToFit)	\
-    ( (This)->lpVtbl -> printAllFit(This,shrinkToFit) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setShowScrollbars(This,On)	\
-    ( (This)->lpVtbl -> setShowScrollbars(This,On) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setCurrentHightlight(This,a,b,c,d)	\
-    ( (This)->lpVtbl -> setCurrentHightlight(This,a,b,c,d) ) 
-
-#define IPDFiumControl_IAcroAXDocShim_setCurrentHighlight(This,a,b,c,d)	\
-    ( (This)->lpVtbl -> setCurrentHighlight(This,a,b,c,d) ) 
-
-#endif /* COBJMACROS */
-
-
-#endif 	/* C style interface */
-
-
-
-
-#endif 	/* __IPDFiumControl_IAcroAXDocShim_INTERFACE_DEFINED__ */
 
 
 EXTERN_C const CLSID CLSID_PDFiumControl;

@@ -11,7 +11,7 @@
       }
       RECT r;
       memcpy(&r,pRect,sizeof(RECT));
-      pDocument -> convertToWindows(&r);
+      pDocument -> convertToPixels(&r);
       DRAW_GREEN_BOX(&r,1)
       pRect = pRect + 1;
    }

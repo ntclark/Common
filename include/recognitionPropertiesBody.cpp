@@ -115,10 +115,10 @@
             r.top = t;
          }
 
-         r.left = max(pTemplateDocumentUI -> rcPDFArea.left,r.left);
-         r.right = min(pTemplateDocumentUI -> rcPDFArea.right,r.right);
-         r.top = max(pTemplateDocumentUI -> rcPDFArea.top,r.top);
-         r.bottom = min(pTemplateDocumentUI -> rcPDFArea.bottom,r.bottom);
+         r.left = max(pTemplateDocumentUI -> rcPDFPagePixels.left,r.left);
+         r.right = min(pTemplateDocumentUI -> rcPDFPagePixels.right,r.right);
+         r.top = max(pTemplateDocumentUI -> rcPDFPagePixels.top,r.top);
+         r.bottom = min(pTemplateDocumentUI -> rcPDFPagePixels.bottom,r.bottom);
 
          HDC hdcTarget = GetDC(hwndVellum);
 
@@ -139,7 +139,7 @@
             countSelections++;
          }
 
-         pTemplateDocumentUI -> convertToPDF(&r);
+         pTemplateDocumentUI -> convertToPoints(&r);
 
          memcpy(&selections[0],&r,sizeof(RECT));
 
@@ -181,11 +181,11 @@
             pageSelections[countSelections] = pTemplateDocumentUI -> textPage(activePotentialIndex);
 
 #if 1
-            double pdfWidth = (double)(pTemplateDocumentUI -> pdfPageWidth ) / 72.0;
-            double pdfHeight = (double)(pTemplateDocumentUI -> pdfPageHeight ) / 72.0;
+            double pdfWidth = (double)(pObject -> pTemplateDocument -> PDFPageWidth() ) / 72.0;
+            double pdfHeight = (double)(pObject -> pTemplateDocument -> PDFPageHeight() ) / 72.0;
 
             double x = (double)pEntry -> left/ 72.0;
-            double y = (double)(pTemplateDocumentUI -> pdfPageHeight - pEntry -> top) / 72.0;
+            double y = (double)(pObject -> pTemplateDocument -> PDFPageHeight() - pEntry -> top) / 72.0;
 
             char szLocation[128];
             sprintf(szLocation,"That location is: %4.2lf inches from the left and %4.2lf inches from the top",x,y);
@@ -273,10 +273,10 @@
             r.top = t;
          }
 
-         r.left = max(pTemplateDocumentUI -> rcPDFArea.left,r.left);
-         r.right = min(pTemplateDocumentUI -> rcPDFArea.right,r.right);
-         r.top = max(pTemplateDocumentUI -> rcPDFArea.top,r.top);
-         r.bottom = min(pTemplateDocumentUI -> rcPDFArea.bottom,r.bottom);
+         r.left = max(pTemplateDocumentUI -> rcPDFPagePixels.left,r.left);
+         r.right = min(pTemplateDocumentUI -> rcPDFPagePixels.right,r.right);
+         r.top = max(pTemplateDocumentUI -> rcPDFPagePixels.top,r.top);
+         r.bottom = min(pTemplateDocumentUI -> rcPDFPagePixels.bottom,r.bottom);
 
          BitBlt(hdc,r.left,r.top,r.right - r.left,r.bottom - r.top,pTemplateDocumentUI -> pdfDC(),r.left,r.top,SRCCOPY);
 
@@ -286,10 +286,10 @@
 
          lastMouseY = currentMouseY - pTemplateDocumentUI -> rcPageParentCoordinates.top;
 
-         r.left = max(pTemplateDocumentUI -> rcPDFArea.left,startMouseX);
-         r.top = max(pTemplateDocumentUI -> rcPDFArea.top,startMouseY);
-         r.right = min(pTemplateDocumentUI -> rcPDFArea.right,lastMouseX);
-         r.bottom = min(pTemplateDocumentUI -> rcPDFArea.bottom,lastMouseY);
+         r.left = max(pTemplateDocumentUI -> rcPDFPagePixels.left,startMouseX);
+         r.top = max(pTemplateDocumentUI -> rcPDFPagePixels.top,startMouseY);
+         r.right = min(pTemplateDocumentUI -> rcPDFPagePixels.right,lastMouseX);
+         r.bottom = min(pTemplateDocumentUI -> rcPDFPagePixels.bottom,lastMouseY);
 
          if ( r.right < r.left ) {
             long t = r.right;
@@ -307,7 +307,7 @@
 
          RECT *pEntry = pEntries;
 
-         pTemplateDocumentUI -> convertToPDF(&r);
+         pTemplateDocumentUI -> convertToPoints(&r);
 
          for ( long k = 0; k < countEntries; k++, pEntry++ ) {
             if ( pEntry -> left < r.left || pEntry -> right > r.right || pEntry -> top > r.top || pEntry -> bottom < r.bottom ) 
@@ -330,7 +330,7 @@
       rcMouse.left = currentMouseX - pTemplateDocumentUI -> rcPageParentCoordinates.left;
       rcMouse.top = currentMouseY - pTemplateDocumentUI -> rcPageParentCoordinates.top;
 
-      pTemplateDocumentUI -> convertToPDF(&rcMouse);
+      pTemplateDocumentUI -> convertToPoints(&rcMouse);
 
       RECT *pEntry = pEntries;
 
