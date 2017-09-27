@@ -1,0 +1,114 @@
+
+
+IDD_INHERITED_DOCUMENT DIALOGEX 0, 0, 256 + 32, 128 + 64 + 64
+STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+   LTEXT "What Happened to my Settings !?",-1, 16, 24, 256, 12
+   LTEXT "Note that after you write to a particular document, depending on it's ""Save Location"" settings, it may be immediately saved and re-opened by Cursivision as a different document.", -1, 16, 48, 256, 30
+   LTEXT "The current document was saved as a copy of:", -1, 16, 78, 256, 12
+   LTEXT "",IDDI_INHERITED_DOCUMENT_TEXT, 16 + 12, 78 + 16, 256 - 12, 24
+   LTEXT "with the embedded writing placed within it.", -1, 16, 118, 256, 12
+
+   LTEXT "Choose File - ""Reopen the source"" from the main menu to open the parent document and change it's settings.",-1,16, 132, 256, 32
+//
+//NTC: 04-25-2014: I attempted to launch properties from properties.
+// There are a while lot of issues - doing this, not the least of which is the templateDocument::tdUI object in all the
+// editors is a static object that get's trounced when you try to launch a new instance of the property pages.
+// It would be nice to do this in the future (for example, to look at a parent document's properties)
+//
+#if 0
+   LTEXT "To set the properties for that document, select Parent",-1,16, 160, 256, 12
+   PUSHBUTTON "Parent",IDDI_INHERITED_DOCUMENT_PROPERTIES, 16 + 16, 160 + 12, 0,0
+#endif
+
+END
+
+IDD_BACKENDS DIALOGEX 0,0, 256, 256 + 128
+STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+   LTEXT "",IDDI_BACKENDS_LIST_LABEL, 8, 5, 220, 14
+
+   LTEXT "Tools in use for the current document. Tools are applied in top to bottom order.\rProperties changed here apply to this document only:",IDDI_BACKENDS_TOP_LIST_LABEL, 8, 20, 240 + 16, 24
+   CONTROL "", IDDI_BACKENDS_TOP_LIST, WC_LISTVIEWA, LVS_REPORT | LVS_OWNERDRAWFIXED | LVS_NOSORTHEADER | WS_CHILD, 8, 20 + 14 + 12, 240 + 16, 64, WS_EX_CLIENTEDGE
+
+   LTEXT "Tools available for use. Properties changed below become the defaults for documents not yet defined (signed or printed) to the system.",IDDI_BACKENDS_BOTTOM_LIST_LABEL, 8, 20, 240 + 16, 24
+   CONTROL "", IDDI_BACKENDS_BOTTOM_LIST, WC_LISTVIEWA, LVS_REPORT | LVS_OWNERDRAWFIXED | LVS_NOSORTHEADER | WS_VISIBLE | WS_CHILD, 8, 20 + 32 + 24, 240 + 16, 64, WS_EX_CLIENTEDGE
+
+   LTEXT "Changes are disabled because Admin privileges are required to change properties in printing profiles",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,
+                           0,0,256, 24 
+
+END
+
+
+#ifndef ADDITIONAL_TOP_SPACE
+
+#  ifdef NO_CURSIVISION_PROPERTIES
+
+#     define ADDITIONAL_TOP_SPACE 0
+
+#  else
+
+#     define ADDITIONAL_TOP_SPACE 30
+
+#  endif
+
+#endif
+
+#include "resultDispositionSaveOptionsMore.rc"
+
+IDD_DISPOSITION_PROPERTIES DIALOGEX 0, 0, 256 + 32, 128 + 64 + 64
+
+STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+   LTEXT "When you write documents with CursiVision, it should:",IDDI_DO_REMEMBER_LABEL,  10, 5, 200, 8
+
+   AUTOCHECKBOX "Remember the signed location(s)",IDDI_DISPOSITION_REMEMBER,              16, 5 + 12, 128, 8
+
+#ifndef TABLETPC
+   AUTORADIOBUTTON "Sign once and save",IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF,           24, 5 + 12 + 10, 90, 12, WS_GROUP
+   AUTORADIOBUTTON "Sign until [ESC] is pressed",IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON,   24 + 102 + 8,  5 + 12 + 10, 128, 12
+#endif
+
+#ifndef NO_CURSIVISION_PROPERTIES
+
+   LTEXT "When CursiVision saves a document it should:",IDDI_HEADER_TEXT, 10, 17 + 24, 180, 12
+
+#endif
+
+#include "resultDispositionSaveOptions.rc"
+
+#ifndef NO_CURSIVISION_PROPERTIES
+
+   LTEXT "Then ...",-1,20,112 + ADDITIONAL_TOP_SPACE, 160, 14
+
+   AUTORADIOBUTTON "Keep the signed document open",IDDI_DISPOSITION_RETAIN_SIGNED,   32,108 + 12 + ADDITIONAL_TOP_SPACE, 180, 14, WS_GROUP
+   AUTORADIOBUTTON "Re-open the original document",IDDI_DISPOSITION_REOPEN_ORIGINAL, 32,108 + 24 + ADDITIONAL_TOP_SPACE, 160, 14
+   AUTORADIOBUTTON "Close the document",IDDI_DISPOSITION_CLOSE_DOCUMENT,             32,108 + 36 + ADDITIONAL_TOP_SPACE, 160, 14
+   AUTORADIOBUTTON "Exit",IDDI_DISPOSITION_EXIT,                                     32,108 + 48 + ADDITIONAL_TOP_SPACE, 24, 14
+   LTEXT "(CursiVision always exits after signing when started by dropping a file on it's icon)",IDDI_DISPOSITION_EXIT_POST_LABEL, 
+                                                                                     32 + 8,108 + 62 + ADDITIONAL_TOP_SPACE, 180, 20
+
+
+   LTEXT "When CursiVision starts it should:",IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL,   10,172 + 24 + ADDITIONAL_TOP_SPACE, 160, 14
+   AUTOCHECKBOX "Show these properties",IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES,               16,172 + 24 + 12 + ADDITIONAL_TOP_SPACE,96,12, WS_GROUP
+   AUTOCHECKBOX "Open the last opened document",IDDI_DISPOSITION_OPEN_LAST_DOCUMENT,            16,172 + 24 + 12 + 12 + ADDITIONAL_TOP_SPACE,128,12
+
+
+#endif
+
+   LTEXT "Changes are disabled because Admin privileges are required to change properties in printing profiles",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,
+                           0,0,256, 24 
+
+#ifndef DONT_TERMINATE_DIALOG_TEMPLATE
+END
+#endif
+
