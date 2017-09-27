@@ -1,8 +1,7 @@
 # Common
 
 ## Header and cpp files that are common across many of the repositories here 
-
---
+---
 
 The projects here are <strong>interrelated</strong>.
    
