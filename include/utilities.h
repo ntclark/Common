@@ -2,6 +2,8 @@
 #pragma once
 
 #include <windows.h>
+#include <stdio.h>
+#include <shlwapi.h>
 #include <ShlObj.h>
 
 #pragma pack(push)
@@ -33,24 +35,9 @@ typedef struct DLGTEMPLATEEX {
 
 #pragma pack(pop)
 
-
-#define PIXELS_TO_HIMETRIC(x,ppli)  ( (2540*(x) + ((ppli) >> 1)) / (ppli) )
-#define HIMETRIC_TO_PIXELS(x,ppli)  ( ((ppli)*(x) + 1270) / 2540 )
-
-#if 0
-long IsTopBandPresent(HWND hwndHTMLHost,HWND hwndPDFToolBar);
-long IsBottomBandPresent(HWND hwndHTMLHost,HWND hwndPDFHorizontalScrollBar);
-
-long FindDocumentUpperLeftCorner(HWND hwndHTMLHost,HWND hwndPDFHorizontalScrollBar,HWND hwndPDFToolBar,POINTL *pCorner);
-long FindDocumentUpperRightCorner(HWND hwndHTMLHost,HWND hwndPDFVerticalScrollBar,HWND hwndPDFHorizontalScrollBar,HWND hwndPDFToolBar,POINTL *pResult);
-long FindDocumentLowerLeftCorner(HWND hwndHTMLHost,HWND hwndPDFHorizontalScrollBar,POINTL *pResult);
-long FindDocumentLowerRightCorner(HWND hwndHTMLHost,HWND hwndPDFHorizontalScrollBar,HWND hwndPDFVerticalScrollBar,POINTL *pResult);
-
-long MeasureDocumentLeftBand(HWND hwndHTMLHost);
-long MeasureDocumentTopBand(HWND hwndHTMLHost);
-long MeasureDocumentRightBand(HWND hwndHTMLHost,HWND hwndPDFVerticalScrollBar);
-long MeasureDocumentBottomBand(HWND hwndHTMLHost,HWND hwndPDFHorizontalScrollBar);
-#endif
+extern "C" int GetCommonAppDataLocation(HWND hwnd,char *);
+extern "C" int GetDocumentsLocation(HWND hwnd,char *);
+int GetLocation(HWND hwnd,long key,char *szFolderLocation);
 
 HWND APIENTRY FindWindowWithClass(HWND hwndP,char* theClassName);
 HWND APIENTRY FindWindowWithStyle(HWND hwndP,LONG_PTR theStyle);
@@ -72,7 +59,13 @@ BOOL CALLBACK findChild(HWND hwndTest,LPARAM lParam);
 BOOL CALLBACK findChildContainingText(HWND hwndTest,LPARAM lParam);
 BOOL CALLBACK findChildContainingInteger(HWND hwndTest,LPARAM lParam);
 
+long HashCode(char *pszInput);
+
 void ASCIIHexDecodeInPlace(char *pszInput);
+void ASCIIHexEncode(char *pszInput,long valueSize,char **ppszResult);
+
+int pixelToHiMetric(SIZEL *pPixels,SIZEL *phiMetric);
+int hiMetricToPixel(SIZEL *phiMetric,SIZEL *pPixels);
 
 void adjustPropertiesDialogSize(SIZEL *pSizelDesired,DLGTEMPLATEEX *pDialog,long cyReservedHeader);
 

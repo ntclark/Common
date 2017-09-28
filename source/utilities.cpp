@@ -4,592 +4,68 @@
 #define SVC_ERROR                        ((DWORD)0xC0020001L)
 #define SVC_INFORMATIONAL                ((DWORD)0x40020002L)
 
-#define NEAR_WHITE_RED     192
-#define NEAR_WHITE_GREEN   192
-#define NEAR_WHITE_BLUE    192
+#define PIXELS_TO_HIMETRIC(x,ppli)  ( (2540*(x) + ((ppli) >> 1)) / (ppli) )
+#define HIMETRIC_TO_PIXELS(x,ppli)  ( ((ppli)*(x) + 1270) / 2540 )
 
-   static COLORREF nearWhite = RGB(NEAR_WHITE_RED,NEAR_WHITE_GREEN,NEAR_WHITE_BLUE);
+   extern "C" int  __cdecl GetDocumentsLocation(HWND hwnd,char *szFolderLocation) {
+   GetLocation(hwnd,CSIDL_PERSONAL,szFolderLocation);
+   return 0;
+   }
 
-#if 0
+   extern "C" int __cdecl GetCommonAppDataLocation(HWND hwnd,char *szFolderLocation) {
+   GetLocation(hwnd,CSIDL_COMMON_APPDATA,szFolderLocation);
+   return 0;
+   }
+ 
+   int GetLocation(HWND hwnd,long key,char *szFolderLocation) {
 
-   long IsBottomBandPresent(HWND hwndHTMLHost,HWND hwndPDFHorizontalScrollBar) {
+   ITEMIDLIST *ppItemIDList;
+   IShellFolder *pIShellFolder;
+   LPCITEMIDLIST pcParentIDList;
 
-   if ( ! hwndHTMLHost )
-      return 0L;
+   HRESULT wasInitialized = CoInitialize(NULL);
 
-   RECT rectDocument;
+   szFolderLocation[0] = '\0';
 
-   GetClientRect(hwndHTMLHost,&rectDocument);
+   HRESULT rc = SHGetFolderLocation(hwnd,key,NULL,0,&ppItemIDList);
 
-   HDC hdc = GetDC(hwndHTMLHost);
+   if ( S_OK != rc ) {
+      char szMessage[256];
+      sprintf(szMessage,"SHGetFolderLocation returned %ld",rc);
+      MessageBox(NULL,szMessage,"Error",MB_OK);
+      szFolderLocation[0] = '\0';
+      return 0;
+   }
 
-   long bottomRow = rectDocument.bottom - rectDocument.top - 2;
+   rc = SHBindToParent(ppItemIDList, IID_IShellFolder, (void **) &pIShellFolder, &pcParentIDList);
 
-   if ( hwndPDFHorizontalScrollBar && IsWindowVisible(hwndPDFHorizontalScrollBar) )
-      bottomRow -= GetSystemMetrics(SM_CYHSCROLL);
+   if ( S_OK == rc ) {
 
-   COLORREF crBackground = GetPixel(hdc,2,bottomRow);
-
-   if ( crBackground > nearWhite )
-      return 0L;
-
-   long colEnd = 3 * (rectDocument.right - rectDocument.left) / 4;
-
-   for ( long col = 2; col < colEnd; col++ ) {
-      if ( crBackground != GetPixel(hdc,col,bottomRow) ) {
-         ReleaseDC(hwndHTMLHost,hdc);
+      STRRET strRet;
+      rc = pIShellFolder -> GetDisplayNameOf(pcParentIDList,SHGDN_FORPARSING,&strRet);
+      pIShellFolder -> Release();
+      if ( S_OK == rc ) {
+         WideCharToMultiByte(CP_ACP,0,strRet.pOleStr,-1,szFolderLocation,MAX_PATH,0,0);
+      } else {
+         char szMessage[256];
+         sprintf(szMessage,"GetDisplayNameOf returned %ld",rc);
+         MessageBox(NULL,szMessage,"Error",MB_OK);
+         szFolderLocation[0] = '\0';
          return 0;
       }
+   } else {
+      char szMessage[256];
+      sprintf(szMessage,"SHBindToParent returned %ld",rc);
+      MessageBox(NULL,szMessage,"Error",MB_OK);
+      szFolderLocation[0] = '\0';
+      return 0;
    }
 
-   ReleaseDC(hwndHTMLHost,hdc);
-
-   return 1;
-   }
-
-
-   long IsTopBandPresent(HWND hwndHTMLHost,HWND hwndPDFToolBar) {
-
-   if ( ! hwndHTMLHost )
-      return 0L;
-
-   long rowStart = 1;
-
-   if ( hwndPDFToolBar && IsWindowVisible(hwndPDFToolBar) ) {
-      RECT rcBar;
-      GetWindowRect(hwndPDFToolBar,&rcBar);
-      rowStart += rcBar.bottom - rcBar.top;
-      rowStart++;
-   } 
-
-   HDC hdc = GetDC(hwndHTMLHost);
-
-   COLORREF crBackground = GetPixel(hdc,0,rowStart);
-
-   if ( crBackground > nearWhite )
-      return 0L;
-
-   RECT rectDocument;
-
-   GetWindowRect(hwndHTMLHost,&rectDocument);
-
-   long colEnd = 3 * (rectDocument.right - rectDocument.left) / 4;
-
-   for ( long col = 1; col < colEnd; col++ ) {
-      if ( crBackground != GetPixel(hdc,col,rowStart) ) {
-         ReleaseDC(hwndHTMLHost,hdc);
-         return 0;
-      }
-   }
-
-   ReleaseDC(hwndHTMLHost,hdc);
-
-   return 1;
-   }
-
-
-   long MeasureDocumentLeftBand(HWND hwndHTMLHost) {
-
-   RECT rectDocument;
-
-   GetWindowRect(hwndHTMLHost,&rectDocument);
-
-   long cx = rectDocument.right - rectDocument.left;
-   long cy = rectDocument.bottom - rectDocument.top;
-
-   long row = cy /2;
-   long col = 1;
-
-   HDC hdc = GetDC(hwndHTMLHost);
-
-   COLORREF backgroundColor = GetPixel(hdc,col,row);
-   COLORREF cr;
-
-   while ( col < cx ) {
-
-      cr = GetPixel(hdc,col,row);
-
-      BYTE r = GetRValue(cr);
-      BYTE g = GetGValue(cr);
-      BYTE b = GetBValue(cr);
-
-      if ( r > NEAR_WHITE_RED && g > NEAR_WHITE_GREEN && b > NEAR_WHITE_BLUE )
-         break;
-
-      col++;
-
-   }
-
-   if ( col == cx )
-      col = 0;
-
-   ReleaseDC(hwndHTMLHost,hdc);
-   return col;
-   }
-
-
-   long MeasureDocumentTopBand(HWND hwndHTMLHost) {
-
-   RECT rectDocument;
-
-   GetWindowRect(hwndHTMLHost,&rectDocument);
-
-   long cx = rectDocument.right - rectDocument.left;
-   long cy = rectDocument.bottom - rectDocument.top;
-
-   long row = 1;
-   long col = cx / 2;
-
-   HDC hdc = GetDC(hwndHTMLHost);
-
-   COLORREF backgroundColor = GetPixel(hdc,col,row);
-   COLORREF cr;
-
-   while ( row < cy ) {
-
-      cr = GetPixel(hdc,col,row);
-
-      BYTE r = GetRValue(cr);
-      BYTE g = GetGValue(cr);
-      BYTE b = GetBValue(cr);
-
-      if ( r > NEAR_WHITE_RED && g > NEAR_WHITE_GREEN && b > NEAR_WHITE_BLUE )
-         break;
-
-      row++;
-
-   }
-
-   if ( row == cy )
-      row = 0;
-
-   ReleaseDC(hwndHTMLHost,hdc);
-   return row;
-   }
-
-   long MeasureDocumentRightBand(HWND hwndHTMLHost,HWND hwndPDFVerticalScrollBar) {
-
-   RECT rectDocument;
-
-   GetWindowRect(hwndHTMLHost,&rectDocument);
-
-   long cx = rectDocument.right - rectDocument.left;
-   long cy = rectDocument.bottom - rectDocument.top;
-
-   if ( hwndPDFVerticalScrollBar && IsWindowVisible(hwndPDFVerticalScrollBar) )
-      cx -= GetSystemMetrics(SM_CXVSCROLL);
-
-   long row = cy /2;
-   long col = cx - 1;
-
-   HDC hdc = GetDC(hwndHTMLHost);
-
-   COLORREF backgroundColor = GetPixel(hdc,col,row);
-   COLORREF cr;
-
-   while ( col ) {
-
-      cr = GetPixel(hdc,col,row);
-
-      BYTE r = GetRValue(cr);
-      BYTE g = GetGValue(cr);
-      BYTE b = GetBValue(cr);
-
-      if ( r > NEAR_WHITE_RED && g > NEAR_WHITE_GREEN && b > NEAR_WHITE_BLUE )
-         break;
-
-      col--;
-
-   }
-
-   if ( ! col )
-      col = cx;
-
-   ReleaseDC(hwndHTMLHost,hdc);
-   return cx - col;
-   }
-
-   long MeasureDocumentBottomBand(HWND hwndHTMLHost,HWND hwndPDFHorizontalScrollBar) {
-
-   RECT rectDocument;
-
-   GetWindowRect(hwndHTMLHost,&rectDocument);
-
-   long cx = rectDocument.right - rectDocument.left;
-   long cy = rectDocument.bottom - rectDocument.top;
-
-   if ( hwndPDFHorizontalScrollBar && IsWindowVisible(hwndPDFHorizontalScrollBar) )
-      cy -= GetSystemMetrics(SM_CYHSCROLL);
-
-   long row = cy - 1;
-   long col = cx / 2;
-
-   HDC hdc = GetDC(hwndHTMLHost);
-
-   COLORREF backgroundColor = GetPixel(hdc,col,row);
-   COLORREF cr;
-
-   while ( row ) {
-
-      cr = GetPixel(hdc,col,row);
-
-      BYTE r = GetRValue(cr);
-      BYTE g = GetGValue(cr);
-      BYTE b = GetBValue(cr);
-
-      if ( r > NEAR_WHITE_RED && g > NEAR_WHITE_GREEN && b > NEAR_WHITE_BLUE )
-         break;
-
-      row--;
-
-   }
-
-   if ( ! row )
-      row = cy;
-
-   ReleaseDC(hwndHTMLHost,hdc);
-   return cy - row;
-   }
-
-
-   long FindDocumentUpperLeftCorner(HWND hwndHTMLHost,HWND hwndPDFHorizontalScrollBar,HWND hwndPDFToolBar,POINTL *pResult) {
-
-   pResult -> x = 0;
-   pResult -> y = 0;
-
-   if ( ! hwndHTMLHost )
-      return 0L;
-
-   RECT rectDocument;
-
-   GetWindowRect(hwndHTMLHost,&rectDocument);
-
-   long cx = rectDocument.right - rectDocument.left;
-   long cy = rectDocument.bottom - rectDocument.top;
-
-   long startRow = 0;
-
-   if ( hwndPDFHorizontalScrollBar && IsWindowVisible(hwndPDFHorizontalScrollBar) )
-      cy -= GetSystemMetrics(SM_CYHSCROLL);//scrollBarHeight;
-
-   if ( hwndPDFToolBar && IsWindowVisible(hwndPDFToolBar) ) {
-      RECT rcBar;
-      GetWindowRect(hwndPDFToolBar,&rcBar);
-      cy -= rcBar.bottom - rcBar.top;
-      startRow += rcBar.bottom - rcBar.top;
-   }
-
-   cy -= 4;
-
-   HDC hdc = GetDC(hwndHTMLHost);
-
-   COLORREF cr = RGB(0,0,0);
-
-   long col = 0;
-   long row = startRow;
-
-   long initialStartRow = startRow;
-
-   while ( row < cy ) {
-
-      col = 0;
-
-      while ( col < cx && row < cy ) {
-
-         cr = GetPixel(hdc,col,row);
-
-         if ( cr > nearWhite ) {
-            long priorCol = col - 1;
-            long priorRow = row - 1;
-            COLORREF priorColor = GetPixel(hdc,priorCol,priorRow);
-            while ( priorRow < cy ) {
-               if ( ! priorColor == GetPixel(hdc,priorCol,priorRow) )
-                  break;
-               priorRow++;
-            }
-            if ( priorRow == cy )
-               break;
-         }
-
-         col++;
-         row++;
-
-      }
-
-      if ( col < cx )
-         break;
-
-      startRow++;
-
-      row = startRow;
-
-   }
-
-   COLORREF foundColor = cr;
-
-   while ( row > initialStartRow && GetPixel(hdc,col,row) == foundColor )
-      row--;
-   row++;
-   while ( col && ( GetPixel(hdc,col,row) == foundColor ) )
-      col--;
-   col++;
-
-   pResult -> x = col;
-   pResult -> y = row;
-
-   if ( ! IsTopBandPresent(hwndHTMLHost,hwndPDFToolBar) )
-      pResult -> y = initialStartRow;
-
-   ReleaseDC(hwndHTMLHost,hdc);
+   if ( S_FALSE == wasInitialized )
+      CoUninitialize();
 
    return 0;
    }
-
-
-   long FindDocumentUpperRightCorner(HWND hwndHTMLHost,HWND hwndPDFVerticalScrollBar,HWND hwndPDFHorizontalScrollBar,HWND hwndPDFToolBar,POINTL *pResult) {
-
-   pResult -> x = 0;
-   pResult -> y = 0;
-
-   if ( ! hwndHTMLHost )
-      return 0L;
-
-   RECT rectDocument;
-
-   GetWindowRect(hwndHTMLHost,&rectDocument);
-
-   long cx = rectDocument.right - rectDocument.left;
-   long cy = rectDocument.bottom - rectDocument.top;
-
-   long startRow = 1;
-
-   if ( hwndPDFVerticalScrollBar && IsWindowVisible(hwndPDFVerticalScrollBar) )
-      cx -= GetSystemMetrics(SM_CXVSCROLL);
-
-   if ( hwndPDFHorizontalScrollBar && IsWindowVisible(hwndPDFHorizontalScrollBar) )
-      cy -= GetSystemMetrics(SM_CYHSCROLL);//scrollBarHeight;
-
-   if ( hwndPDFToolBar && IsWindowVisible(hwndPDFToolBar) ) {
-      RECT rcBar;
-      GetWindowRect(hwndPDFToolBar,&rcBar);
-      cy -= rcBar.bottom - rcBar.top;
-      startRow += rcBar.bottom - rcBar.top;
-   }
-
-   HDC hdc = GetDC(hwndHTMLHost);
-
-   COLORREF cr = RGB(0,0,0);
-
-   long col;
-   long row = startRow;
-   long initialStartRow = startRow;
-
-   while ( row < cy ) {
-
-//      col = cx - 32;
-      col = cx - 1;
-
-      while ( col > 0 && row < cy ) {
-
-         cr = GetPixel(hdc,col,row);
-
-         BYTE r = GetRValue(cr);
-         BYTE g = GetGValue(cr);
-         BYTE b = GetBValue(cr);
-
-         if ( r > NEAR_WHITE_RED && g > NEAR_WHITE_GREEN && b > NEAR_WHITE_BLUE )
-            break;
-
-         col--;
-         row++;
-
-      }
-
-      if ( col > 0 )
-         break;
-
-      startRow++;
-
-      row = startRow;
-
-   }
-
-   COLORREF foundColor = cr;
-
-   while ( row > initialStartRow && GetPixel(hdc,col,row) == foundColor )
-      row--;
-   row++;
-   while ( col < cx && GetPixel(hdc,col,row) == foundColor )
-      col++;
-   col--;
-
-   pResult -> x = col;
-   pResult -> y = row;
-
-   ReleaseDC(hwndHTMLHost,hdc);
-
-   if ( ! IsTopBandPresent(hwndHTMLHost,hwndPDFToolBar) )
-      pResult -> y = initialStartRow;
-
-   return 0;
-   }
-
-
-
-   long FindDocumentLowerRightCorner(HWND hwndHTMLHost,HWND hwndPDFHorizontalScrollBar,HWND hwndPDFVerticalScrollBar,POINTL *pResult) {
-
-   pResult -> x = 0;
-   pResult -> y = 0;
-
-   if ( ! hwndHTMLHost )
-      return 0L;
-
-   RECT rectDocument;
-
-   GetWindowRect(hwndHTMLHost,&rectDocument);
-
-   long cx = rectDocument.right - rectDocument.left;
-   long cy = rectDocument.bottom - rectDocument.top;
-
-   if ( hwndPDFHorizontalScrollBar && IsWindowVisible(hwndPDFHorizontalScrollBar) )
-      cy -= GetSystemMetrics(SM_CYHSCROLL);
-
-   if ( hwndPDFVerticalScrollBar && IsWindowVisible(hwndPDFVerticalScrollBar) )
-      cx -= GetSystemMetrics(SM_CXVSCROLL);
-
-   HDC hdc = GetDC(hwndHTMLHost);
-
-   COLORREF cr = RGB(0,0,0);
-
-   long y = cy - 2;
-   long x = cx - 2;
-
-   long startRow = y;
-
-   while ( y > 0 ) {
-
-      x = cx - 2;
-
-      while ( x > 0 && y > 0 ) {
-
-         cr = GetPixel(hdc,x,y);
-
-         if ( cr > nearWhite )
-            break;
-
-         x--;
-         y--;
-
-      }
-
-      if ( x > 0 )
-         break;
-
-      startRow--;
-
-      y = startRow;
-
-   }
-
-   COLORREF foundColor = cr;
-
-   while ( y < cy && GetPixel(hdc,x,y) == foundColor )
-      y++;
-   y--;
-
-   while ( x < cx && GetPixel(hdc,x,y) == foundColor )
-      x++;
-   x--;
-
-   pResult -> x = x;
-   pResult -> y = y;
-
-   if ( ! IsBottomBandPresent(hwndHTMLHost,hwndPDFHorizontalScrollBar) )
-      pResult -> y = cy;
-
-   ReleaseDC(hwndHTMLHost,hdc);
-
-   return 0L;
-   }
-
-
-   long FindDocumentLowerLeftCorner(HWND hwndHTMLHost,HWND hwndPDFHorizontalScrollBar,POINTL *pResult) {
-
-   pResult -> x = 0;
-   pResult -> y = 0;
-
-   if ( ! hwndHTMLHost )
-      return 0L;
-
-   RECT rectDocument;
-
-   GetWindowRect(hwndHTMLHost,&rectDocument);
-
-   long cx = rectDocument.right - rectDocument.left;
-   long cy = rectDocument.bottom - rectDocument.top;
-
-   if ( hwndPDFHorizontalScrollBar && IsWindowVisible(hwndPDFHorizontalScrollBar) )
-      cy -= GetSystemMetrics(SM_CYHSCROLL);
-
-   HDC hdc = GetDC(hwndHTMLHost);
-
-   long row = cy;
-   long col = 2;
-
-   COLORREF cr = RGB(0,0,0);
-
-   row = cy - 2;
-
-   long startRow = cy;
-
-   while ( row > 0 ) {
-
-      col = 2;
-
-      while ( col < cx && row > 0 ) {
-
-         cr = GetPixel(hdc,col,row);
-
-         if ( cr > nearWhite )
-            break;
-
-         col++;
-         row--;
-
-      }
-
-      if ( col < cx )
-         break;
-
-      startRow--;
-
-      row = startRow;
-
-   }
-
-   COLORREF foundColor = cr;
-
-   while ( row < cy && GetPixel(hdc,col,row) == foundColor )
-      row++;
-   row--;
-
-   while ( col && GetPixel(hdc,col,row) == foundColor )
-      col--;
-   col++;
-
-   pResult -> x = col;
-   pResult -> y = row;
-
-   if ( ! IsBottomBandPresent(hwndHTMLHost,hwndPDFHorizontalScrollBar) )
-      pResult -> y = cy;
-
-   ReleaseDC(hwndHTMLHost,hdc);
-
-   return 0;
-
-   }
-
-#endif
 
    static HWND hwndFoundChild;
    static LONG_PTR findExStyle;
@@ -815,25 +291,6 @@
    return TRUE;
    }
 
-
-   long hashCode(char *pszInput) {
-   long hashCode = 0L;
-   long part = 0L;
-   long n = (long)strlen(pszInput);
-   char *psz = new char[n + 4];
-   memset(psz,0,(n + 4) * sizeof(char));
-   strcpy(psz,pszInput);
-   char *p = psz;
-   for ( long k = 0; k < n; k += 4 ) {
-      memcpy(&part,p,4 * sizeof(char));
-      hashCode ^= part;
-      p += 4;
-   }
-   delete [] psz;
-   return hashCode;
-   }
-
-
    void logEvent(LPTSTR szMessage) { 
 
    HANDLE hEventSource = RegisterEventSource(NULL,"CursiVision");
@@ -853,6 +310,24 @@
 
    return;
    }
+
+   long HashCode(char *pszInput) {
+   long hashCode = 0L;
+   long part = 0L;
+   long n = (DWORD)strlen(pszInput);
+   char *psz = new char[n + 4];
+   memset(psz,0,(n + 4) * sizeof(char));
+   strcpy(psz,pszInput);
+   char *p = psz;
+   for ( long k = 0; k < n; k += 4 ) {
+      memcpy(&part,p,4 * sizeof(char));
+      hashCode ^= part;
+      p += 4;
+   }
+   delete [] psz;
+   return hashCode;
+   }
+
 
    void ASCIIHexDecodeInPlace(char *pszInput) {
 
@@ -892,7 +367,35 @@
    return;
    }
 
-   int pixelsToHiMetric(SIZEL *pPixels,SIZEL *phiMetric) {
+   void ASCIIHexEncode(char *pszInput,long valueSize,char **ppszResult) {
+
+   *ppszResult = new char[2 * valueSize + 1];
+   memset(*ppszResult,0,(2 * valueSize + 1) * sizeof(char));
+
+   char *p = pszInput;
+   char *pEnd = p + valueSize;
+   char *pTarget = *ppszResult;
+
+   while ( p < pEnd ) {
+  
+      *pTarget = (*p & 0xF0) >> 4;
+      *pTarget += (*pTarget > 9 ? 'a' - 10 : '0');
+
+      pTarget++;
+
+      *pTarget = (*p & 0x0F);
+      *pTarget += (*pTarget > 9 ? 'a' - 10 : '0');
+   
+      pTarget++;
+
+      p++;
+
+   }
+
+   return;
+   }
+
+   int pixelToHiMetric(SIZEL *pPixels,SIZEL *phiMetric) {
    HDC hdc = GetDC(0);
    int pxlsX,pxlsY;
  
@@ -902,6 +405,7 @@
  
    phiMetric -> cx = PIXELS_TO_HIMETRIC(pPixels -> cx,pxlsX);
    phiMetric -> cy = PIXELS_TO_HIMETRIC(pPixels -> cy,pxlsY);
+
    return TRUE;
    }
 
@@ -911,6 +415,7 @@
 
    pxlsX = GetDeviceCaps(hdc,LOGPIXELSX);
    pxlsY = GetDeviceCaps(hdc,LOGPIXELSY);
+
    ReleaseDC(0,hdc);
 
    pPixels -> cx = HIMETRIC_TO_PIXELS(phiMetric -> cx,pxlsX);
