@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Sep 28 10:49:07 2017
+/* at Thu Sep 28 13:51:50 2017
  */
 /* Compiler settings for COM Implementation\PDFiumControl.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -326,7 +326,11 @@ EXTERN_C const IID IID_IPDFiumControl;
         virtual HRESULT STDMETHODCALLTYPE GoToPage( 
             long pageNumber) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE PrintCurrentDocument( 
+            BOOL showPrinterSelection) = 0;
+        
         virtual HRESULT STDMETHODCALLTYPE PrintDocument( 
+            BSTR pdfOrHTMLFileName,
             BOOL showPrinterSelection) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Cleanup( void) = 0;
@@ -518,8 +522,13 @@ EXTERN_C const IID IID_IPDFiumControl;
             IPDFiumControl * This,
             long pageNumber);
         
+        HRESULT ( STDMETHODCALLTYPE *PrintCurrentDocument )( 
+            IPDFiumControl * This,
+            BOOL showPrinterSelection);
+        
         HRESULT ( STDMETHODCALLTYPE *PrintDocument )( 
             IPDFiumControl * This,
+            BSTR pdfOrHTMLFileName,
             BOOL showPrinterSelection);
         
         HRESULT ( STDMETHODCALLTYPE *Cleanup )( 
@@ -645,8 +654,11 @@ EXTERN_C const IID IID_IPDFiumControl;
 #define IPDFiumControl_GoToPage(This,pageNumber)	\
     ( (This)->lpVtbl -> GoToPage(This,pageNumber) ) 
 
-#define IPDFiumControl_PrintDocument(This,showPrinterSelection)	\
-    ( (This)->lpVtbl -> PrintDocument(This,showPrinterSelection) ) 
+#define IPDFiumControl_PrintCurrentDocument(This,showPrinterSelection)	\
+    ( (This)->lpVtbl -> PrintCurrentDocument(This,showPrinterSelection) ) 
+
+#define IPDFiumControl_PrintDocument(This,pdfOrHTMLFileName,showPrinterSelection)	\
+    ( (This)->lpVtbl -> PrintDocument(This,pdfOrHTMLFileName,showPrinterSelection) ) 
 
 #define IPDFiumControl_Cleanup(This)	\
     ( (This)->lpVtbl -> Cleanup(This) ) 
