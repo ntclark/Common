@@ -46,7 +46,10 @@
 
    if ( DISPID_DOCUMENTCOMPLETE == dispidMember ) {
       pParent -> pIPDFiumControl -> GoToPage(1);
-      pParent -> pIPDFiumControl -> put_ScrollBarVisible(FALSE);
+      pParent -> pIPDFiumControl -> put_EnableExplorerContextMenu(FALSE);
+      pParent -> currentPageNumber = 1;
+      long countEntries;
+      RECT *pEntries = pParent -> pTextRects(&countEntries);
    }
 
    return S_OK;

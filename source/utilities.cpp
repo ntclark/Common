@@ -32,7 +32,7 @@
    if ( S_OK != rc ) {
       char szMessage[256];
       sprintf(szMessage,"SHGetFolderLocation returned %ld",rc);
-      MessageBox(NULL,szMessage,"Error",MB_OK);
+      MessageBoxA(NULL,szMessage,"Error",MB_OK);
       szFolderLocation[0] = '\0';
       return 0;
    }
@@ -49,14 +49,14 @@
       } else {
          char szMessage[256];
          sprintf(szMessage,"GetDisplayNameOf returned %ld",rc);
-         MessageBox(NULL,szMessage,"Error",MB_OK);
+         MessageBoxA(NULL,szMessage,"Error",MB_OK);
          szFolderLocation[0] = '\0';
          return 0;
       }
    } else {
       char szMessage[256];
       sprintf(szMessage,"SHBindToParent returned %ld",rc);
-      MessageBox(NULL,szMessage,"Error",MB_OK);
+      MessageBoxA(NULL,szMessage,"Error",MB_OK);
       szFolderLocation[0] = '\0';
       return 0;
    }
@@ -180,7 +180,7 @@
        return FALSE;
    }
 
-   GetWindowText(hwndTest,szText,min(n,32));
+   GetWindowTextA(hwndTest,szText,min(n,32));
 
    if ( strstr(szText,pszTest) ) {
        hwndFoundChild = hwndTest;
@@ -198,7 +198,7 @@
 
    BOOL CALLBACK findChildContainingInteger(HWND hwndTest,LPARAM lParam) {
    char szText[32];
-   GetWindowText(hwndTest,szText,32);
+   GetWindowTextA(hwndTest,szText,32);
    if ( strlen(szText) < 1 ) return TRUE;
    char *p = szText;
    while ( *p && ( ' ' == *p || ( '0' <= *p && *p <= '9' ) ) ) 
@@ -217,7 +217,7 @@
    BOOL CALLBACK findChildWithClass(HWND hwndTest,LPARAM lParam) {
    char *pszClass = (char *)lParam;
    char szClass[64];
-   GetClassName(hwndTest,szClass,64);
+   GetClassNameA(hwndTest,szClass,64);
    if ( strlen(szClass) < 1 ) return TRUE;
    if ( 0 == _strnicmp(pszClass,szClass,min(strlen(pszClass),strlen(szClass))) ) {
        hwndFoundChild = hwndTest;
@@ -257,7 +257,7 @@
    BOOL CALLBACK findHorizontalChildWithClass(HWND hwndTest,LPARAM lParam) {
    char *pszClass = (char *)lParam;
    char szClass[64];
-   GetClassName(hwndTest,szClass,64);
+   GetClassNameA(hwndTest,szClass,64);
    if ( strlen(szClass) < 1 ) return TRUE;
    if ( 0 == _strnicmp(pszClass,szClass,min(strlen(pszClass),strlen(szClass))) ) {
       RECT rcWindow;
@@ -276,7 +276,7 @@
    BOOL CALLBACK findChildWithClassAndStyle(HWND hwndTest,LPARAM lParam) {
    char *pszClass = (char *)lParam;
    char szClass[64];
-   GetClassName(hwndTest,szClass,64);
+   GetClassNameA(hwndTest,szClass,64);
    if ( strlen(szClass) < 1 ) return TRUE;
    if ( 0 == _strnicmp(pszClass,szClass,min(strlen(pszClass),strlen(szClass))) ) {
       long style = (long)GetWindowLongPtr(hwndTest,GWL_STYLE);
@@ -293,7 +293,7 @@
 
    void logEvent(LPTSTR szMessage) { 
 
-   HANDLE hEventSource = RegisterEventSource(NULL,"CursiVision");
+   HANDLE hEventSource = RegisterEventSourceA(NULL,"CursiVision");
 
    if ( NULL == hEventSource ) 
       return;

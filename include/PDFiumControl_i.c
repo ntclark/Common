@@ -6,10 +6,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Sep 28 13:51:50 2017
+/* at Tue Oct 03 13:50:01 2017
  */
 /* Compiler settings for COM Implementation\PDFiumControl.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -74,6 +74,9 @@ MIDL_DEFINE_GUID(IID, LIBID_PDFiumControl,0xB5FF6E92,0xF84E,0x432C,0xAA,0xCB,0x0
 
 
 MIDL_DEFINE_GUID(IID, IID_IPDFiumControl,0xB5FF6E92,0xF84E,0x432C,0xAA,0xCB,0x09,0x82,0xC9,0x40,0xE5,0x32);
+
+
+MIDL_DEFINE_GUID(IID, IID_IPDFiumControlEvents,0xB5FF6E92,0xF84E,0x432C,0xAA,0xCB,0x09,0x82,0xC9,0x40,0xE5,0x34);
 
 
 MIDL_DEFINE_GUID(CLSID, CLSID_PDFiumControl,0xB5FF6E92,0xF84E,0x432C,0xAA,0xCB,0x09,0x82,0xC9,0x40,0xE5,0x3F);

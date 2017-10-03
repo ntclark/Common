@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Sep 28 10:49:09 2017
+/* at Fri Sep 29 13:36:45 2017
  */
 /* Compiler settings for pkAPI.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -213,10 +213,10 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             /* [retval][out] */ BSTR *pFontFamily) = 0;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Image( 
-            /* [retval][out] */ OLE_HANDLE *pImageInControlWindowDimensions) = 0;
+            /* [retval][out] */ UINT_PTR *pImageInControlWindowDimensions) = 0;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_NativeSizeImage( 
-            /* [retval][out] */ OLE_HANDLE *pImageInPadDimensions) = 0;
+            /* [retval][out] */ UINT_PTR *pImageInPadDimensions) = 0;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ImageFile( 
             /* [retval][out] */ BSTR *pBSTRImageFileInControlDimensions) = 0;
@@ -546,11 +546,11 @@ EXTERN_C const IID IID_IBasicSignaturePad;
         
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Image )( 
             IBasicSignaturePad * This,
-            /* [retval][out] */ OLE_HANDLE *pImageInControlWindowDimensions);
+            /* [retval][out] */ UINT_PTR *pImageInControlWindowDimensions);
         
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_NativeSizeImage )( 
             IBasicSignaturePad * This,
-            /* [retval][out] */ OLE_HANDLE *pImageInPadDimensions);
+            /* [retval][out] */ UINT_PTR *pImageInPadDimensions);
         
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ImageFile )( 
             IBasicSignaturePad * This,
@@ -1185,11 +1185,11 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
         
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Image )( 
             IPhabletSignaturePad * This,
-            /* [retval][out] */ OLE_HANDLE *pImageInControlWindowDimensions);
+            /* [retval][out] */ UINT_PTR *pImageInControlWindowDimensions);
         
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_NativeSizeImage )( 
             IPhabletSignaturePad * This,
-            /* [retval][out] */ OLE_HANDLE *pImageInPadDimensions);
+            /* [retval][out] */ UINT_PTR *pImageInPadDimensions);
         
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ImageFile )( 
             IPhabletSignaturePad * This,

@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Sep 28 13:51:50 2017
+/* at Tue Oct 03 13:50:01 2017
  */
 /* Compiler settings for COM Implementation\PDFiumControl.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -57,6 +57,13 @@ typedef interface PDFium_DWebBrowserEvents2 PDFium_DWebBrowserEvents2;
 typedef interface IPDFiumControl IPDFiumControl;
 
 #endif 	/* __IPDFiumControl_FWD_DEFINED__ */
+
+
+#ifndef __IPDFiumControlEvents_FWD_DEFINED__
+#define __IPDFiumControlEvents_FWD_DEFINED__
+typedef interface IPDFiumControlEvents IPDFiumControlEvents;
+
+#endif 	/* __IPDFiumControlEvents_FWD_DEFINED__ */
 
 
 #ifndef __PDFiumControl_FWD_DEFINED__
@@ -243,6 +250,9 @@ EXTERN_C const IID IID_IPDFiumControl;
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFHeight( 
             /* [retval][out] */ long *pcxPDFHeightInPixels) = 0;
         
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_EnableExplorerContextMenu( 
+            /* [in] */ BOOL doEnable) = 0;
+        
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFPagesVisible( 
             /* [retval][out] */ BSTR *pPagesVisible) = 0;
         
@@ -308,6 +318,10 @@ EXTERN_C const IID IID_IPDFiumControl;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ScrollBarVisible( 
             /* [retval][out] */ BOOL *__MIDL__IPDFiumControl0002) = 0;
+        
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE ConvertPointsToScrollPanePixels( 
+            long pageNumber,
+            RECT *pRect) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE OpenDocument( 
             BSTR documentFileName,
@@ -417,6 +431,10 @@ EXTERN_C const IID IID_IPDFiumControl;
             IPDFiumControl * This,
             /* [retval][out] */ long *pcxPDFHeightInPixels);
         
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_EnableExplorerContextMenu )( 
+            IPDFiumControl * This,
+            /* [in] */ BOOL doEnable);
+        
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPagesVisible )( 
             IPDFiumControl * This,
             /* [retval][out] */ BSTR *pPagesVisible);
@@ -500,6 +518,11 @@ EXTERN_C const IID IID_IPDFiumControl;
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ScrollBarVisible )( 
             IPDFiumControl * This,
             /* [retval][out] */ BOOL *__MIDL__IPDFiumControl0002);
+        
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *ConvertPointsToScrollPanePixels )( 
+            IPDFiumControl * This,
+            long pageNumber,
+            RECT *pRect);
         
         HRESULT ( STDMETHODCALLTYPE *OpenDocument )( 
             IPDFiumControl * This,
@@ -588,6 +611,9 @@ EXTERN_C const IID IID_IPDFiumControl;
 #define IPDFiumControl_get_PDFHeight(This,pcxPDFHeightInPixels)	\
     ( (This)->lpVtbl -> get_PDFHeight(This,pcxPDFHeightInPixels) ) 
 
+#define IPDFiumControl_put_EnableExplorerContextMenu(This,doEnable)	\
+    ( (This)->lpVtbl -> put_EnableExplorerContextMenu(This,doEnable) ) 
+
 #define IPDFiumControl_get_PDFPagesVisible(This,pPagesVisible)	\
     ( (This)->lpVtbl -> get_PDFPagesVisible(This,pPagesVisible) ) 
 
@@ -642,6 +668,9 @@ EXTERN_C const IID IID_IPDFiumControl;
 #define IPDFiumControl_get_ScrollBarVisible(This,__MIDL__IPDFiumControl0002)	\
     ( (This)->lpVtbl -> get_ScrollBarVisible(This,__MIDL__IPDFiumControl0002) ) 
 
+#define IPDFiumControl_ConvertPointsToScrollPanePixels(This,pageNumber,pRect)	\
+    ( (This)->lpVtbl -> ConvertPointsToScrollPanePixels(This,pageNumber,pRect) ) 
+
 #define IPDFiumControl_OpenDocument(This,documentFileName,pDocumentID)	\
     ( (This)->lpVtbl -> OpenDocument(This,documentFileName,pDocumentID) ) 
 
@@ -672,6 +701,112 @@ EXTERN_C const IID IID_IPDFiumControl;
 
 
 #endif 	/* __IPDFiumControl_INTERFACE_DEFINED__ */
+
+
+#ifndef __IPDFiumControlEvents_INTERFACE_DEFINED__
+#define __IPDFiumControlEvents_INTERFACE_DEFINED__
+
+/* interface IPDFiumControlEvents */
+/* [object][helpstring][uuid] */ 
+
+
+EXTERN_C const IID IID_IPDFiumControlEvents;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("B5FF6E92-F84E-432C-AACB-0982C940E534")
+    IPDFiumControlEvents : public IUnknown
+    {
+    public:
+        virtual HRESULT STDMETHODCALLTYPE MouseMessage( 
+            UINT msg,
+            WPARAM wParam,
+            LPARAM lParam) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Size( 
+            SIZE *pSize) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Paint( 
+            HDC hdc,
+            RECT *prcUpdate) = 0;
+        
+    };
+    
+    
+#else 	/* C style interface */
+
+    typedef struct IPDFiumControlEventsVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            IPDFiumControlEvents * This,
+            /* [in] */ REFIID riid,
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            IPDFiumControlEvents * This);
+        
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            IPDFiumControlEvents * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *MouseMessage )( 
+            IPDFiumControlEvents * This,
+            UINT msg,
+            WPARAM wParam,
+            LPARAM lParam);
+        
+        HRESULT ( STDMETHODCALLTYPE *Size )( 
+            IPDFiumControlEvents * This,
+            SIZE *pSize);
+        
+        HRESULT ( STDMETHODCALLTYPE *Paint )( 
+            IPDFiumControlEvents * This,
+            HDC hdc,
+            RECT *prcUpdate);
+        
+        END_INTERFACE
+    } IPDFiumControlEventsVtbl;
+
+    interface IPDFiumControlEvents
+    {
+        CONST_VTBL struct IPDFiumControlEventsVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IPDFiumControlEvents_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define IPDFiumControlEvents_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define IPDFiumControlEvents_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#define IPDFiumControlEvents_MouseMessage(This,msg,wParam,lParam)	\
+    ( (This)->lpVtbl -> MouseMessage(This,msg,wParam,lParam) ) 
+
+#define IPDFiumControlEvents_Size(This,pSize)	\
+    ( (This)->lpVtbl -> Size(This,pSize) ) 
+
+#define IPDFiumControlEvents_Paint(This,hdc,prcUpdate)	\
+    ( (This)->lpVtbl -> Paint(This,hdc,prcUpdate) ) 
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IPDFiumControlEvents_INTERFACE_DEFINED__ */
 
 
 EXTERN_C const CLSID CLSID_PDFiumControl;

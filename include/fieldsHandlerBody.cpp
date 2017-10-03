@@ -122,8 +122,17 @@
                   currentMouseY < pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.top || currentMouseY > pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.bottom ) 
          break;
 
-      startMouseX = currentMouseX - pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.left;
-      startMouseY = currentMouseY - pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.top;
+      currentMouseX -= pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.left;
+      currentMouseY -= pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.top;
+
+      // The mouse is in MSHTML Visible View coordinates
+
+      if ( currentMouseX < pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.left || currentMouseX > pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.right || 
+                  currentMouseY < pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.top || currentMouseY > pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.bottom ) 
+         break;
+
+      startMouseX = currentMouseX;
+      startMouseY = currentMouseY;
 
       lastMouseX = startMouseX;
       lastMouseY = startMouseY;
@@ -164,11 +173,11 @@
          r.top = max(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.top,r.top);
          r.bottom = min(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.bottom,r.bottom);
 
-         HDC hdc = GetDC(pFieldsHandlerTemplateDocumentUI -> hwndVellum);
+         HDC hdc = GetDC(pFieldsHandlerTemplateDocumentUI -> hwndPane);
 
          BitBlt(hdc,r.left,r.top,r.right - r.left,r.bottom - r.top,pFieldsHandlerTemplateDocumentUI -> pdfDC(),r.left,r.top,SRCCOPY);
 
-         ReleaseDC(pFieldsHandlerTemplateDocumentUI -> hwndVellum,hdc);
+         ReleaseDC(pFieldsHandlerTemplateDocumentUI -> hwndPane,hdc);
 
          pFieldsHandlerTemplateDocumentUI -> convertToPoints(&r);
 
@@ -217,18 +226,15 @@
       if ( ! pFieldsHandlerTemplateDocumentUI )
          break;
 
-      pEntries = pFieldsHandlerTemplateDocumentUI -> pTextRects(&countEntries);
-
-      if ( ! pEntries )
-         break;
-
       long currentMouseX = LOWORD(lParam);
       long currentMouseY = HIWORD(lParam);
+
+      // The mouse is in dialog page coordinates
 
       if ( currentMouseX < pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.left || currentMouseX > pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.right || 
                   currentMouseY < pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.top || currentMouseY > pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.bottom ) {
 
-         oldPotentialIndex = -1L;
+         //oldPotentialIndex = -1L;
          activePotentialIndex = -1L;
          activeFieldIndex = -1L;
          oldActiveFieldIndex = -1L;
@@ -238,6 +244,32 @@
          break;
 
       }
+
+      currentMouseX -= pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.left;
+      currentMouseY -= pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.top;
+
+      // The mouse is in MSHTML Visible View coordinates
+
+      if ( currentMouseX < pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.left || currentMouseX > pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.right || 
+                  currentMouseY < pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.top || currentMouseY > pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.bottom ) {
+
+         //oldPotentialIndex = -1L;
+         activePotentialIndex = -1L;
+         activeFieldIndex = -1L;
+         oldActiveFieldIndex = -1L;
+
+         drawFields(NULL,pFieldsHandlerTemplateDocumentUI);
+
+         break;
+
+      }
+
+      pFieldsHandlerTemplateDocumentUI -> PDFiumControl() -> get_PDFPageNumberAtY(currentMouseY,0,&pFieldsHandlerTemplateDocumentUI -> currentPageNumber);
+
+      pEntries = pFieldsHandlerTemplateDocumentUI -> pTextRects(&countEntries);
+
+      if ( ! pEntries )
+         break;
 
       if ( wParam & MK_LBUTTON ) {
 
@@ -267,14 +299,14 @@
          r.top = max(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.top,r.top);
          r.bottom = min(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.bottom,r.bottom);
 
-         HDC hdc = GetDC(pFieldsHandlerTemplateDocumentUI -> hwndVellum);
+         HDC hdc = GetDC(pFieldsHandlerTemplateDocumentUI -> hwndPane);
 
          BitBlt(hdc,r.left,r.top,r.right - r.left,r.bottom - r.top,pFieldsHandlerTemplateDocumentUI -> pdfDC(),r.left,r.top,SRCCOPY);
 
-         ReleaseDC(pFieldsHandlerTemplateDocumentUI -> hwndVellum,hdc);
+         ReleaseDC(pFieldsHandlerTemplateDocumentUI -> hwndPane,hdc);
 
-         lastMouseX = currentMouseX - pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.left;
-         lastMouseY = currentMouseY - pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.top;
+         lastMouseX = currentMouseX;
+         lastMouseY = currentMouseY;
 
          r.left = max(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.left,startMouseX);
          r.top = max(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.top,startMouseY);
@@ -305,7 +337,7 @@
 
       activeFieldIndex = -1L;
 
-      POINTL ptlMouse = {currentMouseX - pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.left,currentMouseY - pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.top};
+      POINTL ptlMouse = {currentMouseX,currentMouseY};
 
       pFieldsHandlerTemplateDocumentUI -> convertToPoints(&ptlMouse);
 
@@ -321,7 +353,7 @@
       if ( ! ( activeFieldIndex == oldActiveFieldIndex ) && ! ( -1L == oldActiveFieldIndex ) ) {
          RECT r;
          memcpy(&r,&prcFields[oldActiveFieldIndex],sizeof(RECT));
-         pFieldsHandlerTemplateDocumentUI -> convertToPixels(&r);
+         pFieldsHandlerTemplateDocumentUI -> convertToPanePixels(pPageNumbers[oldActiveFieldIndex],&r);
          DRAW_GREEN_BOX(pFieldsHandlerTemplateDocumentUI,PS_SOLID,&r,1)
          oldActiveFieldIndex = -1L;
       }
@@ -329,12 +361,14 @@
       if ( ! ( -1L == activeFieldIndex ) ) {
          RECT r;
          memcpy(&r,&prcFields[activeFieldIndex],sizeof(RECT));
-         pFieldsHandlerTemplateDocumentUI -> convertToPixels(&r);
+         pFieldsHandlerTemplateDocumentUI -> convertToPanePixels(pPageNumbers[activeFieldIndex],&r);
          DRAW_RED_BOX(pFieldsHandlerTemplateDocumentUI,PS_SOLID,&r)
          break;
       }
 
       pEntry = pEntries;
+
+//drawPotentialFields(NULL,pEntries,countEntries,pFieldsHandlerTemplateDocumentUI -> currentPageNumber,pFieldsHandlerTemplateDocumentUI);
 
       for ( long k = 0; k < countEntries; k++, pEntry++ ) {
          if ( ptlMouse.x < pEntry -> left || ptlMouse.x > pEntry -> right || ptlMouse.y > pEntry -> top || ptlMouse.y < pEntry -> bottom ) 
@@ -349,7 +383,11 @@
 
          memcpy(&r,&pEntries[oldPotentialIndex],sizeof(RECT));
 
-         pFieldsHandlerTemplateDocumentUI -> convertToPixels(&r);
+         // r is in PDF coordinates
+
+         pFieldsHandlerTemplateDocumentUI -> convertToPanePixels(pFieldsHandlerTemplateDocumentUI -> currentPageNumber,&r);
+
+         // r is in Vellum pixels
 
          r.left -= 4;
          r.right += 4;
@@ -379,13 +417,13 @@
             r.top = t;
          }
 
-         HDC hdc = GetDC(pFieldsHandlerTemplateDocumentUI -> hwndVellum);
+         HDC hdc = GetDC(pFieldsHandlerTemplateDocumentUI -> hwndPane);
 
          BitBlt(hdc,r.left,r.top,r.right - r.left,r.bottom - r.top,pFieldsHandlerTemplateDocumentUI -> pdfDC(),r.left,r.top,SRCCOPY);
 
          drawFields(hdc,pFieldsHandlerTemplateDocumentUI);
 
-         ReleaseDC(pFieldsHandlerTemplateDocumentUI -> hwndVellum,hdc);
+         ReleaseDC(pFieldsHandlerTemplateDocumentUI -> hwndPane,hdc);
 
          oldPotentialIndex = -1L;
 
@@ -396,7 +434,7 @@
 
       RECT r;
       memcpy(&r,&pEntries[activePotentialIndex],sizeof(RECT));
-      pFieldsHandlerTemplateDocumentUI -> convertToPixels(&r);
+      pFieldsHandlerTemplateDocumentUI -> convertToPanePixels(pFieldsHandlerTemplateDocumentUI -> currentPageNumber,&r);
       DRAW_GREEN_BOX(pFieldsHandlerTemplateDocumentUI,PS_DOT,&r,1)
 
       oldPotentialIndex = activePotentialIndex;

@@ -516,8 +516,8 @@
          entryCountRects++;
 
          if ( -1L == deleteSourceRectIndex ) {
-            InvalidateRect(pTemplateDocumentUI -> hwndHTMLHost,NULL,TRUE);
-            UpdateWindow(pTemplateDocumentUI -> hwndHTMLHost);
+            InvalidateRect(pTemplateDocumentUI -> hwndPane /*hwndHTMLHost*/,NULL,TRUE);
+            UpdateWindow(pTemplateDocumentUI -> hwndPane /*hwndHTMLHost*/);
             //DRAW_RED_BOX(pTarget)
             break;
          }

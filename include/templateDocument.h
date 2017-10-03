@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include <windows.h>
+#include <windowsx.h>
 #include <olectl.h>
 #include <docobj.h>
 #include <exDisp.h>
@@ -41,11 +43,45 @@
          STDMETHOD_ (ULONG, AddRef)();
          STDMETHOD_ (ULONG, Release)();
 
+         class _IPDFiumControlEvents : public IPDFiumControlEvents {
+
+         public:
+
+            _IPDFiumControlEvents(templateDocument::tdUI *pp) : pParent(pp) {};
+
+            // IUnknown
+
+            STDMETHOD (QueryInterface)(REFIID riid,void **ppv);
+            STDMETHOD_ (ULONG, AddRef)();
+            STDMETHOD_ (ULONG, Release)();
+
+            // IPDFiumControlEvents
+
+            STDMETHOD(MouseMessage)(UINT msg,WPARAM wParam,LPARAM lParam);
+
+            STDMETHOD(Size)(SIZE *pSize);
+
+            STDMETHOD(Paint)(HDC hdc,RECT *prcUpdate);
+
+         private:
+
+            templateDocument::tdUI *pParent;
+
+         } *pIPDFiumControlEvents{NULL};
+
          templateDocument *Parent() { return pParent; };
+
+         IPDFiumControl *PDFiumControl() { return pIPDFiumControl; };
 
          void createView(HWND hwndParent,long offsetX,long offsetY,void (*clientPaint)(HDC,templateDocument::tdUI *) = NULL);
 
          void releaseView();
+
+         void setupPDFiumControl();
+         void setURL(char *pszDocumentName);
+         void releasePDFiumControl();
+
+         void findPDFArea();
 
          void size();
 
@@ -55,6 +91,7 @@
          void convertToPixels(RECT *pTarget);
          void convertToPoints(POINTL *pTarget);
          void convertToPixels(POINTL *pTarget);
+         void convertToPanePixels(long pageNumber,RECT *pTarget);
 
          HDC pdfDC();
 
@@ -67,11 +104,10 @@
          RECT rcPageParentCoordinates;
          RECT rcHTML;
          RECT rcPDFPagePixels;
+         RECT rcVellumPixels;
 
          HWND hwndParent;
          HWND hwndPane;
-         HWND hwndHTMLHost;
-         HWND hwndScroll;
          HWND hwndVellum;
 
          double scaleToPixelsX,scaleToPixelsY;
@@ -151,8 +187,8 @@
          private:
 
             int cpCount,enumeratorIndex;
-		    templateDocument::tdUI *pParent;
-		    IConnectionPoint **connectionPoints;
+		      templateDocument::tdUI *pParent;
+		      IConnectionPoint **connectionPoints;
 
          } *pIEnumConnectionPoints_HTML;
 
@@ -180,12 +216,6 @@
             CONNECTDATA *connections;
 
          } *pIEnumerateConnections_HTML;
-
-         void setupPDFiumControl();
-         void setURL(char *pszDocumentName);
-         void releasePDFiumControl();
-
-         void findPDFArea();
 
          void generateBitmap();
 
@@ -215,18 +245,18 @@
          IOleObject *pIOleObject_HTML;
          IOleInPlaceActiveObject *pIOleInPlaceActiveObject_HTML;
 
-         IConnectionPoint *pIConnectionPoint_HTML;
-         DWORD connectionCookie_HTML;
+         IConnectionPoint *pIConnectionPoint_HTML{NULL};
+         DWORD connectionCookie_HTML{0};
+
+         IConnectionPoint *pIConnectionPoint_PDFiumControlEvents{NULL};
+         DWORD connectionCookie_PDFiumControlEvents{0};
 
          IPDFiumControl *pIPDFiumControl{0};
 
          templateDocument *pParent;
 
          static LRESULT CALLBACK paneHandler(HWND,UINT,WPARAM,LPARAM);
-         static LRESULT CALLBACK pdfDocumentRenderer(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam);
          static LRESULT CALLBACK vellumHandler(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam);
-
-         friend class templateDocument;
 
       };
 

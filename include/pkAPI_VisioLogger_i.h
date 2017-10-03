@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Sep 28 10:49:11 2017
+/* at Fri Sep 29 13:36:46 2017
  */
 /* Compiler settings for pkAPI_VisioLogger.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -129,7 +129,7 @@ EXTERN_C const IID IID_IVisioLoggerSignaturePad;
     public:
         virtual HRESULT STDMETHODCALLTYPE Initialize( 
             BSTR padName,
-            OLE_HANDLE hwndHost) = 0;
+            UINT_PTR hwndHost) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Clear( void) = 0;
         
@@ -140,7 +140,7 @@ EXTERN_C const IID IID_IVisioLoggerSignaturePad;
             long y,
             long width,
             long height,
-            OLE_HANDLE hBitmap,
+            UINT_PTR hBitmap,
             long durationInMilliseconds) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE AddBitmap( 
@@ -148,7 +148,7 @@ EXTERN_C const IID IID_IVisioLoggerSignaturePad;
             long y,
             long width,
             long height,
-            OLE_HANDLE hBitmap,
+            UINT_PTR hBitmap,
             long durationInMilliseconds) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE FlushBitmap( void) = 0;
@@ -213,7 +213,7 @@ EXTERN_C const IID IID_IVisioLoggerSignaturePad;
         virtual HRESULT STDMETHODCALLTYPE ShowProperties( void) = 0;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_NativeSizeImage( 
-            /* [retval][out] */ OLE_HANDLE *pImageInPadDimensions) = 0;
+            /* [retval][out] */ UINT_PTR *pImageInPadDimensions) = 0;
         
     };
     
@@ -239,7 +239,7 @@ EXTERN_C const IID IID_IVisioLoggerSignaturePad;
         HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IVisioLoggerSignaturePad * This,
             BSTR padName,
-            OLE_HANDLE hwndHost);
+            UINT_PTR hwndHost);
         
         HRESULT ( STDMETHODCALLTYPE *Clear )( 
             IVisioLoggerSignaturePad * This);
@@ -253,7 +253,7 @@ EXTERN_C const IID IID_IVisioLoggerSignaturePad;
             long y,
             long width,
             long height,
-            OLE_HANDLE hBitmap,
+            UINT_PTR hBitmap,
             long durationInMilliseconds);
         
         HRESULT ( STDMETHODCALLTYPE *AddBitmap )( 
@@ -262,7 +262,7 @@ EXTERN_C const IID IID_IVisioLoggerSignaturePad;
             long y,
             long width,
             long height,
-            OLE_HANDLE hBitmap,
+            UINT_PTR hBitmap,
             long durationInMilliseconds);
         
         HRESULT ( STDMETHODCALLTYPE *FlushBitmap )( 
@@ -350,7 +350,7 @@ EXTERN_C const IID IID_IVisioLoggerSignaturePad;
         
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_NativeSizeImage )( 
             IVisioLoggerSignaturePad * This,
-            /* [retval][out] */ OLE_HANDLE *pImageInPadDimensions);
+            /* [retval][out] */ UINT_PTR *pImageInPadDimensions);
         
         END_INTERFACE
     } IVisioLoggerSignaturePadVtbl;
@@ -627,7 +627,7 @@ EXTERN_C const IID IID_IVisioLoggerKioskPad;
             /* [in] */ long __MIDL__IVisioLoggerKioskPad0001) = 0;
         
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_Background( 
-            /* [in] */ OLE_HANDLE hBitmap) = 0;
+            /* [in] */ UINT_PTR hBitmap) = 0;
         
     };
     
@@ -664,7 +664,7 @@ EXTERN_C const IID IID_IVisioLoggerKioskPad;
         
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Background )( 
             IVisioLoggerKioskPad * This,
-            /* [in] */ OLE_HANDLE hBitmap);
+            /* [in] */ UINT_PTR hBitmap);
         
         END_INTERFACE
     } IVisioLoggerKioskPadVtbl;

@@ -2,11 +2,14 @@
 
    void drawFields(HDC hdc,templateDocument::tdUI *pDocument) {
 
+   if ( 0 == pDocument -> rcVellumPixels.left && 0 == pDocument -> rcVellumPixels.right )
+      return;
+
    bool wasSupplied = true;
 
    if ( NULL == hdc ) {
       wasSupplied = false;
-      hdc = GetDC(pDocument -> hwndVellum);
+      hdc = GetDC(pDocument -> hwndPane);
    }
 
    HFONT hGUIFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
@@ -23,7 +26,7 @@
 
       memcpy(&r,pRect,sizeof(RECT));
 
-      pDocument -> convertToPixels(&r);
+      pDocument -> convertToPanePixels(pPageNumbers[k],&r);
 
       DRAW_GREEN_BOX_HDC(hdc,pDocument,PS_SOLID,&r,1)
 
@@ -43,7 +46,39 @@
    DeleteObject(SelectObject(hdc,oldFont));
 
    if ( ! wasSupplied )
-      ReleaseDC(pDocument -> hwndVellum,hdc);
+      ReleaseDC(pDocument -> hwndPane,hdc);
+   
+   return;
+   }
+
+   void drawPotentialFields(HDC hdc,RECT *pEntries,long countEntries,long pageNumber,templateDocument::tdUI *pDocument) {
+
+   bool wasSupplied = true;
+
+   if ( NULL == hdc ) {
+      wasSupplied = false;
+      hdc = GetDC(pDocument -> hwndPane);
+   }
+
+   RECT *pRect = pEntries;
+   
+   for ( long k = 0; k < countEntries; k++,pRect++ ) {
+
+      //if ( pPageNumbers[k] != pDocument -> currentPageNumber ) 
+      //   continue;
+
+      RECT r;
+
+      memcpy(&r,pRect,sizeof(RECT));
+
+      pDocument -> convertToPanePixels(pageNumber,&r);
+
+      DRAW_GREEN_BOX_HDC(hdc,pDocument,PS_SOLID,&r,1)
+
+   }
+
+   if ( ! wasSupplied )
+      ReleaseDC(pDocument -> hwndPane,hdc);
    
    return;
    }

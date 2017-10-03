@@ -82,8 +82,8 @@
             pObject -> pTemplateDocument -> openDocument(szTemp);
          }
 
-      }
-      break;
+         }
+         break;
 
       case IDDI_CV_CONTROL_TEMPLATE_GET: {
 

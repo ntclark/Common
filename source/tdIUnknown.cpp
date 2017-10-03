@@ -44,19 +44,9 @@
       return pDWebBrowserEvents_HTML -> QueryInterface(riid,ppv);
    else
 
-#if 0
-   if ( IID_IElementBehaviorFactory == riid )
-      return pIElementBehaviorFactory -> QueryInterface(riid,ppv);
+   if ( riid == IID_IPDFiumControlEvents )
+      return pIPDFiumControlEvents -> QueryInterface(riid,ppv);
    else
-
-   if ( IID_IElementBehavior == riid )
-      return pIElementBehavior -> QueryInterface(riid,ppv);
-   else
-
-   if ( IID_IHTMLPainter == riid ) 
-      return pIHTMLPainter -> QueryInterface(riid,ppv);
-   else
-#endif
 
       return E_NOINTERFACE;
 

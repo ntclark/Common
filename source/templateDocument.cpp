@@ -75,6 +75,8 @@
    pIPdfDocument -> get_PageCount(&pageCount);
 
    pUI -> resetScrollbar(pageCount);
+      
+   pUI -> findPDFArea();
 
    return pUI;
    }
@@ -220,7 +222,7 @@
       if ( ! pView -> pUI )
          continue;
       pView -> pUI -> resetScrollbar(pageCount);
-      if ( pView -> pUI -> hwndHTMLHost ) {
+      if ( pView -> pUI -> hwndPane ) {
          pView -> pUI -> size();
       }
    }

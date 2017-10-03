@@ -38,9 +38,7 @@
       parentOffsetX(0L),parentOffsetY(0L),
 
       hwndParent(NULL),
-      hwndHTMLHost(NULL),
       hwndPane(NULL),
-      hwndScroll(NULL),
       hwndVellum(NULL),
 
       scaleToPixelsX(0.0),
@@ -64,21 +62,20 @@
    memset(&ptlPDFUpperLeft,0,sizeof(POINTL));
    memset(&rcHTML,0,sizeof(RECT));
    memset(&rcPageParentCoordinates,0,sizeof(RECT));
+   memset(&rcVellumPixels,0,sizeof(RECT));
    return;
    }
 
 
    templateDocument::tdUI::~tdUI() {
 
+   if ( pIPDFiumControl ) 
+      releasePDFiumControl();
+
    if ( hwndPane ) {
-      DestroyWindow(hwndScroll);
-      DestroyWindow(hwndHTMLHost);
       DestroyWindow(hwndPane);
       DestroyWindow(hwndVellum);
    }
-
-   if ( pIPDFiumControl ) 
-      releasePDFiumControl();
 
    RESET_PAGE
 
@@ -118,11 +115,6 @@
 
       RegisterClass(&gClass);
 
-      gClass.lpfnWndProc = templateDocument::tdUI::pdfDocumentRenderer;
-      gClass.lpszClassName = "pdfDocument";
-
-      RegisterClass(&gClass);
-
       gClass.lpfnWndProc = templateDocument::tdUI::vellumHandler;
       gClass.lpszClassName = "vellum";
 
@@ -130,17 +122,9 @@
 
    }
 
-   hwndPane = CreateWindowEx(WS_EX_CLIENTEDGE,"paneHandler","",WS_CHILD | WS_VISIBLE,parentOffsetX,parentOffsetY,0,0,hwndParent,NULL,hModule,(void *)this);
-   hwndHTMLHost = CreateWindowEx(0,"pdfDocument","",WS_CHILD | WS_VISIBLE,0,0,0,0,hwndPane,NULL,hModule,(void *)this);
-   hwndScroll = CreateWindowEx(WS_EX_RIGHTSCROLLBAR,"ScrollBar","",WS_CHILD | WS_VISIBLE | SBS_VERT,0,0,0,0,hwndPane,NULL,hModule,NULL);
+   hwndPane = CreateWindowEx(0*WS_EX_CLIENTEDGE,"paneHandler","",WS_CHILD | WS_VISIBLE,parentOffsetX,parentOffsetY,0,0,hwndParent,NULL,hModule,(void *)this);
+
    hwndVellum = CreateWindowEx(0L,"vellum","",WS_CHILD | WS_VISIBLE,0,0,0,0,hwndPane,NULL,hModule,(void *)this);
-
-   if ( ! pParent -> pIPdfDocument )
-      EnableWindow(hwndScroll,FALSE);
-   else
-      EnableWindow(hwndScroll,TRUE);
-
-   SetScrollInfo(hwndScroll,SB_CTL,&scrollInfo,TRUE);
 
    if ( ! pParent -> pszDocumentName ) 
       return;
@@ -160,7 +144,7 @@
    if ( pIOleInPlaceFrame_HTML_Host )
       return;
 
-   pIOleInPlaceFrame_HTML_Host = new _IOleInPlaceFrame(this,hwndHTMLHost);
+   pIOleInPlaceFrame_HTML_Host = new _IOleInPlaceFrame(this,hwndPane /*hwndHTMLHost*/);
    pIOleInPlaceSite_HTML_Host = new _IOleInPlaceSite(this,pIOleInPlaceFrame_HTML_Host);
    pIOleClientSite_HTML_Host = new _IOleClientSite(this,pIOleInPlaceSite_HTML_Host,pIOleInPlaceFrame_HTML_Host);
    pIOleDocumentSite_HTML_Host = new _IOleDocumentSite(this,pIOleClientSite_HTML_Host);
@@ -186,10 +170,21 @@
    pIPDFiumControl -> QueryInterface(IID_IConnectionPointContainer,reinterpret_cast<void**>(&pIConnectionPointContainer));
 
    if ( pIConnectionPointContainer ) {
+
       pIConnectionPointContainer -> FindConnectionPoint(DIID_DWebBrowserEvents2,&pIConnectionPoint_HTML);
+
       if ( pIConnectionPoint_HTML ) 
          pIConnectionPoint_HTML -> Advise(pIUnknown,&connectionCookie_HTML);
+
+      pIPDFiumControlEvents = new _IPDFiumControlEvents(this);
+
+      pIConnectionPointContainer -> FindConnectionPoint(IID_IPDFiumControlEvents,&pIConnectionPoint_PDFiumControlEvents);
+
+      if ( pIConnectionPoint_PDFiumControlEvents ) 
+         pIConnectionPoint_PDFiumControlEvents -> Advise(pIUnknown,&connectionCookie_PDFiumControlEvents);
+
       pIConnectionPointContainer -> Release();
+
    }
 
    pIUnknown -> Release();
@@ -210,19 +205,31 @@
 
    RECT rcHost = {0};
 
-   GetWindowRect(hwndHTMLHost,&rcHost);
+   GetWindowRect(hwndPane /*hwndHTMLHost*/,&rcHost);
 
    pIPDFiumControl -> DisplayDocument(logBrush.lbColor,rcHost.right - rcHost.left - 64,rcHost.bottom - rcHost.top - 32,bstrURL,0);
 
    SysFreeString(bstrURL);
 
-   pIOleObject_HTML -> DoVerb(OLEIVERB_SHOW,NULL,pIOleClientSite_HTML_Host,0,hwndHTMLHost,NULL);
+   //pIOleObject_HTML -> DoVerb(OLEIVERB_SHOW,NULL,pIOleClientSite_HTML_Host,0,hwndPane /*hwndHTMLHost*/,NULL);
 
    return;
    }
 
 
    void templateDocument::tdUI::releasePDFiumControl() {
+
+   if ( pIConnectionPoint_HTML ) {
+      pIConnectionPoint_HTML -> Unadvise(connectionCookie_HTML);
+      pIConnectionPoint_HTML -> Release();
+      pIConnectionPoint_HTML = NULL;
+   }
+
+   if ( pIConnectionPoint_PDFiumControlEvents ) {
+      pIConnectionPoint_PDFiumControlEvents -> Unadvise(connectionCookie_PDFiumControlEvents);
+      pIConnectionPoint_PDFiumControlEvents -> Release();
+      pIConnectionPoint_PDFiumControlEvents = NULL;
+   }
 
    pIOleObject_HTML -> Close(OLECLOSE_NOSAVE);
 
@@ -244,18 +251,24 @@
    pIPDFiumControl -> Release();
 
    pIPDFiumControl = NULL;
+
    return;
    }
 
 
    HDC templateDocument::tdUI::pdfDC() {
-   if ( ! hdcPDF ) {
-      if ( hwndVellum ) 
-         ShowWindow(hwndVellum,SW_HIDE);
-      SendMessage(hwndPane,WM_GENERATE_BITMAP,0,0);
-      if ( hwndVellum )
-         ShowWindow(hwndVellum,SW_SHOW);
-   }
+
+   if ( hdcPDF ) 
+      return hdcPDF;
+
+   if ( hwndVellum ) 
+      ShowWindow(hwndVellum,SW_HIDE);
+
+   SendMessage(hwndPane,WM_GENERATE_BITMAP,0,0);
+
+   if ( hwndVellum )
+      ShowWindow(hwndVellum,SW_SHOW);
+
    return hdcPDF; 
    }
 
@@ -268,22 +281,9 @@
 
    void templateDocument::tdUI::resetScrollbar(long pageCount) {
 
-   currentPageNumber = 1L;
-   scrollInfo.cbSize = sizeof(SCROLLINFO);
-   currentPageNumber = 1L;
-   scrollInfo.nPage = 1;
-   scrollInfo.nPos = 1;
-   scrollInfo.nMin = 1;
-   scrollInfo.nMax = pageCount;
-   scrollInfo.fMask = SIF_POS | SIF_PAGE | SIF_RANGE;
-
-   if ( pageCount ) {
-      SetScrollInfo(hwndScroll,SB_CTL,&scrollInfo,TRUE);
-      EnableWindow(hwndScroll,TRUE);
-   } else
-      EnableWindow(hwndScroll,FALSE);
-
    RESET_PAGE
+
+   pIPDFiumControl -> get_PDFPageNumberAtY(100,0,&currentPageNumber);
 
    return;
    }
@@ -297,6 +297,7 @@
 
    double aspectRatio = (double)pParent -> PDFPageWidth() / (double)pParent -> PDFPageHeight();
 
+#if 0
    cxHTML = rcParent.right - rcParent.left - 2 * parentOffsetX - GetSystemMetrics(SM_CXVSCROLL);
    cyHTML = (long)((double)cxHTML / aspectRatio);
    long cyMaxHTML = rcParent.bottom - rcParent.top - parentOffsetY - parentOffsetX;
@@ -315,6 +316,27 @@
 
    AdjustWindowRectEx(&rcAdjust,(DWORD)GetWindowLongPtr(hwndPane,GWL_STYLE),FALSE,(DWORD)GetWindowLongPtr(hwndPane,GWL_EXSTYLE));
 
+#else
+   cxHTML = rcParent.right - rcParent.left - 2 * parentOffsetX;
+   cyHTML = (long)((double)cxHTML / aspectRatio);
+   long cyMaxHTML = rcParent.bottom - rcParent.top - parentOffsetY - parentOffsetX;
+
+   if ( cyHTML > cyMaxHTML ) {
+      cyHTML = rcParent.bottom - rcParent.top - parentOffsetX - parentOffsetY;
+      cxHTML = (long)((double)cyHTML * aspectRatio);
+   }
+
+   long x = ((rcParent.right - rcParent.left) - cxHTML ) / 2;
+   long y = parentOffsetY + ((rcParent.bottom - rcParent.top - parentOffsetX - parentOffsetY) - cyHTML ) / 2;
+
+   SetWindowPos(hwndPane,HWND_TOP,x,y,cxHTML,cyHTML,0L);
+
+   RECT rcAdjust = {0};
+
+   AdjustWindowRectEx(&rcAdjust,(DWORD)GetWindowLongPtr(hwndPane,GWL_STYLE),FALSE,(DWORD)GetWindowLongPtr(hwndPane,GWL_EXSTYLE));
+
+#endif
+
    cxHTML -= (rcAdjust.right - rcAdjust.left);
    cyHTML -= (rcAdjust.bottom - rcAdjust.top);
 
@@ -323,11 +345,9 @@
    rcHTML.right = cxHTML;
    rcHTML.bottom = cyHTML;
 
+#if 0
    SetWindowPos(hwndHTMLHost,HWND_TOP,0,0,cxHTML,cyHTML,0L);
-
-   SetWindowPos(hwndScroll,HWND_TOP,cxHTML,0,GetSystemMetrics(SM_CXVSCROLL),cyHTML,0L);
-
-   SetWindowPos(hwndVellum,HWND_TOP,0,0,cxHTML,cyHTML,0L);
+#endif
 
    rcPageParentCoordinates.left = x;
    rcPageParentCoordinates.right = x + cxHTML;
@@ -350,9 +370,6 @@
 
    templateDocument::tdUI *pDocument = (templateDocument::tdUI *)GetWindowLongPtr(hwnd,GWLP_USERDATA);
 
-   if ( pDocument && pDocument -> hwndParent && WM_MOUSEFIRST <= msg && WM_MOUSELAST >= msg ) 
-      return SendMessage(pDocument -> hwndParent,msg,wParam,MAKELPARAM(LOWORD(lParam) + pDocument -> rcPageParentCoordinates.left,HIWORD(lParam) + pDocument -> rcPageParentCoordinates.top));
-
    switch ( msg ) {
 
    case WM_CREATE: {
@@ -372,6 +389,7 @@
 
       if ( pDocument -> hdcPDF )
          DeleteDC(pDocument -> hdcPDF);
+
       pDocument -> hdcPDF = CreateCompatibleDC(NULL);
 
       if ( pDocument -> hbmPDF )
@@ -389,7 +407,7 @@
 
       BitBlt(pDocument -> hdcPDF,0,0,pDocument -> cxHTML,pDocument -> cyHTML,hdcSource,0,0,SRCCOPY);
 
-      ReleaseDC(pDocument -> hwndHTMLHost,hdcSource);
+      ReleaseDC(hwndSource,hdcSource);
 
       pDocument -> needsImageRegenerated = false;
 
@@ -400,11 +418,8 @@
       KillTimer(hwnd,TIMER_ID_PAINT);
       pDocument -> findPDFArea();
       SendMessage(pDocument -> hwndPane,WM_GENERATE_BITMAP,0L,0L);
-      if ( pDocument -> pClientPaint ) {
-         HDC hdc = GetDC(hwnd);
-         pDocument -> pClientPaint(hdc,pDocument);
-         ReleaseDC(hwnd,hdc);
-      }
+      if ( pDocument -> pClientPaint ) 
+         pDocument -> pClientPaint(NULL,pDocument);
       break;
 
    case WM_ERASEBKGND:
@@ -420,99 +435,6 @@
       }
       return LRESULT(0);
 
-   case WM_VSCROLL: {
-
-      pDocument -> scrollInfo.cbSize = sizeof(SCROLLINFO);
-
-      pDocument -> scrollInfo.fMask = SIF_ALL;
-
-      GetScrollInfo(pDocument -> hwndScroll,SB_CTL,&pDocument -> scrollInfo);
-
-      switch ( LOWORD(wParam) ) {
-      case SB_LINEDOWN:
-      case SB_PAGEDOWN:
-         pDocument -> scrollInfo.nPos += 1;
-         break;
-
-      case SB_LINEUP:
-      case SB_PAGEUP:
-         pDocument -> scrollInfo.nPos -= 1;
-         break;
-
-      case SB_THUMBPOSITION:
-         pDocument -> scrollInfo.nPos = HIWORD(wParam);
-         break;
-
-      default:
-         break;
-      }
-
-      SetScrollInfo(pDocument -> hwndScroll,SB_CTL,&pDocument -> scrollInfo,TRUE);
-
-      GetScrollInfo(pDocument -> hwndScroll,SB_CTL,&pDocument -> scrollInfo);
-
-      if ( ! ( pDocument -> currentPageNumber == pDocument -> scrollInfo.nPos ) ) {
-         RESET_PAGE_PTR(pDocument)
-      }
-
-      pDocument -> currentPageNumber = pDocument -> scrollInfo.nPos;
-
-      pDocument -> needsImageRegenerated = true;
-
-      if ( pDocument -> pIPDFiumControl )
-         pDocument -> pIPDFiumControl -> GoToPage(pDocument -> currentPageNumber); 
-
-      InvalidateRect(pDocument -> hwndPane,NULL,TRUE);
-
-      UpdateWindow(pDocument -> hwndPane);
-
-      SendMessage(hwnd,WM_ERASEBKGND,0L,0L);
-
-      }
-      break;
-
-   }
-
-   return DefWindowProc(hwnd,msg,wParam,lParam);
-   }
-
-
-   LRESULT CALLBACK templateDocument::tdUI::pdfDocumentRenderer(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam) {
-
-   templateDocument::tdUI *pDocument = (templateDocument::tdUI *)GetWindowLongPtr(hwnd,GWLP_USERDATA);
-
-   switch ( msg ) {
-
-   case WM_CREATE: {
-      CREATESTRUCT *pc = reinterpret_cast<CREATESTRUCT *>(lParam);
-      pDocument = reinterpret_cast<templateDocument::tdUI *>(pc -> lpCreateParams);
-      SetWindowLongPtr(hwnd,GWLP_USERDATA,(ULONG_PTR)pDocument);
-      }
-      return (LRESULT)0;
-
-   case WM_TIMER:
-      KillTimer(hwnd,TIMER_ID_PAINT);
-      pDocument -> findPDFArea();
-      SendMessage(pDocument -> hwndPane,WM_GENERATE_BITMAP,0L,0L);
-      if ( pDocument -> pClientPaint ) {
-         HDC hdc = GetDC(hwnd);
-         pDocument -> pClientPaint(hdc,pDocument);
-         ReleaseDC(hwnd,hdc);
-      }
-      break;
-
-   case WM_PAINT: {
-      PAINTSTRUCT ps;
-      BeginPaint(hwnd,&ps);
-//HBRUSH hb = CreateSolidBrush(RGB(0,0,255));
-//FillRect(ps.hdc,&ps.rcPaint,hb);
-      EndPaint(hwnd,&ps);
-      SetTimer(hwnd,TIMER_ID_PAINT,TIMER_PAINT_DURATION,NULL);
-      }
-      return LRESULT(0);
-
-   default:
-      break;
    }
 
    return DefWindowProc(hwnd,msg,wParam,lParam);
@@ -523,9 +445,6 @@
 
    templateDocument::tdUI *pDocument = (templateDocument::tdUI *)GetWindowLongPtr(hwnd,GWLP_USERDATA);
 
-   if ( pDocument && pDocument -> hwndParent && WM_MOUSEFIRST <= msg && WM_MOUSELAST >= msg ) 
-      return SendMessage(pDocument -> hwndParent,msg,wParam,MAKELPARAM(LOWORD(lParam) + pDocument -> rcPageParentCoordinates.left,HIWORD(lParam) + pDocument -> rcPageParentCoordinates.top));
-
    switch ( msg ) {
 
    case WM_CREATE: {
@@ -535,22 +454,9 @@
       }
       return (LRESULT)0;
 
-   case WM_TIMER:
-      KillTimer(hwnd,TIMER_ID_PAINT);
-      pDocument -> findPDFArea();
-      SendMessage(pDocument -> hwndPane,WM_GENERATE_BITMAP,0L,0L);
-      if ( pDocument -> pClientPaint ) {
-         HDC hdc = GetDC(hwnd);
-         pDocument -> pClientPaint(hdc,pDocument);
-         ReleaseDC(hwnd,hdc);
-      }
-      break;
-
    case WM_PAINT: {
       PAINTSTRUCT ps;
       BeginPaint(hwnd,&ps);
-//HBRUSH hb = CreateSolidBrush(RGB(0,255,0));
-//FillRect(ps.hdc,&ps.rcPaint,hb);
       EndPaint(hwnd,&ps);
       SetTimer(hwnd,TIMER_ID_PAINT,TIMER_PAINT_DURATION,NULL);
       }
@@ -756,6 +662,24 @@
    pTarget -> right = rcPDFPagePixels.left + (long)((double)pTarget -> right * scaleToPixelsX);
    pTarget -> top = rcPDFPagePixels.top + (long)((double)(pParent -> PDFPageHeight() - pTarget -> top) * scaleToPixelsY);
    pTarget -> bottom = rcPDFPagePixels.top + (long)((double)(pParent -> PDFPageHeight() - pTarget -> bottom) * scaleToPixelsY);
+   return;
+   }
+
+
+   void templateDocument::tdUI::convertToPanePixels(long pageNumber,RECT *pTarget) {
+
+   pIPDFiumControl -> ConvertPointsToScrollPanePixels(pageNumber,pTarget);
+
+   long cx = pTarget -> right - pTarget -> left;
+   long cy = pTarget -> bottom - pTarget -> top;
+
+   //pTarget -> left += rcVellumPixels.left;
+   //pTarget -> right = pTarget -> left + cx;
+
+   pTarget -> top += rcVellumPixels.top;
+   pTarget -> bottom = pTarget -> top + cy;
+
+   pTarget -> right = min(pTarget -> right,rcPDFPagePixels.right - 2);
 
    return;
    }
