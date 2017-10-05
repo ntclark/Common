@@ -131,8 +131,6 @@
 
    setupPDFiumControl();
 
-   size();
-
    setURL(pParent -> pszDocumentName);
 
    return;
@@ -144,7 +142,7 @@
    if ( pIOleInPlaceFrame_HTML_Host )
       return;
 
-   pIOleInPlaceFrame_HTML_Host = new _IOleInPlaceFrame(this,hwndPane /*hwndHTMLHost*/);
+   pIOleInPlaceFrame_HTML_Host = new _IOleInPlaceFrame(this,hwndPane);
    pIOleInPlaceSite_HTML_Host = new _IOleInPlaceSite(this,pIOleInPlaceFrame_HTML_Host);
    pIOleClientSite_HTML_Host = new _IOleClientSite(this,pIOleInPlaceSite_HTML_Host,pIOleInPlaceFrame_HTML_Host);
    pIOleDocumentSite_HTML_Host = new _IOleDocumentSite(this,pIOleClientSite_HTML_Host);
@@ -195,6 +193,8 @@
 
    void templateDocument::tdUI::setURL(char *pszDocument) {
 
+   size();
+
    BSTR bstrURL = SysAllocStringLen(NULL,MAX_PATH);
 
    MultiByteToWideChar(CP_ACP,0,pszDocument,-1,bstrURL,MAX_PATH);
@@ -205,13 +205,11 @@
 
    RECT rcHost = {0};
 
-   GetWindowRect(hwndPane /*hwndHTMLHost*/,&rcHost);
+   GetWindowRect(hwndPane,&rcHost);
 
    pIPDFiumControl -> DisplayDocument(logBrush.lbColor,rcHost.right - rcHost.left - 64,rcHost.bottom - rcHost.top - 32,bstrURL,0);
 
    SysFreeString(bstrURL);
-
-   //pIOleObject_HTML -> DoVerb(OLEIVERB_SHOW,NULL,pIOleClientSite_HTML_Host,0,hwndPane /*hwndHTMLHost*/,NULL);
 
    return;
    }
@@ -248,7 +246,7 @@
 
    pIPDFiumControl -> Cleanup();
 
-   pIPDFiumControl -> Release();
+   pIPDFiumControl -> FinalRelease();
 
    pIPDFiumControl = NULL;
 

@@ -1,5 +1,5 @@
 
-   long __stdcall MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::QueryInterface(REFIID riid,void **ppv) {
+   long __stdcall EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::QueryInterface(REFIID riid,void **ppv) {
 
    if ( ! ppv )
       return E_POINTER;
@@ -24,41 +24,41 @@
 
    return S_OK;
    }
-   unsigned long __stdcall MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::AddRef() {
-   return ++refCount;
+   unsigned long __stdcall EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::AddRef() {
+   return pParent -> AddRef();
    }
-   unsigned long __stdcall MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::Release() {
-   return --refCount;
+   unsigned long __stdcall EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::Release() {
+   return pParent -> Release();
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::GetWindow(HWND *gwh) {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::GetWindow(HWND *gwh) {
    *gwh = pIOleInPlaceFrame -> HWNDHost();
    return S_OK;
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::ContextSensitiveHelp(BOOL fEnterMode) {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::ContextSensitiveHelp(BOOL fEnterMode) {
    return S_OK;
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::CanInPlaceActivate() {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::CanInPlaceActivate() {
    return S_OK;
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::OnInPlaceActivate() {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::OnInPlaceActivate() {
    return S_OK;
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::OnUIActivate() {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::OnUIActivate() {
    return S_OK;
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::GetWindowContext(IOleInPlaceFrame **ppIOleInPlaceFrame,
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::GetWindowContext(IOleInPlaceFrame **ppIOleInPlaceFrame,
                                                                         IOleInPlaceUIWindow **ppIOleInPlaceUIWindow,
                                                                         RECT *pRectPosition,RECT *pRectClip,
                                                                         OLEINPLACEFRAMEINFO *pOleInPlaceFrameInfo) {
@@ -88,45 +88,45 @@
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::Scroll(SIZE) {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::Scroll(SIZE) {
    return S_OK;
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::OnUIDeactivate(BOOL) {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::OnUIDeactivate(BOOL) {
    return S_OK;
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::OnInPlaceDeactivate() {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::OnInPlaceDeactivate() {
    return S_OK;
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::DiscardUndoState() {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::DiscardUndoState() {
    return S_OK;
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::DeactivateAndUndo() {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::DeactivateAndUndo() {
    return S_OK;
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::OnPosRectChange(const RECT *pRect) {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::OnPosRectChange(const RECT *pRect) {
    return S_OK;
    }
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::OnInPlaceActivateEx(BOOL *pRedraw,DWORD dwFlags) {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::OnInPlaceActivateEx(BOOL *pRedraw,DWORD dwFlags) {
    *pRedraw = FALSE;
    return S_OK;
    }
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::OnInPlaceDeactivateEx(BOOL fNoRedraw) {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::OnInPlaceDeactivateEx(BOOL fNoRedraw) {
    return S_OK;
    }
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleInPlaceSite::RequestUIActivate() {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::RequestUIActivate() {
    return S_OK;
    }
 

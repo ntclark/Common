@@ -185,6 +185,7 @@
             memcpy(&prcFields[countFields],&r,sizeof(RECT));
             memset(&pFieldLabels[countFields * 32],0,32 * sizeof(char));
             pFieldRequired[countFields] = 0L;
+            pFieldsHandlerTemplateDocumentUI -> PDFiumControl() -> get_PDFPageNumberAtY(startMouseY,lastMouseY - startMouseY,&pFieldsHandlerTemplateDocumentUI -> currentPageNumber);
             pPageNumbers[countFields] = pFieldsHandlerTemplateDocumentUI -> currentPageNumber;
             countFields++;
             SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
@@ -201,7 +202,8 @@
             memcpy(&prcFields[countFields],&pEntries[activePotentialIndex],sizeof(RECT));
             memset(&pFieldLabels[countFields * 32],0,32 * sizeof(char));
             pFieldRequired[countFields] = 0L;
-            pPageNumbers[countFields] = pFieldsHandlerTemplateDocumentUI -> textPage(activePotentialIndex);
+            pFieldsHandlerTemplateDocumentUI -> PDFiumControl() -> get_PDFPageNumberAtY(startMouseY,lastMouseY - startMouseY,&pFieldsHandlerTemplateDocumentUI -> currentPageNumber);
+            pPageNumbers[countFields] = pFieldsHandlerTemplateDocumentUI -> currentPageNumber;
             countFields++;
             SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
          } else

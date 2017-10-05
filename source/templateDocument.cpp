@@ -104,7 +104,7 @@
       selfAllocatedDocumentName = true;
    }
 
-   if ( pszName && pszName != pszDocumentName )
+   if ( pszName && ! ( pszName == pszDocumentName ) )
       strcpy(pszDocumentName,pszName);
 
    if ( pszDocumentName[0] )

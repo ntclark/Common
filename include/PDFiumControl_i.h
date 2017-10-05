@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Oct 03 13:50:01 2017
+/* at Thu Oct 05 16:45:05 2017
  */
 /* Compiler settings for COM Implementation\PDFiumControl.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -324,11 +324,9 @@ EXTERN_C const IID IID_IPDFiumControl;
             RECT *pRect) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE OpenDocument( 
-            BSTR documentFileName,
-            GUID *pDocumentID) = 0;
+            BSTR documentFileName) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE CloseDocument( 
-            GUID *pDocumentID) = 0;
+        virtual HRESULT STDMETHODCALLTYPE CloseDocument( void) = 0;
         
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE DisplayDocument( 
             COLORREF backgroundColor,
@@ -346,6 +344,8 @@ EXTERN_C const IID IID_IPDFiumControl;
         virtual HRESULT STDMETHODCALLTYPE PrintDocument( 
             BSTR pdfOrHTMLFileName,
             BOOL showPrinterSelection) = 0;
+        
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE FinalRelease( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Cleanup( void) = 0;
         
@@ -526,12 +526,10 @@ EXTERN_C const IID IID_IPDFiumControl;
         
         HRESULT ( STDMETHODCALLTYPE *OpenDocument )( 
             IPDFiumControl * This,
-            BSTR documentFileName,
-            GUID *pDocumentID);
+            BSTR documentFileName);
         
         HRESULT ( STDMETHODCALLTYPE *CloseDocument )( 
-            IPDFiumControl * This,
-            GUID *pDocumentID);
+            IPDFiumControl * This);
         
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *DisplayDocument )( 
             IPDFiumControl * This,
@@ -553,6 +551,9 @@ EXTERN_C const IID IID_IPDFiumControl;
             IPDFiumControl * This,
             BSTR pdfOrHTMLFileName,
             BOOL showPrinterSelection);
+        
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *FinalRelease )( 
+            IPDFiumControl * This);
         
         HRESULT ( STDMETHODCALLTYPE *Cleanup )( 
             IPDFiumControl * This);
@@ -671,11 +672,11 @@ EXTERN_C const IID IID_IPDFiumControl;
 #define IPDFiumControl_ConvertPointsToScrollPanePixels(This,pageNumber,pRect)	\
     ( (This)->lpVtbl -> ConvertPointsToScrollPanePixels(This,pageNumber,pRect) ) 
 
-#define IPDFiumControl_OpenDocument(This,documentFileName,pDocumentID)	\
-    ( (This)->lpVtbl -> OpenDocument(This,documentFileName,pDocumentID) ) 
+#define IPDFiumControl_OpenDocument(This,documentFileName)	\
+    ( (This)->lpVtbl -> OpenDocument(This,documentFileName) ) 
 
-#define IPDFiumControl_CloseDocument(This,pDocumentID)	\
-    ( (This)->lpVtbl -> CloseDocument(This,pDocumentID) ) 
+#define IPDFiumControl_CloseDocument(This)	\
+    ( (This)->lpVtbl -> CloseDocument(This) ) 
 
 #define IPDFiumControl_DisplayDocument(This,backgroundColor,cxImagePixels,cyImagePixels,pdfOrHTMLFileName,pageNumber)	\
     ( (This)->lpVtbl -> DisplayDocument(This,backgroundColor,cxImagePixels,cyImagePixels,pdfOrHTMLFileName,pageNumber) ) 
@@ -688,6 +689,9 @@ EXTERN_C const IID IID_IPDFiumControl;
 
 #define IPDFiumControl_PrintDocument(This,pdfOrHTMLFileName,showPrinterSelection)	\
     ( (This)->lpVtbl -> PrintDocument(This,pdfOrHTMLFileName,showPrinterSelection) ) 
+
+#define IPDFiumControl_FinalRelease(This)	\
+    ( (This)->lpVtbl -> FinalRelease(This) ) 
 
 #define IPDFiumControl_Cleanup(This)	\
     ( (This)->lpVtbl -> Cleanup(This) ) 

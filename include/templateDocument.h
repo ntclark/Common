@@ -114,10 +114,18 @@
 
       private:
 
-#undef MSHTML_SUPPORTING_CLASS
-#define MSHTML_SUPPORTING_CLASS templateDocument::tdUI
+//#undef MSHTML_SUPPORTING_CLASS
+//#define MSHTML_SUPPORTING_CLASS templateDocument::tdUI
+//
+//#include "interfacesToSupportMSHTML.h"
 
-#include "interfacesToSupportMSHTML.h"
+#ifdef EMBEDDED_OBJECT_EMBEDDER_CLASS
+#undef EMBEDDED_OBJECT_EMBEDDER_CLASS
+#endif
+
+#define EMBEDDED_OBJECT_EMBEDDER_CLASS templateDocument::tdUI
+
+#include "interfacesToSupportAnEmbeddedObject.h"
 
          // DWebBrowserEvents2
 

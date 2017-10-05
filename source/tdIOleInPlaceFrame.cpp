@@ -1,4 +1,4 @@
 
 #include "templateDocument.h"
 
-#include "interfacesToSupportMSHTML_IOleInPlaceFrame.cpp"
+#include "interfacesToSupportAnEmbeddedObject_IOleInPlaceFrame.cpp"

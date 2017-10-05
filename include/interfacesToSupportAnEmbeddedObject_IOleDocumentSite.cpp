@@ -1,5 +1,5 @@
 
-   long __stdcall MSHTML_SUPPORTING_CLASS::_IOleDocumentSite::QueryInterface(REFIID riid,void **ppv) {
+   long __stdcall EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleDocumentSite::QueryInterface(REFIID riid,void **ppv) {
 
    if ( ! ppv )
       return E_POINTER;
@@ -21,16 +21,16 @@
    return S_OK;
    }
 
-   unsigned long __stdcall MSHTML_SUPPORTING_CLASS::_IOleDocumentSite::AddRef() {
-   return ++refCount;
+   unsigned long __stdcall EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleDocumentSite::AddRef() {
+   return pParent -> AddRef();
    }
 
-   unsigned long __stdcall MSHTML_SUPPORTING_CLASS::_IOleDocumentSite::Release() {
-   return --refCount;
+   unsigned long __stdcall EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleDocumentSite::Release() {
+   return pParent -> Release();
    }
 
 
-   HRESULT MSHTML_SUPPORTING_CLASS::_IOleDocumentSite::ActivateMe(IOleDocumentView *pv) {
+   HRESULT EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleDocumentSite::ActivateMe(IOleDocumentView *pv) {
 
    if ( pv ) {
       pIOleDocumentView = pv;
