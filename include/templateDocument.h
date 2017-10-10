@@ -92,8 +92,11 @@
          void convertToPoints(POINTL *pTarget);
          void convertToPixels(POINTL *pTarget);
          void convertToPanePixels(long pageNumber,RECT *pTarget);
+         void convertToClippedPanePixels(long pageNumber,RECT *pTarget);
 
          HDC pdfDC();
+
+         bool isDocumentRendered();
 
          RECT *pTextRects(long *pCount);
          char *pTextText(long index);
@@ -113,11 +116,6 @@
          double scaleToPixelsX,scaleToPixelsY;
 
       private:
-
-//#undef MSHTML_SUPPORTING_CLASS
-//#define MSHTML_SUPPORTING_CLASS templateDocument::tdUI
-//
-//#include "interfacesToSupportMSHTML.h"
 
 #ifdef EMBEDDED_OBJECT_EMBEDDER_CLASS
 #undef EMBEDDED_OBJECT_EMBEDDER_CLASS
@@ -325,9 +323,7 @@
    if ( hdcPDF ) DeleteDC(hdcPDF);     \
    hdcPDF = NULL;                      \
    if ( hbmPDF ) DeleteObject(hbmPDF); \
-   hbmPDF = NULL;                      \
-   if ( pIPDFiumControl )              \
-      pIPDFiumControl -> GoToPage(currentPageNumber);  
+   hbmPDF = NULL;                      
 
 
 #define RESET_PAGE_PTR(p)             \

@@ -239,7 +239,7 @@
 
          memcpy(&r,&pTemplateDocumentUI -> rcPDFPagePixels,sizeof(RECT));
 
-         HDC hdc = GetDC(pTemplateDocumentUI -> hwndVellum);
+         HDC hdc = GetDC(pTemplateDocumentUI -> hwndPane);
 
          BitBlt(hdc,r.left,r.top,r.right - r.left,r.bottom - r.top,pTemplateDocumentUI -> pdfDC(),r.left,r.top,SRCCOPY);
 
@@ -249,7 +249,7 @@
 
          rectIgnoreIndex = -1L;
 
-         ReleaseDC(pTemplateDocumentUI -> hwndVellum,hdc);
+         ReleaseDC(pTemplateDocumentUI -> hwndPane,hdc);
 
          char szMessage[128];
 
@@ -322,13 +322,7 @@
 
          SetDlgItemText(hwnd,IDDI_CV_LOCATIONS_ADDITIONAL_INFO,szMessage);
 
-         RECT rBox;
-
-         memcpy(&rBox,&visibleRects[sourceIndex],sizeof(RECT));
-
-         pTemplateDocumentUI -> convertToPixels(&rBox);
-
-         DRAW_RED_BOX(pTemplateDocumentUI,PS_SOLID,&rBox)
+         DRAW_GREEN_BOX(pTemplateDocumentUI,PS_SOLID,&visibleRects[sourceIndex],2)
 
          break;
 
@@ -356,15 +350,9 @@
 
          vrIndex++;
 
-         RECT r;
-
-         memcpy(&r,pr,sizeof(RECT));
-
-         pTemplateDocumentUI -> convertToPixels(&r);
-
          if ( ptlMouse.x < pr -> left || ptlMouse.x > pr -> right || ptlMouse.y > pr -> top || ptlMouse.y < pr -> bottom ) {
 
-            DRAW_BLACK_BOX(pTemplateDocumentUI,PS_SOLID,&r)
+            DRAW_BLACK_BOX(pTemplateDocumentUI,PS_SOLID,pr,2)
 
             if ( ! noteEmitted )
                SetWindowText(hwndInstructions,"Right click for Options");
@@ -376,10 +364,10 @@
 
             candidateRectIndex = visibleRectIndexes[vrIndex];
 
-            DRAW_RED_BOX(pTemplateDocumentUI,PS_SOLID,&r)
+            DRAW_GREEN_BOX(pTemplateDocumentUI,PS_SOLID,pr,2)
 
             if ( ! noteEmitted )
-               SetWindowText(hwndInstructions,"Right click for Options, Left click to move");
+               SetWindowText(hwndInstructions,"Right click for Options, Left click to move\rResize by dragging corners.");
 
             noteEmitted = true;
 
@@ -536,10 +524,7 @@
          copySourceRectIndex = candidateRectIndex;
          deleteSourceRectIndex = candidateRectIndex;
          candidateRectIndex = -1L;
-         RECT r;
-         memcpy(&r,&visibleRects[copySourceRectIndex],sizeof(RECT));
-         pTemplateDocumentUI -> convertToPixels(&r);
-         DRAW_WHITE_BOX(pTemplateDocumentUI,PS_SOLID,&r)
+         DRAW_WHITE_BOX(pTemplateDocumentUI,PS_SOLID,&visibleRects[copySourceRectIndex],2)
          SetWindowText(hwndInstructions,"Move to the destination, right click and choose Paste");
          }
          break;

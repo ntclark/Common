@@ -11,10 +11,10 @@
    static long activePotentialIndex = -1L;
    static long oldPotentialIndex = -1L;
 
-   static long activeFieldIndex = -1L;
-   static long oldActiveFieldIndex = -1L;
+   static long activeSelectedIndex = -1L;
+   static long oldActiveSelectedIndex = -1L;
 
-   static RECT *pEntries = NULL;
+   static RECT *prcPotentialFields = NULL;
    static long countEntries = 0L;
 
    static RECT keepFields[MAX_TEXT_RECT_COUNT];
@@ -22,7 +22,7 @@
    static char keepFieldLabels[MAX_TEXT_RECT_COUNT][32];
    static long keepFieldRequired[MAX_TEXT_RECT_COUNT];
 
-   static RECT *prcFields = NULL;
+   static RECT *prcSelectedFields = NULL;
    static long *pPageNumbers = NULL;
    static char *pFieldLabels;
    static long *pFieldRequired = NULL;

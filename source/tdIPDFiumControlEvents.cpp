@@ -23,17 +23,13 @@
 
 
    HRESULT __stdcall templateDocument::tdUI::_IPDFiumControlEvents::MouseMessage(UINT msg,WPARAM wParam,LPARAM lParam) {
-
    POINTL ptlTranslated{GET_X_LPARAM(lParam) + pParent -> rcPageParentCoordinates.left,GET_Y_LPARAM(lParam) + pParent -> rcPageParentCoordinates.top};
-
    SendMessage(pParent -> hwndParent,msg,wParam,MAKELPARAM(ptlTranslated.x,ptlTranslated.y));
-
    return S_OK;
    }
 
 
    HRESULT __stdcall templateDocument::tdUI::_IPDFiumControlEvents::Size(SIZE *pSize) {
-
    return S_OK;
    }
 

@@ -2,7 +2,7 @@
 
    void drawFields(HDC hdc,templateDocument::tdUI *pDocument) {
 
-   if ( 0 == pDocument -> rcVellumPixels.left && 0 == pDocument -> rcVellumPixels.right )
+   if ( ! pDocument -> isDocumentRendered() )
       return;
 
    bool wasSupplied = true;
@@ -15,11 +15,16 @@
    HFONT hGUIFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
    HGDIOBJ oldFont = SelectObject(hdc,hGUIFont);
 
-   RECT *pRect = prcFields;
+   RECT *pRect = prcSelectedFields;
    
    for ( long k = 0; k < countFields; k++,pRect++ ) {
 
       if ( pPageNumbers[k] != pDocument -> currentPageNumber ) 
+         continue;
+
+      DRAW_BLUE_BOX_HDC(hdc,pDocument,PS_SOLID,pRect,2)
+
+      if ( ! pFieldLabels[k * 32] )
          continue;
 
       RECT r;
@@ -27,11 +32,6 @@
       memcpy(&r,pRect,sizeof(RECT));
 
       pDocument -> convertToPanePixels(pPageNumbers[k],&r);
-
-      DRAW_GREEN_BOX_HDC(hdc,pDocument,PS_SOLID,&r,1)
-
-      if ( ! pFieldLabels[k * 32] )
-         continue;
 
       if ( r.bottom < r.top ) {
          long t = r.bottom;
@@ -64,16 +64,10 @@
    
    for ( long k = 0; k < countEntries; k++,pRect++ ) {
 
-      //if ( pPageNumbers[k] != pDocument -> currentPageNumber ) 
-      //   continue;
+      if ( ! ( pPageNumbers[k] == pDocument -> currentPageNumber ) )
+         continue;
 
-      RECT r;
-
-      memcpy(&r,pRect,sizeof(RECT));
-
-      pDocument -> convertToPanePixels(pageNumber,&r);
-
-      DRAW_GREEN_BOX_HDC(hdc,pDocument,PS_SOLID,&r,1)
+      DRAW_GREEN_BOX_HDC(hdc,pDocument,PS_SOLID,pRect,2)
 
    }
 
@@ -91,9 +85,9 @@
 
    long leftOver = MAX_TEXT_RECT_COUNT - foundIndex - 1;
 
-   memcpy(keepRect,&prcFields[foundIndex + 1],   leftOver * sizeof(RECT));
-   memset(&prcFields[foundIndex],0,              leftOver * sizeof(RECT));
-   memcpy(&prcFields[foundIndex],keepRect,       leftOver * sizeof(RECT));
+   memcpy(keepRect,&prcSelectedFields[foundIndex + 1],   leftOver * sizeof(RECT));
+   memset(&prcSelectedFields[foundIndex],0,              leftOver * sizeof(RECT));
+   memcpy(&prcSelectedFields[foundIndex],keepRect,       leftOver * sizeof(RECT));
 
    memcpy(keepText,&pFieldLabels[(foundIndex + 1) * 32],32 * leftOver * sizeof(char));
    memset(&pFieldLabels[foundIndex * 32],0,           32 * leftOver * sizeof(char));

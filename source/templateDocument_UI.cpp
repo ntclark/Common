@@ -616,13 +616,25 @@
    pIPDFiumControl -> get_PDFPageWidthPixels(0,&cx);
    pIPDFiumControl -> get_PDFPageHeightPixels(0,&cy);
 
+   //
+   //NTC: 10-09-2017: I am not sure what the "2" is, MSHTML seems to report that it's window is
+   // 2 pixels in and down from the top of it's host window. I can find nothing related to 
+   // window styles (WS_EX_CLIENTEDGE, for example), that is accounting for these 2 pixels.
+   //
+#if 1
+   rcPDFPagePixels.left = ptlPDFUpperLeft.x + 2;
+   rcPDFPagePixels.top = ptlPDFUpperLeft.y + 2;
+#else
    rcPDFPagePixels.left = ptlPDFUpperLeft.x;
    rcPDFPagePixels.top = ptlPDFUpperLeft.y;
+#endif
    rcPDFPagePixels.right = ptlPDFUpperLeft.x + cx;
    rcPDFPagePixels.bottom = ptlPDFUpperLeft.y + cy;
 
    scaleToPixelsX = (double)cx / (double)(pParent -> PDFPageWidth());
    scaleToPixelsY = (double)cy / (double)(pParent -> PDFPageHeight());
+
+scaleToPixelsX = scaleToPixelsY;
 
    return;
    }
@@ -666,18 +678,28 @@
 
    void templateDocument::tdUI::convertToPanePixels(long pageNumber,RECT *pTarget) {
 
+   if ( 0 == pageNumber )
+      pageNumber = currentPageNumber;
+
    pIPDFiumControl -> ConvertPointsToScrollPanePixels(pageNumber,pTarget);
 
    long cx = pTarget -> right - pTarget -> left;
    long cy = pTarget -> bottom - pTarget -> top;
 
-   //pTarget -> left += rcVellumPixels.left;
-   //pTarget -> right = pTarget -> left + cx;
-
    pTarget -> top += rcVellumPixels.top;
    pTarget -> bottom = pTarget -> top + cy;
 
-   pTarget -> right = min(pTarget -> right,rcPDFPagePixels.right - 2);
+   return;
+   }
+
+   void templateDocument::tdUI::convertToClippedPanePixels(long pageNumber,RECT *pTarget) {
+
+   convertToPanePixels(pageNumber,pTarget);
+
+   pTarget -> left = max(pTarget -> left,rcPDFPagePixels.left);
+   pTarget -> right = min(pTarget -> right,rcPDFPagePixels.right);
+   pTarget -> top = max(pTarget -> top,rcPDFPagePixels.top);
+   pTarget -> bottom = min(pTarget -> bottom,rcPDFPagePixels.bottom);
 
    return;
    }
@@ -686,4 +708,15 @@
    pTarget -> x = rcPDFPagePixels.left + (long)((double)pTarget -> x * scaleToPixelsX);
    pTarget -> y = rcPDFPagePixels.top + (long)((double)(pParent -> PDFPageHeight() - pTarget -> y) * scaleToPixelsY);
    return;
+   }
+
+   bool templateDocument::tdUI::isDocumentRendered() {
+
+   if ( 0 == rcVellumPixels.left && 0 == rcVellumPixels.right )
+      return false;
+
+   if ( 0 == ptlPDFUpperLeft.x && 0 == ptlPDFUpperLeft.y )
+      return false;
+
+   return true;
    }

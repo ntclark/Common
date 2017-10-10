@@ -13,13 +13,13 @@
       p = (resultDisposition *)pPage -> lParam;
       SetWindowLongPtr(hwnd,GWLP_USERDATA,(ULONG_PTR)p);
       pObject = (OBJECT_WITH_PROPERTIES *)p -> pParent;
-      pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwnd,16,70,drawSelections);
-      hwndVellum = pTemplateDocumentUI -> hwndVellum;
+      pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwnd,16,80,drawSelections);
       oldPotentialIndex = -1L;
       activePotentialIndex = -1L;
       char szTemp[256];
       LoadString(hModule,IDDI_CV_RECOGNITION_INSTRUCTIONS,szTemp,256);
       SetDlgItemText(hwnd,IDDI_CV_RECOGNITION_INSTRUCTIONS,szTemp);
+      LoadString(hModule,IDDI_CV_LIMIT_REACHED,szMaxSelectionsReached,128);
       memcpy(selections,pObject -> expectedRects,sizeof(pObject -> expectedRects));
       memcpy(textSelections,pObject -> expectedText,sizeof(pObject -> expectedText));
       memcpy(pageSelections,pObject -> expectedPage,sizeof(pObject -> expectedPage));
@@ -39,7 +39,7 @@
       pTemplateDocumentUI -> size();
       RECT rcView = {0},rcNote = {0},rcParent = {0};
       GetWindowRect(hwnd,&rcParent);
-      GetWindowRect(hwndVellum,&rcView);
+      GetWindowRect(pTemplateDocumentUI -> hwndPane,&rcView);
       GetWindowRect(GetDlgItem(hwnd,IDDI_CV_MORE_INFORMATION),&rcNote);
       SetWindowPos(GetDlgItem(hwnd,IDDI_CV_MORE_INFORMATION),HWND_TOP,rcView.left - rcParent.left,rcView.top - (rcNote.bottom - rcNote.top) - rcParent.top - 4,0,0,SWP_NOSIZE);
       }
@@ -53,6 +53,8 @@
 
       long currentMouseX = LOWORD(lParam);
       long currentMouseY = HIWORD(lParam);
+
+      // The mouse is in dialog page coordinates
 
       if ( currentMouseX < pTemplateDocumentUI -> rcPageParentCoordinates.left || currentMouseX > pTemplateDocumentUI -> rcPageParentCoordinates.right || 
                   currentMouseY < pTemplateDocumentUI -> rcPageParentCoordinates.top || currentMouseY > pTemplateDocumentUI -> rcPageParentCoordinates.bottom ) 
@@ -72,10 +74,10 @@
 
          if ( countSelections ) {
             RECT r = {0};
-            GetWindowRect(hwndVellum,&r);
-            HDC hdc = GetDC(hwndVellum);
+            GetWindowRect(pTemplateDocumentUI -> hwndPane,&r);
+            HDC hdc = GetDC(pTemplateDocumentUI -> hwndPane);
             BitBlt(hdc,0,0,r.right - r.left,r.bottom - r.top,pTemplateDocumentUI -> pdfDC(),0,0,SRCCOPY);
-            ReleaseDC(hwndVellum,hdc);
+            ReleaseDC(pTemplateDocumentUI -> hwndPane,hdc);
          }
 
          countSelections = 0;
@@ -83,6 +85,7 @@
          memset(textSelections,0,sizeof(textSelections));
          memset(pageSelections,0,sizeof(pageSelections));
          SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
+
          isAdding = false;
 
       }
@@ -98,20 +101,20 @@
 
          RECT r;
 
-         r.left = startMouseX - 4;
-         r.top = startMouseY - 4;
-         r.right = lastMouseX + 4;
-         r.bottom = lastMouseY + 4;
+         r.left = startMouseX;
+         r.top = startMouseY;
+         r.right = lastMouseX;
+         r.bottom = lastMouseY;
 
          if ( r.right < r.left ) {
-            long t = r.right - 8;
-            r.right = r.left + 8;
+            long t = r.right;
+            r.right = r.left;
             r.left = t;
          }
 
          if ( r.bottom < r.top ) {
-            long t = r.bottom - 8;
-            r.bottom = r.top + 8;
+            long t = r.bottom;
+            r.bottom = r.top;
             r.top = t;
          }
 
@@ -120,11 +123,11 @@
          r.top = max(pTemplateDocumentUI -> rcPDFPagePixels.top,r.top);
          r.bottom = min(pTemplateDocumentUI -> rcPDFPagePixels.bottom,r.bottom);
 
-         HDC hdcTarget = GetDC(hwndVellum);
+         HDC hdcTarget = GetDC(pTemplateDocumentUI -> hwndPane);
 
-         BitBlt(hdcTarget,r.left,r.top,r.right - r.left,r.bottom - r.top,pTemplateDocumentUI -> pdfDC(),r.left,r.top,SRCCOPY);
+         BitBlt(hdcTarget,r.left - 2,r.top - 2,r.right - r.left + 4,r.bottom - r.top + 4,pTemplateDocumentUI -> pdfDC(),r.left - 2,r.top - 2,SRCCOPY);
 
-         ReleaseDC(hwndVellum,hdcTarget);
+         ReleaseDC(pTemplateDocumentUI -> hwndPane,hdcTarget);
 
          countSelections = 0;
          memset(selections,0,sizeof(selections));
@@ -149,6 +152,8 @@
 
       } else if ( ! ( -1L == activePotentialIndex ) ) {
 
+         lastSelectedIndex = activePotentialIndex; 
+
          RECT *pEntry = &pEntries[activePotentialIndex];
 
          if ( wParam & MK_CONTROL ) {
@@ -163,10 +168,14 @@
             }
 
             if ( -1L == foundIndex ) {
-               memcpy(&selections[countSelections],pEntry,sizeof(RECT));
-               memcpy(&textSelections[countSelections * 33],pTemplateDocumentUI -> pTextText(activePotentialIndex),32);
-               pageSelections[countSelections] = pTemplateDocumentUI -> textPage(activePotentialIndex);
-               countSelections++;
+               if ( countSelections == MAX_TEXT_RECT_COUNT - 1 ) {
+                  SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,szMaxSelectionsReached);
+               } else {
+                  memcpy(&selections[countSelections],pEntry,sizeof(RECT));
+                  memcpy(&textSelections[countSelections * 33],pTemplateDocumentUI -> pTextText(activePotentialIndex),32);
+                  pageSelections[countSelections] = pTemplateDocumentUI -> textPage(activePotentialIndex);
+                  countSelections++;
+               }
             } else
                removeSelection(foundIndex);
 
@@ -180,7 +189,6 @@
             memcpy(&textSelections,pTemplateDocumentUI -> pTextText(activePotentialIndex),32);
             pageSelections[countSelections] = pTemplateDocumentUI -> textPage(activePotentialIndex);
 
-#if 1
             double pdfWidth = (double)(pObject -> pTemplateDocument -> PDFPageWidth() ) / 72.0;
             double pdfHeight = (double)(pObject -> pTemplateDocument -> PDFPageHeight() ) / 72.0;
 
@@ -190,8 +198,10 @@
             char szLocation[128];
             sprintf(szLocation,"That location is: %4.2lf inches from the left and %4.2lf inches from the top",x,y);
             SetDlgItemText(hwnd,IDDI_CV_MORE_INFORMATION,szLocation);
-#endif
+
             countSelections = 1;
+
+            DRAW_BLUE_BOX(pEntry,2)
 
          }
 
@@ -220,13 +230,10 @@
       if ( ! pTemplateDocumentUI )
          break;
 
-      pEntries = pTemplateDocumentUI -> pTextRects(&countEntries);
-
-      if ( ! pEntries )
-         break;
-
       long currentMouseX = LOWORD(lParam);
       long currentMouseY = HIWORD(lParam);
+
+      // The mouse is in dialog page coordinates
 
       if ( currentMouseX < pTemplateDocumentUI -> rcPageParentCoordinates.left || currentMouseX > pTemplateDocumentUI -> rcPageParentCoordinates.right || 
                   currentMouseY < pTemplateDocumentUI -> rcPageParentCoordinates.top || currentMouseY > pTemplateDocumentUI -> rcPageParentCoordinates.bottom ) {
@@ -234,6 +241,30 @@
          activePotentialIndex = -1L;
          break;
       }
+
+      currentMouseX -= pTemplateDocumentUI -> rcPageParentCoordinates.left;
+      currentMouseY -= pTemplateDocumentUI -> rcPageParentCoordinates.top;
+
+      // The mouse is in MSHTML Visible View coordinates
+
+      if ( currentMouseX < pTemplateDocumentUI -> rcPDFPagePixels.left || currentMouseX > pTemplateDocumentUI -> rcPDFPagePixels.right || 
+                  currentMouseY < pTemplateDocumentUI -> rcPDFPagePixels.top || currentMouseY > pTemplateDocumentUI -> rcPDFPagePixels.bottom ) {
+         oldPotentialIndex = -1L;
+         activePotentialIndex = -1L;
+         break;
+      }
+
+      currentMouseX += pTemplateDocumentUI -> rcPageParentCoordinates.left;
+      currentMouseY += pTemplateDocumentUI -> rcPageParentCoordinates.top;
+
+      // The mouse is in dialog page coordinates
+
+      pEntries = pTemplateDocumentUI -> pTextRects(&countEntries);
+
+      if ( ! pEntries )
+         break;
+
+      pTemplateDocumentUI -> PDFiumControl() -> get_PDFPageNumberAtY(currentMouseY,0,&pTemplateDocumentUI -> currentPageNumber);
 
       if ( wParam & MK_LBUTTON ) {
 
@@ -252,7 +283,7 @@
             }
          }
 
-         HDC hdc = GetDC(hwndVellum);
+         HDC hdc = GetDC(pTemplateDocumentUI -> hwndPane);
 
          RECT r;
 
@@ -280,7 +311,7 @@
 
          BitBlt(hdc,r.left,r.top,r.right - r.left,r.bottom - r.top,pTemplateDocumentUI -> pdfDC(),r.left,r.top,SRCCOPY);
 
-         ReleaseDC(hwndVellum,hdc);
+         ReleaseDC(pTemplateDocumentUI -> hwndPane,hdc);
 
          lastMouseX = currentMouseX - pTemplateDocumentUI -> rcPageParentCoordinates.left;
 
@@ -303,11 +334,11 @@
             r.top = t;
          }
 
-         DRAW_GREEN_BOX(&r,2);
-
-         RECT *pEntry = pEntries;
+         DRAW_GREEN_BOX_PIXELS(&r,2);
 
          pTemplateDocumentUI -> convertToPoints(&r);
+
+         RECT *pEntry = pEntries;
 
          for ( long k = 0; k < countEntries; k++, pEntry++ ) {
             if ( pEntry -> left < r.left || pEntry -> right > r.right || pEntry -> top > r.top || pEntry -> bottom < r.bottom ) 
@@ -330,6 +361,8 @@
       rcMouse.left = currentMouseX - pTemplateDocumentUI -> rcPageParentCoordinates.left;
       rcMouse.top = currentMouseY - pTemplateDocumentUI -> rcPageParentCoordinates.top;
 
+      // rcMouse is in MSHTML Visible View coordinates
+
       pTemplateDocumentUI -> convertToPoints(&rcMouse);
 
       RECT *pEntry = pEntries;
@@ -349,22 +382,63 @@
       }
 
       if ( activePotentialIndex != oldPotentialIndex && ! ( -1L == oldPotentialIndex ) ) {
-         DRAW_BOX(&pEntries[oldPotentialIndex])
+
+         RECT r;
+
+         memcpy(&r,&pEntries[oldPotentialIndex],sizeof(RECT));
+
+         // r is in PDF coordinates
+
+         pTemplateDocumentUI -> convertToPanePixels(pTemplateDocumentUI -> currentPageNumber,&r);
+
+         // r is in Pane pixels
+
+         r.left -= 4;
+         r.right += 4;
+
+         if ( r.bottom > r.top ) {
+            r.top -= 4;
+            r.bottom += 4;
+         } else {
+            r.top += 4;
+            r.bottom -= 4;
+         }
+
+         r.left = max(pTemplateDocumentUI -> rcPDFPagePixels.left,r.left);
+         r.right = min(pTemplateDocumentUI -> rcPDFPagePixels.right,r.right);
+         r.top = max(pTemplateDocumentUI -> rcPDFPagePixels.top,r.top);
+         r.bottom = min(pTemplateDocumentUI -> rcPDFPagePixels.bottom,r.bottom);
+
+         if ( r.right < r.left ) {
+            long t = r.right - 8;
+            r.right = r.left + 8;
+            r.left = t;
+         }
+
+         if ( r.bottom < r.top ) {
+            long t = r.bottom - 8;
+            r.bottom = r.top + 8;
+            r.top = t;
+         }
+
+         HDC hdc = GetDC(pTemplateDocumentUI -> hwndPane);
+
+         BitBlt(hdc,r.left,r.top,r.right - r.left,r.bottom - r.top,pTemplateDocumentUI -> pdfDC(),r.left,r.top,SRCCOPY);
+
+         drawSelections(hdc,pTemplateDocumentUI);
+
+         ReleaseDC(pTemplateDocumentUI -> hwndPane,hdc);
+
          oldPotentialIndex = -1L;
       }
 
       if ( activePotentialIndex == oldPotentialIndex )
          break;
-#if 0
-RECT r;
-r.left = 2;
-r.bottom = 2;
-r.right = 612 - 2;
-r.top = 792 - 2;
-DRAW_BOX(&r);
-#else
-      DRAW_BOX(&pEntries[activePotentialIndex])
-#endif
+
+      if ( lastSelectedIndex == activePotentialIndex )
+         DRAW_BLUE_BOX(&pEntries[activePotentialIndex],2)
+      else
+         DRAW_GREEN_BOX(&pEntries[activePotentialIndex],2)
 
       oldPotentialIndex = activePotentialIndex;
 
@@ -381,11 +455,11 @@ DRAW_BOX(&r);
          memset(pageSelections,0,sizeof(pageSelections));
          SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
          SetDlgItemText(hwnd,IDDI_CV_MORE_INFORMATION,"");
-         HDC hdcTarget = GetDC(hwndVellum);
+         HDC hdcTarget = GetDC(pTemplateDocumentUI -> hwndPane);
          RECT r;
-         GetClientRect(hwndVellum,&r);
+         GetClientRect(pTemplateDocumentUI -> hwndPane,&r);
          BitBlt(hdcTarget,r.left,r.top,r.right - r.left,r.bottom - r.top,pTemplateDocumentUI -> pdfDC(),r.left,r.top,SRCCOPY);
-         ReleaseDC(hwndVellum,hdcTarget);
+         ReleaseDC(pTemplateDocumentUI -> hwndPane,hdcTarget);
          break;
       }
       break;

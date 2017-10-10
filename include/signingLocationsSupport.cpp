@@ -1,11 +1,14 @@
 
    static void drawSigningAreas(HDC hdc,templateDocument::tdUI *pDocument) {
 
+   if ( ! pDocument -> isDocumentRendered() )
+      return;
+
    bool wasSupplied = true;
 
    if ( NULL == hdc ) {
       wasSupplied = false;
-      hdc = GetDC(pDocument -> hwndVellum);
+      hdc = GetDC(pDocument -> hwndPane);
    }
 
    HPEN hPen = CreatePen(PS_SOLID,1,RGB(0,0,0));
@@ -33,11 +36,10 @@
          continue;
 
       RECT r;
-      RECT *pr = &r;
 
       memcpy(&r,&pLocation -> documentRect,sizeof(RECT));
 
-      pDocument -> convertToPixels(pr);
+      pDocument -> convertToPanePixels(pDocument -> currentPageNumber,&r);
 
       RECT rcText;
 
@@ -48,18 +50,18 @@
          r.top += rectShiftY;
          r.bottom += rectShiftY;
 
-         DRAW_BOX_NOCLIP(pDocument,pr)
+         DRAW_BOX_NOCLIP(pDocument,PS_SOLID,&pLocation -> documentRect,2)
 
-         memcpy(&rcText,pr,sizeof(RECT));
+         memcpy(&rcText,&r,sizeof(RECT));
 
       } else {
 
-         DRAW_BOX(pDocument,PS_SOLID,pr)
+         DRAW_BOX(pDocument,PS_SOLID,&pLocation -> documentRect,2)
 
-         rcText.left = max(pDocument -> rcPDFPagePixels.left,pr -> left);
-         rcText.right = min(pDocument -> rcPDFPagePixels.right,pr -> right);
-         rcText.top = max(pDocument -> rcPDFPagePixels.top,pr -> top);
-         rcText.bottom = min(pDocument -> rcPDFPagePixels.bottom,pr -> bottom);
+         rcText.left = max(pDocument -> rcPDFPagePixels.left,r.left);
+         rcText.right = min(pDocument -> rcPDFPagePixels.right,r.right);
+         rcText.top = max(pDocument -> rcPDFPagePixels.top,r.top);
+         rcText.bottom = min(pDocument -> rcPDFPagePixels.bottom,r.bottom);
 
          memcpy(&visibleRects[vrIndex],&pLocation -> documentRect,sizeof(RECT));
          visibleRectIndexes[vrIndex] = allRectIndex;

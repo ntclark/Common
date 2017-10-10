@@ -3,9 +3,10 @@
    static bool isAdding;
    static bool commitChanges;
    static bool didDrag;
-   static HWND hwndVellum;
+
    static long activePotentialIndex = -1L;
    static long oldPotentialIndex = -1L;
+   static long lastSelectedIndex = -1L;
 
    static long startMouseX = 0L, startMouseY = 0L;
    static long lastMouseX = 0L, lastMouseY = 0L;
@@ -18,6 +19,8 @@
    static RECT selections[MAX_TEXT_RECT_COUNT];
    static char textSelections[MAX_TEXT_TEXT_SPACE];
    static long pageSelections[MAX_TEXT_RECT_COUNT];
+
+   static char szMaxSelectionsReached[128];
 
    static long *pEncounteredInDrag = NULL;
 
@@ -36,40 +39,60 @@
    }                                                  \
 }
 
-#define DRAW_BOX(pr)                                           \
+#define HIDE_GREEN_BOX(pr,w)                                     \
    {                                                           \
-   HDC hdc = GetDC(hwndVellum);                                \
-   HPEN hPen = CreatePen(PS_SOLID,1,RGB(128,128,128));         \
+   HDC hdc = GetDC(pTemplateDocumentUI -> hwndPane);           \
+   HPEN hPen = CreatePen(PS_SOLID,w,RGB(0,255,0));         \
    HPEN oldPen = (HPEN)SelectObject(hdc,hPen);                 \
    SetROP2(hdc,R2_XORPEN);                                     \
    RECT rc;                                                    \
    memcpy(&rc,(pr),sizeof(RECT));                              \
-   pTemplateDocumentUI -> convertToPixels(&rc);                \
+   pTemplateDocumentUI -> convertToClippedPanePixels(0,&rc);   \
    MoveToEx(hdc,rc.left,rc.top,NULL);                          \
    LineTo(hdc,rc.right,rc.top);                                \
    LineTo(hdc,rc.right,rc.bottom);                             \
    LineTo(hdc,rc.left,rc.bottom);                              \
    LineTo(hdc,rc.left,rc.top);                                 \
    DeleteObject(SelectObject(hdc,oldPen));                     \
-   ReleaseDC(hwndVellum,hdc);                                  \
+   ReleaseDC(pTemplateDocumentUI -> hwndPane,hdc);             \
    }
 
-#define DRAW_COLORED_BOX(color,pr,w)            \
-{                                               \
-   HDC hdc = GetDC(hwndVellum);                 \
-   HPEN hRedPen = CreatePen(PS_SOLID,(w),color);\
-   HGDIOBJ oldObj = SelectObject(hdc,hRedPen);  \
-   MoveToEx(hdc,(pr) -> left,(pr) -> top,NULL); \
-   LineTo(hdc,(pr) -> right,(pr) -> top);       \
-   LineTo(hdc,(pr) -> right,(pr) -> bottom);    \
-   LineTo(hdc,(pr) -> left,(pr) -> bottom);     \
-   LineTo(hdc,(pr) -> left,(pr) -> top);        \
-   DeleteObject(SelectObject(hdc,oldObj));      \
-   ReleaseDC(hwndVellum,hdc);                   \
+#define DRAW_COLORED_BOX(color,pr,w)                     \
+{                                                        \
+   HDC hdc = GetDC(pTemplateDocumentUI -> hwndPane);     \
+   HPEN hRedPen = CreatePen(PS_SOLID,(w),color);         \
+   HGDIOBJ oldObj = SelectObject(hdc,hRedPen);           \
+   RECT rc;                                                    \
+   memcpy(&rc,(pr),sizeof(RECT));                              \
+   pTemplateDocumentUI -> convertToClippedPanePixels(0,&rc);   \
+   MoveToEx(hdc,rc.left,rc.top,NULL);                          \
+   LineTo(hdc,rc.right,rc.top);                                \
+   LineTo(hdc,rc.right,rc.bottom);                             \
+   LineTo(hdc,rc.left,rc.bottom);                              \
+   LineTo(hdc,rc.left,rc.top);                                 \
+   DeleteObject(SelectObject(hdc,oldObj));                     \
+   ReleaseDC(pTemplateDocumentUI -> hwndPane,hdc);             \
+}
+
+#define DRAW_COLORED_BOX_PIXELS(color,pr,w)              \
+{                                                        \
+   HDC hdc = GetDC(pTemplateDocumentUI -> hwndPane);     \
+   HPEN hRedPen = CreatePen(PS_SOLID,(w),color);         \
+   HGDIOBJ oldObj = SelectObject(hdc,hRedPen);           \
+   RECT rc;                                                    \
+   memcpy(&rc,(pr),sizeof(RECT));                              \
+   MoveToEx(hdc,rc.left,rc.top,NULL);                          \
+   LineTo(hdc,rc.right,rc.top);                                \
+   LineTo(hdc,rc.right,rc.bottom);                             \
+   LineTo(hdc,rc.left,rc.bottom);                              \
+   LineTo(hdc,rc.left,rc.top);                                 \
+   DeleteObject(SelectObject(hdc,oldObj));                     \
+   ReleaseDC(pTemplateDocumentUI -> hwndPane,hdc);             \
 }
 
 #define DRAW_GREEN_BOX(pr,w) DRAW_COLORED_BOX(RGB(0,255,0),pr,w)
-
+#define DRAW_BLUE_BOX(pr,w) DRAW_COLORED_BOX(RGB(0,0,255),pr,w)
+#define DRAW_GREEN_BOX_PIXELS(pr,w) DRAW_COLORED_BOX_PIXELS(RGB(0,255,0),pr,w)
 
    static void drawSelections(HDC,templateDocument::tdUI *);
    static void removeSelection(long atIndex);

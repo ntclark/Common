@@ -22,17 +22,17 @@
       memcpy(keepFieldRequired,pDoodleOptionProps -> dataFieldRequired,sizeof(keepFieldRequired));
       memcpy(keepPageNumbers,pDoodleOptionProps -> dataFieldPage,sizeof(keepPageNumbers));
 
-      prcFields = pDoodleOptionProps -> dataFields;
+      prcSelectedFields = pDoodleOptionProps -> dataFields;
       pFieldLabels = &pDoodleOptionProps -> dataFieldLabels[0][0];
       pFieldRequired = pDoodleOptionProps -> dataFieldRequired;
       pPageNumbers = pDoodleOptionProps -> dataFieldPage;
 
       countFields = pDoodleOptionProps -> countDataFields;
 
-      pFieldsHandlerTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwnd,16,52,drawFields);
+      pFieldsHandlerTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwnd,16,64,drawFields);
 
-      char szInstructions[MAX_PATH];
-      LoadString(hModule,IDDI_DATA_FIELDS_INSTRUCTIONS,szInstructions,MAX_PATH);
+      char szInstructions[1024];
+      LoadString(hModule,IDDI_DATA_FIELDS_INSTRUCTIONS,szInstructions,1024);
       SetDlgItemText(hwnd,IDDI_DATA_FIELDS_INSTRUCTIONS,szInstructions);
       commitChanges = false;
 
@@ -52,7 +52,7 @@
             pDoodleOptionProps -> countDataFields++;
          }
       } else {
-         memcpy(prcFields,keepFields,sizeof(keepFields));
+         memcpy(prcSelectedFields,keepFields,sizeof(keepFields));
          memcpy(pFieldLabels,keepFieldLabels,sizeof(keepFieldLabels));
          memcpy(pPageNumbers,keepPageNumbers,sizeof(keepPageNumbers));
          memcpy(pFieldRequired,keepFieldRequired,sizeof(keepFieldRequired));
@@ -64,7 +64,7 @@
 
    case WM_RBUTTONUP: {
 
-      if ( -1L == activeFieldIndex )
+      if ( -1L == activeSelectedIndex )
          break;
 
       long currentMouseX = LOWORD(lParam);
@@ -182,7 +182,7 @@
          pFieldsHandlerTemplateDocumentUI -> convertToPoints(&r);
 
          if ( countFields < ( MAX_TEXT_RECT_COUNT - 1 ) ) {
-            memcpy(&prcFields[countFields],&r,sizeof(RECT));
+            memcpy(&prcSelectedFields[countFields],&r,sizeof(RECT));
             memset(&pFieldLabels[countFields * 32],0,32 * sizeof(char));
             pFieldRequired[countFields] = 0L;
             pFieldsHandlerTemplateDocumentUI -> PDFiumControl() -> get_PDFPageNumberAtY(startMouseY,lastMouseY - startMouseY,&pFieldsHandlerTemplateDocumentUI -> currentPageNumber);
@@ -192,14 +192,14 @@
          } else
             SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"Max");
 
-      } else if ( ! ( -1L == activeFieldIndex ) ) {
+      } else if ( ! ( -1L == activeSelectedIndex ) ) {
 
-         removeField(activeFieldIndex,pFieldsHandlerTemplateDocumentUI);
+         removeField(activeSelectedIndex,pFieldsHandlerTemplateDocumentUI);
 
       } else if ( ! ( -1L == activePotentialIndex ) ) {
 
          if ( countFields < ( MAX_TEXT_RECT_COUNT - 1 ) ) {
-            memcpy(&prcFields[countFields],&pEntries[activePotentialIndex],sizeof(RECT));
+            memcpy(&prcSelectedFields[countFields],&prcPotentialFields[activePotentialIndex],sizeof(RECT));
             memset(&pFieldLabels[countFields * 32],0,32 * sizeof(char));
             pFieldRequired[countFields] = 0L;
             pFieldsHandlerTemplateDocumentUI -> PDFiumControl() -> get_PDFPageNumberAtY(startMouseY,lastMouseY - startMouseY,&pFieldsHandlerTemplateDocumentUI -> currentPageNumber);
@@ -214,7 +214,7 @@
       drawFields(NULL,pFieldsHandlerTemplateDocumentUI);
 
       activePotentialIndex = -1L;
-      activeFieldIndex = -1L;
+      activeSelectedIndex = -1L;
       oldPotentialIndex = -1L;
 
       }
@@ -236,10 +236,10 @@
       if ( currentMouseX < pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.left || currentMouseX > pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.right || 
                   currentMouseY < pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.top || currentMouseY > pFieldsHandlerTemplateDocumentUI -> rcPageParentCoordinates.bottom ) {
 
-         //oldPotentialIndex = -1L;
+         oldPotentialIndex = -1L;
          activePotentialIndex = -1L;
-         activeFieldIndex = -1L;
-         oldActiveFieldIndex = -1L;
+         activeSelectedIndex = -1L;
+         oldActiveSelectedIndex = -1L;
 
          drawFields(NULL,pFieldsHandlerTemplateDocumentUI);
 
@@ -255,10 +255,10 @@
       if ( currentMouseX < pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.left || currentMouseX > pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.right || 
                   currentMouseY < pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.top || currentMouseY > pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.bottom ) {
 
-         //oldPotentialIndex = -1L;
+         oldPotentialIndex = -1L;
          activePotentialIndex = -1L;
-         activeFieldIndex = -1L;
-         oldActiveFieldIndex = -1L;
+         activeSelectedIndex = -1L;
+         oldActiveSelectedIndex = -1L;
 
          drawFields(NULL,pFieldsHandlerTemplateDocumentUI);
 
@@ -268,9 +268,9 @@
 
       pFieldsHandlerTemplateDocumentUI -> PDFiumControl() -> get_PDFPageNumberAtY(currentMouseY,0,&pFieldsHandlerTemplateDocumentUI -> currentPageNumber);
 
-      pEntries = pFieldsHandlerTemplateDocumentUI -> pTextRects(&countEntries);
+      prcPotentialFields = pFieldsHandlerTemplateDocumentUI -> pTextRects(&countEntries);
 
-      if ( ! pEntries )
+      if ( ! prcPotentialFields )
          break;
 
       if ( wParam & MK_LBUTTON ) {
@@ -296,10 +296,10 @@
             r.top = t;
          }
 
-         r.left = max(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.left,r.left);
-         r.right = min(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.right,r.right);
-         r.top = max(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.top,r.top);
-         r.bottom = min(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.bottom,r.bottom);
+         //r.left = max(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.left,r.left);
+         //r.right = min(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.right,r.right);
+         //r.top = max(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.top,r.top);
+         //r.bottom = min(pFieldsHandlerTemplateDocumentUI -> rcPDFPagePixels.bottom,r.bottom);
 
          HDC hdc = GetDC(pFieldsHandlerTemplateDocumentUI -> hwndPane);
 
@@ -327,6 +327,8 @@
             r.top = t;
          }
 
+         pFieldsHandlerTemplateDocumentUI -> convertToPoints(&r);
+
          DRAW_GREEN_BOX(pFieldsHandlerTemplateDocumentUI,PS_DOT,&r,2);
 
          drawFields(NULL,pFieldsHandlerTemplateDocumentUI);
@@ -337,40 +339,33 @@
 
       activePotentialIndex = -1L;
 
-      activeFieldIndex = -1L;
+      activeSelectedIndex = -1L;
 
       POINTL ptlMouse = {currentMouseX,currentMouseY};
 
       pFieldsHandlerTemplateDocumentUI -> convertToPoints(&ptlMouse);
 
-      RECT *pEntry = prcFields;
+      RECT *pEntry = prcSelectedFields;
 
       for ( long k = 0; k < countFields; k++, pEntry++ ) {
          if ( ptlMouse.x < pEntry -> left || ptlMouse.x > pEntry -> right || ptlMouse.y > pEntry -> top || ptlMouse.y < pEntry -> bottom ) 
             continue;
-         activeFieldIndex = k;
+         activeSelectedIndex = k;
          break;
       }
 
-      if ( ! ( activeFieldIndex == oldActiveFieldIndex ) && ! ( -1L == oldActiveFieldIndex ) ) {
-         RECT r;
-         memcpy(&r,&prcFields[oldActiveFieldIndex],sizeof(RECT));
-         pFieldsHandlerTemplateDocumentUI -> convertToPanePixels(pPageNumbers[oldActiveFieldIndex],&r);
-         DRAW_GREEN_BOX(pFieldsHandlerTemplateDocumentUI,PS_SOLID,&r,1)
-         oldActiveFieldIndex = -1L;
+      if ( ! ( activeSelectedIndex == oldActiveSelectedIndex ) && ! ( -1L == oldActiveSelectedIndex ) ) {
+         DRAW_BLUE_BOX(pFieldsHandlerTemplateDocumentUI,PS_SOLID,&prcSelectedFields[oldActiveSelectedIndex],2)
+         oldActiveSelectedIndex = -1L;
       }
 
-      if ( ! ( -1L == activeFieldIndex ) ) {
-         RECT r;
-         memcpy(&r,&prcFields[activeFieldIndex],sizeof(RECT));
-         pFieldsHandlerTemplateDocumentUI -> convertToPanePixels(pPageNumbers[activeFieldIndex],&r);
-         DRAW_RED_BOX(pFieldsHandlerTemplateDocumentUI,PS_SOLID,&r)
+      if ( ! ( -1L == activeSelectedIndex ) ) {
+         DRAW_RED_BOX(pFieldsHandlerTemplateDocumentUI,PS_SOLID,&prcSelectedFields[activeSelectedIndex],2)
+         oldActiveSelectedIndex = activeSelectedIndex;
          break;
       }
 
-      pEntry = pEntries;
-
-//drawPotentialFields(NULL,pEntries,countEntries,pFieldsHandlerTemplateDocumentUI -> currentPageNumber,pFieldsHandlerTemplateDocumentUI);
+      pEntry = prcPotentialFields;
 
       for ( long k = 0; k < countEntries; k++, pEntry++ ) {
          if ( ptlMouse.x < pEntry -> left || ptlMouse.x > pEntry -> right || ptlMouse.y > pEntry -> top || ptlMouse.y < pEntry -> bottom ) 
@@ -383,13 +378,13 @@
 
          RECT r;
 
-         memcpy(&r,&pEntries[oldPotentialIndex],sizeof(RECT));
+         memcpy(&r,&prcPotentialFields[oldPotentialIndex],sizeof(RECT));
 
          // r is in PDF coordinates
 
          pFieldsHandlerTemplateDocumentUI -> convertToPanePixels(pFieldsHandlerTemplateDocumentUI -> currentPageNumber,&r);
 
-         // r is in Vellum pixels
+         // r is in Pane pixels
 
          r.left -= 4;
          r.right += 4;
@@ -431,13 +426,12 @@
 
       }
 
+      // The mouse is not inside any field rectangle, potential or selected
+
       if ( activePotentialIndex == oldPotentialIndex )
          break;
 
-      RECT r;
-      memcpy(&r,&pEntries[activePotentialIndex],sizeof(RECT));
-      pFieldsHandlerTemplateDocumentUI -> convertToPanePixels(pFieldsHandlerTemplateDocumentUI -> currentPageNumber,&r);
-      DRAW_GREEN_BOX(pFieldsHandlerTemplateDocumentUI,PS_DOT,&r,1)
+      DRAW_GREEN_BOX(pFieldsHandlerTemplateDocumentUI,PS_DOT,&prcPotentialFields[activePotentialIndex],2)
 
       oldPotentialIndex = activePotentialIndex;
 
@@ -451,7 +445,7 @@
 
       case IDDI_DATA_FIELDS_RESET: {
          countFields = 0;
-         memset(prcFields,0,sizeof(keepFields));
+         memset(prcSelectedFields,0,sizeof(keepFields));
          memset(pFieldLabels,0,sizeof(keepFieldLabels));
          memset(pFieldRequired,0,sizeof(keepFieldRequired));
          memset(pPageNumbers,0,sizeof(keepPageNumbers));
@@ -462,21 +456,21 @@
          break;
 
       case IDDI_DATA_FIELDS_LABEL: {
-         if ( -1L == activeFieldIndex ) 
+         if ( -1L == activeSelectedIndex ) 
             break;
          DLGTEMPLATE *dt = (DLGTEMPLATE *)LoadResource(hModule,FindResource(hModule,MAKEINTRESOURCE(IDD_DATA_FIELDS_LABEL),RT_DIALOG));
-         DialogBoxIndirectParam(hModule,dt,hwnd,(DLGPROC)labelHandler,(LPARAM)activeFieldIndex);
-         activeFieldIndex = -1L;
+         DialogBoxIndirectParam(hModule,dt,hwnd,(DLGPROC)labelHandler,(LPARAM)activeSelectedIndex);
+         activeSelectedIndex = -1L;
          ShowWindow(pFieldsHandlerTemplateDocumentUI -> hwndVellum,SW_HIDE);
          ShowWindow(pFieldsHandlerTemplateDocumentUI -> hwndVellum,SW_SHOW);
          }
          break;
 
       case IDDI_DATA_FIELDS_DELETE: {
-         if ( -1L == activeFieldIndex ) 
+         if ( -1L == activeSelectedIndex ) 
             break;
-         removeField(activeFieldIndex,pFieldsHandlerTemplateDocumentUI);
-         activeFieldIndex = -1L;
+         removeField(activeSelectedIndex,pFieldsHandlerTemplateDocumentUI);
+         activeSelectedIndex = -1L;
          ShowWindow(pFieldsHandlerTemplateDocumentUI -> hwndVellum,SW_HIDE);
          ShowWindow(pFieldsHandlerTemplateDocumentUI -> hwndVellum,SW_SHOW);
          }

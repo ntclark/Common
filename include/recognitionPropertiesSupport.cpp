@@ -9,11 +9,8 @@
          pRect++;
          continue;
       }
-      RECT r;
-      memcpy(&r,pRect,sizeof(RECT));
-      pDocument -> convertToPixels(&r);
-      DRAW_GREEN_BOX(&r,1)
-      pRect = pRect + 1;
+      DRAW_BLUE_BOX(pRect,2)
+      pRect++;
    }
 
    return;

@@ -50,6 +50,7 @@
       pParent -> currentPageNumber = 1;
       long countEntries;
       RECT *pEntries = pParent -> pTextRects(&countEntries);
+      pParent -> findPDFArea();
    }
 
    return S_OK;

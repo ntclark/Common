@@ -5,9 +5,9 @@ STYLE WS_CHILD
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
    PUSHBUTTON "Reset",IDDI_CV_LOCATIONS_RESET,  8,                      8, 32, 12
-   LTEXT "",IDDI_CV_RECOGNITION_INSTRUCTIONS,   8 + 32 + 4,             4, 128 + 128, 26
-   LTEXT "",IDDI_CV_MORE_INFORMATION,           8,                      4 + 26, 128 + 128, 12
-   LTEXT "",IDDI_CV_LIMIT_REACHED,              8 + 32 + 4 + 128 + 128, 4, 16, 12
+   LTEXT "",IDDI_CV_RECOGNITION_INSTRUCTIONS,   8 + 32 + 4,             4, 256 + 64, 48
+   LTEXT "",IDDI_CV_MORE_INFORMATION,           8,                      4 + 48, 256 + 64, 12
+   LTEXT "",IDDI_CV_LIMIT_REACHED,              8 + 32 + 4 + 256 + 64 + 4, 4, 64, 40
 
    LTEXT "Changes are disabled because Admin privileges are required to change properties in printing profiles",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,
                            0,0,256, 12 
