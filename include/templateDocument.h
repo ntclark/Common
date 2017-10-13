@@ -81,13 +81,16 @@
          void setURL(char *pszDocumentName);
          void releasePDFiumControl();
 
-         void findPDFArea();
+         void findPDFArea(long pageNumber = 0);
 
          void size();
 
          void resetScrollbar(long pageCount);
 
+         void resolveCurrentPageNumber(POINTL *pPtlMouse);
+
          void convertToPoints(RECT *pTarget);
+         void convertToPointsOnPage(long pageNumber,RECT *pTarget);
          void convertToPixels(RECT *pTarget);
          void convertToPoints(POINTL *pTarget);
          void convertToPixels(POINTL *pTarget);
@@ -107,13 +110,14 @@
          RECT rcPageParentCoordinates;
          RECT rcHTML;
          RECT rcPDFPagePixels;
+         RECT rcPDFPagePixelsInView;
          RECT rcVellumPixels;
 
          HWND hwndParent;
          HWND hwndPane;
          HWND hwndVellum;
 
-         double scaleToPixelsX,scaleToPixelsY;
+         double scaleToPixels{0.0};
 
       private:
 
@@ -238,7 +242,6 @@
          long countDocumentRects;
 
          long cxHTML,cyHTML;
-         bool needsImageRegenerated;
 
          long refCount;
 

@@ -41,16 +41,13 @@
       hwndPane(NULL),
       hwndVellum(NULL),
 
-      scaleToPixelsX(0.0),
-      scaleToPixelsY(0.0),
+      scaleToPixels(0.0),
 
       cxHTML(0L),
       cyHTML(0L),
 
       hdcPDF(NULL),
       hbmPDF(NULL),
-
-      needsImageRegenerated(false),
 
       refCount(0)
 
@@ -59,6 +56,7 @@
    pParent = pp;
    memset(&scrollInfo,0,sizeof(SCROLLINFO));
    memset(&rcPDFPagePixels,0,sizeof(RECT));
+   memset(&rcPDFPagePixelsInView,0,sizeof(RECT));
    memset(&ptlPDFUpperLeft,0,sizeof(POINTL));
    memset(&rcHTML,0,sizeof(RECT));
    memset(&rcPageParentCoordinates,0,sizeof(RECT));
@@ -122,7 +120,7 @@
 
    }
 
-   hwndPane = CreateWindowEx(0*WS_EX_CLIENTEDGE,"paneHandler","",WS_CHILD | WS_VISIBLE,parentOffsetX,parentOffsetY,0,0,hwndParent,NULL,hModule,(void *)this);
+   hwndPane = CreateWindowEx(0,"paneHandler","",WS_CHILD | WS_VISIBLE,parentOffsetX,parentOffsetY,0,0,hwndParent,NULL,hModule,(void *)this);
 
    hwndVellum = CreateWindowEx(0L,"vellum","",WS_CHILD | WS_VISIBLE,0,0,0,0,hwndPane,NULL,hModule,(void *)this);
 
@@ -205,7 +203,9 @@
 
    RECT rcHost = {0};
 
-   GetWindowRect(hwndPane,&rcHost);
+   GetClientRect(hwndPane,&rcHost);
+
+   //pIOleObject_HTML -> DoVerb(OLEIVERB_SHOW,NULL,pIOleClientSite_HTML_Host,0,hwndPane,&rcHost);
 
    pIPDFiumControl -> DisplayDocument(logBrush.lbColor,rcHost.right - rcHost.left - 64,rcHost.bottom - rcHost.top - 32,bstrURL,0);
 
@@ -295,26 +295,6 @@
 
    double aspectRatio = (double)pParent -> PDFPageWidth() / (double)pParent -> PDFPageHeight();
 
-#if 0
-   cxHTML = rcParent.right - rcParent.left - 2 * parentOffsetX - GetSystemMetrics(SM_CXVSCROLL);
-   cyHTML = (long)((double)cxHTML / aspectRatio);
-   long cyMaxHTML = rcParent.bottom - rcParent.top - parentOffsetY - parentOffsetX;
-
-   if ( cyHTML > cyMaxHTML ) {
-      cyHTML = rcParent.bottom - rcParent.top - parentOffsetX - parentOffsetY;
-      cxHTML = (long)((double)cyHTML * aspectRatio);
-   }
-
-   long x = ((rcParent.right - rcParent.left) - (cxHTML + GetSystemMetrics(SM_CXVSCROLL) ) ) / 2;
-   long y = parentOffsetY + ((rcParent.bottom - rcParent.top - parentOffsetX - parentOffsetY) - cyHTML ) / 2;
-
-   SetWindowPos(hwndPane,HWND_TOP,x,y,cxHTML + GetSystemMetrics(SM_CXVSCROLL),cyHTML,0L);
-
-   RECT rcAdjust = {0};
-
-   AdjustWindowRectEx(&rcAdjust,(DWORD)GetWindowLongPtr(hwndPane,GWL_STYLE),FALSE,(DWORD)GetWindowLongPtr(hwndPane,GWL_EXSTYLE));
-
-#else
    cxHTML = rcParent.right - rcParent.left - 2 * parentOffsetX;
    cyHTML = (long)((double)cxHTML / aspectRatio);
    long cyMaxHTML = rcParent.bottom - rcParent.top - parentOffsetY - parentOffsetX;
@@ -333,8 +313,6 @@
 
    AdjustWindowRectEx(&rcAdjust,(DWORD)GetWindowLongPtr(hwndPane,GWL_STYLE),FALSE,(DWORD)GetWindowLongPtr(hwndPane,GWL_EXSTYLE));
 
-#endif
-
    cxHTML -= (rcAdjust.right - rcAdjust.left);
    cyHTML -= (rcAdjust.bottom - rcAdjust.top);
 
@@ -342,10 +320,6 @@
    rcHTML.top = 0;
    rcHTML.right = cxHTML;
    rcHTML.bottom = cyHTML;
-
-#if 0
-   SetWindowPos(hwndHTMLHost,HWND_TOP,0,0,cxHTML,cyHTML,0L);
-#endif
 
    rcPageParentCoordinates.left = x;
    rcPageParentCoordinates.right = x + cxHTML;
@@ -381,9 +355,6 @@
 
       if ( ! pDocument -> pIOleObject_HTML )
          break;
-      
-      if ( ! pDocument -> needsImageRegenerated )
-         break;
 
       if ( pDocument -> hdcPDF )
          DeleteDC(pDocument -> hdcPDF);
@@ -407,8 +378,6 @@
 
       ReleaseDC(hwndSource,hdcSource);
 
-      pDocument -> needsImageRegenerated = false;
-
       }
       break;
 
@@ -422,7 +391,6 @@
 
    case WM_ERASEBKGND:
       SetTimer(hwnd,TIMER_ID_PAINT,TIMER_PAINT_DURATION,NULL);
-      pDocument -> needsImageRegenerated = true;
       break;
 
    case WM_PAINT: {
@@ -456,7 +424,7 @@
       PAINTSTRUCT ps;
       BeginPaint(hwnd,&ps);
       EndPaint(hwnd,&ps);
-      SetTimer(hwnd,TIMER_ID_PAINT,TIMER_PAINT_DURATION,NULL);
+      //SetTimer(hwnd,TIMER_ID_PAINT,TIMER_PAINT_DURATION,NULL);
       }
       return LRESULT(0);
 
@@ -605,16 +573,20 @@
    }
 
 
+   void templateDocument::tdUI::findPDFArea(long pageNumber) {
 
-   void templateDocument::tdUI::findPDFArea() {
+   pIPDFiumControl -> get_PDFPageXPixelsInView(pageNumber,&ptlPDFUpperLeft.x);
 
-   pIPDFiumControl -> get_PDFPageXPixelsInView(0,&ptlPDFUpperLeft.x);
-   pIPDFiumControl -> get_PDFPageYPixelsInView(0,&ptlPDFUpperLeft.y);
+   long reportedY = 0L;
+
+   pIPDFiumControl -> get_PDFPageYPixelsInView(pageNumber,&reportedY);
+
+   ptlPDFUpperLeft.y = max(0,reportedY);
 
    long cx,cy;
 
-   pIPDFiumControl -> get_PDFPageWidthPixels(0,&cx);
-   pIPDFiumControl -> get_PDFPageHeightPixels(0,&cy);
+   pIPDFiumControl -> get_PDFPageWidthPixels(pageNumber,&cx);
+   pIPDFiumControl -> get_PDFPageHeightPixels(pageNumber,&cy);
 
    //
    //NTC: 10-09-2017: I am not sure what the "2" is, MSHTML seems to report that it's window is
@@ -623,55 +595,114 @@
    //
 #if 1
    rcPDFPagePixels.left = ptlPDFUpperLeft.x + 2;
-   rcPDFPagePixels.top = ptlPDFUpperLeft.y + 2;
+   rcPDFPagePixels.top = reportedY + 2;
 #else
    rcPDFPagePixels.left = ptlPDFUpperLeft.x;
    rcPDFPagePixels.top = ptlPDFUpperLeft.y;
 #endif
    rcPDFPagePixels.right = ptlPDFUpperLeft.x + cx;
-   rcPDFPagePixels.bottom = ptlPDFUpperLeft.y + cy;
+   rcPDFPagePixels.bottom = reportedY + 2 + cy;
 
-   scaleToPixelsX = (double)cx / (double)(pParent -> PDFPageWidth());
-   scaleToPixelsY = (double)cy / (double)(pParent -> PDFPageHeight());
+   //
+   //NTC: 10-12-2017: The ..InView rect is that portion of the page that is visible in the current window.
+   // use the ..InView rect to check whether the mouse is over the page.
+   //
+   // The PDFPagePixels rect may reflect that the top of the document is above the top of the view window
+   // and therefore may have a negative "top" value.
+   //
+   rcPDFPagePixelsInView.left = rcPDFPagePixels.left;
+   rcPDFPagePixelsInView.top = ptlPDFUpperLeft.y + 2;
 
-scaleToPixelsX = scaleToPixelsY;
+   rcPDFPagePixelsInView.right = rcPDFPagePixels.right;
+   rcPDFPagePixelsInView.bottom = rcPDFPagePixels.bottom;
+
+   scaleToPixels = (double)cy / (double)(pParent -> PDFPageHeight());
 
    return;
    }
 
+   void templateDocument::tdUI::resolveCurrentPageNumber(POINTL *pPtlMouse) {
+   pIPDFiumControl -> get_PDFPageNumberAtY(pPtlMouse -> y,0,&currentPageNumber);
+   findPDFArea(currentPageNumber);
+   return;
+   }
 
    void templateDocument::tdUI::convertToPoints(RECT *pTarget) {
 
    pTarget -> left -= rcPDFPagePixels.left;
    pTarget -> right -= rcPDFPagePixels.left;
 
-   pTarget -> left = (long)((double)pTarget -> left / scaleToPixelsX);
-   pTarget -> right = (long)((double)pTarget -> right / scaleToPixelsX);
+   pTarget -> left = (long)((double)pTarget -> left / scaleToPixels);
+   pTarget -> right = (long)((double)pTarget -> right / scaleToPixels);
 
    pTarget -> top -= rcPDFPagePixels.top;
    pTarget -> bottom -= rcPDFPagePixels.top;
 
-   pTarget -> top = pParent -> PDFPageHeight() - (long)((double)pTarget -> top / scaleToPixelsY);
-   pTarget -> bottom = pParent -> PDFPageHeight() - (long)((double)pTarget -> bottom / scaleToPixelsY);
+   pTarget -> top = pParent -> PDFPageHeight() - (long)((double)pTarget -> top / scaleToPixels);
+   pTarget -> bottom = pParent -> PDFPageHeight() - (long)((double)pTarget -> bottom / scaleToPixels);
 
    return;
    }
 
 
+   void templateDocument::tdUI::convertToPointsOnPage(long pageNumber,RECT *pTarget) {
+
+   RECT rcPDFPage = {0};
+
+   long x,y;
+
+   pIPDFiumControl -> get_PDFPageXPixels(pageNumber,&x);
+   pIPDFiumControl -> get_PDFPageYPixels(pageNumber,&y);
+
+   long cx,cy;
+
+   pIPDFiumControl -> get_PDFPageWidthPixels(pageNumber,&cx);
+   pIPDFiumControl -> get_PDFPageHeightPixels(pageNumber,&cy);
+
+   //
+   //NTC: 10-09-2017: I am not sure what the "2" is, MSHTML seems to report that it's window is
+   // 2 pixels in and down from the top of it's host window. I can find nothing related to 
+   // window styles (WS_EX_CLIENTEDGE, for example), that is accounting for these 2 pixels.
+   //
+#if 1
+   rcPDFPage.left = x + 2;
+   rcPDFPage.top = y + 2;
+#else
+   rcPDFPage.left = x;
+   rcPDFPage.top = y;
+#endif
+   rcPDFPage.right = rcPDFPage.left + cx;
+   rcPDFPage.bottom = rcPDFPage.top + cy;
+
+   pTarget -> left -= rcPDFPage.left;
+   pTarget -> right -= rcPDFPage.left;
+
+   pTarget -> left = (long)((double)pTarget -> left / scaleToPixels);
+   pTarget -> right = (long)((double)pTarget -> right / scaleToPixels);
+
+   pTarget -> top -= rcPDFPage.top;
+   pTarget -> bottom -= rcPDFPage.top;
+
+   pTarget -> top = pParent -> PDFPageHeight() - (long)((double)pTarget -> top / scaleToPixels);
+   pTarget -> bottom = pParent -> PDFPageHeight() - (long)((double)pTarget -> bottom / scaleToPixels);
+
+   return;
+   }
+
    void templateDocument::tdUI::convertToPoints(POINTL *pTarget) {
    pTarget -> x -= rcPDFPagePixels.left;
    pTarget -> y -= rcPDFPagePixels.top;
-   pTarget -> x = (long)((double)pTarget -> x / scaleToPixelsX);
-   pTarget -> y = pParent -> PDFPageHeight() - (long)((double)pTarget -> y / scaleToPixelsY);
+   pTarget -> x = (long)((double)pTarget -> x / scaleToPixels);
+   pTarget -> y = pParent -> PDFPageHeight() - (long)((double)pTarget -> y / scaleToPixels);
    return;
    }
 
 
    void templateDocument::tdUI::convertToPixels(RECT *pTarget) {
-   pTarget -> left = rcPDFPagePixels.left + (long)((double)pTarget -> left * scaleToPixelsX);
-   pTarget -> right = rcPDFPagePixels.left + (long)((double)pTarget -> right * scaleToPixelsX);
-   pTarget -> top = rcPDFPagePixels.top + (long)((double)(pParent -> PDFPageHeight() - pTarget -> top) * scaleToPixelsY);
-   pTarget -> bottom = rcPDFPagePixels.top + (long)((double)(pParent -> PDFPageHeight() - pTarget -> bottom) * scaleToPixelsY);
+   pTarget -> left = rcPDFPagePixels.left + (long)((double)pTarget -> left * scaleToPixels);
+   pTarget -> right = rcPDFPagePixels.left + (long)((double)pTarget -> right * scaleToPixels);
+   pTarget -> top = rcPDFPagePixels.top + (long)((double)(pParent -> PDFPageHeight() - pTarget -> top) * scaleToPixels);
+   pTarget -> bottom = rcPDFPagePixels.top + (long)((double)(pParent -> PDFPageHeight() - pTarget -> bottom) * scaleToPixels);
    return;
    }
 
@@ -705,8 +736,8 @@ scaleToPixelsX = scaleToPixelsY;
    }
 
    void templateDocument::tdUI::convertToPixels(POINTL *pTarget) {
-   pTarget -> x = rcPDFPagePixels.left + (long)((double)pTarget -> x * scaleToPixelsX);
-   pTarget -> y = rcPDFPagePixels.top + (long)((double)(pParent -> PDFPageHeight() - pTarget -> y) * scaleToPixelsY);
+   pTarget -> x = rcPDFPagePixels.left + (long)((double)pTarget -> x * scaleToPixels);
+   pTarget -> y = rcPDFPagePixels.top + (long)((double)(pParent -> PDFPageHeight() - pTarget -> y) * scaleToPixels);
    return;
    }
 
@@ -716,6 +747,9 @@ scaleToPixelsX = scaleToPixelsY;
       return false;
 
    if ( 0 == ptlPDFUpperLeft.x && 0 == ptlPDFUpperLeft.y )
+      return false;
+
+   if ( ! IsWindowVisible(hwndPane) )
       return false;
 
    return true;

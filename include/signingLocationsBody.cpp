@@ -258,8 +258,8 @@
             if ( 0 == deltaX || 0 == deltaY )
                break;
 
-            deltaX = (long)((double)deltaX / pTemplateDocumentUI -> scaleToPixelsX);
-            deltaY = (long)((double)deltaY / pTemplateDocumentUI -> scaleToPixelsY);
+            deltaX = (long)((double)deltaX / pTemplateDocumentUI -> scaleToPixels);
+            deltaY = (long)((double)deltaY / pTemplateDocumentUI -> scaleToPixels);
 
             double aspectRatio = pSignaturePad -> WidthInInches() / pSignaturePad -> HeightInInches();
 
@@ -304,11 +304,11 @@
 
          } else {
 
-            visibleRects[sourceIndex].left = rBase.left + (long)((double)deltaX / pTemplateDocumentUI -> scaleToPixelsX);
-            visibleRects[sourceIndex].right = rBase.right + (long)((double)deltaX / pTemplateDocumentUI -> scaleToPixelsX);
+            visibleRects[sourceIndex].left = rBase.left + (long)((double)deltaX / pTemplateDocumentUI -> scaleToPixels);
+            visibleRects[sourceIndex].right = rBase.right + (long)((double)deltaX / pTemplateDocumentUI -> scaleToPixels);
 
-            visibleRects[sourceIndex].top = rBase.top - (long)((double)deltaY / pTemplateDocumentUI -> scaleToPixelsY);
-            visibleRects[sourceIndex].bottom = rBase.bottom - (long)((double)deltaY / pTemplateDocumentUI -> scaleToPixelsY);
+            visibleRects[sourceIndex].top = rBase.top - (long)((double)deltaY / pTemplateDocumentUI -> scaleToPixels);
+            visibleRects[sourceIndex].bottom = rBase.bottom - (long)((double)deltaY / pTemplateDocumentUI -> scaleToPixels);
 
             double pdfWidth = (double)(pTemplateDocumentUI -> Parent() -> PDFPageWidth() ) / 72.0;
             double pdfHeight = (double)(pTemplateDocumentUI -> Parent() -> PDFPageHeight() ) / 72.0;
@@ -470,11 +470,11 @@
          double pdfWidth = (double)(pTemplateDocumentUI -> Parent() -> PDFPageWidth() ) / 72.0;
          double pdfHeight = (double)(pTemplateDocumentUI -> Parent() -> PDFPageHeight() ) / 72.0;
 
-         pTarget -> left = (long)((double)mouseMenuX / pTemplateDocumentUI -> scaleToPixelsX);
-         pTarget -> top = pTemplateDocumentUI -> Parent() -> PDFPageHeight() - (long)((double)mouseMenuY / pTemplateDocumentUI -> scaleToPixelsY);
+         pTarget -> left = (long)((double)mouseMenuX / pTemplateDocumentUI -> scaleToPixels);
+         pTarget -> top = pTemplateDocumentUI -> Parent() -> PDFPageHeight() - (long)((double)mouseMenuY / pTemplateDocumentUI -> scaleToPixels);
 
-         pTarget -> right = pTarget -> left + (long)((double)(pTemplateDocumentUI -> rcPDFPagePixels.right - pTemplateDocumentUI -> rcPDFPagePixels.left) * padWidth / pdfWidth / pTemplateDocumentUI -> scaleToPixelsX);
-         pTarget -> bottom = pTarget -> top - (long)((double)(pTemplateDocumentUI -> rcPDFPagePixels.bottom - pTemplateDocumentUI -> rcPDFPagePixels.top) * padHeight / pdfHeight / pTemplateDocumentUI -> scaleToPixelsY );
+         pTarget -> right = pTarget -> left + (long)((double)(pTemplateDocumentUI -> rcPDFPagePixels.right - pTemplateDocumentUI -> rcPDFPagePixels.left) * padWidth / pdfWidth / pTemplateDocumentUI -> scaleToPixels);
+         pTarget -> bottom = pTarget -> top - (long)((double)(pTemplateDocumentUI -> rcPDFPagePixels.bottom - pTemplateDocumentUI -> rcPDFPagePixels.top) * padHeight / pdfHeight / pTemplateDocumentUI -> scaleToPixels );
 
          drawSigningAreas(NULL,pTemplateDocumentUI);
 
@@ -493,8 +493,8 @@
 
          RECT *pTarget = &pCurrentLocations[entryCountRects].documentRect;
 
-         pTarget -> left = (long)((double)mouseMenuX / pTemplateDocumentUI -> scaleToPixelsX);
-         pTarget -> top = pTemplateDocumentUI -> Parent() -> PDFPageHeight() - (long)((double)mouseMenuY / pTemplateDocumentUI -> scaleToPixelsY);
+         pTarget -> left = (long)((double)mouseMenuX / pTemplateDocumentUI -> scaleToPixels);
+         pTarget -> top = pTemplateDocumentUI -> Parent() -> PDFPageHeight() - (long)((double)mouseMenuY / pTemplateDocumentUI -> scaleToPixels);
 
          pTarget -> right = pTarget -> left + pSource -> right - pSource -> left;
          pTarget -> bottom = pTarget -> top - (pSource -> top - pSource -> bottom);

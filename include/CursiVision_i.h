@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Mon Oct 09 10:34:22 2017
+/* at Thu Oct 12 17:25:53 2017
  */
 /* Compiler settings for CursiVision.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 

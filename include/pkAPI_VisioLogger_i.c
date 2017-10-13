@@ -6,7 +6,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Sep 29 13:36:46 2017
+/* at Thu Oct 12 17:02:18 2017
  */
 /* Compiler settings for pkAPI_VisioLogger.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
