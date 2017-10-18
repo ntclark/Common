@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Oct 13 07:45:52 2017
+/* at Wed Oct 18 11:02:45 2017
  */
 /* Compiler settings for COM Implementation\PDFiumControl.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -253,6 +253,9 @@ EXTERN_C const IID IID_IPDFiumControl;
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_EnableExplorerContextMenu( 
             /* [in] */ BOOL doEnable) = 0;
         
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PageCount( 
+            /* [retval][out] */ long *pPageCount) = 0;
+        
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFPagesVisible( 
             /* [retval][out] */ BSTR *pPagesVisible) = 0;
         
@@ -435,6 +438,10 @@ EXTERN_C const IID IID_IPDFiumControl;
             IPDFiumControl * This,
             /* [in] */ BOOL doEnable);
         
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PageCount )( 
+            IPDFiumControl * This,
+            /* [retval][out] */ long *pPageCount);
+        
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFPagesVisible )( 
             IPDFiumControl * This,
             /* [retval][out] */ BSTR *pPagesVisible);
@@ -614,6 +621,9 @@ EXTERN_C const IID IID_IPDFiumControl;
 
 #define IPDFiumControl_put_EnableExplorerContextMenu(This,doEnable)	\
     ( (This)->lpVtbl -> put_EnableExplorerContextMenu(This,doEnable) ) 
+
+#define IPDFiumControl_get_PageCount(This,pPageCount)	\
+    ( (This)->lpVtbl -> get_PageCount(This,pPageCount) ) 
 
 #define IPDFiumControl_get_PDFPagesVisible(This,pPagesVisible)	\
     ( (This)->lpVtbl -> get_PDFPagesVisible(This,pPagesVisible) ) 

@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir);\Common\include;\Visio Logger\Common\include;\Common\include\pdfEnabler;\Common\source;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\include;\Common\include;\Visio Logger\Common\include;\Common\include\pdfEnabler;\Common\source;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0603;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -27,7 +27,7 @@
       <TypeLibraryName>\Common\Include\%(Filename).tlb</TypeLibraryName>
     </Midl>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>\Common\include;\Common\resources;$(ProjectDir);$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\include;\Common\include;\Common\resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Lib>
       <OutputFile>\Common\lib\$(Platform)\$(TargetName)$(TargetExt)</OutputFile>

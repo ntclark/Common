@@ -1,3 +1,6 @@
+// Copyright 2017 InnoVisioNate Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
    AUTOCHECKBOX "Append ",IDDI_DISPOSITION_APPEND,20,24 + ADDITIONAL_TOP_SPACE, 38, 12
    EDITTEXT IDDI_DISPOSITION_SUFFIX,20 + 40 + 8 - 4,  16 + 8 + ADDITIONAL_TOP_SPACE, 68, 12, ES_AUTOHSCROLL

@@ -1,3 +1,7 @@
+// Copyright 2017 InnoVisioNate Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
 //
 //NTC: 02-14-12. This is starting out as a property page for the control. In the future it
 // may be implemented into the CursiVision executable. Therefore, it is stored in the parent 

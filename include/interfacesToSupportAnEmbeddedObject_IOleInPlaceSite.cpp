@@ -1,3 +1,6 @@
+// Copyright 2017 InnoVisioNate Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
    long __stdcall EMBEDDED_OBJECT_EMBEDDER_CLASS::_IOleInPlaceSite::QueryInterface(REFIID riid,void **ppv) {
 

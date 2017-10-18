@@ -1,3 +1,6 @@
+// Copyright 2017 InnoVisioNate Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <io.h>
 
@@ -70,7 +73,7 @@
    long nextPageOffset = ftell(fProfile);
    fseek(fProfile,entriesCountLocation,SEEK_SET);
    fprintf(fProfile,"%06ld-%08ld%c",countFound,nextPageOffset,0x0A);
-   _chsize(fileno(fProfile),nextPageOffset + 1);
+   _chsize(_fileno(fProfile),nextPageOffset + 1);
    fclose(fProfile); 
    return;
    };
