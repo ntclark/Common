@@ -67,11 +67,11 @@ library CursiVisionSignaturePad {
         void PrepareForPage(RECT *pRect);
 
         void DisplaySignatureBitmapFile(char *pszImageFile,[optional,defaultvalue(0)] BOOL populatePad,[optional,defaultvalue(1)] BOOL isLastPage);
-        void DisplaySignatureBitmapHandle(HBITMAP hBitmap,HDC hdc,long x,long y,long cx,long cy);
-        void OverlaySignatureBitmapHandle(HBITMAP hBitmap,HDC hdc,long x,long y,long cx,long cy);
+        void DisplaySignatureBitmapHandle(UINT_PTR hBitmap,HDC hdc,long x,long y,long cx,long cy);
+        void OverlaySignatureBitmapHandle(UINT_PTR hBitmap,HDC hdc,long x,long y,long cx,long cy);
 
         void DisplayHotSpotFile(char *pszFile,long eventID,long x,long y,long cx,long cy);
-        void DisplayHotSpotHandle(HBITMAP hBitmap,HDC hdc,long eventID,long x,long y,long cx,long cy);
+        void DisplayHotSpotHandle(UINT_PTR hBitmap,HDC hdc,long eventID,long x,long y,long cx,long cy);
 
         void DisplayOk(long eventID);
         void DisplayClear(long eventID);

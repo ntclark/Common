@@ -4,9 +4,9 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Oct 18 12:11:26 2017
+/* at Wed Nov 01 13:17:35 2017
  */
-/* Compiler settings for D:\PadKiller\..\Common\source\SignaturePad.odl:
+/* Compiler settings for D:\Phablet-API\..\Common\source\SignaturePad.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
@@ -163,7 +163,7 @@ EXTERN_C const IID IID_ISignaturePad;
             /* [defaultvalue][optional] */ BOOL isLastPage = 1) = 0;
         
         virtual void STDMETHODCALLTYPE DisplaySignatureBitmapHandle( 
-            HBITMAP hBitmap,
+            UINT_PTR hBitmap,
             HDC hdc,
             long x,
             long y,
@@ -171,7 +171,7 @@ EXTERN_C const IID IID_ISignaturePad;
             long cy) = 0;
         
         virtual void STDMETHODCALLTYPE OverlaySignatureBitmapHandle( 
-            HBITMAP hBitmap,
+            UINT_PTR hBitmap,
             HDC hdc,
             long x,
             long y,
@@ -187,7 +187,7 @@ EXTERN_C const IID IID_ISignaturePad;
             long cy) = 0;
         
         virtual void STDMETHODCALLTYPE DisplayHotSpotHandle( 
-            HBITMAP hBitmap,
+            UINT_PTR hBitmap,
             HDC hdc,
             long eventID,
             long x,
@@ -396,7 +396,7 @@ EXTERN_C const IID IID_ISignaturePad;
         
         void ( STDMETHODCALLTYPE *DisplaySignatureBitmapHandle )( 
             ISignaturePad * This,
-            HBITMAP hBitmap,
+            UINT_PTR hBitmap,
             HDC hdc,
             long x,
             long y,
@@ -405,7 +405,7 @@ EXTERN_C const IID IID_ISignaturePad;
         
         void ( STDMETHODCALLTYPE *OverlaySignatureBitmapHandle )( 
             ISignaturePad * This,
-            HBITMAP hBitmap,
+            UINT_PTR hBitmap,
             HDC hdc,
             long x,
             long y,
@@ -423,7 +423,7 @@ EXTERN_C const IID IID_ISignaturePad;
         
         void ( STDMETHODCALLTYPE *DisplayHotSpotHandle )( 
             ISignaturePad * This,
-            HBITMAP hBitmap,
+            UINT_PTR hBitmap,
             HDC hdc,
             long eventID,
             long x,

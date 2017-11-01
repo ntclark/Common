@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Oct 18 12:11:27 2017
+/* at Wed Nov 01 13:17:38 2017
  */
 /* Compiler settings for pkAPI.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -228,7 +228,7 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             /* [in] */ BSTR imageFile) = 0;
         
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_BackgroundBitmapHandle( 
-            /* [in] */ HBITMAP hBitmap) = 0;
+            /* [in] */ UINT_PTR hBitmap) = 0;
         
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_PDFFile( 
             /* [in] */ BSTR pdfFile) = 0;
@@ -236,8 +236,14 @@ EXTERN_C const IID IID_IBasicSignaturePad;
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PDFFile( 
             /* [retval][out] */ BSTR *pPdfFile) = 0;
         
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_ShowUpdates( 
+            /* [in] */ VARIANT_BOOL showUpdates) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ShowUpdates( 
+            /* [retval][out] */ VARIANT_BOOL *pShowUpdates) = 0;
+        
         virtual HRESULT STDMETHODCALLTYPE AreaBitmapHandle( 
-            HBITMAP hBitmap,
+            UINT_PTR hBitmap,
             long x,
             long y,
             long cx,
@@ -304,6 +310,16 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             /* [optional][in] */ VARIANT fontFace,
             /* [optional][in] */ VARIANT fontSizeInPoints) = 0;
         
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE CreateEntryField( 
+            BSTR theText,
+            long controlID,
+            long x,
+            long y,
+            long width,
+            BOOL isVisible,
+            /* [optional][in] */ VARIANT fontFace,
+            /* [optional][in] */ VARIANT fontSizeInPoints) = 0;
+        
         virtual HRESULT STDMETHODCALLTYPE RemoveControl( 
             long eventID) = 0;
         
@@ -330,6 +346,10 @@ EXTERN_C const IID IID_IBasicSignaturePad;
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ControlTextBounds( 
             /* [in] */ long controlId,
             /* [retval][out] */ RECT *__MIDL__IBasicSignaturePad0009) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ControlFontHeightPixels( 
+            /* [in] */ long controlId,
+            /* [retval][out] */ float *__MIDL__IBasicSignaturePad0010) = 0;
         
         virtual /* [propput][helpstring] */ HRESULT STDMETHODCALLTYPE put_DrawingWindowHandle( 
             /* [in] */ HWND hwndDrawingWindow) = 0;
@@ -566,7 +586,7 @@ EXTERN_C const IID IID_IBasicSignaturePad;
         
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_BackgroundBitmapHandle )( 
             IBasicSignaturePad * This,
-            /* [in] */ HBITMAP hBitmap);
+            /* [in] */ UINT_PTR hBitmap);
         
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_PDFFile )( 
             IBasicSignaturePad * This,
@@ -576,9 +596,17 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             IBasicSignaturePad * This,
             /* [retval][out] */ BSTR *pPdfFile);
         
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ShowUpdates )( 
+            IBasicSignaturePad * This,
+            /* [in] */ VARIANT_BOOL showUpdates);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ShowUpdates )( 
+            IBasicSignaturePad * This,
+            /* [retval][out] */ VARIANT_BOOL *pShowUpdates);
+        
         HRESULT ( STDMETHODCALLTYPE *AreaBitmapHandle )( 
             IBasicSignaturePad * This,
-            HBITMAP hBitmap,
+            UINT_PTR hBitmap,
             long x,
             long y,
             long cx,
@@ -652,6 +680,17 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             /* [optional][in] */ VARIANT fontFace,
             /* [optional][in] */ VARIANT fontSizeInPoints);
         
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateEntryField )( 
+            IBasicSignaturePad * This,
+            BSTR theText,
+            long controlID,
+            long x,
+            long y,
+            long width,
+            BOOL isVisible,
+            /* [optional][in] */ VARIANT fontFace,
+            /* [optional][in] */ VARIANT fontSizeInPoints);
+        
         HRESULT ( STDMETHODCALLTYPE *RemoveControl )( 
             IBasicSignaturePad * This,
             long eventID);
@@ -685,6 +724,11 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             IBasicSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ RECT *__MIDL__IBasicSignaturePad0009);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ControlFontHeightPixels )( 
+            IBasicSignaturePad * This,
+            /* [in] */ long controlId,
+            /* [retval][out] */ float *__MIDL__IBasicSignaturePad0010);
         
         /* [propput][helpstring] */ HRESULT ( STDMETHODCALLTYPE *put_DrawingWindowHandle )( 
             IBasicSignaturePad * This,
@@ -890,6 +934,12 @@ EXTERN_C const IID IID_IBasicSignaturePad;
 #define IBasicSignaturePad_get_PDFFile(This,pPdfFile)	\
     ( (This)->lpVtbl -> get_PDFFile(This,pPdfFile) ) 
 
+#define IBasicSignaturePad_put_ShowUpdates(This,showUpdates)	\
+    ( (This)->lpVtbl -> put_ShowUpdates(This,showUpdates) ) 
+
+#define IBasicSignaturePad_get_ShowUpdates(This,pShowUpdates)	\
+    ( (This)->lpVtbl -> get_ShowUpdates(This,pShowUpdates) ) 
+
 #define IBasicSignaturePad_AreaBitmapHandle(This,hBitmap,x,y,cx,cy)	\
     ( (This)->lpVtbl -> AreaBitmapHandle(This,hBitmap,x,y,cx,cy) ) 
 
@@ -914,6 +964,9 @@ EXTERN_C const IID IID_IBasicSignaturePad;
 #define IBasicSignaturePad_CreateTextBox(This,theText,controlID,x,y,width,maxHeight,isVisible,fontFace,fontSizeInPoints)	\
     ( (This)->lpVtbl -> CreateTextBox(This,theText,controlID,x,y,width,maxHeight,isVisible,fontFace,fontSizeInPoints) ) 
 
+#define IBasicSignaturePad_CreateEntryField(This,theText,controlID,x,y,width,isVisible,fontFace,fontSizeInPoints)	\
+    ( (This)->lpVtbl -> CreateEntryField(This,theText,controlID,x,y,width,isVisible,fontFace,fontSizeInPoints) ) 
+
 #define IBasicSignaturePad_RemoveControl(This,eventID)	\
     ( (This)->lpVtbl -> RemoveControl(This,eventID) ) 
 
@@ -934,6 +987,9 @@ EXTERN_C const IID IID_IBasicSignaturePad;
 
 #define IBasicSignaturePad_get_ControlTextBounds(This,controlId,__MIDL__IBasicSignaturePad0009)	\
     ( (This)->lpVtbl -> get_ControlTextBounds(This,controlId,__MIDL__IBasicSignaturePad0009) ) 
+
+#define IBasicSignaturePad_get_ControlFontHeightPixels(This,controlId,__MIDL__IBasicSignaturePad0010)	\
+    ( (This)->lpVtbl -> get_ControlFontHeightPixels(This,controlId,__MIDL__IBasicSignaturePad0010) ) 
 
 #define IBasicSignaturePad_put_DrawingWindowHandle(This,hwndDrawingWindow)	\
     ( (This)->lpVtbl -> put_DrawingWindowHandle(This,hwndDrawingWindow) ) 
@@ -1205,7 +1261,7 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
         
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_BackgroundBitmapHandle )( 
             IPhabletSignaturePad * This,
-            /* [in] */ HBITMAP hBitmap);
+            /* [in] */ UINT_PTR hBitmap);
         
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_PDFFile )( 
             IPhabletSignaturePad * This,
@@ -1215,9 +1271,17 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             IPhabletSignaturePad * This,
             /* [retval][out] */ BSTR *pPdfFile);
         
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ShowUpdates )( 
+            IPhabletSignaturePad * This,
+            /* [in] */ VARIANT_BOOL showUpdates);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ShowUpdates )( 
+            IPhabletSignaturePad * This,
+            /* [retval][out] */ VARIANT_BOOL *pShowUpdates);
+        
         HRESULT ( STDMETHODCALLTYPE *AreaBitmapHandle )( 
             IPhabletSignaturePad * This,
-            HBITMAP hBitmap,
+            UINT_PTR hBitmap,
             long x,
             long y,
             long cx,
@@ -1291,6 +1355,17 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             /* [optional][in] */ VARIANT fontFace,
             /* [optional][in] */ VARIANT fontSizeInPoints);
         
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateEntryField )( 
+            IPhabletSignaturePad * This,
+            BSTR theText,
+            long controlID,
+            long x,
+            long y,
+            long width,
+            BOOL isVisible,
+            /* [optional][in] */ VARIANT fontFace,
+            /* [optional][in] */ VARIANT fontSizeInPoints);
+        
         HRESULT ( STDMETHODCALLTYPE *RemoveControl )( 
             IPhabletSignaturePad * This,
             long eventID);
@@ -1324,6 +1399,11 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             IPhabletSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ RECT *__MIDL__IBasicSignaturePad0009);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ControlFontHeightPixels )( 
+            IPhabletSignaturePad * This,
+            /* [in] */ long controlId,
+            /* [retval][out] */ float *__MIDL__IBasicSignaturePad0010);
         
         /* [propput][helpstring] */ HRESULT ( STDMETHODCALLTYPE *put_DrawingWindowHandle )( 
             IPhabletSignaturePad * This,
@@ -1537,6 +1617,12 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
 #define IPhabletSignaturePad_get_PDFFile(This,pPdfFile)	\
     ( (This)->lpVtbl -> get_PDFFile(This,pPdfFile) ) 
 
+#define IPhabletSignaturePad_put_ShowUpdates(This,showUpdates)	\
+    ( (This)->lpVtbl -> put_ShowUpdates(This,showUpdates) ) 
+
+#define IPhabletSignaturePad_get_ShowUpdates(This,pShowUpdates)	\
+    ( (This)->lpVtbl -> get_ShowUpdates(This,pShowUpdates) ) 
+
 #define IPhabletSignaturePad_AreaBitmapHandle(This,hBitmap,x,y,cx,cy)	\
     ( (This)->lpVtbl -> AreaBitmapHandle(This,hBitmap,x,y,cx,cy) ) 
 
@@ -1561,6 +1647,9 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
 #define IPhabletSignaturePad_CreateTextBox(This,theText,controlID,x,y,width,maxHeight,isVisible,fontFace,fontSizeInPoints)	\
     ( (This)->lpVtbl -> CreateTextBox(This,theText,controlID,x,y,width,maxHeight,isVisible,fontFace,fontSizeInPoints) ) 
 
+#define IPhabletSignaturePad_CreateEntryField(This,theText,controlID,x,y,width,isVisible,fontFace,fontSizeInPoints)	\
+    ( (This)->lpVtbl -> CreateEntryField(This,theText,controlID,x,y,width,isVisible,fontFace,fontSizeInPoints) ) 
+
 #define IPhabletSignaturePad_RemoveControl(This,eventID)	\
     ( (This)->lpVtbl -> RemoveControl(This,eventID) ) 
 
@@ -1581,6 +1670,9 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
 
 #define IPhabletSignaturePad_get_ControlTextBounds(This,controlId,__MIDL__IBasicSignaturePad0009)	\
     ( (This)->lpVtbl -> get_ControlTextBounds(This,controlId,__MIDL__IBasicSignaturePad0009) ) 
+
+#define IPhabletSignaturePad_get_ControlFontHeightPixels(This,controlId,__MIDL__IBasicSignaturePad0010)	\
+    ( (This)->lpVtbl -> get_ControlFontHeightPixels(This,controlId,__MIDL__IBasicSignaturePad0010) ) 
 
 #define IPhabletSignaturePad_put_DrawingWindowHandle(This,hwndDrawingWindow)	\
     ( (This)->lpVtbl -> put_DrawingWindowHandle(This,hwndDrawingWindow) ) 
@@ -1686,6 +1778,15 @@ EXTERN_C const IID IID_IPhabletSignaturePadEvents;
             long controlId,
             BSTR theItem) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE TextChanged( 
+            long controlId,
+            BSTR oldText,
+            BSTR newText) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE KeyStroke( 
+            long controlId,
+            WPARAM keyStroke) = 0;
+        
     };
     
     
@@ -1741,6 +1842,17 @@ EXTERN_C const IID IID_IPhabletSignaturePadEvents;
             long controlId,
             BSTR theItem);
         
+        HRESULT ( STDMETHODCALLTYPE *TextChanged )( 
+            IPhabletSignaturePadEvents * This,
+            long controlId,
+            BSTR oldText,
+            BSTR newText);
+        
+        HRESULT ( STDMETHODCALLTYPE *KeyStroke )( 
+            IPhabletSignaturePadEvents * This,
+            long controlId,
+            WPARAM keyStroke);
+        
         END_INTERFACE
     } IPhabletSignaturePadEventsVtbl;
 
@@ -1787,6 +1899,12 @@ EXTERN_C const IID IID_IPhabletSignaturePadEvents;
 
 #define IPhabletSignaturePadEvents_ItemSelected(This,controlId,theItem)	\
     ( (This)->lpVtbl -> ItemSelected(This,controlId,theItem) ) 
+
+#define IPhabletSignaturePadEvents_TextChanged(This,controlId,oldText,newText)	\
+    ( (This)->lpVtbl -> TextChanged(This,controlId,oldText,newText) ) 
+
+#define IPhabletSignaturePadEvents_KeyStroke(This,controlId,keyStroke)	\
+    ( (This)->lpVtbl -> KeyStroke(This,controlId,keyStroke) ) 
 
 #endif /* COBJMACROS */
 
