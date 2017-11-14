@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Oct 18 11:32:15 2017
+/* at Thu Nov 09 16:26:11 2017
  */
 /* Compiler settings for ImagingBackEnd.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -41,16 +41,16 @@
 
 /* Forward Declarations */ 
 
-#ifndef __CursiVisionImagingBackEnd_FWD_DEFINED__
-#define __CursiVisionImagingBackEnd_FWD_DEFINED__
+#ifndef __CursiVisionTWAINImagingBackEnd_FWD_DEFINED__
+#define __CursiVisionTWAINImagingBackEnd_FWD_DEFINED__
 
 #ifdef __cplusplus
-typedef class CursiVisionImagingBackEnd CursiVisionImagingBackEnd;
+typedef class CursiVisionTWAINImagingBackEnd CursiVisionTWAINImagingBackEnd;
 #else
-typedef struct CursiVisionImagingBackEnd CursiVisionImagingBackEnd;
+typedef struct CursiVisionTWAINImagingBackEnd CursiVisionTWAINImagingBackEnd;
 #endif /* __cplusplus */
 
-#endif 	/* __CursiVisionImagingBackEnd_FWD_DEFINED__ */
+#endif 	/* __CursiVisionTWAINImagingBackEnd_FWD_DEFINED__ */
 
 
 /* header files for imported files */
@@ -62,23 +62,23 @@ extern "C"{
 
 
 
-#ifndef __CursiVisionImagingBackEnd_LIBRARY_DEFINED__
-#define __CursiVisionImagingBackEnd_LIBRARY_DEFINED__
+#ifndef __CursiVisionTWAINImagingBackEnd_LIBRARY_DEFINED__
+#define __CursiVisionTWAINImagingBackEnd_LIBRARY_DEFINED__
 
-/* library CursiVisionImagingBackEnd */
+/* library CursiVisionTWAINImagingBackEnd */
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionImagingBackEnd;
+DEFINE_GUID(LIBID_CursiVisionTWAINImagingBackEnd,0x5B1E25BB,0x633C,0x4e17,0xA3,0x27,0x25,0x58,0x3B,0x64,0x6B,0x4D);
 
-EXTERN_C const CLSID CLSID_CursiVisionImagingBackEnd;
+DEFINE_GUID(CLSID_CursiVisionTWAINImagingBackEnd,0x5B1E25BB,0x633C,0x4e17,0xA3,0x27,0x25,0x58,0x3B,0x64,0x6B,0x4E);
 
 #ifdef __cplusplus
 
-class DECLSPEC_UUID("A8DF7F28-4775-48ac-A3FD-F693C0E96F1F")
-CursiVisionImagingBackEnd;
+class DECLSPEC_UUID("5B1E25BB-633C-4e17-A327-25583B646B4E")
+CursiVisionTWAINImagingBackEnd;
 #endif
-#endif /* __CursiVisionImagingBackEnd_LIBRARY_DEFINED__ */
+#endif /* __CursiVisionTWAINImagingBackEnd_LIBRARY_DEFINED__ */
 
 /* Additional Prototypes for ALL interfaces */
 

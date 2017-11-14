@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Oct 18 11:31:39 2017
+/* at Thu Nov 09 16:25:59 2017
  */
 /* Compiler settings for ftpBackEnd.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -69,9 +69,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionFTPBackEnd;
+DEFINE_GUID(LIBID_CursiVisionFTPBackEnd,0xCDC6E109,0x9B34,0x4405,0x87,0xB8,0x0D,0x82,0xD3,0xB6,0x23,0xD6);
 
-EXTERN_C const CLSID CLSID_CursiVisionFTPBackEnd;
+DEFINE_GUID(CLSID_CursiVisionFTPBackEnd,0xCDC6E109,0x9B34,0x4405,0x87,0xB8,0x0D,0x82,0xD3,0xB6,0x23,0xD7);
 
 #ifdef __cplusplus
 

@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Oct 18 11:28:58 2017
+/* at Thu Nov 09 16:25:29 2017
  */
 /* Compiler settings for emailBackEnd.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -69,9 +69,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionEmailBackEnd;
+DEFINE_GUID(LIBID_CursiVisionEmailBackEnd,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x40);
 
-EXTERN_C const CLSID CLSID_CursiVisionEmailBackEnd;
+DEFINE_GUID(CLSID_CursiVisionEmailBackEnd,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x41);
 
 #ifdef __cplusplus
 

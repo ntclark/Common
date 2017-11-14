@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Oct 18 11:32:39 2017
+/* at Thu Nov 09 16:25:58 2017
  */
 /* Compiler settings for EnhancedNamingBackEnd.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -69,9 +69,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionNamingBackEnd;
+DEFINE_GUID(LIBID_CursiVisionNamingBackEnd,0x2BEFEC20,0xB6F7,0x4ccb,0x93,0xB7,0xD8,0xED,0xDF,0x31,0x53,0xB5);
 
-EXTERN_C const CLSID CLSID_CursiVisionNamingBackEnd;
+DEFINE_GUID(CLSID_CursiVisionNamingBackEnd,0x2BEFEC20,0xB6F7,0x4ccb,0x93,0xB7,0xD8,0xED,0xDF,0x31,0x53,0xB6);
 
 #ifdef __cplusplus
 

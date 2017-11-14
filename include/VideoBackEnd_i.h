@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Oct 18 11:35:14 2017
+/* at Thu Nov 09 16:26:12 2017
  */
 /* Compiler settings for VideoBackEnd.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -69,9 +69,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionVideoBackEnd;
+DEFINE_GUID(LIBID_CursiVisionVideoBackEnd,0xA8DF7F28,0x4775,0x48ac,0xA3,0xFD,0xF6,0x93,0xC0,0xE9,0x6F,0x22);
 
-EXTERN_C const CLSID CLSID_CursiVisionVideoBackEnd;
+DEFINE_GUID(CLSID_CursiVisionVideoBackEnd,0xA8DF7F28,0x4775,0x48ac,0xA3,0xFD,0xF6,0x93,0xC0,0xE9,0x6F,0x23);
 
 #ifdef __cplusplus
 

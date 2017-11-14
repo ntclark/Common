@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Oct 18 11:31:54 2017
+/* at Thu Nov 09 16:25:59 2017
  */
 /* Compiler settings for GenericBackEnd.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -69,9 +69,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionGenericBackEnd;
+DEFINE_GUID(LIBID_CursiVisionGenericBackEnd,0x52A9EE3A,0x5C46,0x48b4,0xA1,0xA4,0x56,0x92,0x9E,0xD0,0x5E,0x55);
 
-EXTERN_C const CLSID CLSID_CursiVisionGenericBackEnd;
+DEFINE_GUID(CLSID_CursiVisionGenericBackEnd,0x52A9EE3A,0x5C46,0x48b4,0xA1,0xA4,0x56,0x92,0x9E,0xD0,0x5E,0x56);
 
 #ifdef __cplusplus
 
