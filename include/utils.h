@@ -42,9 +42,8 @@
   char *convertToSZAscii(OLECHAR * szU);
 
   HRESULT commaStringFromVariant(VARIANT *,char *szSupplied,long lenString);
-#if 0
   HRESULT variantFromCommaString(IEvaluator *pEvaluator,char *szSupplied,VARIANT *pv);
-#endif
+
   HRESULT PutDataPointSafeArray(SAFEARRAY **ppDoubles,DataPoint *values);
   HRESULT GetDataPointSafeArray(SAFEARRAY *pArray,DataPoint *values);
  
@@ -91,7 +90,7 @@
                                 char *versionIndependentName,
                                 char *versionDependentName,
                                 CATID* pCategoryIDs,
-                                long oleMisc,boolean isControl,boolean isInsertable,boolean isProgrammable);
+                                long bitmapIndex,long oleMisc,boolean isControl,boolean isInsertable,boolean isProgrammable);
   
   HRESULT utilsDllUnregisterObject(const CLSID classID,char *versionIndependentName,char *versionDependentName);
 
@@ -148,8 +147,8 @@
    }
 
 #define HWND_FROM_VT(h) (HWND)(h.lVal)
-#define xHWND_FROM_LONG(h) reinterpret_cast<HWND>(h)
-#define xLONG_FROM_HWND(h) reinterpret_cast<long>(h)
+#define HWND_FROM_LONG(h) reinterpret_cast<HWND>(h)
+#define LONG_FROM_HWND(h) reinterpret_cast<long>(h)
 
 #define VT_FROM_HWND(h) (VARIANT)(h)
 

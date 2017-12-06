@@ -139,7 +139,7 @@ library CursiVisionSignaturePad {
     interface ISignaturePadEvents : IUnknown {
         HRESULT PenDown();
         HRESULT PenUp();
-        HRESULT PenPoint(long x,long y);
+        HRESULT PenPoint(long x,long y,float inkWeight);
         HRESULT OptionSelected(long optionNumber);
         HRESULT ItemSelected(long controlId,BSTR selectedItem);
     };

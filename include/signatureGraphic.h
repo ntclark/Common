@@ -15,6 +15,7 @@ struct signatureGraphic {
          pSignatureDataX = new long[PREALLOCATED_SIGNATURE_GRAPHIC_SIZE];
          pSignatureDataY = new long[PREALLOCATED_SIGNATURE_GRAPHIC_SIZE];
          pSignatureDataPage = new long[PREALLOCATED_SIGNATURE_GRAPHIC_SIZE];
+         pInkWeight = new float[PREALLOCATED_SIGNATURE_GRAPHIC_SIZE];
       }
       };
 
@@ -30,14 +31,16 @@ struct signatureGraphic {
       if ( pSignatureDataX ) delete [] pSignatureDataX; 
       if ( pSignatureDataY ) delete [] pSignatureDataY; 
       if ( pSignatureDataPage ) delete [] pSignatureDataPage;
+      if ( pInkWeight ) delete [] pInkWeight;
    };
 
-   void addPoint(long x,long y,long pageNumber) { 
+   void addPoint(long x,long y,long pageNumber,float inkWeight) { 
       if ( PREALLOCATED_SIGNATURE_GRAPHIC_SIZE == totalPoints ) 
          return;
       pSignatureDataX[totalPoints] = x; 
       pSignatureDataY[totalPoints] = y; 
       pSignatureDataPage[totalPoints] = pageNumber;
+      pInkWeight[totalPoints] = inkWeight;
       totalPoints++; 
    };
 
@@ -55,5 +58,6 @@ struct signatureGraphic {
    long *pSignatureDataX;
    long *pSignatureDataY;
    long *pSignatureDataPage;
+   float *pInkWeight;
 };
 

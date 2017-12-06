@@ -3,18 +3,18 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 7.00.0500 */
-/* at Mon Jan 13 14:49:53 2014
+ /* File created by MIDL compiler version 8.00.0603 */
+/* at Thu Nov 30 16:53:24 2017
  */
-/* Compiler settings for .\GSystem.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run)
+/* Compiler settings for GSystem.odl:
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
-//@@MIDL_FILE_HEADING(  )
+/* @@MIDL_FILE_HEADING(  ) */
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
 
@@ -44,6 +44,7 @@
 #ifndef __IGSystemStatusBar_FWD_DEFINED__
 #define __IGSystemStatusBar_FWD_DEFINED__
 typedef interface IGSystemStatusBar IGSystemStatusBar;
+
 #endif 	/* __IGSystemStatusBar_FWD_DEFINED__ */
 
 
@@ -89,42 +90,47 @@ struct DataList
     } ;
 
 enum CoordinatePlane
-    {	CoordinatePlane_unspecified	= 0,
-	CoordinatePlane_XY	= 1,
-	CoordinatePlane_YX	= 2,
-	CoordinatePlane_XZ	= 3,
-	CoordinatePlane_ZX	= 4,
-	CoordinatePlane_YZ	= 5,
-	CoordinatePlane_ZY	= 6,
-	CoordinatePlane_screen	= 7,
-	CoordinatePlane_normal	= ( CoordinatePlane_screen + 1 ) 
+    {
+        CoordinatePlane_unspecified	= 0,
+        CoordinatePlane_XY	= 1,
+        CoordinatePlane_YX	= 2,
+        CoordinatePlane_XZ	= 3,
+        CoordinatePlane_ZX	= 4,
+        CoordinatePlane_YZ	= 5,
+        CoordinatePlane_ZY	= 6,
+        CoordinatePlane_screen	= 7,
+        CoordinatePlane_normal	= ( CoordinatePlane_screen + 1 ) 
     } ;
 
 enum UnitOfMeasure
-    {	UNIT_PIXEL	= 0,
-	UNIT_PERCENT	= 1
+    {
+        UNIT_PIXEL	= 0,
+        UNIT_PERCENT	= 1
     } ;
 
 enum DataArity
-    {	DATA_ARITY_UNKNOWN	= 0,
-	DATA_ARITY_2D	= 1,
-	DATA_ARITY_3D	= 2
+    {
+        DATA_ARITY_UNKNOWN	= 0,
+        DATA_ARITY_2D	= 1,
+        DATA_ARITY_3D	= 2
     } ;
 
 enum TextFormat
-    {	TEXT_FORMAT_NONE	= 0,
-	TEXT_FORMAT_LEFT	= 0x1,
-	TEXT_FORMAT_RIGHT	= 0x2,
-	TEXT_FORMAT_CENTER	= 0x4,
-	TEXT_COORDINATES_FROM_TOP	= 0x10,
-	TEXT_COORDINATES_FROM_CENTER	= 0x20,
-	TEXT_COORDINATES_FROM_BOTTOM	= 0x40
+    {
+        TEXT_FORMAT_NONE	= 0,
+        TEXT_FORMAT_LEFT	= 0x1,
+        TEXT_FORMAT_RIGHT	= 0x2,
+        TEXT_FORMAT_CENTER	= 0x4,
+        TEXT_COORDINATES_FROM_TOP	= 0x10,
+        TEXT_COORDINATES_FROM_CENTER	= 0x20,
+        TEXT_COORDINATES_FROM_BOTTOM	= 0x40
     } ;
 
 enum TextSizeUnits
-    {	TEXT_SIZE_PIXELS	= 0,
-	TEXT_SIZE_PERCENT	= 0x1,
-	TEXT_SIZE_POINTS	= 0x2
+    {
+        TEXT_SIZE_PIXELS	= 0,
+        TEXT_SIZE_PERCENT	= 0x1,
+        TEXT_SIZE_POINTS	= 0x2
     } ;
 
 EXTERN_C const IID LIBID_GSystems;
@@ -154,6 +160,7 @@ EXTERN_C const IID IID_IGSystemStatusBar;
         
     };
     
+    
 #else 	/* C style interface */
 
     typedef struct IGSystemStatusBarVtbl
@@ -163,8 +170,8 @@ EXTERN_C const IID IID_IGSystemStatusBar;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IGSystemStatusBar * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
-            __RPC__deref_out  void **ppvObject);
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IGSystemStatusBar * This);

@@ -3,18 +3,18 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 7.00.0500 */
-/* at Mon Jan 13 14:49:53 2014
+ /* File created by MIDL compiler version 8.00.0603 */
+/* at Tue Dec 05 21:48:13 2017
  */
-/* Compiler settings for .\Evaluator.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run)
+/* Compiler settings for Evaluator.odl:
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
-//@@MIDL_FILE_HEADING(  )
+/* @@MIDL_FILE_HEADING(  ) */
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
 
@@ -44,12 +44,14 @@
 #ifndef __IEvaluator_FWD_DEFINED__
 #define __IEvaluator_FWD_DEFINED__
 typedef interface IEvaluator IEvaluator;
+
 #endif 	/* __IEvaluator_FWD_DEFINED__ */
 
 
 #ifndef __IEvaluatorEvents_FWD_DEFINED__
 #define __IEvaluatorEvents_FWD_DEFINED__
 typedef interface IEvaluatorEvents IEvaluatorEvents;
+
 #endif 	/* __IEvaluatorEvents_FWD_DEFINED__ */
 
 
@@ -82,26 +84,29 @@ extern "C"{
 
 
 enum evaluatorErrorMessage
-    {	evaluatorError	= ( 0x400 + 4000 ) 
+    {
+        evaluatorError	= ( 0x400 + 4000 ) 
     } ;
 
 enum evaluatorEvents
-    {	evaluatorEventStarted	= 1,
-	evaluatorEventTakeResultString	= 2,
-	evaluatorEventUnknownVariable	= 3,
-	evaluatorEventUnknownFunction	= 4,
-	evaluatorEventMathError	= 5,
-	evaluatorEventFinished	= 6,
-	evaluatorEventClear	= 7,
-	evaluatorEventDivideByZero	= 8,
-	evaluatorEventInvalidArgument	= 9
+    {
+        evaluatorEventStarted	= 1,
+        evaluatorEventTakeResultString	= 2,
+        evaluatorEventUnknownVariable	= 3,
+        evaluatorEventUnknownFunction	= 4,
+        evaluatorEventMathError	= 5,
+        evaluatorEventFinished	= 6,
+        evaluatorEventClear	= 7,
+        evaluatorEventDivideByZero	= 8,
+        evaluatorEventInvalidArgument	= 9
     } ;
 
 enum evaluatorErrors
-    {	evaluatorErrorVariableUndefined	= 1,
-	evaluatorErrorFunctionUndefined	= 2,
-	evaluatorErrorBadFunction	= 3,
-	evaluatorErrorBadDelimiter	= 4
+    {
+        evaluatorErrorVariableUndefined	= 1,
+        evaluatorErrorFunctionUndefined	= 2,
+        evaluatorErrorBadFunction	= 3,
+        evaluatorErrorBadDelimiter	= 4
     } ;
 
 EXTERN_C const IID LIBID_Evaluator;
@@ -162,6 +167,7 @@ EXTERN_C const IID IID_IEvaluator;
         
     };
     
+    
 #else 	/* C style interface */
 
     typedef struct IEvaluatorVtbl
@@ -171,8 +177,8 @@ EXTERN_C const IID IID_IEvaluator;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IEvaluator * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
-            __RPC__deref_out  void **ppvObject);
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IEvaluator * This);
@@ -200,14 +206,22 @@ EXTERN_C const IID IID_IEvaluator;
         
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IEvaluator * This,
-            /* [in] */ DISPID dispIdMember,
-            /* [in] */ REFIID riid,
-            /* [in] */ LCID lcid,
-            /* [in] */ WORD wFlags,
-            /* [out][in] */ DISPPARAMS *pDispParams,
-            /* [out] */ VARIANT *pVarResult,
-            /* [out] */ EXCEPINFO *pExcepInfo,
-            /* [out] */ UINT *puArgErr);
+            /* [annotation][in] */ 
+            _In_  DISPID dispIdMember,
+            /* [annotation][in] */ 
+            _In_  REFIID riid,
+            /* [annotation][in] */ 
+            _In_  LCID lcid,
+            /* [annotation][in] */ 
+            _In_  WORD wFlags,
+            /* [annotation][out][in] */ 
+            _In_  DISPPARAMS *pDispParams,
+            /* [annotation][out] */ 
+            _Out_opt_  VARIANT *pVarResult,
+            /* [annotation][out] */ 
+            _Out_opt_  EXCEPINFO *pExcepInfo,
+            /* [annotation][out] */ 
+            _Out_opt_  UINT *puArgErr);
         
         /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Eval )( 
             IEvaluator * This,
@@ -390,6 +404,7 @@ EXTERN_C const IID IID_IEvaluatorEvents;
         
     };
     
+    
 #else 	/* C style interface */
 
     typedef struct IEvaluatorEventsVtbl
@@ -399,8 +414,8 @@ EXTERN_C const IID IID_IEvaluatorEvents;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IEvaluatorEvents * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
-            __RPC__deref_out  void **ppvObject);
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IEvaluatorEvents * This);
@@ -428,14 +443,22 @@ EXTERN_C const IID IID_IEvaluatorEvents;
         
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IEvaluatorEvents * This,
-            /* [in] */ DISPID dispIdMember,
-            /* [in] */ REFIID riid,
-            /* [in] */ LCID lcid,
-            /* [in] */ WORD wFlags,
-            /* [out][in] */ DISPPARAMS *pDispParams,
-            /* [out] */ VARIANT *pVarResult,
-            /* [out] */ EXCEPINFO *pExcepInfo,
-            /* [out] */ UINT *puArgErr);
+            /* [annotation][in] */ 
+            _In_  DISPID dispIdMember,
+            /* [annotation][in] */ 
+            _In_  REFIID riid,
+            /* [annotation][in] */ 
+            _In_  LCID lcid,
+            /* [annotation][in] */ 
+            _In_  WORD wFlags,
+            /* [annotation][out][in] */ 
+            _In_  DISPPARAMS *pDispParams,
+            /* [annotation][out] */ 
+            _Out_opt_  VARIANT *pVarResult,
+            /* [annotation][out] */ 
+            _Out_opt_  EXCEPINFO *pExcepInfo,
+            /* [annotation][out] */ 
+            _Out_opt_  UINT *puArgErr);
         
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *Started )( 
             IEvaluatorEvents * This,

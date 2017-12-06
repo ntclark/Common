@@ -3,18 +3,18 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 7.00.0500 */
-/* at Mon Jan 13 14:49:51 2014
+ /* File created by MIDL compiler version 8.00.0603 */
+/* at Sat Dec 02 15:33:42 2017
  */
-/* Compiler settings for .\Variable.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run)
+/* Compiler settings for Variable.odl:
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
-//@@MIDL_FILE_HEADING(  )
+/* @@MIDL_FILE_HEADING(  ) */
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
 
@@ -44,6 +44,7 @@
 #ifndef __IVariable_FWD_DEFINED__
 #define __IVariable_FWD_DEFINED__
 typedef interface IVariable IVariable;
+
 #endif 	/* __IVariable_FWD_DEFINED__ */
 
 
@@ -179,7 +180,10 @@ EXTERN_C const IID IID_IVariable;
         
         virtual HRESULT STDMETHODCALLTYPE InitializeDomain( void) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE Edit( void) = 0;
+        
     };
+    
     
 #else 	/* C style interface */
 
@@ -190,8 +194,8 @@ EXTERN_C const IID IID_IVariable;
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IVariable * This,
             /* [in] */ REFIID riid,
-            /* [iid_is][out] */ 
-            __RPC__deref_out  void **ppvObject);
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IVariable * This);
@@ -219,14 +223,22 @@ EXTERN_C const IID IID_IVariable;
         
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IVariable * This,
-            /* [in] */ DISPID dispIdMember,
-            /* [in] */ REFIID riid,
-            /* [in] */ LCID lcid,
-            /* [in] */ WORD wFlags,
-            /* [out][in] */ DISPPARAMS *pDispParams,
-            /* [out] */ VARIANT *pVarResult,
-            /* [out] */ EXCEPINFO *pExcepInfo,
-            /* [out] */ UINT *puArgErr);
+            /* [annotation][in] */ 
+            _In_  DISPID dispIdMember,
+            /* [annotation][in] */ 
+            _In_  REFIID riid,
+            /* [annotation][in] */ 
+            _In_  LCID lcid,
+            /* [annotation][in] */ 
+            _In_  WORD wFlags,
+            /* [annotation][out][in] */ 
+            _In_  DISPPARAMS *pDispParams,
+            /* [annotation][out] */ 
+            _Out_opt_  VARIANT *pVarResult,
+            /* [annotation][out] */ 
+            _Out_opt_  EXCEPINFO *pExcepInfo,
+            /* [annotation][out] */ 
+            _Out_opt_  UINT *puArgErr);
         
         /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Value )( 
             IVariable * This,
@@ -342,6 +354,9 @@ EXTERN_C const IID IID_IVariable;
             HWND hwndTabControl);
         
         HRESULT ( STDMETHODCALLTYPE *InitializeDomain )( 
+            IVariable * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *Edit )( 
             IVariable * This);
         
         END_INTERFACE
@@ -466,6 +481,9 @@ EXTERN_C const IID IID_IVariable;
 
 #define IVariable_InitializeDomain(This)	\
     ( (This)->lpVtbl -> InitializeDomain(This) ) 
+
+#define IVariable_Edit(This)	\
+    ( (This)->lpVtbl -> Edit(This) ) 
 
 #endif /* COBJMACROS */
 

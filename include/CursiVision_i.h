@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Nov 10 13:43:45 2017
+/* at Thu Nov 16 15:24:16 2017
  */
 /* Compiler settings for CursiVision.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -576,7 +576,8 @@ DEFINE_GUID(IID_ICursiVisionEvents,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,
         
         virtual HRESULT STDMETHODCALLTYPE PenPoint( 
             long x,
-            long y) = 0;
+            long y,
+            float inkWeight) = 0;
         
     };
     
@@ -637,7 +638,8 @@ DEFINE_GUID(IID_ICursiVisionEvents,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,
         HRESULT ( STDMETHODCALLTYPE *PenPoint )( 
             ICursiVisionEvents * This,
             long x,
-            long y);
+            long y,
+            float inkWeight);
         
         END_INTERFACE
     } ICursiVisionEventsVtbl;
@@ -692,8 +694,8 @@ DEFINE_GUID(IID_ICursiVisionEvents,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,
 #define ICursiVisionEvents_PenUp(This,x,y)	\
     ( (This)->lpVtbl -> PenUp(This,x,y) ) 
 
-#define ICursiVisionEvents_PenPoint(This,x,y)	\
-    ( (This)->lpVtbl -> PenPoint(This,x,y) ) 
+#define ICursiVisionEvents_PenPoint(This,x,y,inkWeight)	\
+    ( (This)->lpVtbl -> PenPoint(This,x,y,inkWeight) ) 
 
 #endif /* COBJMACROS */
 

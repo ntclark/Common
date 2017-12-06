@@ -5,18 +5,18 @@
 /* link this file in with the server and any clients */
 
 
- /* File created by MIDL compiler version 7.00.0500 */
-/* at Mon Jan 13 14:49:53 2014
+ /* File created by MIDL compiler version 8.00.0603 */
+/* at Tue Dec 05 21:48:13 2017
  */
-/* Compiler settings for .\Evaluator.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run)
+/* Compiler settings for Evaluator.odl:
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
-//@@MIDL_FILE_HEADING(  )
+/* @@MIDL_FILE_HEADING(  ) */
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
 

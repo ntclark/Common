@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Nov 10 10:17:39 2017
+/* at Fri Dec 01 13:24:45 2017
  */
-/* Compiler settings for D:\CursiVision\..\Common\source\SignaturePad.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+/* Compiler settings for D:\Phablet-API\..\Common\source\SignaturePad.odl:
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -810,7 +810,8 @@ EXTERN_C const IID IID_ISignaturePadEvents;
         
         virtual HRESULT STDMETHODCALLTYPE PenPoint( 
             long x,
-            long y) = 0;
+            long y,
+            float inkWeight) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE OptionSelected( 
             long optionNumber) = 0;
@@ -849,7 +850,8 @@ EXTERN_C const IID IID_ISignaturePadEvents;
         HRESULT ( STDMETHODCALLTYPE *PenPoint )( 
             ISignaturePadEvents * This,
             long x,
-            long y);
+            long y,
+            float inkWeight);
         
         HRESULT ( STDMETHODCALLTYPE *OptionSelected )( 
             ISignaturePadEvents * This,
@@ -889,8 +891,8 @@ EXTERN_C const IID IID_ISignaturePadEvents;
 #define ISignaturePadEvents_PenUp(This)	\
     ( (This)->lpVtbl -> PenUp(This) ) 
 
-#define ISignaturePadEvents_PenPoint(This,x,y)	\
-    ( (This)->lpVtbl -> PenPoint(This,x,y) ) 
+#define ISignaturePadEvents_PenPoint(This,x,y,inkWeight)	\
+    ( (This)->lpVtbl -> PenPoint(This,x,y,inkWeight) ) 
 
 #define ISignaturePadEvents_OptionSelected(This,optionNumber)	\
     ( (This)->lpVtbl -> OptionSelected(This,optionNumber) ) 
