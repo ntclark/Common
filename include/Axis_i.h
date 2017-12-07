@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Dec 05 18:12:15 2017
+/* at Wed Dec 06 17:27:35 2017
  */
 /* Compiler settings for Axis.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -297,7 +297,8 @@ EXTERN_C const IID IID_IAxis;
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE AdviseGSystemStatusBar( 
             /* external definition not present */ IGSystemStatusBar *__MIDL__IAxis0009) = 0;
         
-        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE ShowProperties( void) = 0;
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE ShowProperties( 
+            HWND hwndParent) = 0;
         
     };
     
@@ -572,7 +573,8 @@ EXTERN_C const IID IID_IAxis;
             /* external definition not present */ IGSystemStatusBar *__MIDL__IAxis0009);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *ShowProperties )( 
-            IAxis * This);
+            IAxis * This,
+            HWND hwndParent);
         
         END_INTERFACE
     } IAxisVtbl;
@@ -766,8 +768,8 @@ EXTERN_C const IID IID_IAxis;
 #define IAxis_AdviseGSystemStatusBar(This,__MIDL__IAxis0009)	\
     ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IAxis0009) ) 
 
-#define IAxis_ShowProperties(This)	\
-    ( (This)->lpVtbl -> ShowProperties(This) ) 
+#define IAxis_ShowProperties(This,hwndParent)	\
+    ( (This)->lpVtbl -> ShowProperties(This,hwndParent) ) 
 
 #endif /* COBJMACROS */
 

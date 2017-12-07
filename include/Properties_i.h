@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Dec 01 10:45:48 2017
+/* at Wed Dec 06 12:13:41 2017
  */
 /* Compiler settings for Com-Implementation\Properties.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -893,6 +893,8 @@ EXTERN_C const IID IID_IGProperty;
             void *anyData,
             long length) = 0;
         
+        virtual /* [id] */ void *STDMETHODCALLTYPE pointer( void) = 0;
+        
     };
     
     
@@ -1302,6 +1304,9 @@ EXTERN_C const IID IID_IGProperty;
             void *anyData,
             long length);
         
+        /* [id] */ void *( STDMETHODCALLTYPE *pointer )( 
+            IGProperty * This);
+        
         END_INTERFACE
     } IGPropertyVtbl;
 
@@ -1586,6 +1591,9 @@ EXTERN_C const IID IID_IGProperty;
 
 #define IGProperty_assign(This,anyData,length)	\
     ( (This)->lpVtbl -> assign(This,anyData,length) ) 
+
+#define IGProperty_pointer(This)	\
+    ( (This)->lpVtbl -> pointer(This) ) 
 
 #endif /* COBJMACROS */
 
