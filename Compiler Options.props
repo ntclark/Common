@@ -7,6 +7,7 @@
     <_ProjectFileVersion>14.0.24720.0</_ProjectFileVersion>
     <OutDir>\Common\Artifacts\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(ProjectDir)$(Configuration)\$(Platform)\</IntDir>
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -18,6 +19,8 @@
       <AdditionalLibraryDirectories>\Common\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>\Common\lib\$(Platform)\$(TargetName).lib</ImportLibrary>
       <TargetMachine>NotSet</TargetMachine>
+      <AdditionalOptions>/SECTION:.rsrc,rw %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>comctl32.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>\Common\include;\Visio Logger\Common\odl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -25,6 +28,7 @@
       <HeaderFileName>\Common\Include\%(Filename)_i.h</HeaderFileName>
       <InterfaceIdentifierFileName>\Common\Include\%(Filename)_i.c</InterfaceIdentifierFileName>
       <TypeLibraryName>\Common\Include\%(Filename).tlb</TypeLibraryName>
+      <DefaultCharType>Ascii</DefaultCharType>
     </Midl>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\include;\Common\include;\Common\resources;$(SolutionDir);$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

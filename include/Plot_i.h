@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Dec 21 10:43:53 2017
+/* at Fri Dec 22 12:44:20 2017
  */
 /* Compiler settings for Plot.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -548,7 +548,7 @@ EXTERN_C const IID IID_IBasePlot;
         
         virtual HRESULT STDMETHODCALLTYPE AddText( 
             void *text,
-            unsigned char *name,
+            char *name,
             int idNumber) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE RemoveText( 
@@ -678,7 +678,7 @@ EXTERN_C const IID IID_IBasePlot;
         HRESULT ( STDMETHODCALLTYPE *AddText )( 
             IBasePlot * This,
             void *text,
-            unsigned char *name,
+            char *name,
             int idNumber);
         
         HRESULT ( STDMETHODCALLTYPE *RemoveText )( 
@@ -970,7 +970,7 @@ EXTERN_C const IID IID_IPlot;
         
         virtual HRESULT STDMETHODCALLTYPE AddText( 
             void *text,
-            unsigned char *name,
+            char *name,
             int idNumber) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE RemoveText( 
@@ -1221,7 +1221,7 @@ EXTERN_C const IID IID_IPlot;
         HRESULT ( STDMETHODCALLTYPE *AddText )( 
             IPlot * This,
             void *text,
-            unsigned char *name,
+            char *name,
             int idNumber);
         
         HRESULT ( STDMETHODCALLTYPE *RemoveText )( 

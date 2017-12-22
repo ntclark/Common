@@ -10,7 +10,7 @@
 #include "Object.h"
 #include "Dictionary.h"
 
-#include "natezlib\zlib.h"
+//#include "natezlib\zlib.h"
 
 class PdfObject;
 

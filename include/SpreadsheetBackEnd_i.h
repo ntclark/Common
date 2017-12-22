@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Nov 09 16:25:59 2017
+/* at Fri Dec 22 10:49:43 2017
  */
 /* Compiler settings for SpreadsheetBackEnd.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -69,9 +69,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-DEFINE_GUID(LIBID_CursiVisionSpreadsheetBackEnd,0xC16C4DF5,0x7197,0x4207,0x93,0xC0,0x82,0xA7,0x18,0x15,0x98,0x76);
+EXTERN_C const IID LIBID_CursiVisionSpreadsheetBackEnd;
 
-DEFINE_GUID(CLSID_CursiVisionSpreadsheetBackEnd,0xC16C4DF5,0x7197,0x4207,0x93,0xC0,0x82,0xA7,0x18,0x15,0x98,0x77);
+EXTERN_C const CLSID CLSID_CursiVisionSpreadsheetBackEnd;
 
 #ifdef __cplusplus
 

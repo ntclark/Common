@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Dec 21 10:46:30 2017
+/* at Fri Dec 22 12:56:49 2017
  */
 /* Compiler settings for viewSet.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -76,7 +76,7 @@ extern "C"{
 /* [control][version][lcid][helpstring][helpfile][uuid] */ 
 
 
-DEFINE_GUID(LIBID_ViewSet,0x8CAEFD7E,0x55E6,0x11d3,0x83,0x65,0x00,0x60,0x08,0xBD,0x5B,0xC3);
+EXTERN_C const IID LIBID_ViewSet;
 
 #ifndef __IViewSet_INTERFACE_DEFINED__
 #define __IViewSet_INTERFACE_DEFINED__
@@ -85,7 +85,7 @@ DEFINE_GUID(LIBID_ViewSet,0x8CAEFD7E,0x55E6,0x11d3,0x83,0x65,0x00,0x60,0x08,0xBD
 /* [object][helpstring][uuid] */ 
 
 
-DEFINE_GUID(IID_IViewSet,0x8CAEFD7F,0x55E6,0x11d3,0x83,0x65,0x00,0x60,0x08,0xBD,0x5B,0xC3);
+EXTERN_C const IID IID_IViewSet;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -196,7 +196,7 @@ DEFINE_GUID(IID_IViewSet,0x8CAEFD7F,0x55E6,0x11d3,0x83,0x65,0x00,0x60,0x08,0xBD,
 #endif 	/* __IViewSet_INTERFACE_DEFINED__ */
 
 
-DEFINE_GUID(CLSID_ViewSet,0x8CAEFD80,0x55E6,0x11d3,0x83,0x65,0x00,0x60,0x08,0xBD,0x5B,0xC3);
+EXTERN_C const CLSID CLSID_ViewSet;
 
 #ifdef __cplusplus
 
