@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Dec 06 17:28:47 2017
+/* at Thu Dec 21 10:46:30 2017
  */
 /* Compiler settings for viewSet.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -108,10 +108,10 @@ DEFINE_GUID(IID_IViewSet,0x8CAEFD7F,0x55E6,0x11d3,0x83,0x65,0x00,0x60,0x08,0xBD,
             /* external definition not present */ IAxis *pIAxis_Y,
             /* external definition not present */ IAxis *pIAxis_Z) = 0;
         
-        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_ParentWindow( 
-            /* [in] */ HWND hwndParent) = 0;
-        
-        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Properties( void) = 0;
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Properties( 
+            /* [in] */ void ( STDMETHODCALLTYPE *pWhenDoneCallback )( 
+                void *__MIDL__IViewSet0000),
+            /* [in] */ void *pArg) = 0;
         
     };
     
@@ -150,12 +150,11 @@ DEFINE_GUID(IID_IViewSet,0x8CAEFD7F,0x55E6,0x11d3,0x83,0x65,0x00,0x60,0x08,0xBD,
             /* external definition not present */ IAxis *pIAxis_Y,
             /* external definition not present */ IAxis *pIAxis_Z);
         
-        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_ParentWindow )( 
-            IViewSet * This,
-            /* [in] */ HWND hwndParent);
-        
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Properties )( 
-            IViewSet * This);
+            IViewSet * This,
+            /* [in] */ void ( STDMETHODCALLTYPE *pWhenDoneCallback )( 
+                void *__MIDL__IViewSet0000),
+            /* [in] */ void *pArg);
         
         END_INTERFACE
     } IViewSetVtbl;
@@ -183,11 +182,8 @@ DEFINE_GUID(IID_IViewSet,0x8CAEFD7F,0x55E6,0x11d3,0x83,0x65,0x00,0x60,0x08,0xBD,
 #define IViewSet_Initialize(This,hwndOwner,pIOpenGLImplementation,pIEvaluator,parentPlotView,parentTheta,parentPhi,parentSpin,parentFloor,parentCeiling,pIDataSet,pIAxis_X,pIAxis_Y,pIAxis_Z)	\
     ( (This)->lpVtbl -> Initialize(This,hwndOwner,pIOpenGLImplementation,pIEvaluator,parentPlotView,parentTheta,parentPhi,parentSpin,parentFloor,parentCeiling,pIDataSet,pIAxis_X,pIAxis_Y,pIAxis_Z) ) 
 
-#define IViewSet_put_ParentWindow(This,hwndParent)	\
-    ( (This)->lpVtbl -> put_ParentWindow(This,hwndParent) ) 
-
-#define IViewSet_Properties(This)	\
-    ( (This)->lpVtbl -> Properties(This) ) 
+#define IViewSet_Properties(This,pWhenDoneCallback,pArg)	\
+    ( (This)->lpVtbl -> Properties(This,pWhenDoneCallback,pArg) ) 
 
 #endif /* COBJMACROS */
 

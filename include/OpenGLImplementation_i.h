@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Dec 06 14:07:02 2017
+/* at Thu Dec 21 10:39:05 2017
  */
 /* Compiler settings for OpenGLImplementation.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -106,7 +106,9 @@ EXTERN_C const IID IID_IOpenGLImplementation;
         virtual HRESULT STDMETHODCALLTYPE SetTargetWindow( 
             HWND __MIDL__IOpenGLImplementation0001) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE ResetTargetWindow( void) = 0;
+        virtual HDC STDMETHODCALLTYPE TargetDC( void) = 0;
+        
+        virtual HWND STDMETHODCALLTYPE TargetHWND( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE PrintSetup( void) = 0;
         
@@ -231,6 +233,8 @@ EXTERN_C const IID IID_IOpenGLImplementation;
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_MousePositionClient( 
             POINT *ptMouse) = 0;
         
+        virtual BOOL STDMETHODCALLTYPE IsRendered( void) = 0;
+        
         virtual HRESULT STDMETHODCALLTYPE GetExtents( 
             double *minx,
             double *miny,
@@ -295,7 +299,7 @@ EXTERN_C const IID IID_IOpenGLImplementation;
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ViewSpin( 
             /* [retval][out] */ double *pViewSpin) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE Flush( void) = 0;
+        virtual HRESULT STDMETHODCALLTYPE Finalize( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE SetColor( 
             /* external definition not present */ IGProperty *__MIDL__IOpenGLImplementation0005) = 0;
@@ -307,7 +311,7 @@ EXTERN_C const IID IID_IOpenGLImplementation;
             double *normal) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE GetPickBoxHits( 
-            POINT *ptl,
+            POINTL *ptl,
             long pickWindowSize,
             unsigned int *hitTable,
             long hitTableSize,
@@ -417,7 +421,10 @@ EXTERN_C const IID IID_IOpenGLImplementation;
             IOpenGLImplementation * This,
             HWND __MIDL__IOpenGLImplementation0001);
         
-        HRESULT ( STDMETHODCALLTYPE *ResetTargetWindow )( 
+        HDC ( STDMETHODCALLTYPE *TargetDC )( 
+            IOpenGLImplementation * This);
+        
+        HWND ( STDMETHODCALLTYPE *TargetHWND )( 
             IOpenGLImplementation * This);
         
         HRESULT ( STDMETHODCALLTYPE *PrintSetup )( 
@@ -571,6 +578,9 @@ EXTERN_C const IID IID_IOpenGLImplementation;
             IOpenGLImplementation * This,
             POINT *ptMouse);
         
+        BOOL ( STDMETHODCALLTYPE *IsRendered )( 
+            IOpenGLImplementation * This);
+        
         HRESULT ( STDMETHODCALLTYPE *GetExtents )( 
             IOpenGLImplementation * This,
             double *minx,
@@ -652,7 +662,7 @@ EXTERN_C const IID IID_IOpenGLImplementation;
             IOpenGLImplementation * This,
             /* [retval][out] */ double *pViewSpin);
         
-        HRESULT ( STDMETHODCALLTYPE *Flush )( 
+        HRESULT ( STDMETHODCALLTYPE *Finalize )( 
             IOpenGLImplementation * This);
         
         HRESULT ( STDMETHODCALLTYPE *SetColor )( 
@@ -669,7 +679,7 @@ EXTERN_C const IID IID_IOpenGLImplementation;
         
         HRESULT ( STDMETHODCALLTYPE *GetPickBoxHits )( 
             IOpenGLImplementation * This,
-            POINT *ptl,
+            POINTL *ptl,
             long pickWindowSize,
             unsigned int *hitTable,
             long hitTableSize,
@@ -762,8 +772,11 @@ EXTERN_C const IID IID_IOpenGLImplementation;
 #define IOpenGLImplementation_SetTargetWindow(This,__MIDL__IOpenGLImplementation0001)	\
     ( (This)->lpVtbl -> SetTargetWindow(This,__MIDL__IOpenGLImplementation0001) ) 
 
-#define IOpenGLImplementation_ResetTargetWindow(This)	\
-    ( (This)->lpVtbl -> ResetTargetWindow(This) ) 
+#define IOpenGLImplementation_TargetDC(This)	\
+    ( (This)->lpVtbl -> TargetDC(This) ) 
+
+#define IOpenGLImplementation_TargetHWND(This)	\
+    ( (This)->lpVtbl -> TargetHWND(This) ) 
 
 #define IOpenGLImplementation_PrintSetup(This)	\
     ( (This)->lpVtbl -> PrintSetup(This) ) 
@@ -849,6 +862,9 @@ EXTERN_C const IID IID_IOpenGLImplementation;
 #define IOpenGLImplementation_get_MousePositionClient(This,ptMouse)	\
     ( (This)->lpVtbl -> get_MousePositionClient(This,ptMouse) ) 
 
+#define IOpenGLImplementation_IsRendered(This)	\
+    ( (This)->lpVtbl -> IsRendered(This) ) 
+
 #define IOpenGLImplementation_GetExtents(This,minx,miny,minz,maxx,maxy,maxz)	\
     ( (This)->lpVtbl -> GetExtents(This,minx,miny,minz,maxx,maxy,maxz) ) 
 
@@ -900,8 +916,8 @@ EXTERN_C const IID IID_IOpenGLImplementation;
 #define IOpenGLImplementation_get_ViewSpin(This,pViewSpin)	\
     ( (This)->lpVtbl -> get_ViewSpin(This,pViewSpin) ) 
 
-#define IOpenGLImplementation_Flush(This)	\
-    ( (This)->lpVtbl -> Flush(This) ) 
+#define IOpenGLImplementation_Finalize(This)	\
+    ( (This)->lpVtbl -> Finalize(This) ) 
 
 #define IOpenGLImplementation_SetColor(This,__MIDL__IOpenGLImplementation0005)	\
     ( (This)->lpVtbl -> SetColor(This,__MIDL__IOpenGLImplementation0005) ) 

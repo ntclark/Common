@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Dec 06 17:27:35 2017
+/* at Thu Dec 21 10:43:53 2017
  */
 /* Compiler settings for Axis.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -268,16 +268,18 @@ EXTERN_C const IID IID_IAxis;
             /* [in] */ IAxis *pYAxis,
             /* [in] */ IAxis *pZAxis,
             /* [in] */ /* external definition not present */ IGProperty *pIPropertyPlotView,
-            /* [in] */ /* external definition not present */ IGProperty *pIPropertyPlotSubType,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyFloor,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyCeiling,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyOpenGLText,
             /* [in] */ /* external definition not present */ IDataSet *pIDomainDataSet,
             /* [in] */ /* external definition not present */ IOpenGLImplementation *__MIDL__IAxis0006,
-            /* [in] */ /* external definition not present */ IEvaluator *__MIDL__IAxis0007) = 0;
+            /* [in] */ /* external definition not present */ IEvaluator *__MIDL__IAxis0007,
+            /* [in] */ void ( STDMETHODCALLTYPE *pWhenChangedCallback )( 
+                void *__MIDL__IAxis0008),
+            void *pWhenChangedArg) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_DataSet( 
-            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IAxis0008) = 0;
+            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IAxis0010) = 0;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE PrepText( void) = 0;
         
@@ -295,7 +297,7 @@ EXTERN_C const IID IID_IAxis;
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE Erase( void) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE AdviseGSystemStatusBar( 
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IAxis0009) = 0;
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IAxis0011) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE ShowProperties( 
             HWND hwndParent) = 0;
@@ -534,17 +536,19 @@ EXTERN_C const IID IID_IAxis;
             /* [in] */ IAxis *pYAxis,
             /* [in] */ IAxis *pZAxis,
             /* [in] */ /* external definition not present */ IGProperty *pIPropertyPlotView,
-            /* [in] */ /* external definition not present */ IGProperty *pIPropertyPlotSubType,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyFloor,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyCeiling,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyOpenGLText,
             /* [in] */ /* external definition not present */ IDataSet *pIDomainDataSet,
             /* [in] */ /* external definition not present */ IOpenGLImplementation *__MIDL__IAxis0006,
-            /* [in] */ /* external definition not present */ IEvaluator *__MIDL__IAxis0007);
+            /* [in] */ /* external definition not present */ IEvaluator *__MIDL__IAxis0007,
+            /* [in] */ void ( STDMETHODCALLTYPE *pWhenChangedCallback )( 
+                void *__MIDL__IAxis0008),
+            void *pWhenChangedArg);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataSet )( 
             IAxis * This,
-            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IAxis0008);
+            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IAxis0010);
         
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *PrepText )( 
             IAxis * This);
@@ -570,7 +574,7 @@ EXTERN_C const IID IID_IAxis;
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *AdviseGSystemStatusBar )( 
             IAxis * This,
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IAxis0009);
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IAxis0011);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *ShowProperties )( 
             IAxis * This,
@@ -738,11 +742,11 @@ EXTERN_C const IID IID_IAxis;
 #define IAxis_get_GridLinesPerTick(This,pGridLines)	\
     ( (This)->lpVtbl -> get_GridLinesPerTick(This,pGridLines) ) 
 
-#define IAxis_Initialize(This,hwndOwner,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pIPropertyPlotSubType,pPropertyFloor,pPropertyCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007)	\
-    ( (This)->lpVtbl -> Initialize(This,hwndOwner,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pIPropertyPlotSubType,pPropertyFloor,pPropertyCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007) ) 
+#define IAxis_Initialize(This,hwndOwner,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyFloor,pPropertyCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007,pWhenChangedCallback,pWhenChangedArg)	\
+    ( (This)->lpVtbl -> Initialize(This,hwndOwner,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyFloor,pPropertyCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007,pWhenChangedCallback,pWhenChangedArg) ) 
 
-#define IAxis_get_DataSet(This,__MIDL__IAxis0008)	\
-    ( (This)->lpVtbl -> get_DataSet(This,__MIDL__IAxis0008) ) 
+#define IAxis_get_DataSet(This,__MIDL__IAxis0010)	\
+    ( (This)->lpVtbl -> get_DataSet(This,__MIDL__IAxis0010) ) 
 
 #define IAxis_PrepText(This)	\
     ( (This)->lpVtbl -> PrepText(This) ) 
@@ -765,8 +769,8 @@ EXTERN_C const IID IID_IAxis;
 #define IAxis_Erase(This)	\
     ( (This)->lpVtbl -> Erase(This) ) 
 
-#define IAxis_AdviseGSystemStatusBar(This,__MIDL__IAxis0009)	\
-    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IAxis0009) ) 
+#define IAxis_AdviseGSystemStatusBar(This,__MIDL__IAxis0011)	\
+    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IAxis0011) ) 
 
 #define IAxis_ShowProperties(This,hwndParent)	\
     ( (This)->lpVtbl -> ShowProperties(This,hwndParent) ) 

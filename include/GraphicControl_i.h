@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Dec 05 22:38:39 2017
+/* at Wed Dec 20 10:16:52 2017
  */
 /* Compiler settings for GraphicControl.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -112,7 +112,8 @@ enum GraphicPropertiesID
         gcPropPickBoxSize	= 72,
         gcPropUseStatusBar	= 73,
         gcPropUseGraphicsCursor	= 74,
-        gcPropDenyUserPropertySettings	= 75
+        gcPropDenyUserPropertySettings	= 75,
+        gcPropAllowUserShowFunctions	= 76
     } ;
 
 enum GraphicMethodsID
@@ -140,27 +141,6 @@ enum GraphicMethodsID
         gcMethodRemovePlot	= 131,
         gcMethodRemoveAllPlots	= 132,
         gcMethodSynchronise	= 133
-    } ;
-
-enum PlotViews
-    {
-        gcPlotView2D	= 0x1,
-        gcPlotView3D	= 0x2
-    } ;
-
-enum PlotTypes
-    {
-        gcPlotTypeNone	= 0,
-        gcPlotTypeNatural	= 0x10001,
-        gcPlotTypeSurface	= 0x20000,
-        gcPlotTypeWireFrame	= 0x40000,
-        gcPlotTypeStacks	= 0x80000,
-        gcPlotTypeBlocks	= 0x100000,
-        gcPlotTypeBalls	= 0x200000,
-        gcPlotTypePie	= 0x80002,
-        gcPlotTypeContour	= 0x20004,
-        gcPlotTypeQuads	= 0x40008,
-        gcPlotTypeTriangles	= 0x80010
     } ;
 
 EXTERN_C const IID LIBID_Graphic;
@@ -418,6 +398,9 @@ EXTERN_C const IID IID_IGSGraphic;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_ShowFunctions( 
             /* [retval][out] */ VARIANT_BOOL *pShowing) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_AllowUserSetFunctionVisibility( 
+            /* [in] */ VARIANT_BOOL doAllow) = 0;
         
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_AutoPlotViewDetection( 
             /* [in] */ VARIANT_BOOL __MIDL__IGSGraphic0002) = 0;
@@ -738,6 +721,10 @@ EXTERN_C const IID IID_IGSGraphic;
             IGSGraphic * This,
             /* [retval][out] */ VARIANT_BOOL *pShowing);
         
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_AllowUserSetFunctionVisibility )( 
+            IGSGraphic * This,
+            /* [in] */ VARIANT_BOOL doAllow);
+        
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_AutoPlotViewDetection )( 
             IGSGraphic * This,
             /* [in] */ VARIANT_BOOL __MIDL__IGSGraphic0002);
@@ -1017,6 +1004,9 @@ EXTERN_C const IID IID_IGSGraphic;
 
 #define IGSGraphic_get_ShowFunctions(This,pShowing)	\
     ( (This)->lpVtbl -> get_ShowFunctions(This,pShowing) ) 
+
+#define IGSGraphic_put_AllowUserSetFunctionVisibility(This,doAllow)	\
+    ( (This)->lpVtbl -> put_AllowUserSetFunctionVisibility(This,doAllow) ) 
 
 #define IGSGraphic_put_AutoPlotViewDetection(This,__MIDL__IGSGraphic0002)	\
     ( (This)->lpVtbl -> put_AutoPlotViewDetection(This,__MIDL__IGSGraphic0002) ) 

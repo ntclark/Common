@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Dec 05 22:37:00 2017
+/* at Tue Dec 19 08:56:45 2017
  */
 /* Compiler settings for GSystem.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -131,6 +131,33 @@ enum TextSizeUnits
         TEXT_SIZE_PIXELS	= 0,
         TEXT_SIZE_PERCENT	= 0x1,
         TEXT_SIZE_POINTS	= 0x2
+    } ;
+
+enum PlotViews
+    {
+        gcPlotView2D	= 0x1,
+        gcPlotView3D	= 0x2
+    } ;
+
+enum PlotTypes
+    {
+        gcPlotTypeNone	= 0,
+        gcPlotTypeNatural	= 0x10001,
+        gcPlotTypeSurface	= 0x20000,
+        gcPlotTypeWireFrame	= 0x40000,
+        gcPlotTypeStacks	= 0x80000,
+        gcPlotTypeBlocks	= 0x100000,
+        gcPlotTypeBalls	= 0x200000,
+        gcPlotTypePie	= 0x80002,
+        gcPlotTypeContour	= 0x20004,
+        gcPlotTypeQuads	= 0x40008,
+        gcPlotTypeTriangles	= 0x80010
+    } ;
+
+enum PlotIdBands
+    {
+        plotIdFunctions	= 100,
+        plotIdDataSets	= 200
     } ;
 
 EXTERN_C const IID LIBID_GSystems;

@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Dec 05 22:35:13 2017
+/* at Thu Dec 21 10:39:47 2017
  */
 /* Compiler settings for Function.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -376,6 +376,35 @@ EXTERN_C const IID IID_IGSFunctioNater;
         
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE EditProperties( void) = 0;
         
+        virtual /* [id][propput][helpstring] */ HRESULT STDMETHODCALLTYPE put_IPlot( 
+            /* [in] */ void *pIPlot) = 0;
+        
+        virtual /* [id][propget] */ HRESULT STDMETHODCALLTYPE get_IPlot( 
+            /* [retval][out] */ void **ppIPlot) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Initialize( 
+            /* external definition not present */ IDataSet *pIDataSet_Domain,
+            /* external definition not present */ IOpenGLImplementation *pIOpenGLImplementation,
+            /* external definition not present */ IGProperty *pIPropertyLineColor,
+            /* external definition not present */ IGProperty *pIPropertyLineWeight,
+            /* external definition not present */ IGProperty *parentPropertyPlotView,
+            /* external definition not present */ IGProperty *parentPropertyDefault2DPlotSubType,
+            /* external definition not present */ IGProperty *parentPropertyDefault3DPlotSubType,
+            /* external definition not present */ IGProperty *parentPropertyBackgroundColor,
+            /* external definition not present */ IGProperty *parentPropertyFloor,
+            /* external definition not present */ IGProperty *parentPropertyCeiling,
+            /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
+                void *__MIDL__IGSFunctioNater0000),
+            /* [in] */ void *pArg) = 0;
+        
+        virtual /* [id][propput][helpstring] */ HRESULT STDMETHODCALLTYPE put_OnChangeCallback( 
+            /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
+                void *__MIDL__IGSFunctioNater0002),
+            /* [in] */ void *pArg) = 0;
+        
+        virtual /* [id][propget][helpstring] */ HRESULT STDMETHODCALLTYPE get_AnyControlVisible( 
+            /* [retval][out] */ VARIANT_BOOL *pAnyVisible) = 0;
+        
     };
     
     
@@ -612,6 +641,40 @@ EXTERN_C const IID IID_IGSFunctioNater;
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *EditProperties )( 
             IGSFunctioNater * This);
         
+        /* [id][propput][helpstring] */ HRESULT ( STDMETHODCALLTYPE *put_IPlot )( 
+            IGSFunctioNater * This,
+            /* [in] */ void *pIPlot);
+        
+        /* [id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_IPlot )( 
+            IGSFunctioNater * This,
+            /* [retval][out] */ void **ppIPlot);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Initialize )( 
+            IGSFunctioNater * This,
+            /* external definition not present */ IDataSet *pIDataSet_Domain,
+            /* external definition not present */ IOpenGLImplementation *pIOpenGLImplementation,
+            /* external definition not present */ IGProperty *pIPropertyLineColor,
+            /* external definition not present */ IGProperty *pIPropertyLineWeight,
+            /* external definition not present */ IGProperty *parentPropertyPlotView,
+            /* external definition not present */ IGProperty *parentPropertyDefault2DPlotSubType,
+            /* external definition not present */ IGProperty *parentPropertyDefault3DPlotSubType,
+            /* external definition not present */ IGProperty *parentPropertyBackgroundColor,
+            /* external definition not present */ IGProperty *parentPropertyFloor,
+            /* external definition not present */ IGProperty *parentPropertyCeiling,
+            /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
+                void *__MIDL__IGSFunctioNater0000),
+            /* [in] */ void *pArg);
+        
+        /* [id][propput][helpstring] */ HRESULT ( STDMETHODCALLTYPE *put_OnChangeCallback )( 
+            IGSFunctioNater * This,
+            /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
+                void *__MIDL__IGSFunctioNater0002),
+            /* [in] */ void *pArg);
+        
+        /* [id][propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_AnyControlVisible )( 
+            IGSFunctioNater * This,
+            /* [retval][out] */ VARIANT_BOOL *pAnyVisible);
+        
         END_INTERFACE
     } IGSFunctioNaterVtbl;
 
@@ -782,6 +845,21 @@ EXTERN_C const IID IID_IGSFunctioNater;
 
 #define IGSFunctioNater_EditProperties(This)	\
     ( (This)->lpVtbl -> EditProperties(This) ) 
+
+#define IGSFunctioNater_put_IPlot(This,pIPlot)	\
+    ( (This)->lpVtbl -> put_IPlot(This,pIPlot) ) 
+
+#define IGSFunctioNater_get_IPlot(This,ppIPlot)	\
+    ( (This)->lpVtbl -> get_IPlot(This,ppIPlot) ) 
+
+#define IGSFunctioNater_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg)	\
+    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg) ) 
+
+#define IGSFunctioNater_put_OnChangeCallback(This,pCallback,pArg)	\
+    ( (This)->lpVtbl -> put_OnChangeCallback(This,pCallback,pArg) ) 
+
+#define IGSFunctioNater_get_AnyControlVisible(This,pAnyVisible)	\
+    ( (This)->lpVtbl -> get_AnyControlVisible(This,pAnyVisible) ) 
 
 #endif /* COBJMACROS */
 

@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Dec 06 17:28:47 2017
+/* at Thu Dec 21 10:43:53 2017
  */
 /* Compiler settings for Plot.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -488,14 +488,17 @@ EXTERN_C const IID IID_IBasePlot;
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_DataSet( 
             /* [retval][out] */ /* external definition not present */ IDataSet **dataSet) = 0;
         
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_DataArity( 
+            /* [retval][out] */ enum /* external definition not present */ DataArity *__MIDL__IBasePlot0000) = 0;
+        
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_SegmentID( 
             /* [retval][out] */ long *getID) = 0;
         
         virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_ActionTable( 
-            /* [in] */ IGraphicSegmentAction *__MIDL__IBasePlot0000) = 0;
+            /* [in] */ IGraphicSegmentAction *__MIDL__IBasePlot0001) = 0;
         
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_ActionTable( 
-            /* [retval][out] */ IGraphicSegmentAction **__MIDL__IBasePlot0001) = 0;
+            /* [retval][out] */ IGraphicSegmentAction **__MIDL__IBasePlot0002) = 0;
         
         virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_PlotView( 
             /* [in] */ enum /* external definition not present */ PlotViews newPlotView) = 0;
@@ -596,17 +599,21 @@ EXTERN_C const IID IID_IBasePlot;
             IBasePlot * This,
             /* [retval][out] */ /* external definition not present */ IDataSet **dataSet);
         
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataArity )( 
+            IBasePlot * This,
+            /* [retval][out] */ enum /* external definition not present */ DataArity *__MIDL__IBasePlot0000);
+        
         /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_SegmentID )( 
             IBasePlot * This,
             /* [retval][out] */ long *getID);
         
         /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_ActionTable )( 
             IBasePlot * This,
-            /* [in] */ IGraphicSegmentAction *__MIDL__IBasePlot0000);
+            /* [in] */ IGraphicSegmentAction *__MIDL__IBasePlot0001);
         
         /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_ActionTable )( 
             IBasePlot * This,
-            /* [retval][out] */ IGraphicSegmentAction **__MIDL__IBasePlot0001);
+            /* [retval][out] */ IGraphicSegmentAction **__MIDL__IBasePlot0002);
         
         /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_PlotView )( 
             IBasePlot * This,
@@ -730,14 +737,17 @@ EXTERN_C const IID IID_IBasePlot;
 #define IBasePlot_get_DataSet(This,dataSet)	\
     ( (This)->lpVtbl -> get_DataSet(This,dataSet) ) 
 
+#define IBasePlot_get_DataArity(This,__MIDL__IBasePlot0000)	\
+    ( (This)->lpVtbl -> get_DataArity(This,__MIDL__IBasePlot0000) ) 
+
 #define IBasePlot_get_SegmentID(This,getID)	\
     ( (This)->lpVtbl -> get_SegmentID(This,getID) ) 
 
-#define IBasePlot_put_ActionTable(This,__MIDL__IBasePlot0000)	\
-    ( (This)->lpVtbl -> put_ActionTable(This,__MIDL__IBasePlot0000) ) 
+#define IBasePlot_put_ActionTable(This,__MIDL__IBasePlot0001)	\
+    ( (This)->lpVtbl -> put_ActionTable(This,__MIDL__IBasePlot0001) ) 
 
-#define IBasePlot_get_ActionTable(This,__MIDL__IBasePlot0001)	\
-    ( (This)->lpVtbl -> get_ActionTable(This,__MIDL__IBasePlot0001) ) 
+#define IBasePlot_get_ActionTable(This,__MIDL__IBasePlot0002)	\
+    ( (This)->lpVtbl -> get_ActionTable(This,__MIDL__IBasePlot0002) ) 
 
 #define IBasePlot_put_PlotView(This,newPlotView)	\
     ( (This)->lpVtbl -> put_PlotView(This,newPlotView) ) 
@@ -891,6 +901,9 @@ EXTERN_C const IID IID_IPlot;
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_DataSet( 
             /* [retval][out] */ /* external definition not present */ IDataSet **dataSet) = 0;
         
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_DataArity( 
+            /* [retval][out] */ enum /* external definition not present */ DataArity *__MIDL__IPlot0002) = 0;
+        
         virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_PlotNotify( 
             /* [in] */ IPlotNotify *setIPlotNotify) = 0;
         
@@ -930,25 +943,20 @@ EXTERN_C const IID IID_IPlot;
             /* external definition not present */ IEvaluator *pIEvaluator,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight,
-            /* external definition not present */ IGProperty *parentPropertyPlotType,
-            /* external definition not present */ IGProperty *parentPropertyPlotSubType,
+            /* external definition not present */ IGProperty *parentPropertyPlotView,
+            /* external definition not present */ IGProperty *parentPropertyDefault2DPlotSubType,
+            /* external definition not present */ IGProperty *parentPropertyDefault3DPlotSubType,
             /* external definition not present */ IGProperty *parentPropertyBackgroundColor,
-            /* external definition not present */ IGProperty *parentPropertyTheta,
-            /* external definition not present */ IGProperty *parentPropertyPhi,
-            /* external definition not present */ IGProperty *parentPropertySpin,
             /* external definition not present */ IGProperty *parentPropertyFloor,
             /* external definition not present */ IGProperty *parentPropertyCeiling,
-            /* external definition not present */ IGProperty *parentPropertyCountLights,
-            /* external definition not present */ IGProperty **parentPropertiesLightOn,
-            /* external definition not present */ IGProperty **parentPropertiesAmbientLight,
-            /* external definition not present */ IGProperty **parentPropertiesDiffuseLight,
-            /* external definition not present */ IGProperty **parentPropertiesSpecularLight,
-            /* external definition not present */ IGProperty **parentPropertiesLightPosition) = 0;
+            /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
+                void *__MIDL__IPlot0003),
+            /* [in] */ void *pArg) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE PrepareForData( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE TakeDataPoint( 
-            struct /* external definition not present */ DataPoint *__MIDL__IPlot0002) = 0;
+            struct /* external definition not present */ DataPoint *__MIDL__IPlot0005) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE TakeDataString( 
             BSTR inputData) = 0;
@@ -956,7 +964,7 @@ EXTERN_C const IID IID_IPlot;
         virtual HRESULT STDMETHODCALLTYPE ResetData( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE LastPoint( 
-            struct /* external definition not present */ DataPoint *__MIDL__IPlot0003) = 0;
+            struct /* external definition not present */ DataPoint *__MIDL__IPlot0006) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE StubPlot( void) = 0;
         
@@ -988,7 +996,7 @@ EXTERN_C const IID IID_IPlot;
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE EditProperties( void) = 0;
         
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE AdviseGSystemStatusBar( 
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IPlot0004) = 0;
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IPlot0007) = 0;
         
     };
     
@@ -1124,6 +1132,10 @@ EXTERN_C const IID IID_IPlot;
             IPlot * This,
             /* [retval][out] */ /* external definition not present */ IDataSet **dataSet);
         
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataArity )( 
+            IPlot * This,
+            /* [retval][out] */ enum /* external definition not present */ DataArity *__MIDL__IPlot0002);
+        
         /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_PlotNotify )( 
             IPlot * This,
             /* [in] */ IPlotNotify *setIPlotNotify);
@@ -1175,27 +1187,22 @@ EXTERN_C const IID IID_IPlot;
             /* external definition not present */ IEvaluator *pIEvaluator,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight,
-            /* external definition not present */ IGProperty *parentPropertyPlotType,
-            /* external definition not present */ IGProperty *parentPropertyPlotSubType,
+            /* external definition not present */ IGProperty *parentPropertyPlotView,
+            /* external definition not present */ IGProperty *parentPropertyDefault2DPlotSubType,
+            /* external definition not present */ IGProperty *parentPropertyDefault3DPlotSubType,
             /* external definition not present */ IGProperty *parentPropertyBackgroundColor,
-            /* external definition not present */ IGProperty *parentPropertyTheta,
-            /* external definition not present */ IGProperty *parentPropertyPhi,
-            /* external definition not present */ IGProperty *parentPropertySpin,
             /* external definition not present */ IGProperty *parentPropertyFloor,
             /* external definition not present */ IGProperty *parentPropertyCeiling,
-            /* external definition not present */ IGProperty *parentPropertyCountLights,
-            /* external definition not present */ IGProperty **parentPropertiesLightOn,
-            /* external definition not present */ IGProperty **parentPropertiesAmbientLight,
-            /* external definition not present */ IGProperty **parentPropertiesDiffuseLight,
-            /* external definition not present */ IGProperty **parentPropertiesSpecularLight,
-            /* external definition not present */ IGProperty **parentPropertiesLightPosition);
+            /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
+                void *__MIDL__IPlot0003),
+            /* [in] */ void *pArg);
         
         HRESULT ( STDMETHODCALLTYPE *PrepareForData )( 
             IPlot * This);
         
         HRESULT ( STDMETHODCALLTYPE *TakeDataPoint )( 
             IPlot * This,
-            struct /* external definition not present */ DataPoint *__MIDL__IPlot0002);
+            struct /* external definition not present */ DataPoint *__MIDL__IPlot0005);
         
         HRESULT ( STDMETHODCALLTYPE *TakeDataString )( 
             IPlot * This,
@@ -1206,7 +1213,7 @@ EXTERN_C const IID IID_IPlot;
         
         HRESULT ( STDMETHODCALLTYPE *LastPoint )( 
             IPlot * This,
-            struct /* external definition not present */ DataPoint *__MIDL__IPlot0003);
+            struct /* external definition not present */ DataPoint *__MIDL__IPlot0006);
         
         HRESULT ( STDMETHODCALLTYPE *StubPlot )( 
             IPlot * This);
@@ -1249,7 +1256,7 @@ EXTERN_C const IID IID_IPlot;
         
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *AdviseGSystemStatusBar )( 
             IPlot * This,
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IPlot0004);
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IPlot0007);
         
         END_INTERFACE
     } IPlotVtbl;
@@ -1344,6 +1351,9 @@ EXTERN_C const IID IID_IPlot;
 #define IPlot_get_DataSet(This,dataSet)	\
     ( (This)->lpVtbl -> get_DataSet(This,dataSet) ) 
 
+#define IPlot_get_DataArity(This,__MIDL__IPlot0002)	\
+    ( (This)->lpVtbl -> get_DataArity(This,__MIDL__IPlot0002) ) 
+
 #define IPlot_put_PlotNotify(This,setIPlotNotify)	\
     ( (This)->lpVtbl -> put_PlotNotify(This,setIPlotNotify) ) 
 
@@ -1377,14 +1387,14 @@ EXTERN_C const IID IID_IPlot;
 #define IPlot_GetSegments(This,pSegmentArray)	\
     ( (This)->lpVtbl -> GetSegments(This,pSegmentArray) ) 
 
-#define IPlot_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotType,parentPropertyPlotSubType,parentPropertyBackgroundColor,parentPropertyTheta,parentPropertyPhi,parentPropertySpin,parentPropertyFloor,parentPropertyCeiling,parentPropertyCountLights,parentPropertiesLightOn,parentPropertiesAmbientLight,parentPropertiesDiffuseLight,parentPropertiesSpecularLight,parentPropertiesLightPosition)	\
-    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotType,parentPropertyPlotSubType,parentPropertyBackgroundColor,parentPropertyTheta,parentPropertyPhi,parentPropertySpin,parentPropertyFloor,parentPropertyCeiling,parentPropertyCountLights,parentPropertiesLightOn,parentPropertiesAmbientLight,parentPropertiesDiffuseLight,parentPropertiesSpecularLight,parentPropertiesLightPosition) ) 
+#define IPlot_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg)	\
+    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg) ) 
 
 #define IPlot_PrepareForData(This)	\
     ( (This)->lpVtbl -> PrepareForData(This) ) 
 
-#define IPlot_TakeDataPoint(This,__MIDL__IPlot0002)	\
-    ( (This)->lpVtbl -> TakeDataPoint(This,__MIDL__IPlot0002) ) 
+#define IPlot_TakeDataPoint(This,__MIDL__IPlot0005)	\
+    ( (This)->lpVtbl -> TakeDataPoint(This,__MIDL__IPlot0005) ) 
 
 #define IPlot_TakeDataString(This,inputData)	\
     ( (This)->lpVtbl -> TakeDataString(This,inputData) ) 
@@ -1392,8 +1402,8 @@ EXTERN_C const IID IID_IPlot;
 #define IPlot_ResetData(This)	\
     ( (This)->lpVtbl -> ResetData(This) ) 
 
-#define IPlot_LastPoint(This,__MIDL__IPlot0003)	\
-    ( (This)->lpVtbl -> LastPoint(This,__MIDL__IPlot0003) ) 
+#define IPlot_LastPoint(This,__MIDL__IPlot0006)	\
+    ( (This)->lpVtbl -> LastPoint(This,__MIDL__IPlot0006) ) 
 
 #define IPlot_StubPlot(This)	\
     ( (This)->lpVtbl -> StubPlot(This) ) 
@@ -1425,8 +1435,8 @@ EXTERN_C const IID IID_IPlot;
 #define IPlot_EditProperties(This)	\
     ( (This)->lpVtbl -> EditProperties(This) ) 
 
-#define IPlot_AdviseGSystemStatusBar(This,__MIDL__IPlot0004)	\
-    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IPlot0004) ) 
+#define IPlot_AdviseGSystemStatusBar(This,__MIDL__IPlot0007)	\
+    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IPlot0007) ) 
 
 #endif /* COBJMACROS */
 

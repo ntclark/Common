@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Dec 06 09:03:16 2017
+/* at Thu Dec 21 10:18:11 2017
  */
 /* Compiler settings for DataSet.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -46,6 +46,13 @@
 typedef interface IDataSet IDataSet;
 
 #endif 	/* __IDataSet_FWD_DEFINED__ */
+
+
+#ifndef __IDataSetEvents_FWD_DEFINED__
+#define __IDataSetEvents_FWD_DEFINED__
+typedef interface IDataSetEvents IDataSetEvents;
+
+#endif 	/* __IDataSetEvents_FWD_DEFINED__ */
 
 
 #ifndef __DataSet_FWD_DEFINED__
@@ -93,6 +100,18 @@ EXTERN_C const IID IID_IDataSet;
     IDataSet : public IUnknown
     {
     public:
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_Name( 
+            /* [in] */ BSTR name) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Name( 
+            /* [retval][out] */ BSTR *pName) = 0;
+        
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_DataSource( 
+            /* [in] */ BSTR dataSource) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_DataSource( 
+            /* [retval][out] */ BSTR *pDataSource) = 0;
+        
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_maxX( 
             /* [in] */ double maxVal) = 0;
         
@@ -291,6 +310,22 @@ EXTERN_C const IID IID_IDataSet;
         
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IDataSet * This);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Name )( 
+            IDataSet * This,
+            /* [in] */ BSTR name);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Name )( 
+            IDataSet * This,
+            /* [retval][out] */ BSTR *pName);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_DataSource )( 
+            IDataSet * This,
+            /* [in] */ BSTR dataSource);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataSource )( 
+            IDataSet * This,
+            /* [retval][out] */ BSTR *pDataSource);
         
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_maxX )( 
             IDataSet * This,
@@ -546,6 +581,18 @@ EXTERN_C const IID IID_IDataSet;
     ( (This)->lpVtbl -> Release(This) ) 
 
 
+#define IDataSet_put_Name(This,name)	\
+    ( (This)->lpVtbl -> put_Name(This,name) ) 
+
+#define IDataSet_get_Name(This,pName)	\
+    ( (This)->lpVtbl -> get_Name(This,pName) ) 
+
+#define IDataSet_put_DataSource(This,dataSource)	\
+    ( (This)->lpVtbl -> put_DataSource(This,dataSource) ) 
+
+#define IDataSet_get_DataSource(This,pDataSource)	\
+    ( (This)->lpVtbl -> get_DataSource(This,pDataSource) ) 
+
 #define IDataSet_put_maxX(This,maxVal)	\
     ( (This)->lpVtbl -> put_maxX(This,maxVal) ) 
 
@@ -716,11 +763,81 @@ EXTERN_C const IID IID_IDataSet;
 #endif 	/* __IDataSet_INTERFACE_DEFINED__ */
 
 
+#ifndef __IDataSetEvents_INTERFACE_DEFINED__
+#define __IDataSetEvents_INTERFACE_DEFINED__
+
+/* interface IDataSetEvents */
+/* [object][helpstring][uuid] */ 
+
+
+EXTERN_C const IID IID_IDataSetEvents;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("8CAEFDA3-55E6-11d3-8365-006008BD5BC3")
+    IDataSetEvents : public IUnknown
+    {
+    public:
+    };
+    
+    
+#else 	/* C style interface */
+
+    typedef struct IDataSetEventsVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            IDataSetEvents * This,
+            /* [in] */ REFIID riid,
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            IDataSetEvents * This);
+        
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            IDataSetEvents * This);
+        
+        END_INTERFACE
+    } IDataSetEventsVtbl;
+
+    interface IDataSetEvents
+    {
+        CONST_VTBL struct IDataSetEventsVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IDataSetEvents_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define IDataSetEvents_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define IDataSetEvents_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IDataSetEvents_INTERFACE_DEFINED__ */
+
+
 EXTERN_C const CLSID CLSID_DataSet;
 
 #ifdef __cplusplus
 
-class DECLSPEC_UUID("8CAEFDA3-55E6-11d3-8365-006008BD5BC3")
+class DECLSPEC_UUID("8CAEFDA4-55E6-11d3-8365-006008BD5BC3")
 DataSet;
 #endif
 #endif /* __DataSet_LIBRARY_DEFINED__ */
