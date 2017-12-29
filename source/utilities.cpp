@@ -128,6 +128,11 @@
    return hwndFoundChild;
    }
 
+   HWND APIENTRY FindWindowWithFunction(HWND hwndParent,std::function<bool(HWND)> *pTestFunction) {
+   hwndFoundChild = NULL;
+   EnumChildWindows(hwndParent,findChildWindowWithFunction,(LPARAM)pTestFunction);
+   return hwndFoundChild;
+   }
 
    BOOL CALLBACK findChild(HWND hwndTest,LPARAM lParam) {
 
@@ -293,6 +298,20 @@
       return FALSE;
    return TRUE;
    }
+
+
+   BOOL CALLBACK findChildWindowWithFunction(HWND hwndTest,LPARAM lParam) {
+   std::function<bool(HWND)> *pF = (std::function<bool(HWND)> *)lParam;
+   if ( (*pF)(hwndTest) ) {
+      hwndFoundChild = hwndTest;
+      return FALSE;
+   }
+   EnumChildWindows(hwndTest,findChildWindowWithFunction,lParam);
+   if ( hwndFoundChild )
+      return FALSE;
+   return TRUE;
+   }
+
 
    void logEvent(LPTSTR szMessage) { 
 

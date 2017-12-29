@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Dec 22 12:54:35 2017
+/* at Fri Dec 29 08:48:16 2017
  */
 /* Compiler settings for Function.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -382,6 +382,12 @@ EXTERN_C const IID IID_IGSFunctioNater;
         virtual /* [id][propget] */ HRESULT STDMETHODCALLTYPE get_IPlot( 
             /* [retval][out] */ void **ppIPlot) = 0;
         
+        virtual /* [id][propput] */ HRESULT STDMETHODCALLTYPE put_IDataSet( 
+            /* [in] */ void *pIDataSet) = 0;
+        
+        virtual /* [id][propget] */ HRESULT STDMETHODCALLTYPE get_IDataSet( 
+            /* [retval][out] */ void **ppIDataSet) = 0;
+        
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Initialize( 
             /* external definition not present */ IDataSet *pIDataSet_Domain,
             /* external definition not present */ IOpenGLImplementation *pIOpenGLImplementation,
@@ -404,6 +410,9 @@ EXTERN_C const IID IID_IGSFunctioNater;
         
         virtual /* [id][propget][helpstring] */ HRESULT STDMETHODCALLTYPE get_AnyControlVisible( 
             /* [retval][out] */ VARIANT_BOOL *pAnyVisible) = 0;
+        
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE AdviseGSystemStatusBar( 
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IGSFunctioNater0004) = 0;
         
     };
     
@@ -649,6 +658,14 @@ EXTERN_C const IID IID_IGSFunctioNater;
             IGSFunctioNater * This,
             /* [retval][out] */ void **ppIPlot);
         
+        /* [id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_IDataSet )( 
+            IGSFunctioNater * This,
+            /* [in] */ void *pIDataSet);
+        
+        /* [id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_IDataSet )( 
+            IGSFunctioNater * This,
+            /* [retval][out] */ void **ppIDataSet);
+        
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IGSFunctioNater * This,
             /* external definition not present */ IDataSet *pIDataSet_Domain,
@@ -674,6 +691,10 @@ EXTERN_C const IID IID_IGSFunctioNater;
         /* [id][propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_AnyControlVisible )( 
             IGSFunctioNater * This,
             /* [retval][out] */ VARIANT_BOOL *pAnyVisible);
+        
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *AdviseGSystemStatusBar )( 
+            IGSFunctioNater * This,
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IGSFunctioNater0004);
         
         END_INTERFACE
     } IGSFunctioNaterVtbl;
@@ -852,6 +873,12 @@ EXTERN_C const IID IID_IGSFunctioNater;
 #define IGSFunctioNater_get_IPlot(This,ppIPlot)	\
     ( (This)->lpVtbl -> get_IPlot(This,ppIPlot) ) 
 
+#define IGSFunctioNater_put_IDataSet(This,pIDataSet)	\
+    ( (This)->lpVtbl -> put_IDataSet(This,pIDataSet) ) 
+
+#define IGSFunctioNater_get_IDataSet(This,ppIDataSet)	\
+    ( (This)->lpVtbl -> get_IDataSet(This,ppIDataSet) ) 
+
 #define IGSFunctioNater_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg)	\
     ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg) ) 
 
@@ -860,6 +887,9 @@ EXTERN_C const IID IID_IGSFunctioNater;
 
 #define IGSFunctioNater_get_AnyControlVisible(This,pAnyVisible)	\
     ( (This)->lpVtbl -> get_AnyControlVisible(This,pAnyVisible) ) 
+
+#define IGSFunctioNater_AdviseGSystemStatusBar(This,__MIDL__IGSFunctioNater0004)	\
+    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IGSFunctioNater0004) ) 
 
 #endif /* COBJMACROS */
 

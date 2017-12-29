@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Dec 22 10:49:37 2017
+/* at Sat Dec 23 13:19:22 2017
  */
 /* Compiler settings for GSystem.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -111,8 +111,9 @@ enum UnitOfMeasure
 enum DataArity
     {
         DATA_ARITY_UNKNOWN	= 0,
-        DATA_ARITY_2D	= 1,
-        DATA_ARITY_3D	= 2
+        DATA_ARITY_1D   = 1,
+        DATA_ARITY_2D	= 2,
+        DATA_ARITY_3D	= 3
     } ;
 
 enum TextFormat
@@ -136,22 +137,23 @@ enum TextSizeUnits
 enum PlotViews
     {
         gcPlotView2D	= 0x1,
-        gcPlotView3D	= 0x2
+        gcPlotView3D	= 0x2,
+        gcPlotViewMask	= 0xfffffff0
     } ;
 
 enum PlotTypes
     {
         gcPlotTypeNone	= 0,
-        gcPlotTypeNatural	= 0x10001,
-        gcPlotTypeSurface	= 0x20000,
-        gcPlotTypeWireFrame	= 0x40000,
-        gcPlotTypeStacks	= 0x80000,
-        gcPlotTypeBlocks	= 0x100000,
-        gcPlotTypeBalls	= 0x200000,
-        gcPlotTypePie	= 0x80002,
-        gcPlotTypeContour	= 0x20004,
-        gcPlotTypeQuads	= 0x40008,
-        gcPlotTypeTriangles	= 0x80010
+        gcPlotTypeNatural	= 0x10003,
+        gcPlotTypeSurface	= 0x20002,
+        gcPlotTypeWireFrame	= 0x40002,
+        gcPlotTypeStacks	= 0x80003,
+        gcPlotTypeBlocks	= 0x100003,
+        gcPlotTypeBalls	= 0x200003,
+        gcPlotTypePie	= 0x400001,
+        gcPlotTypeContour	= 0x800003,
+        gcPlotTypeQuads	= 0x1000003,
+        gcPlotTypeTriangles	= 0x1200003
     } ;
 
 enum PlotIdBands

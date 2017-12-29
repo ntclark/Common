@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Dec 22 12:32:16 2017
+/* at Thu Dec 28 23:53:37 2017
  */
 /* Compiler settings for DataSet.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -112,6 +112,44 @@ EXTERN_C const IID IID_IDataSet;
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_DataSource( 
             /* [retval][out] */ BSTR *pDataSource) = 0;
         
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_IsFunctionSource( 
+            /* [in] */ VARIANT_BOOL __MIDL__IDataSet0000) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_IsFunctionSource( 
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__IDataSet0001) = 0;
+        
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_IFunction( 
+            /* [in] */ void *pIFunction) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_IFunction( 
+            /* [retval][out] */ void **ppIFunction) = 0;
+        
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_IPlot( 
+            /* [in] */ void *pIPlot) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_IPlot( 
+            /* [retval][out] */ void **ppIPlot) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Initialize( 
+            void *pvIDataSet_Domain,
+            void *pIOpenGLImplementation,
+            /* external definition not present */ IGProperty *pIPropertyLineColor,
+            /* external definition not present */ IGProperty *pIPropertyLineWeight,
+            /* external definition not present */ IGProperty *parentPropertyPlotView,
+            /* external definition not present */ IGProperty *parentPropertyDefault2DPlotSubType,
+            /* external definition not present */ IGProperty *parentPropertyDefault3DPlotSubType,
+            /* external definition not present */ IGProperty *parentPropertyBackgroundColor,
+            /* external definition not present */ IGProperty *parentPropertyFloor,
+            /* external definition not present */ IGProperty *parentPropertyCeiling,
+            /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
+                void *__MIDL__IDataSet0002),
+            /* [in] */ void *pArg) = 0;
+        
+        virtual /* [propput][helpstring] */ HRESULT STDMETHODCALLTYPE put_OnChangeCallback( 
+            /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
+                void *__MIDL__IDataSet0004),
+            /* [in] */ void *pArg) = 0;
+        
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_maxX( 
             /* [in] */ double maxVal) = 0;
         
@@ -149,10 +187,10 @@ EXTERN_C const IID IID_IDataSet;
             /* [retval][out] */ double *getVal) = 0;
         
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_floor( 
-            /* [in] */ /* external definition not present */ IGProperty *__MIDL__IDataSet0000) = 0;
+            /* [in] */ /* external definition not present */ IGProperty *__MIDL__IDataSet0006) = 0;
         
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_ceiling( 
-            /* [in] */ /* external definition not present */ IGProperty *__MIDL__IDataSet0001) = 0;
+            /* [in] */ /* external definition not present */ IGProperty *__MIDL__IDataSet0007) = 0;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_top( 
             /* [retval][out] */ struct /* external definition not present */ DataList **getTop) = 0;
@@ -164,10 +202,10 @@ EXTERN_C const IID IID_IDataSet;
             /* [retval][out] */ long *pCount) = 0;
         
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_DataArity( 
-            /* [in] */ enum /* external definition not present */ DataArity __MIDL__IDataSet0002) = 0;
+            /* [in] */ enum /* external definition not present */ DataArity __MIDL__IDataSet0008) = 0;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_DataArity( 
-            /* [retval][out] */ enum /* external definition not present */ DataArity *__MIDL__IDataSet0003) = 0;
+            /* [retval][out] */ enum /* external definition not present */ DataArity *__MIDL__IDataSet0009) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE peek( 
             /* [in] */ struct /* external definition not present */ DataList *afterItem,
@@ -215,7 +253,7 @@ EXTERN_C const IID IID_IDataSet;
         virtual HRESULT STDMETHODCALLTYPE makeUnitSize( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE ResetLimits( 
-            struct /* external definition not present */ DataPoint *__MIDL__IDataSet0004) = 0;
+            struct /* external definition not present */ DataPoint *__MIDL__IDataSet0010) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE SetDomain( 
             struct /* external definition not present */ DataPoint *minPoint,
@@ -238,7 +276,7 @@ EXTERN_C const IID IID_IDataSet;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_IsIncludedDomain( 
             /* [in] */ IDataSet *pOtherDataSet,
-            /* [retval][out] */ boolean *__MIDL__IDataSet0005) = 0;
+            /* [retval][out] */ boolean *__MIDL__IDataSet0011) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE RemoveIncludedDomain( 
             IDataSet *pTheOtherDataSet) = 0;
@@ -290,6 +328,11 @@ EXTERN_C const IID IID_IDataSet;
             struct /* external definition not present */ DataPoint *minPoint,
             struct /* external definition not present */ DataPoint *maxPoint) = 0;
         
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Start( void) = 0;
+        
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE AdviseGSystemStatusBar( 
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IDataSet0012) = 0;
+        
     };
     
     
@@ -326,6 +369,52 @@ EXTERN_C const IID IID_IDataSet;
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataSource )( 
             IDataSet * This,
             /* [retval][out] */ BSTR *pDataSource);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_IsFunctionSource )( 
+            IDataSet * This,
+            /* [in] */ VARIANT_BOOL __MIDL__IDataSet0000);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_IsFunctionSource )( 
+            IDataSet * This,
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__IDataSet0001);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_IFunction )( 
+            IDataSet * This,
+            /* [in] */ void *pIFunction);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_IFunction )( 
+            IDataSet * This,
+            /* [retval][out] */ void **ppIFunction);
+        
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_IPlot )( 
+            IDataSet * This,
+            /* [in] */ void *pIPlot);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_IPlot )( 
+            IDataSet * This,
+            /* [retval][out] */ void **ppIPlot);
+        
+        HRESULT ( STDMETHODCALLTYPE *Initialize )( 
+            IDataSet * This,
+            void *pvIDataSet_Domain,
+            void *pIOpenGLImplementation,
+            /* external definition not present */ IGProperty *pIPropertyLineColor,
+            /* external definition not present */ IGProperty *pIPropertyLineWeight,
+            /* external definition not present */ IGProperty *parentPropertyPlotView,
+            /* external definition not present */ IGProperty *parentPropertyDefault2DPlotSubType,
+            /* external definition not present */ IGProperty *parentPropertyDefault3DPlotSubType,
+            /* external definition not present */ IGProperty *parentPropertyBackgroundColor,
+            /* external definition not present */ IGProperty *parentPropertyFloor,
+            /* external definition not present */ IGProperty *parentPropertyCeiling,
+            /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
+                void *__MIDL__IDataSet0002),
+            /* [in] */ void *pArg);
+        
+        /* [propput][helpstring] */ HRESULT ( STDMETHODCALLTYPE *put_OnChangeCallback )( 
+            IDataSet * This,
+            /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
+                void *__MIDL__IDataSet0004),
+            /* [in] */ void *pArg);
         
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_maxX )( 
             IDataSet * This,
@@ -377,11 +466,11 @@ EXTERN_C const IID IID_IDataSet;
         
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_floor )( 
             IDataSet * This,
-            /* [in] */ /* external definition not present */ IGProperty *__MIDL__IDataSet0000);
+            /* [in] */ /* external definition not present */ IGProperty *__MIDL__IDataSet0006);
         
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ceiling )( 
             IDataSet * This,
-            /* [in] */ /* external definition not present */ IGProperty *__MIDL__IDataSet0001);
+            /* [in] */ /* external definition not present */ IGProperty *__MIDL__IDataSet0007);
         
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_top )( 
             IDataSet * This,
@@ -397,11 +486,11 @@ EXTERN_C const IID IID_IDataSet;
         
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_DataArity )( 
             IDataSet * This,
-            /* [in] */ enum /* external definition not present */ DataArity __MIDL__IDataSet0002);
+            /* [in] */ enum /* external definition not present */ DataArity __MIDL__IDataSet0008);
         
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataArity )( 
             IDataSet * This,
-            /* [retval][out] */ enum /* external definition not present */ DataArity *__MIDL__IDataSet0003);
+            /* [retval][out] */ enum /* external definition not present */ DataArity *__MIDL__IDataSet0009);
         
         HRESULT ( STDMETHODCALLTYPE *peek )( 
             IDataSet * This,
@@ -463,7 +552,7 @@ EXTERN_C const IID IID_IDataSet;
         
         HRESULT ( STDMETHODCALLTYPE *ResetLimits )( 
             IDataSet * This,
-            struct /* external definition not present */ DataPoint *__MIDL__IDataSet0004);
+            struct /* external definition not present */ DataPoint *__MIDL__IDataSet0010);
         
         HRESULT ( STDMETHODCALLTYPE *SetDomain )( 
             IDataSet * This,
@@ -491,7 +580,7 @@ EXTERN_C const IID IID_IDataSet;
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_IsIncludedDomain )( 
             IDataSet * This,
             /* [in] */ IDataSet *pOtherDataSet,
-            /* [retval][out] */ boolean *__MIDL__IDataSet0005);
+            /* [retval][out] */ boolean *__MIDL__IDataSet0011);
         
         HRESULT ( STDMETHODCALLTYPE *RemoveIncludedDomain )( 
             IDataSet * This,
@@ -558,6 +647,13 @@ EXTERN_C const IID IID_IDataSet;
             struct /* external definition not present */ DataPoint *minPoint,
             struct /* external definition not present */ DataPoint *maxPoint);
         
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Start )( 
+            IDataSet * This);
+        
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *AdviseGSystemStatusBar )( 
+            IDataSet * This,
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IDataSet0012);
+        
         END_INTERFACE
     } IDataSetVtbl;
 
@@ -592,6 +688,30 @@ EXTERN_C const IID IID_IDataSet;
 
 #define IDataSet_get_DataSource(This,pDataSource)	\
     ( (This)->lpVtbl -> get_DataSource(This,pDataSource) ) 
+
+#define IDataSet_put_IsFunctionSource(This,__MIDL__IDataSet0000)	\
+    ( (This)->lpVtbl -> put_IsFunctionSource(This,__MIDL__IDataSet0000) ) 
+
+#define IDataSet_get_IsFunctionSource(This,__MIDL__IDataSet0001)	\
+    ( (This)->lpVtbl -> get_IsFunctionSource(This,__MIDL__IDataSet0001) ) 
+
+#define IDataSet_put_IFunction(This,pIFunction)	\
+    ( (This)->lpVtbl -> put_IFunction(This,pIFunction) ) 
+
+#define IDataSet_get_IFunction(This,ppIFunction)	\
+    ( (This)->lpVtbl -> get_IFunction(This,ppIFunction) ) 
+
+#define IDataSet_put_IPlot(This,pIPlot)	\
+    ( (This)->lpVtbl -> put_IPlot(This,pIPlot) ) 
+
+#define IDataSet_get_IPlot(This,ppIPlot)	\
+    ( (This)->lpVtbl -> get_IPlot(This,ppIPlot) ) 
+
+#define IDataSet_Initialize(This,pvIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg)	\
+    ( (This)->lpVtbl -> Initialize(This,pvIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg) ) 
+
+#define IDataSet_put_OnChangeCallback(This,pCallback,pArg)	\
+    ( (This)->lpVtbl -> put_OnChangeCallback(This,pCallback,pArg) ) 
 
 #define IDataSet_put_maxX(This,maxVal)	\
     ( (This)->lpVtbl -> put_maxX(This,maxVal) ) 
@@ -629,11 +749,11 @@ EXTERN_C const IID IID_IDataSet;
 #define IDataSet_get_minZ(This,getVal)	\
     ( (This)->lpVtbl -> get_minZ(This,getVal) ) 
 
-#define IDataSet_put_floor(This,__MIDL__IDataSet0000)	\
-    ( (This)->lpVtbl -> put_floor(This,__MIDL__IDataSet0000) ) 
+#define IDataSet_put_floor(This,__MIDL__IDataSet0006)	\
+    ( (This)->lpVtbl -> put_floor(This,__MIDL__IDataSet0006) ) 
 
-#define IDataSet_put_ceiling(This,__MIDL__IDataSet0001)	\
-    ( (This)->lpVtbl -> put_ceiling(This,__MIDL__IDataSet0001) ) 
+#define IDataSet_put_ceiling(This,__MIDL__IDataSet0007)	\
+    ( (This)->lpVtbl -> put_ceiling(This,__MIDL__IDataSet0007) ) 
 
 #define IDataSet_get_top(This,getTop)	\
     ( (This)->lpVtbl -> get_top(This,getTop) ) 
@@ -644,11 +764,11 @@ EXTERN_C const IID IID_IDataSet;
 #define IDataSet_get_countPoints(This,pCount)	\
     ( (This)->lpVtbl -> get_countPoints(This,pCount) ) 
 
-#define IDataSet_put_DataArity(This,__MIDL__IDataSet0002)	\
-    ( (This)->lpVtbl -> put_DataArity(This,__MIDL__IDataSet0002) ) 
+#define IDataSet_put_DataArity(This,__MIDL__IDataSet0008)	\
+    ( (This)->lpVtbl -> put_DataArity(This,__MIDL__IDataSet0008) ) 
 
-#define IDataSet_get_DataArity(This,__MIDL__IDataSet0003)	\
-    ( (This)->lpVtbl -> get_DataArity(This,__MIDL__IDataSet0003) ) 
+#define IDataSet_get_DataArity(This,__MIDL__IDataSet0009)	\
+    ( (This)->lpVtbl -> get_DataArity(This,__MIDL__IDataSet0009) ) 
 
 #define IDataSet_peek(This,afterItem,getItem)	\
     ( (This)->lpVtbl -> peek(This,afterItem,getItem) ) 
@@ -689,8 +809,8 @@ EXTERN_C const IID IID_IDataSet;
 #define IDataSet_makeUnitSize(This)	\
     ( (This)->lpVtbl -> makeUnitSize(This) ) 
 
-#define IDataSet_ResetLimits(This,__MIDL__IDataSet0004)	\
-    ( (This)->lpVtbl -> ResetLimits(This,__MIDL__IDataSet0004) ) 
+#define IDataSet_ResetLimits(This,__MIDL__IDataSet0010)	\
+    ( (This)->lpVtbl -> ResetLimits(This,__MIDL__IDataSet0010) ) 
 
 #define IDataSet_SetDomain(This,minPoint,maxPoint)	\
     ( (This)->lpVtbl -> SetDomain(This,minPoint,maxPoint) ) 
@@ -704,8 +824,8 @@ EXTERN_C const IID IID_IDataSet;
 #define IDataSet_IncludeDomain(This,pTheOtherDataSet)	\
     ( (This)->lpVtbl -> IncludeDomain(This,pTheOtherDataSet) ) 
 
-#define IDataSet_get_IsIncludedDomain(This,pOtherDataSet,__MIDL__IDataSet0005)	\
-    ( (This)->lpVtbl -> get_IsIncludedDomain(This,pOtherDataSet,__MIDL__IDataSet0005) ) 
+#define IDataSet_get_IsIncludedDomain(This,pOtherDataSet,__MIDL__IDataSet0011)	\
+    ( (This)->lpVtbl -> get_IsIncludedDomain(This,pOtherDataSet,__MIDL__IDataSet0011) ) 
 
 #define IDataSet_RemoveIncludedDomain(This,pTheOtherDataSet)	\
     ( (This)->lpVtbl -> RemoveIncludedDomain(This,pTheOtherDataSet) ) 
@@ -752,6 +872,12 @@ EXTERN_C const IID IID_IDataSet;
 #define IDataSet_GetDomainGDI(This,minPoint,maxPoint)	\
     ( (This)->lpVtbl -> GetDomainGDI(This,minPoint,maxPoint) ) 
 
+#define IDataSet_Start(This)	\
+    ( (This)->lpVtbl -> Start(This) ) 
+
+#define IDataSet_AdviseGSystemStatusBar(This,__MIDL__IDataSet0012)	\
+    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IDataSet0012) ) 
+
 #endif /* COBJMACROS */
 
 
@@ -778,6 +904,19 @@ EXTERN_C const IID IID_IDataSetEvents;
     IDataSetEvents : public IUnknown
     {
     public:
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Clear( void) = 0;
+        
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Started( 
+            /* [in] */ long cntExpectedResults) = 0;
+        
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE TakeValues( 
+            /* [in] */ long iterationNo,
+            /* [in] */ long valueCount,
+            /* [in] */ SAFEARRAY * *pNamesArrayOfStrings,
+            /* [in] */ SAFEARRAY * *pValuesArrayOfDoubles) = 0;
+        
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Finished( void) = 0;
+        
     };
     
     
@@ -797,6 +936,23 @@ EXTERN_C const IID IID_IDataSetEvents;
             IDataSetEvents * This);
         
         ULONG ( STDMETHODCALLTYPE *Release )( 
+            IDataSetEvents * This);
+        
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Clear )( 
+            IDataSetEvents * This);
+        
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Started )( 
+            IDataSetEvents * This,
+            /* [in] */ long cntExpectedResults);
+        
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *TakeValues )( 
+            IDataSetEvents * This,
+            /* [in] */ long iterationNo,
+            /* [in] */ long valueCount,
+            /* [in] */ SAFEARRAY * *pNamesArrayOfStrings,
+            /* [in] */ SAFEARRAY * *pValuesArrayOfDoubles);
+        
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Finished )( 
             IDataSetEvents * This);
         
         END_INTERFACE
@@ -821,6 +977,18 @@ EXTERN_C const IID IID_IDataSetEvents;
 #define IDataSetEvents_Release(This)	\
     ( (This)->lpVtbl -> Release(This) ) 
 
+
+#define IDataSetEvents_Clear(This)	\
+    ( (This)->lpVtbl -> Clear(This) ) 
+
+#define IDataSetEvents_Started(This,cntExpectedResults)	\
+    ( (This)->lpVtbl -> Started(This,cntExpectedResults) ) 
+
+#define IDataSetEvents_TakeValues(This,iterationNo,valueCount,pNamesArrayOfStrings,pValuesArrayOfDoubles)	\
+    ( (This)->lpVtbl -> TakeValues(This,iterationNo,valueCount,pNamesArrayOfStrings,pValuesArrayOfDoubles) ) 
+
+#define IDataSetEvents_Finished(This)	\
+    ( (This)->lpVtbl -> Finished(This) ) 
 
 #endif /* COBJMACROS */
 

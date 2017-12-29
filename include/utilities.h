@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <shlwapi.h>
 #include <ShlObj.h>
+#include <functional>
 
 #pragma pack(push)
 
@@ -51,6 +52,7 @@ HWND APIENTRY FindWindowWithClassAndStyle(HWND hwndP,char* theClassName,LONG_PTR
 HWND APIENTRY FindWindowWithText(HWND hwndP,char* theText);
 HWND APIENTRY FindWindowContainingText(HWND hwndP,char* theText);
 HWND APIENTRY FindWindowContainingInteger(HWND hwndP);
+HWND APIENTRY FindWindowWithFunction(HWND hwndP,std::function<bool(HWND)> *pTestFunction);
 
 BOOL CALLBACK findChildWithClass(HWND hwndTest,LPARAM lParam);
 BOOL CALLBACK findChildWithStyle(HWND hwndTest,LPARAM lParam);
@@ -61,6 +63,7 @@ BOOL CALLBACK findChildWithClassAndStyle(HWND hwndTest,LPARAM lParam);
 BOOL CALLBACK findChild(HWND hwndTest,LPARAM lParam);
 BOOL CALLBACK findChildContainingText(HWND hwndTest,LPARAM lParam);
 BOOL CALLBACK findChildContainingInteger(HWND hwndTest,LPARAM lParam);
+BOOL CALLBACK findChildWindowWithFunction(HWND hwndTest,LPARAM lParam);
 
 long HashCode(char *pszInput);
 

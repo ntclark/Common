@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Dec 22 12:44:20 2017
+/* at Fri Dec 29 00:13:34 2017
  */
 /* Compiler settings for Plot.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -482,10 +482,10 @@ EXTERN_C const IID IID_IBasePlot;
     IBasePlot : public IUnknown
     {
     public:
-        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_DataSet( 
+        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_IDataSet( 
             /* [in] */ /* external definition not present */ IDataSet *dataSet) = 0;
         
-        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_DataSet( 
+        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_IDataSet( 
             /* [retval][out] */ /* external definition not present */ IDataSet **dataSet) = 0;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_DataArity( 
@@ -591,11 +591,11 @@ EXTERN_C const IID IID_IBasePlot;
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IBasePlot * This);
         
-        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_DataSet )( 
+        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_IDataSet )( 
             IBasePlot * This,
             /* [in] */ /* external definition not present */ IDataSet *dataSet);
         
-        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataSet )( 
+        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_IDataSet )( 
             IBasePlot * This,
             /* [retval][out] */ /* external definition not present */ IDataSet **dataSet);
         
@@ -731,11 +731,11 @@ EXTERN_C const IID IID_IBasePlot;
     ( (This)->lpVtbl -> Release(This) ) 
 
 
-#define IBasePlot_put_DataSet(This,dataSet)	\
-    ( (This)->lpVtbl -> put_DataSet(This,dataSet) ) 
+#define IBasePlot_put_IDataSet(This,dataSet)	\
+    ( (This)->lpVtbl -> put_IDataSet(This,dataSet) ) 
 
-#define IBasePlot_get_DataSet(This,dataSet)	\
-    ( (This)->lpVtbl -> get_DataSet(This,dataSet) ) 
+#define IBasePlot_get_IDataSet(This,dataSet)	\
+    ( (This)->lpVtbl -> get_IDataSet(This,dataSet) ) 
 
 #define IBasePlot_get_DataArity(This,__MIDL__IBasePlot0000)	\
     ( (This)->lpVtbl -> get_DataArity(This,__MIDL__IBasePlot0000) ) 
@@ -895,10 +895,10 @@ EXTERN_C const IID IID_IPlot;
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_ActionTable( 
             /* [retval][out] */ IGraphicSegmentAction **__MIDL__IPlot0001) = 0;
         
-        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_DataSet( 
+        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_IDataSet( 
             /* [in] */ /* external definition not present */ IDataSet *dataSet) = 0;
         
-        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_DataSet( 
+        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_IDataSet( 
             /* [retval][out] */ /* external definition not present */ IDataSet **dataSet) = 0;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_DataArity( 
@@ -1124,11 +1124,11 @@ EXTERN_C const IID IID_IPlot;
             IPlot * This,
             /* [retval][out] */ IGraphicSegmentAction **__MIDL__IPlot0001);
         
-        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_DataSet )( 
+        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_IDataSet )( 
             IPlot * This,
             /* [in] */ /* external definition not present */ IDataSet *dataSet);
         
-        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataSet )( 
+        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_IDataSet )( 
             IPlot * This,
             /* [retval][out] */ /* external definition not present */ IDataSet **dataSet);
         
@@ -1345,11 +1345,11 @@ EXTERN_C const IID IID_IPlot;
 #define IPlot_get_ActionTable(This,__MIDL__IPlot0001)	\
     ( (This)->lpVtbl -> get_ActionTable(This,__MIDL__IPlot0001) ) 
 
-#define IPlot_put_DataSet(This,dataSet)	\
-    ( (This)->lpVtbl -> put_DataSet(This,dataSet) ) 
+#define IPlot_put_IDataSet(This,dataSet)	\
+    ( (This)->lpVtbl -> put_IDataSet(This,dataSet) ) 
 
-#define IPlot_get_DataSet(This,dataSet)	\
-    ( (This)->lpVtbl -> get_DataSet(This,dataSet) ) 
+#define IPlot_get_IDataSet(This,dataSet)	\
+    ( (This)->lpVtbl -> get_IDataSet(This,dataSet) ) 
 
 #define IPlot_get_DataArity(This,__MIDL__IPlot0002)	\
     ( (This)->lpVtbl -> get_DataArity(This,__MIDL__IPlot0002) ) 
