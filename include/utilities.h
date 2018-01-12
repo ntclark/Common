@@ -54,6 +54,8 @@ HWND APIENTRY FindWindowContainingText(HWND hwndP,char* theText);
 HWND APIENTRY FindWindowContainingInteger(HWND hwndP);
 HWND APIENTRY FindWindowWithFunction(HWND hwndP,std::function<bool(HWND)> *pTestFunction);
 
+void APIENTRY DoOnWindowDescendants(HWND hwndP,std::function<void(HWND)> *pTestFunction);
+
 BOOL CALLBACK findChildWithClass(HWND hwndTest,LPARAM lParam);
 BOOL CALLBACK findChildWithStyle(HWND hwndTest,LPARAM lParam);
 BOOL CALLBACK findChildWithExStyle(HWND hwndTest,LPARAM lParam);
@@ -64,6 +66,8 @@ BOOL CALLBACK findChild(HWND hwndTest,LPARAM lParam);
 BOOL CALLBACK findChildContainingText(HWND hwndTest,LPARAM lParam);
 BOOL CALLBACK findChildContainingInteger(HWND hwndTest,LPARAM lParam);
 BOOL CALLBACK findChildWindowWithFunction(HWND hwndTest,LPARAM lParam);
+
+BOOL CALLBACK doDescendantWindowsWithFunction(HWND hwndTest,LPARAM lParam);
 
 long HashCode(char *pszInput);
 

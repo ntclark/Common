@@ -14,6 +14,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;\Common\include;\Visio Logger\Common\include;\Common\include\pdfEnabler;\Common\source;$(SolutionDir);$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0603;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>\Common\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

@@ -134,6 +134,22 @@
    return hwndFoundChild;
    }
 
+
+   void APIENTRY DoOnWindowDescendants(HWND hwndParent,std::function<void(HWND)> *pTestFunction) {
+   EnumChildWindows(hwndParent,doDescendantWindowsWithFunction,(LPARAM)pTestFunction);
+   delete pTestFunction;
+   return;
+   }
+
+
+   BOOL CALLBACK doDescendantWindowsWithFunction(HWND hwndChild,LPARAM lParam) {
+   std::function<void(HWND)> *pTestFunction = (std::function<void(HWND)> *)lParam;
+   (*pTestFunction)(hwndChild);   
+   EnumChildWindows(hwndChild,doDescendantWindowsWithFunction,(LPARAM)pTestFunction);
+   return TRUE;
+   }
+
+
    BOOL CALLBACK findChild(HWND hwndTest,LPARAM lParam) {
 
    char *pszTest = (char *)lParam;

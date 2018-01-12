@@ -13,7 +13,6 @@
 #include "list.h"
 
    template<class T> List<T>::List() {
-//   firstListItem = new ListItem;
    firstListItem = (ListItem *)NULL;
    lastListItem = (ListItem *)NULL;
    currentListItem = (ListItem *)NULL;
@@ -298,23 +297,6 @@
       if ( ! p ) return (T *)NULL;
    }
    return (T *)NULL;
-/*
-   ListItem *p = firstListItem;
-   if ( beforeThisOne == (T *)NULL) {
-      while ( p -> next ) p = p -> next;
-      return p -> member;
-   }
-   while ( p ) {
-      if ( p -> member = beforeThisOne )
-         if ( p -> previous ) 
-            return p -> previous -> member;
-         else
-            return (T *)NULL;
-      p = p -> previous;
-      if ( !p ) return (T *)NULL;
-   }
-   return (T *)NULL;
-*/
    }
  
  
@@ -334,6 +316,16 @@
    ListItem *p = firstListItem;
    while ( p ) {
       if ( p -> id == idNumber && p -> id != -1) return p -> member;
+      p = p -> next;
+   }
+   return (T *)NULL;
+   }
+ 
+   template<class T> T *List<T>::Get(T *item) {
+   ListItem *p = firstListItem;
+   while ( p ) {
+      if ( p -> member == item ) 
+         return p -> member;
       p = p -> next;
    }
    return (T *)NULL;

@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sat Dec 23 13:19:26 2017
+/* at Tue Jan 09 18:38:15 2018
  */
 /* Compiler settings for GraphicControl.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -53,6 +53,13 @@ typedef interface IGSGraphicEvents IGSGraphicEvents;
 typedef interface IGSGraphic IGSGraphic;
 
 #endif 	/* __IGSGraphic_FWD_DEFINED__ */
+
+
+#ifndef __IGSGraphicServices_FWD_DEFINED__
+#define __IGSGraphicServices_FWD_DEFINED__
+typedef interface IGSGraphicServices IGSGraphicServices;
+
+#endif 	/* __IGSGraphicServices_FWD_DEFINED__ */
 
 
 #ifndef __GSystemGraphic_FWD_DEFINED__
@@ -290,10 +297,10 @@ EXTERN_C const IID IID_IGSGraphic;
             /* [retval][out] */ enum PlotViews *plotView) = 0;
         
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_PlotType( 
-            /* [in] */ enum PlotTypes plotType) = 0;
+            /* [in] */ enum gc2DPlotTypes plotType) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_PlotType( 
-            /* [retval][out] */ enum PlotTypes *plotType) = 0;
+            /* [retval][out] */ enum gc2DPlotTypes *plotType) = 0;
         
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_Floor( 
             /* [in] */ double floorZValue) = 0;
@@ -580,11 +587,11 @@ EXTERN_C const IID IID_IGSGraphic;
         
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_PlotType )( 
             IGSGraphic * This,
-            /* [in] */ enum PlotTypes plotType);
+            /* [in] */ enum gc2DPlotTypes plotType);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_PlotType )( 
             IGSGraphic * This,
-            /* [retval][out] */ enum PlotTypes *plotType);
+            /* [retval][out] */ enum gc2DPlotTypes *plotType);
         
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Floor )( 
             IGSGraphic * This,
@@ -1118,11 +1125,89 @@ EXTERN_C const IID IID_IGSGraphic;
 #endif 	/* __IGSGraphic_INTERFACE_DEFINED__ */
 
 
+#ifndef __IGSGraphicServices_INTERFACE_DEFINED__
+#define __IGSGraphicServices_INTERFACE_DEFINED__
+
+/* interface IGSGraphicServices */
+/* [object][helpstring][uuid] */ 
+
+
+EXTERN_C const IID IID_IGSGraphicServices;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("8CAEFD73-55E6-11d3-8365-006008BD5BC3")
+    IGSGraphicServices : public IUnknown
+    {
+    public:
+        virtual HRESULT STDMETHODCALLTYPE ActivateLighting( void) = 0;
+        
+    };
+    
+    
+#else 	/* C style interface */
+
+    typedef struct IGSGraphicServicesVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            IGSGraphicServices * This,
+            /* [in] */ REFIID riid,
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            IGSGraphicServices * This);
+        
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            IGSGraphicServices * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *ActivateLighting )( 
+            IGSGraphicServices * This);
+        
+        END_INTERFACE
+    } IGSGraphicServicesVtbl;
+
+    interface IGSGraphicServices
+    {
+        CONST_VTBL struct IGSGraphicServicesVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IGSGraphicServices_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define IGSGraphicServices_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define IGSGraphicServices_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#define IGSGraphicServices_ActivateLighting(This)	\
+    ( (This)->lpVtbl -> ActivateLighting(This) ) 
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IGSGraphicServices_INTERFACE_DEFINED__ */
+
+
 EXTERN_C const CLSID CLSID_GSystemGraphic;
 
 #ifdef __cplusplus
 
-class DECLSPEC_UUID("8CAEFD73-55E6-11d3-8365-006008BD5BC3")
+class DECLSPEC_UUID("8CAEFD74-55E6-11d3-8365-006008BD5BC3")
 GSystemGraphic;
 #endif
 #endif /* __Graphic_LIBRARY_DEFINED__ */

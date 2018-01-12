@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sat Dec 23 13:19:22 2017
+/* at Tue Jan 09 16:43:46 2018
  */
 /* Compiler settings for GSystem.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -46,6 +46,13 @@
 typedef interface IGSystemStatusBar IGSystemStatusBar;
 
 #endif 	/* __IGSystemStatusBar_FWD_DEFINED__ */
+
+
+#ifndef __IGSystemPlotType_FWD_DEFINED__
+#define __IGSystemPlotType_FWD_DEFINED__
+typedef interface IGSystemPlotType IGSystemPlotType;
+
+#endif 	/* __IGSystemPlotType_FWD_DEFINED__ */
 
 
 #ifndef __GSystems_FWD_DEFINED__
@@ -111,7 +118,7 @@ enum UnitOfMeasure
 enum DataArity
     {
         DATA_ARITY_UNKNOWN	= 0,
-        DATA_ARITY_1D   = 1,
+        DATA_ARITY_1D	= 1,
         DATA_ARITY_2D	= 2,
         DATA_ARITY_3D	= 3
     } ;
@@ -138,22 +145,81 @@ enum PlotViews
     {
         gcPlotView2D	= 0x1,
         gcPlotView3D	= 0x2,
-        gcPlotViewMask	= 0xfffffff0
+        gcPlotViewMask	= 0xfffffffc
     } ;
 
-enum PlotTypes
+enum gc2DPlotTypes
     {
         gcPlotTypeNone	= 0,
-        gcPlotTypeNatural	= 0x10003,
-        gcPlotTypeSurface	= 0x20002,
-        gcPlotTypeWireFrame	= 0x40002,
-        gcPlotTypeStacks	= 0x80003,
-        gcPlotTypeBlocks	= 0x100003,
-        gcPlotTypeBalls	= 0x200003,
-        gcPlotTypePie	= 0x400001,
-        gcPlotTypeContour	= 0x800003,
-        gcPlotTypeQuads	= 0x1000003,
-        gcPlotTypeTriangles	= 0x1200003
+        gcPlotType2DExternal1	= 0x1,
+        gcPlotType2DExternal2	= 0x2,
+        gcPlotType2DExternal3	= 0x4,
+        gcPlotType2DExternal4	= 0x8,
+        gcPlotType2DExternal5	= 0x10,
+        gcPlotType2DExternal6	= 0x20,
+        gcPlotType2DExternal7	= 0x40,
+        gcPlotType2DExternal8	= 0x80,
+        gcPlotType2DExternal9	= 0x100,
+        gcPlotType2DExternal10	= 0x200,
+        gcPlotType2DExternal11	= 0x400,
+        gcPlotType2DExternal12	= 0x800,
+        gcPlotType2DExternal13	= 0x1000,
+        gcPlotType2DExternal14	= 0x2000,
+        gcPlotType2DExternal15	= 0x4000,
+        gcPlotType2DExternal16	= 0x8000,
+        gcPlotType2DExternal17	= 0x10000,
+        gcPlotType2DExternal18	= 0x20000,
+        gcPlotType2DExternal19	= 0x30000,
+        gcPlotType2DExternal20	= 0x80000,
+        gcPlotType2DExternal21	= 0x100000,
+        gcPlotType2DExternal22	= 0x200000,
+        gcPlotType2DExternal23	= 0x400000,
+        gcPlotType2DExternal24	= 0x800000,
+        gcPlotType2DExternal25	= 0x1000000,
+        gcPlotType2DExternal26	= 0x2000000,
+        gcPlotType2DExternal27	= 0x4000000,
+        gcPlotType2DExternal28	= 0x8000000,
+        gcPlotType2DExternal29	= 0x10000000,
+        gcPlotType2DExternal30	= 0x20000000,
+        gcPlotType2DExternal31	= 0x40000000,
+        gcPlotType2DExternal32	= 0x80000000
+    } ;
+
+enum gc3DPlotTypes
+    {
+        gcPlotType3DNone	= 0,
+        gcPlotType3DExternal1	= 0x1,
+        gcPlotType3DExternal2	= 0x2,
+        gcPlotType3DExternal3	= 0x4,
+        gcPlotType3DExternal4	= 0x8,
+        gcPlotType3DExternal5	= 0x10,
+        gcPlotType3DExternal6	= 0x20,
+        gcPlotType3DExternal7	= 0x40,
+        gcPlotType3DExternal8	= 0x80,
+        gcPlotType3DExternal9	= 0x100,
+        gcPlotType3DExternal10	= 0x200,
+        gcPlotType3DExternal11	= 0x400,
+        gcPlotType3DExternal12	= 0x800,
+        gcPlotType3DExternal13	= 0x1000,
+        gcPlotType3DExternal14	= 0x2000,
+        gcPlotType3DExternal15	= 0x4000,
+        gcPlotType3DExternal16	= 0x8000,
+        gcPlotType3DExternal17	= 0x10000,
+        gcPlotType3DExternal18	= 0x20000,
+        gcPlotType3DExternal19	= 0x30000,
+        gcPlotType3DExternal20	= 0x80000,
+        gcPlotType3DExternal21	= 0x100000,
+        gcPlotType3DExternal22	= 0x200000,
+        gcPlotType3DExternal23	= 0x400000,
+        gcPlotType3DExternal24	= 0x800000,
+        gcPlotType3DExternal25	= 0x1000000,
+        gcPlotType3DExternal26	= 0x2000000,
+        gcPlotType3DExternal27	= 0x4000000,
+        gcPlotType3DExternal28	= 0x8000000,
+        gcPlotType3DExternal29	= 0x10000000,
+        gcPlotType3DExternal30	= 0x20000000,
+        gcPlotType3DExternal31	= 0x40000000,
+        gcPlotType3DExternal32	= 0x80000000
     } ;
 
 enum PlotIdBands
@@ -256,6 +322,176 @@ EXTERN_C const IID IID_IGSystemStatusBar;
 
 
 #endif 	/* __IGSystemStatusBar_INTERFACE_DEFINED__ */
+
+
+#ifndef __IGSystemPlotType_INTERFACE_DEFINED__
+#define __IGSystemPlotType_INTERFACE_DEFINED__
+
+/* interface IGSystemPlotType */
+/* [object][uuid] */ 
+
+
+EXTERN_C const IID IID_IGSystemPlotType;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("8CBEFD00-55E6-11d3-8365-006008BD5BC3")
+    IGSystemPlotType : public IUnknown
+    {
+    public:
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Count( 
+            /* [retval][out] */ long *pCountProvided) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Name( 
+            /* [in] */ long item,
+            /* [retval][out] */ BSTR *pBstr) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Is3DOnly( 
+            /* [in] */ long item,
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__IGSystemPlotType0000) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_UsesMaterialShading( 
+            /* [in] */ long item,
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__IGSystemPlotType0001) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_HasProperties( 
+            /* [in] */ long item,
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__IGSystemPlotType0002) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ShowProperties( 
+            /* [in] */ long item,
+            /* [in] */ HWND hwndParent,
+            REFIID instanceGuid,
+            void ( STDMETHODCALLTYPE __stdcall *whenDoneCallBack )( 
+                void *pArg,
+                ULONG_PTR cookie),
+            void *pArg,
+            ULONG_PTR cookie) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Execute( 
+            /* [in] */ long item,
+            long segmentID,
+            void *pvIPlot,
+            void *pvIOpenGLImplementation,
+            void *pvIDataSet) = 0;
+        
+    };
+    
+    
+#else 	/* C style interface */
+
+    typedef struct IGSystemPlotTypeVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            IGSystemPlotType * This,
+            /* [in] */ REFIID riid,
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            IGSystemPlotType * This);
+        
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            IGSystemPlotType * This);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Count )( 
+            IGSystemPlotType * This,
+            /* [retval][out] */ long *pCountProvided);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Name )( 
+            IGSystemPlotType * This,
+            /* [in] */ long item,
+            /* [retval][out] */ BSTR *pBstr);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Is3DOnly )( 
+            IGSystemPlotType * This,
+            /* [in] */ long item,
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__IGSystemPlotType0000);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_UsesMaterialShading )( 
+            IGSystemPlotType * This,
+            /* [in] */ long item,
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__IGSystemPlotType0001);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_HasProperties )( 
+            IGSystemPlotType * This,
+            /* [in] */ long item,
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__IGSystemPlotType0002);
+        
+        HRESULT ( STDMETHODCALLTYPE *ShowProperties )( 
+            IGSystemPlotType * This,
+            /* [in] */ long item,
+            /* [in] */ HWND hwndParent,
+            REFIID instanceGuid,
+            void ( STDMETHODCALLTYPE __stdcall *whenDoneCallBack )( 
+                void *pArg,
+                ULONG_PTR cookie),
+            void *pArg,
+            ULONG_PTR cookie);
+        
+        HRESULT ( STDMETHODCALLTYPE *Execute )( 
+            IGSystemPlotType * This,
+            /* [in] */ long item,
+            long segmentID,
+            void *pvIPlot,
+            void *pvIOpenGLImplementation,
+            void *pvIDataSet);
+        
+        END_INTERFACE
+    } IGSystemPlotTypeVtbl;
+
+    interface IGSystemPlotType
+    {
+        CONST_VTBL struct IGSystemPlotTypeVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IGSystemPlotType_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define IGSystemPlotType_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define IGSystemPlotType_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#define IGSystemPlotType_get_Count(This,pCountProvided)	\
+    ( (This)->lpVtbl -> get_Count(This,pCountProvided) ) 
+
+#define IGSystemPlotType_get_Name(This,item,pBstr)	\
+    ( (This)->lpVtbl -> get_Name(This,item,pBstr) ) 
+
+#define IGSystemPlotType_get_Is3DOnly(This,item,__MIDL__IGSystemPlotType0000)	\
+    ( (This)->lpVtbl -> get_Is3DOnly(This,item,__MIDL__IGSystemPlotType0000) ) 
+
+#define IGSystemPlotType_get_UsesMaterialShading(This,item,__MIDL__IGSystemPlotType0001)	\
+    ( (This)->lpVtbl -> get_UsesMaterialShading(This,item,__MIDL__IGSystemPlotType0001) ) 
+
+#define IGSystemPlotType_get_HasProperties(This,item,__MIDL__IGSystemPlotType0002)	\
+    ( (This)->lpVtbl -> get_HasProperties(This,item,__MIDL__IGSystemPlotType0002) ) 
+
+#define IGSystemPlotType_ShowProperties(This,item,hwndParent,instanceGuid,whenDoneCallBack,pArg,cookie)	\
+    ( (This)->lpVtbl -> ShowProperties(This,item,hwndParent,instanceGuid,whenDoneCallBack,pArg,cookie) ) 
+
+#define IGSystemPlotType_Execute(This,item,segmentID,pvIPlot,pvIOpenGLImplementation,pvIDataSet)	\
+    ( (This)->lpVtbl -> Execute(This,item,segmentID,pvIPlot,pvIOpenGLImplementation,pvIDataSet) ) 
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IGSystemPlotType_INTERFACE_DEFINED__ */
 
 
 EXTERN_C const CLSID CLSID_GSystems;

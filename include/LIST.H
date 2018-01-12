@@ -55,6 +55,7 @@
       T *GetPrevious(T *beforeThisOne);
       T *Get(char *itemName);
       T *Get(long idNumber);
+      T *Get(T* item);
       T *GetByIndex(int itemIndex);
 
       int Clone(T *memberToClone = NULL,void *spaceToPutIt = NULL);

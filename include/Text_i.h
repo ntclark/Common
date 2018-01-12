@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Dec 29 00:12:52 2017
+/* at Wed Jan 10 17:11:04 2018
  */
 /* Compiler settings for Text.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -470,8 +470,10 @@ EXTERN_C const IID IID_IText;
             char *text,
             struct /* external definition not present */ DataPoint *position,
             /* [in] */ void ( STDMETHODCALLTYPE *pWhenChangedCallback )( 
-                void *__MIDL__IText0020),
-            /* [in] */ void *pWhenChangedArg) = 0;
+                void *__MIDL__IText0020,
+                ULONG_PTR __MIDL__IText0021),
+            /* [in] */ void *pWhenChangedArg,
+            /* [in] */ ULONG_PTR whenChangedCookie) = 0;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE PrepData( void) = 0;
         
@@ -482,7 +484,7 @@ EXTERN_C const IID IID_IText;
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE Redraw( void) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE AdviseGSystemStatusBar( 
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IText0022) = 0;
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IText0023) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE EditProperties( void) = 0;
         
@@ -490,15 +492,15 @@ EXTERN_C const IID IID_IText;
             IText *pIText_Source) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_GDIBoundingBox( 
-            /* [retval][out] */ RECT *__MIDL__IText0023) = 0;
+            /* [retval][out] */ RECT *__MIDL__IText0024) = 0;
         
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_GDIBoundingBox( 
-            /* [in] */ RECT *__MIDL__IText0024) = 0;
+            /* [in] */ RECT *__MIDL__IText0025) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE LineUp( void) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_DataSet( 
-            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IText0025) = 0;
+            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IText0026) = 0;
         
     };
     
@@ -863,8 +865,10 @@ EXTERN_C const IID IID_IText;
             char *text,
             struct /* external definition not present */ DataPoint *position,
             /* [in] */ void ( STDMETHODCALLTYPE *pWhenChangedCallback )( 
-                void *__MIDL__IText0020),
-            /* [in] */ void *pWhenChangedArg);
+                void *__MIDL__IText0020,
+                ULONG_PTR __MIDL__IText0021),
+            /* [in] */ void *pWhenChangedArg,
+            /* [in] */ ULONG_PTR whenChangedCookie);
         
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *PrepData )( 
             IText * This);
@@ -880,7 +884,7 @@ EXTERN_C const IID IID_IText;
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *AdviseGSystemStatusBar )( 
             IText * This,
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IText0022);
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IText0023);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *EditProperties )( 
             IText * This);
@@ -891,18 +895,18 @@ EXTERN_C const IID IID_IText;
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_GDIBoundingBox )( 
             IText * This,
-            /* [retval][out] */ RECT *__MIDL__IText0023);
+            /* [retval][out] */ RECT *__MIDL__IText0024);
         
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_GDIBoundingBox )( 
             IText * This,
-            /* [in] */ RECT *__MIDL__IText0024);
+            /* [in] */ RECT *__MIDL__IText0025);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *LineUp )( 
             IText * This);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataSet )( 
             IText * This,
-            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IText0025);
+            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IText0026);
         
         END_INTERFACE
     } ITextVtbl;
@@ -1159,8 +1163,8 @@ EXTERN_C const IID IID_IText;
 #define IText_put_TextNotify(This,pITextNotify)	\
     ( (This)->lpVtbl -> put_TextNotify(This,pITextNotify) ) 
 
-#define IText_Initialize(This,hwndOwner,__MIDL__IText0017,__MIDL__IText0018,__MIDL__IText0019,pPropFloor,pPropCeiling,pPropOpenGLRendering,text,position,pWhenChangedCallback,pWhenChangedArg)	\
-    ( (This)->lpVtbl -> Initialize(This,hwndOwner,__MIDL__IText0017,__MIDL__IText0018,__MIDL__IText0019,pPropFloor,pPropCeiling,pPropOpenGLRendering,text,position,pWhenChangedCallback,pWhenChangedArg) ) 
+#define IText_Initialize(This,hwndOwner,__MIDL__IText0017,__MIDL__IText0018,__MIDL__IText0019,pPropFloor,pPropCeiling,pPropOpenGLRendering,text,position,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie)	\
+    ( (This)->lpVtbl -> Initialize(This,hwndOwner,__MIDL__IText0017,__MIDL__IText0018,__MIDL__IText0019,pPropFloor,pPropCeiling,pPropOpenGLRendering,text,position,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie) ) 
 
 #define IText_PrepData(This)	\
     ( (This)->lpVtbl -> PrepData(This) ) 
@@ -1174,8 +1178,8 @@ EXTERN_C const IID IID_IText;
 #define IText_Redraw(This)	\
     ( (This)->lpVtbl -> Redraw(This) ) 
 
-#define IText_AdviseGSystemStatusBar(This,__MIDL__IText0022)	\
-    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IText0022) ) 
+#define IText_AdviseGSystemStatusBar(This,__MIDL__IText0023)	\
+    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IText0023) ) 
 
 #define IText_EditProperties(This)	\
     ( (This)->lpVtbl -> EditProperties(This) ) 
@@ -1183,17 +1187,17 @@ EXTERN_C const IID IID_IText;
 #define IText_CopyFrom(This,pIText_Source)	\
     ( (This)->lpVtbl -> CopyFrom(This,pIText_Source) ) 
 
-#define IText_get_GDIBoundingBox(This,__MIDL__IText0023)	\
-    ( (This)->lpVtbl -> get_GDIBoundingBox(This,__MIDL__IText0023) ) 
+#define IText_get_GDIBoundingBox(This,__MIDL__IText0024)	\
+    ( (This)->lpVtbl -> get_GDIBoundingBox(This,__MIDL__IText0024) ) 
 
-#define IText_put_GDIBoundingBox(This,__MIDL__IText0024)	\
-    ( (This)->lpVtbl -> put_GDIBoundingBox(This,__MIDL__IText0024) ) 
+#define IText_put_GDIBoundingBox(This,__MIDL__IText0025)	\
+    ( (This)->lpVtbl -> put_GDIBoundingBox(This,__MIDL__IText0025) ) 
 
 #define IText_LineUp(This)	\
     ( (This)->lpVtbl -> LineUp(This) ) 
 
-#define IText_get_DataSet(This,__MIDL__IText0025)	\
-    ( (This)->lpVtbl -> get_DataSet(This,__MIDL__IText0025) ) 
+#define IText_get_DataSet(This,__MIDL__IText0026)	\
+    ( (This)->lpVtbl -> get_DataSet(This,__MIDL__IText0026) ) 
 
 #endif /* COBJMACROS */
 

@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Dec 29 08:48:16 2017
+/* at Wed Jan 10 17:05:46 2018
  */
 /* Compiler settings for Function.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -400,19 +400,26 @@ EXTERN_C const IID IID_IGSFunctioNater;
             /* external definition not present */ IGProperty *parentPropertyFloor,
             /* external definition not present */ IGProperty *parentPropertyCeiling,
             /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
-                void *__MIDL__IGSFunctioNater0000),
-            /* [in] */ void *pArg) = 0;
+                void *__MIDL__IGSFunctioNater0000,
+                ULONG_PTR __MIDL__IGSFunctioNater0001),
+            /* [in] */ void *pArg,
+            /* [in] */ ULONG_PTR callbackCookie) = 0;
         
         virtual /* [id][propput][helpstring] */ HRESULT STDMETHODCALLTYPE put_OnChangeCallback( 
             /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
-                void *__MIDL__IGSFunctioNater0002),
-            /* [in] */ void *pArg) = 0;
+                void *__MIDL__IGSFunctioNater0003,
+                ULONG_PTR __MIDL__IGSFunctioNater0004),
+            /* [in] */ void *pArg,
+            /* [in] */ ULONG_PTR callbackCookie) = 0;
         
         virtual /* [id][propget][helpstring] */ HRESULT STDMETHODCALLTYPE get_AnyControlVisible( 
             /* [retval][out] */ VARIANT_BOOL *pAnyVisible) = 0;
         
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE AdviseGSystemStatusBar( 
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IGSFunctioNater0004) = 0;
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IGSFunctioNater0006) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE AdviseGSGraphicServices( 
+            void *__MIDL__IGSFunctioNater0007) = 0;
         
     };
     
@@ -679,14 +686,18 @@ EXTERN_C const IID IID_IGSFunctioNater;
             /* external definition not present */ IGProperty *parentPropertyFloor,
             /* external definition not present */ IGProperty *parentPropertyCeiling,
             /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
-                void *__MIDL__IGSFunctioNater0000),
-            /* [in] */ void *pArg);
+                void *__MIDL__IGSFunctioNater0000,
+                ULONG_PTR __MIDL__IGSFunctioNater0001),
+            /* [in] */ void *pArg,
+            /* [in] */ ULONG_PTR callbackCookie);
         
         /* [id][propput][helpstring] */ HRESULT ( STDMETHODCALLTYPE *put_OnChangeCallback )( 
             IGSFunctioNater * This,
             /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
-                void *__MIDL__IGSFunctioNater0002),
-            /* [in] */ void *pArg);
+                void *__MIDL__IGSFunctioNater0003,
+                ULONG_PTR __MIDL__IGSFunctioNater0004),
+            /* [in] */ void *pArg,
+            /* [in] */ ULONG_PTR callbackCookie);
         
         /* [id][propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_AnyControlVisible )( 
             IGSFunctioNater * This,
@@ -694,7 +705,11 @@ EXTERN_C const IID IID_IGSFunctioNater;
         
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *AdviseGSystemStatusBar )( 
             IGSFunctioNater * This,
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IGSFunctioNater0004);
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IGSFunctioNater0006);
+        
+        HRESULT ( STDMETHODCALLTYPE *AdviseGSGraphicServices )( 
+            IGSFunctioNater * This,
+            void *__MIDL__IGSFunctioNater0007);
         
         END_INTERFACE
     } IGSFunctioNaterVtbl;
@@ -879,17 +894,20 @@ EXTERN_C const IID IID_IGSFunctioNater;
 #define IGSFunctioNater_get_IDataSet(This,ppIDataSet)	\
     ( (This)->lpVtbl -> get_IDataSet(This,ppIDataSet) ) 
 
-#define IGSFunctioNater_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg)	\
-    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg) ) 
+#define IGSFunctioNater_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg,callbackCookie)	\
+    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg,callbackCookie) ) 
 
-#define IGSFunctioNater_put_OnChangeCallback(This,pCallback,pArg)	\
-    ( (This)->lpVtbl -> put_OnChangeCallback(This,pCallback,pArg) ) 
+#define IGSFunctioNater_put_OnChangeCallback(This,pCallback,pArg,callbackCookie)	\
+    ( (This)->lpVtbl -> put_OnChangeCallback(This,pCallback,pArg,callbackCookie) ) 
 
 #define IGSFunctioNater_get_AnyControlVisible(This,pAnyVisible)	\
     ( (This)->lpVtbl -> get_AnyControlVisible(This,pAnyVisible) ) 
 
-#define IGSFunctioNater_AdviseGSystemStatusBar(This,__MIDL__IGSFunctioNater0004)	\
-    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IGSFunctioNater0004) ) 
+#define IGSFunctioNater_AdviseGSystemStatusBar(This,__MIDL__IGSFunctioNater0006)	\
+    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IGSFunctioNater0006) ) 
+
+#define IGSFunctioNater_AdviseGSGraphicServices(This,__MIDL__IGSFunctioNater0007)	\
+    ( (This)->lpVtbl -> AdviseGSGraphicServices(This,__MIDL__IGSFunctioNater0007) ) 
 
 #endif /* COBJMACROS */
 

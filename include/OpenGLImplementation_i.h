@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Dec 29 00:13:34 2017
+/* at Wed Jan 10 21:10:42 2018
  */
 /* Compiler settings for OpenGLImplementation.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -280,6 +280,19 @@ EXTERN_C const IID IID_IOpenGLImplementation;
         
         virtual HRESULT STDMETHODCALLTYPE EndSolids( 
             long segmentID) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE BeginTriangleSolids( 
+            long segmentID,
+            /* external definition not present */ IGProperty *pPropTopColor,
+            /* external definition not present */ IGProperty *pPropBottomColor) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE EndTriangleSolids( 
+            long segmentID) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE BeginOpenGLMode( 
+            long mode) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE EndOpenGLMode( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE ClipPlane( 
             struct /* external definition not present */ DataPoint *dpStartLine,
@@ -639,6 +652,23 @@ EXTERN_C const IID IID_IOpenGLImplementation;
             IOpenGLImplementation * This,
             long segmentID);
         
+        HRESULT ( STDMETHODCALLTYPE *BeginTriangleSolids )( 
+            IOpenGLImplementation * This,
+            long segmentID,
+            /* external definition not present */ IGProperty *pPropTopColor,
+            /* external definition not present */ IGProperty *pPropBottomColor);
+        
+        HRESULT ( STDMETHODCALLTYPE *EndTriangleSolids )( 
+            IOpenGLImplementation * This,
+            long segmentID);
+        
+        HRESULT ( STDMETHODCALLTYPE *BeginOpenGLMode )( 
+            IOpenGLImplementation * This,
+            long mode);
+        
+        HRESULT ( STDMETHODCALLTYPE *EndOpenGLMode )( 
+            IOpenGLImplementation * This);
+        
         HRESULT ( STDMETHODCALLTYPE *ClipPlane )( 
             IOpenGLImplementation * This,
             struct /* external definition not present */ DataPoint *dpStartLine,
@@ -900,6 +930,18 @@ EXTERN_C const IID IID_IOpenGLImplementation;
 
 #define IOpenGLImplementation_EndSolids(This,segmentID)	\
     ( (This)->lpVtbl -> EndSolids(This,segmentID) ) 
+
+#define IOpenGLImplementation_BeginTriangleSolids(This,segmentID,pPropTopColor,pPropBottomColor)	\
+    ( (This)->lpVtbl -> BeginTriangleSolids(This,segmentID,pPropTopColor,pPropBottomColor) ) 
+
+#define IOpenGLImplementation_EndTriangleSolids(This,segmentID)	\
+    ( (This)->lpVtbl -> EndTriangleSolids(This,segmentID) ) 
+
+#define IOpenGLImplementation_BeginOpenGLMode(This,mode)	\
+    ( (This)->lpVtbl -> BeginOpenGLMode(This,mode) ) 
+
+#define IOpenGLImplementation_EndOpenGLMode(This)	\
+    ( (This)->lpVtbl -> EndOpenGLMode(This) ) 
 
 #define IOpenGLImplementation_ClipPlane(This,dpStartLine,dpEndLine,dpCorner1,dpCorner2)	\
     ( (This)->lpVtbl -> ClipPlane(This,dpStartLine,dpEndLine,dpCorner1,dpCorner2) ) 

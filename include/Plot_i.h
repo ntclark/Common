@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Dec 29 00:13:34 2017
+/* at Fri Jan 12 10:00:54 2018
  */
 /* Compiler settings for Plot.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -74,6 +74,13 @@ typedef interface IPlot IPlot;
 typedef interface IPlotNotify IPlotNotify;
 
 #endif 	/* __IPlotNotify_FWD_DEFINED__ */
+
+
+#ifndef __IPlotServices_FWD_DEFINED__
+#define __IPlotServices_FWD_DEFINED__
+typedef interface IPlotServices IPlotServices;
+
+#endif 	/* __IPlotServices_FWD_DEFINED__ */
 
 
 #ifndef __GraphicSegment_FWD_DEFINED__
@@ -152,7 +159,7 @@ EXTERN_C const IID IID_IGraphicSegmentAction;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
-    MIDL_INTERFACE("8CAEFD7D-55E6-11d3-8365-006008BD5BC3")
+    MIDL_INTERFACE("8CAEFD7E-55E6-11d3-8365-006008BD5BC3")
     IGraphicSegmentAction : public IUnknown
     {
     public:
@@ -488,17 +495,16 @@ EXTERN_C const IID IID_IBasePlot;
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_IDataSet( 
             /* [retval][out] */ /* external definition not present */ IDataSet **dataSet) = 0;
         
-        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_DataArity( 
-            /* [retval][out] */ enum /* external definition not present */ DataArity *__MIDL__IBasePlot0000) = 0;
+        virtual enum /* external definition not present */ DataArity STDMETHODCALLTYPE DataArity( void) = 0;
         
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_SegmentID( 
             /* [retval][out] */ long *getID) = 0;
         
         virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_ActionTable( 
-            /* [in] */ IGraphicSegmentAction *__MIDL__IBasePlot0001) = 0;
+            /* [in] */ IGraphicSegmentAction *__MIDL__IBasePlot0000) = 0;
         
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_ActionTable( 
-            /* [retval][out] */ IGraphicSegmentAction **__MIDL__IBasePlot0002) = 0;
+            /* [retval][out] */ IGraphicSegmentAction **__MIDL__IBasePlot0001) = 0;
         
         virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_PlotView( 
             /* [in] */ enum /* external definition not present */ PlotViews newPlotView) = 0;
@@ -506,11 +512,17 @@ EXTERN_C const IID IID_IBasePlot;
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_PlotView( 
             /* [retval][out] */ enum /* external definition not present */ PlotViews *getPlotView) = 0;
         
-        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_PlotType( 
-            /* [in] */ enum /* external definition not present */ PlotTypes newPlotSubTppe) = 0;
+        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_PlotType2D( 
+            /* [in] */ enum /* external definition not present */ gc2DPlotTypes newPlotSubTppe) = 0;
         
-        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_PlotType( 
-            /* [retval][out] */ enum /* external definition not present */ PlotTypes *getPlotSubType) = 0;
+        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_PlotType2D( 
+            /* [retval][out] */ enum /* external definition not present */ gc2DPlotTypes *getPlotSubType) = 0;
+        
+        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_PlotType3D( 
+            /* [in] */ enum /* external definition not present */ gc3DPlotTypes newPlotSubTppe) = 0;
+        
+        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_PlotType3D( 
+            /* [retval][out] */ enum /* external definition not present */ gc3DPlotTypes *getPlotSubType) = 0;
         
         virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_ColorProperty( 
             /* [in] */ /* external definition not present */ IGProperty *pIPropertyColor) = 0;
@@ -599,9 +611,8 @@ EXTERN_C const IID IID_IBasePlot;
             IBasePlot * This,
             /* [retval][out] */ /* external definition not present */ IDataSet **dataSet);
         
-        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataArity )( 
-            IBasePlot * This,
-            /* [retval][out] */ enum /* external definition not present */ DataArity *__MIDL__IBasePlot0000);
+        enum /* external definition not present */ DataArity ( STDMETHODCALLTYPE *DataArity )( 
+            IBasePlot * This);
         
         /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_SegmentID )( 
             IBasePlot * This,
@@ -609,11 +620,11 @@ EXTERN_C const IID IID_IBasePlot;
         
         /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_ActionTable )( 
             IBasePlot * This,
-            /* [in] */ IGraphicSegmentAction *__MIDL__IBasePlot0001);
+            /* [in] */ IGraphicSegmentAction *__MIDL__IBasePlot0000);
         
         /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_ActionTable )( 
             IBasePlot * This,
-            /* [retval][out] */ IGraphicSegmentAction **__MIDL__IBasePlot0002);
+            /* [retval][out] */ IGraphicSegmentAction **__MIDL__IBasePlot0001);
         
         /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_PlotView )( 
             IBasePlot * This,
@@ -623,13 +634,21 @@ EXTERN_C const IID IID_IBasePlot;
             IBasePlot * This,
             /* [retval][out] */ enum /* external definition not present */ PlotViews *getPlotView);
         
-        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_PlotType )( 
+        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_PlotType2D )( 
             IBasePlot * This,
-            /* [in] */ enum /* external definition not present */ PlotTypes newPlotSubTppe);
+            /* [in] */ enum /* external definition not present */ gc2DPlotTypes newPlotSubTppe);
         
-        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_PlotType )( 
+        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_PlotType2D )( 
             IBasePlot * This,
-            /* [retval][out] */ enum /* external definition not present */ PlotTypes *getPlotSubType);
+            /* [retval][out] */ enum /* external definition not present */ gc2DPlotTypes *getPlotSubType);
+        
+        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_PlotType3D )( 
+            IBasePlot * This,
+            /* [in] */ enum /* external definition not present */ gc3DPlotTypes newPlotSubTppe);
+        
+        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_PlotType3D )( 
+            IBasePlot * This,
+            /* [retval][out] */ enum /* external definition not present */ gc3DPlotTypes *getPlotSubType);
         
         /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_ColorProperty )( 
             IBasePlot * This,
@@ -737,17 +756,17 @@ EXTERN_C const IID IID_IBasePlot;
 #define IBasePlot_get_IDataSet(This,dataSet)	\
     ( (This)->lpVtbl -> get_IDataSet(This,dataSet) ) 
 
-#define IBasePlot_get_DataArity(This,__MIDL__IBasePlot0000)	\
-    ( (This)->lpVtbl -> get_DataArity(This,__MIDL__IBasePlot0000) ) 
+#define IBasePlot_DataArity(This)	\
+    ( (This)->lpVtbl -> DataArity(This) ) 
 
 #define IBasePlot_get_SegmentID(This,getID)	\
     ( (This)->lpVtbl -> get_SegmentID(This,getID) ) 
 
-#define IBasePlot_put_ActionTable(This,__MIDL__IBasePlot0001)	\
-    ( (This)->lpVtbl -> put_ActionTable(This,__MIDL__IBasePlot0001) ) 
+#define IBasePlot_put_ActionTable(This,__MIDL__IBasePlot0000)	\
+    ( (This)->lpVtbl -> put_ActionTable(This,__MIDL__IBasePlot0000) ) 
 
-#define IBasePlot_get_ActionTable(This,__MIDL__IBasePlot0002)	\
-    ( (This)->lpVtbl -> get_ActionTable(This,__MIDL__IBasePlot0002) ) 
+#define IBasePlot_get_ActionTable(This,__MIDL__IBasePlot0001)	\
+    ( (This)->lpVtbl -> get_ActionTable(This,__MIDL__IBasePlot0001) ) 
 
 #define IBasePlot_put_PlotView(This,newPlotView)	\
     ( (This)->lpVtbl -> put_PlotView(This,newPlotView) ) 
@@ -755,11 +774,17 @@ EXTERN_C const IID IID_IBasePlot;
 #define IBasePlot_get_PlotView(This,getPlotView)	\
     ( (This)->lpVtbl -> get_PlotView(This,getPlotView) ) 
 
-#define IBasePlot_put_PlotType(This,newPlotSubTppe)	\
-    ( (This)->lpVtbl -> put_PlotType(This,newPlotSubTppe) ) 
+#define IBasePlot_put_PlotType2D(This,newPlotSubTppe)	\
+    ( (This)->lpVtbl -> put_PlotType2D(This,newPlotSubTppe) ) 
 
-#define IBasePlot_get_PlotType(This,getPlotSubType)	\
-    ( (This)->lpVtbl -> get_PlotType(This,getPlotSubType) ) 
+#define IBasePlot_get_PlotType2D(This,getPlotSubType)	\
+    ( (This)->lpVtbl -> get_PlotType2D(This,getPlotSubType) ) 
+
+#define IBasePlot_put_PlotType3D(This,newPlotSubTppe)	\
+    ( (This)->lpVtbl -> put_PlotType3D(This,newPlotSubTppe) ) 
+
+#define IBasePlot_get_PlotType3D(This,getPlotSubType)	\
+    ( (This)->lpVtbl -> get_PlotType3D(This,getPlotSubType) ) 
 
 #define IBasePlot_put_ColorProperty(This,pIPropertyColor)	\
     ( (This)->lpVtbl -> put_ColorProperty(This,pIPropertyColor) ) 
@@ -886,6 +911,11 @@ EXTERN_C const IID IID_IPlot;
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_PlotTypeProperty( 
             /* [retval][out] */ /* external definition not present */ IGProperty **ppPlotSubTypeProperty) = 0;
         
+        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_PlotTypeUsesMaterialShading( 
+            /* [in] */ long the2DTypes_ORd_enum_gc2DTypes,
+            /* [in] */ long the3DTypes_ORd_enum_gc3DTypes,
+            /* [retval][out] */ VARIANT_BOOL *pHasSurfaces) = 0;
+        
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_SegmentID( 
             /* [retval][out] */ long *getID) = 0;
         
@@ -901,8 +931,7 @@ EXTERN_C const IID IID_IPlot;
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_IDataSet( 
             /* [retval][out] */ /* external definition not present */ IDataSet **dataSet) = 0;
         
-        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_DataArity( 
-            /* [retval][out] */ enum /* external definition not present */ DataArity *__MIDL__IPlot0002) = 0;
+        virtual enum /* external definition not present */ DataArity STDMETHODCALLTYPE DataArity( void) = 0;
         
         virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_PlotNotify( 
             /* [in] */ IPlotNotify *setIPlotNotify) = 0;
@@ -916,17 +945,29 @@ EXTERN_C const IID IID_IPlot;
         virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_Color( 
             /* [retval][out] */ SAFEARRAY * *pColor) = 0;
         
-        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_ColorProperty( 
+        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_LineColorProperty( 
             /* [in] */ /* external definition not present */ IGProperty *pIPropertyColor) = 0;
         
-        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_ColorProperty( 
+        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_LineColorProperty( 
             /* [retval][out] */ /* external definition not present */ IGProperty **ppIPropertyColor) = 0;
         
-        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_LineWeight( 
+        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_LineWeightProperty( 
             /* [in] */ /* external definition not present */ IGProperty *pIPropertyLineWeightInPixels) = 0;
         
-        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_LineWeight( 
+        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_LineWeightProperty( 
             /* [retval][out] */ /* external definition not present */ IGProperty **ppIPropertyLineWeightInPixels) = 0;
+        
+        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_TopSurfaceColorProperty( 
+            /* [in] */ /* external definition not present */ IGProperty *pIPropertyColor) = 0;
+        
+        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_TopSurfaceColorProperty( 
+            /* [retval][out] */ /* external definition not present */ IGProperty **ppIPropertyColor) = 0;
+        
+        virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_BottomSurfaceColorProperty( 
+            /* [in] */ /* external definition not present */ IGProperty *pIPropertyColor) = 0;
+        
+        virtual /* [helpstring][propget] */ HRESULT STDMETHODCALLTYPE get_BottomSurfaceColorProperty( 
+            /* [retval][out] */ /* external definition not present */ IGProperty **ppIPropertyColor) = 0;
         
         virtual /* [helpstring][propput] */ HRESULT STDMETHODCALLTYPE put_ParentWindow( 
             /* [in] */ HWND hwndParent) = 0;
@@ -950,8 +991,10 @@ EXTERN_C const IID IID_IPlot;
             /* external definition not present */ IGProperty *parentPropertyFloor,
             /* external definition not present */ IGProperty *parentPropertyCeiling,
             /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
-                void *__MIDL__IPlot0003),
-            /* [in] */ void *pArg) = 0;
+                void *__MIDL__IPlot0002,
+                ULONG_PTR __MIDL__IPlot0003),
+            /* [in] */ void *pArg,
+            /* [in] */ ULONG_PTR callbackCookie) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE PrepareForData( void) = 0;
         
@@ -997,6 +1040,9 @@ EXTERN_C const IID IID_IPlot;
         
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE AdviseGSystemStatusBar( 
             /* external definition not present */ IGSystemStatusBar *__MIDL__IPlot0007) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE AdviseGSGraphicServices( 
+            void *__MIDL__IPlot0008) = 0;
         
     };
     
@@ -1112,6 +1158,12 @@ EXTERN_C const IID IID_IPlot;
             IPlot * This,
             /* [retval][out] */ /* external definition not present */ IGProperty **ppPlotSubTypeProperty);
         
+        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_PlotTypeUsesMaterialShading )( 
+            IPlot * This,
+            /* [in] */ long the2DTypes_ORd_enum_gc2DTypes,
+            /* [in] */ long the3DTypes_ORd_enum_gc3DTypes,
+            /* [retval][out] */ VARIANT_BOOL *pHasSurfaces);
+        
         /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_SegmentID )( 
             IPlot * This,
             /* [retval][out] */ long *getID);
@@ -1132,9 +1184,8 @@ EXTERN_C const IID IID_IPlot;
             IPlot * This,
             /* [retval][out] */ /* external definition not present */ IDataSet **dataSet);
         
-        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataArity )( 
-            IPlot * This,
-            /* [retval][out] */ enum /* external definition not present */ DataArity *__MIDL__IPlot0002);
+        enum /* external definition not present */ DataArity ( STDMETHODCALLTYPE *DataArity )( 
+            IPlot * This);
         
         /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_PlotNotify )( 
             IPlot * This,
@@ -1152,21 +1203,37 @@ EXTERN_C const IID IID_IPlot;
             IPlot * This,
             /* [retval][out] */ SAFEARRAY * *pColor);
         
-        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_ColorProperty )( 
+        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_LineColorProperty )( 
             IPlot * This,
             /* [in] */ /* external definition not present */ IGProperty *pIPropertyColor);
         
-        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_ColorProperty )( 
+        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_LineColorProperty )( 
             IPlot * This,
             /* [retval][out] */ /* external definition not present */ IGProperty **ppIPropertyColor);
         
-        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_LineWeight )( 
+        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_LineWeightProperty )( 
             IPlot * This,
             /* [in] */ /* external definition not present */ IGProperty *pIPropertyLineWeightInPixels);
         
-        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_LineWeight )( 
+        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_LineWeightProperty )( 
             IPlot * This,
             /* [retval][out] */ /* external definition not present */ IGProperty **ppIPropertyLineWeightInPixels);
+        
+        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_TopSurfaceColorProperty )( 
+            IPlot * This,
+            /* [in] */ /* external definition not present */ IGProperty *pIPropertyColor);
+        
+        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_TopSurfaceColorProperty )( 
+            IPlot * This,
+            /* [retval][out] */ /* external definition not present */ IGProperty **ppIPropertyColor);
+        
+        /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_BottomSurfaceColorProperty )( 
+            IPlot * This,
+            /* [in] */ /* external definition not present */ IGProperty *pIPropertyColor);
+        
+        /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_BottomSurfaceColorProperty )( 
+            IPlot * This,
+            /* [retval][out] */ /* external definition not present */ IGProperty **ppIPropertyColor);
         
         /* [helpstring][propput] */ HRESULT ( STDMETHODCALLTYPE *put_ParentWindow )( 
             IPlot * This,
@@ -1194,8 +1261,10 @@ EXTERN_C const IID IID_IPlot;
             /* external definition not present */ IGProperty *parentPropertyFloor,
             /* external definition not present */ IGProperty *parentPropertyCeiling,
             /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
-                void *__MIDL__IPlot0003),
-            /* [in] */ void *pArg);
+                void *__MIDL__IPlot0002,
+                ULONG_PTR __MIDL__IPlot0003),
+            /* [in] */ void *pArg,
+            /* [in] */ ULONG_PTR callbackCookie);
         
         HRESULT ( STDMETHODCALLTYPE *PrepareForData )( 
             IPlot * This);
@@ -1257,6 +1326,10 @@ EXTERN_C const IID IID_IPlot;
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *AdviseGSystemStatusBar )( 
             IPlot * This,
             /* external definition not present */ IGSystemStatusBar *__MIDL__IPlot0007);
+        
+        HRESULT ( STDMETHODCALLTYPE *AdviseGSGraphicServices )( 
+            IPlot * This,
+            void *__MIDL__IPlot0008);
         
         END_INTERFACE
     } IPlotVtbl;
@@ -1336,6 +1409,9 @@ EXTERN_C const IID IID_IPlot;
 #define IPlot_get_PlotTypeProperty(This,ppPlotSubTypeProperty)	\
     ( (This)->lpVtbl -> get_PlotTypeProperty(This,ppPlotSubTypeProperty) ) 
 
+#define IPlot_get_PlotTypeUsesMaterialShading(This,the2DTypes_ORd_enum_gc2DTypes,the3DTypes_ORd_enum_gc3DTypes,pHasSurfaces)	\
+    ( (This)->lpVtbl -> get_PlotTypeUsesMaterialShading(This,the2DTypes_ORd_enum_gc2DTypes,the3DTypes_ORd_enum_gc3DTypes,pHasSurfaces) ) 
+
 #define IPlot_get_SegmentID(This,getID)	\
     ( (This)->lpVtbl -> get_SegmentID(This,getID) ) 
 
@@ -1351,8 +1427,8 @@ EXTERN_C const IID IID_IPlot;
 #define IPlot_get_IDataSet(This,dataSet)	\
     ( (This)->lpVtbl -> get_IDataSet(This,dataSet) ) 
 
-#define IPlot_get_DataArity(This,__MIDL__IPlot0002)	\
-    ( (This)->lpVtbl -> get_DataArity(This,__MIDL__IPlot0002) ) 
+#define IPlot_DataArity(This)	\
+    ( (This)->lpVtbl -> DataArity(This) ) 
 
 #define IPlot_put_PlotNotify(This,setIPlotNotify)	\
     ( (This)->lpVtbl -> put_PlotNotify(This,setIPlotNotify) ) 
@@ -1366,17 +1442,29 @@ EXTERN_C const IID IID_IPlot;
 #define IPlot_get_Color(This,pColor)	\
     ( (This)->lpVtbl -> get_Color(This,pColor) ) 
 
-#define IPlot_put_ColorProperty(This,pIPropertyColor)	\
-    ( (This)->lpVtbl -> put_ColorProperty(This,pIPropertyColor) ) 
+#define IPlot_put_LineColorProperty(This,pIPropertyColor)	\
+    ( (This)->lpVtbl -> put_LineColorProperty(This,pIPropertyColor) ) 
 
-#define IPlot_get_ColorProperty(This,ppIPropertyColor)	\
-    ( (This)->lpVtbl -> get_ColorProperty(This,ppIPropertyColor) ) 
+#define IPlot_get_LineColorProperty(This,ppIPropertyColor)	\
+    ( (This)->lpVtbl -> get_LineColorProperty(This,ppIPropertyColor) ) 
 
-#define IPlot_put_LineWeight(This,pIPropertyLineWeightInPixels)	\
-    ( (This)->lpVtbl -> put_LineWeight(This,pIPropertyLineWeightInPixels) ) 
+#define IPlot_put_LineWeightProperty(This,pIPropertyLineWeightInPixels)	\
+    ( (This)->lpVtbl -> put_LineWeightProperty(This,pIPropertyLineWeightInPixels) ) 
 
-#define IPlot_get_LineWeight(This,ppIPropertyLineWeightInPixels)	\
-    ( (This)->lpVtbl -> get_LineWeight(This,ppIPropertyLineWeightInPixels) ) 
+#define IPlot_get_LineWeightProperty(This,ppIPropertyLineWeightInPixels)	\
+    ( (This)->lpVtbl -> get_LineWeightProperty(This,ppIPropertyLineWeightInPixels) ) 
+
+#define IPlot_put_TopSurfaceColorProperty(This,pIPropertyColor)	\
+    ( (This)->lpVtbl -> put_TopSurfaceColorProperty(This,pIPropertyColor) ) 
+
+#define IPlot_get_TopSurfaceColorProperty(This,ppIPropertyColor)	\
+    ( (This)->lpVtbl -> get_TopSurfaceColorProperty(This,ppIPropertyColor) ) 
+
+#define IPlot_put_BottomSurfaceColorProperty(This,pIPropertyColor)	\
+    ( (This)->lpVtbl -> put_BottomSurfaceColorProperty(This,pIPropertyColor) ) 
+
+#define IPlot_get_BottomSurfaceColorProperty(This,ppIPropertyColor)	\
+    ( (This)->lpVtbl -> get_BottomSurfaceColorProperty(This,ppIPropertyColor) ) 
 
 #define IPlot_put_ParentWindow(This,hwndParent)	\
     ( (This)->lpVtbl -> put_ParentWindow(This,hwndParent) ) 
@@ -1387,8 +1475,8 @@ EXTERN_C const IID IID_IPlot;
 #define IPlot_GetSegments(This,pSegmentArray)	\
     ( (This)->lpVtbl -> GetSegments(This,pSegmentArray) ) 
 
-#define IPlot_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg)	\
-    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg) ) 
+#define IPlot_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg,callbackCookie)	\
+    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg,callbackCookie) ) 
 
 #define IPlot_PrepareForData(This)	\
     ( (This)->lpVtbl -> PrepareForData(This) ) 
@@ -1437,6 +1525,9 @@ EXTERN_C const IID IID_IPlot;
 
 #define IPlot_AdviseGSystemStatusBar(This,__MIDL__IPlot0007)	\
     ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IPlot0007) ) 
+
+#define IPlot_AdviseGSGraphicServices(This,__MIDL__IPlot0008)	\
+    ( (This)->lpVtbl -> AdviseGSGraphicServices(This,__MIDL__IPlot0008) ) 
 
 #endif /* COBJMACROS */
 
@@ -1527,6 +1618,100 @@ EXTERN_C const IID IID_IPlotNotify;
 
 
 #endif 	/* __IPlotNotify_INTERFACE_DEFINED__ */
+
+
+#ifndef __IPlotServices_INTERFACE_DEFINED__
+#define __IPlotServices_INTERFACE_DEFINED__
+
+/* interface IPlotServices */
+/* [object][uuid] */ 
+
+
+EXTERN_C const IID IID_IPlotServices;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("8CAEFD7D-55E6-11d3-8365-006008BD5BC3")
+    IPlotServices : public IUnknown
+    {
+    public:
+        virtual HRESULT STDMETHODCALLTYPE GetPlotTypesInformation( 
+            SAFEARRAY * *pp2DTypeIDs,
+            SAFEARRAY * *pp3DTypeIds,
+            SAFEARRAY * *pp2DTypeNames,
+            SAFEARRAY * *pp3DTypeNames,
+            SAFEARRAY * *pp2DTypeInstanceNumbers,
+            SAFEARRAY * *pp3DTypeInstanceNumbers,
+            SAFEARRAY * *pp2DTypeInstances,
+            SAFEARRAY * *pp3DTypeInstances) = 0;
+        
+    };
+    
+    
+#else 	/* C style interface */
+
+    typedef struct IPlotServicesVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            IPlotServices * This,
+            /* [in] */ REFIID riid,
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            IPlotServices * This);
+        
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            IPlotServices * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetPlotTypesInformation )( 
+            IPlotServices * This,
+            SAFEARRAY * *pp2DTypeIDs,
+            SAFEARRAY * *pp3DTypeIds,
+            SAFEARRAY * *pp2DTypeNames,
+            SAFEARRAY * *pp3DTypeNames,
+            SAFEARRAY * *pp2DTypeInstanceNumbers,
+            SAFEARRAY * *pp3DTypeInstanceNumbers,
+            SAFEARRAY * *pp2DTypeInstances,
+            SAFEARRAY * *pp3DTypeInstances);
+        
+        END_INTERFACE
+    } IPlotServicesVtbl;
+
+    interface IPlotServices
+    {
+        CONST_VTBL struct IPlotServicesVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IPlotServices_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define IPlotServices_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define IPlotServices_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#define IPlotServices_GetPlotTypesInformation(This,pp2DTypeIDs,pp3DTypeIds,pp2DTypeNames,pp3DTypeNames,pp2DTypeInstanceNumbers,pp3DTypeInstanceNumbers,pp2DTypeInstances,pp3DTypeInstances)	\
+    ( (This)->lpVtbl -> GetPlotTypesInformation(This,pp2DTypeIDs,pp3DTypeIds,pp2DTypeNames,pp3DTypeNames,pp2DTypeInstanceNumbers,pp3DTypeInstanceNumbers,pp2DTypeInstances,pp3DTypeInstances) ) 
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IPlotServices_INTERFACE_DEFINED__ */
 
 
 EXTERN_C const CLSID CLSID_GraphicSegment;
