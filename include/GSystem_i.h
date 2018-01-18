@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Jan 09 16:43:46 2018
+/* at Sun Jan 14 11:45:05 2018
  */
 /* Compiler settings for GSystem.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -358,6 +358,20 @@ EXTERN_C const IID IID_IGSystemPlotType;
             /* [in] */ long item,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IGSystemPlotType0002) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE InitNew( 
+            /* [in] */ long item,
+            /* [in] */ REFIID instanceGUID) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Save( 
+            /* [in] */ long item,
+            /* [in] */ REFIID instanceGUID,
+            /* [in] */ void *pvIStream) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Load( 
+            /* [in] */ long item,
+            /* [in] */ REFIID instanceGUID,
+            /* [in] */ void *pvIStream) = 0;
+        
         virtual HRESULT STDMETHODCALLTYPE ShowProperties( 
             /* [in] */ long item,
             /* [in] */ HWND hwndParent,
@@ -370,6 +384,7 @@ EXTERN_C const IID IID_IGSystemPlotType;
         
         virtual HRESULT STDMETHODCALLTYPE Execute( 
             /* [in] */ long item,
+            /* [in] */ REFIID instanceGUID,
             long segmentID,
             void *pvIPlot,
             void *pvIOpenGLImplementation,
@@ -420,6 +435,23 @@ EXTERN_C const IID IID_IGSystemPlotType;
             /* [in] */ long item,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IGSystemPlotType0002);
         
+        HRESULT ( STDMETHODCALLTYPE *InitNew )( 
+            IGSystemPlotType * This,
+            /* [in] */ long item,
+            /* [in] */ REFIID instanceGUID);
+        
+        HRESULT ( STDMETHODCALLTYPE *Save )( 
+            IGSystemPlotType * This,
+            /* [in] */ long item,
+            /* [in] */ REFIID instanceGUID,
+            /* [in] */ void *pvIStream);
+        
+        HRESULT ( STDMETHODCALLTYPE *Load )( 
+            IGSystemPlotType * This,
+            /* [in] */ long item,
+            /* [in] */ REFIID instanceGUID,
+            /* [in] */ void *pvIStream);
+        
         HRESULT ( STDMETHODCALLTYPE *ShowProperties )( 
             IGSystemPlotType * This,
             /* [in] */ long item,
@@ -434,6 +466,7 @@ EXTERN_C const IID IID_IGSystemPlotType;
         HRESULT ( STDMETHODCALLTYPE *Execute )( 
             IGSystemPlotType * This,
             /* [in] */ long item,
+            /* [in] */ REFIID instanceGUID,
             long segmentID,
             void *pvIPlot,
             void *pvIOpenGLImplementation,
@@ -477,11 +510,20 @@ EXTERN_C const IID IID_IGSystemPlotType;
 #define IGSystemPlotType_get_HasProperties(This,item,__MIDL__IGSystemPlotType0002)	\
     ( (This)->lpVtbl -> get_HasProperties(This,item,__MIDL__IGSystemPlotType0002) ) 
 
+#define IGSystemPlotType_InitNew(This,item,instanceGUID)	\
+    ( (This)->lpVtbl -> InitNew(This,item,instanceGUID) ) 
+
+#define IGSystemPlotType_Save(This,item,instanceGUID,pvIStream)	\
+    ( (This)->lpVtbl -> Save(This,item,instanceGUID,pvIStream) ) 
+
+#define IGSystemPlotType_Load(This,item,instanceGUID,pvIStream)	\
+    ( (This)->lpVtbl -> Load(This,item,instanceGUID,pvIStream) ) 
+
 #define IGSystemPlotType_ShowProperties(This,item,hwndParent,instanceGuid,whenDoneCallBack,pArg,cookie)	\
     ( (This)->lpVtbl -> ShowProperties(This,item,hwndParent,instanceGuid,whenDoneCallBack,pArg,cookie) ) 
 
-#define IGSystemPlotType_Execute(This,item,segmentID,pvIPlot,pvIOpenGLImplementation,pvIDataSet)	\
-    ( (This)->lpVtbl -> Execute(This,item,segmentID,pvIPlot,pvIOpenGLImplementation,pvIDataSet) ) 
+#define IGSystemPlotType_Execute(This,item,instanceGUID,segmentID,pvIPlot,pvIOpenGLImplementation,pvIDataSet)	\
+    ( (This)->lpVtbl -> Execute(This,item,instanceGUID,segmentID,pvIPlot,pvIOpenGLImplementation,pvIDataSet) ) 
 
 #endif /* COBJMACROS */
 

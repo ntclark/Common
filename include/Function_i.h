@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Jan 10 17:05:46 2018
+/* at Thu Jan 18 11:13:12 2018
  */
 /* Compiler settings for Function.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -397,8 +397,12 @@ EXTERN_C const IID IID_IGSFunctioNater;
             /* external definition not present */ IGProperty *parentPropertyDefault2DPlotSubType,
             /* external definition not present */ IGProperty *parentPropertyDefault3DPlotSubType,
             /* external definition not present */ IGProperty *parentPropertyBackgroundColor,
-            /* external definition not present */ IGProperty *parentPropertyFloor,
-            /* external definition not present */ IGProperty *parentPropertyCeiling,
+            /* external definition not present */ IGProperty *parentPropertyXFloor,
+            /* external definition not present */ IGProperty *parentPropertyXCeiling,
+            /* external definition not present */ IGProperty *parentPropertyYFloor,
+            /* external definition not present */ IGProperty *parentPropertyYCeiling,
+            /* external definition not present */ IGProperty *parentPropertyZFloor,
+            /* external definition not present */ IGProperty *parentPropertyZCeiling,
             /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
                 void *__MIDL__IGSFunctioNater0000,
                 ULONG_PTR __MIDL__IGSFunctioNater0001),
@@ -683,8 +687,12 @@ EXTERN_C const IID IID_IGSFunctioNater;
             /* external definition not present */ IGProperty *parentPropertyDefault2DPlotSubType,
             /* external definition not present */ IGProperty *parentPropertyDefault3DPlotSubType,
             /* external definition not present */ IGProperty *parentPropertyBackgroundColor,
-            /* external definition not present */ IGProperty *parentPropertyFloor,
-            /* external definition not present */ IGProperty *parentPropertyCeiling,
+            /* external definition not present */ IGProperty *parentPropertyXFloor,
+            /* external definition not present */ IGProperty *parentPropertyXCeiling,
+            /* external definition not present */ IGProperty *parentPropertyYFloor,
+            /* external definition not present */ IGProperty *parentPropertyYCeiling,
+            /* external definition not present */ IGProperty *parentPropertyZFloor,
+            /* external definition not present */ IGProperty *parentPropertyZCeiling,
             /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
                 void *__MIDL__IGSFunctioNater0000,
                 ULONG_PTR __MIDL__IGSFunctioNater0001),
@@ -894,8 +902,8 @@ EXTERN_C const IID IID_IGSFunctioNater;
 #define IGSFunctioNater_get_IDataSet(This,ppIDataSet)	\
     ( (This)->lpVtbl -> get_IDataSet(This,ppIDataSet) ) 
 
-#define IGSFunctioNater_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg,callbackCookie)	\
-    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg,callbackCookie) ) 
+#define IGSFunctioNater_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyXFloor,parentPropertyXCeiling,parentPropertyYFloor,parentPropertyYCeiling,parentPropertyZFloor,parentPropertyZCeiling,pCallback,pArg,callbackCookie)	\
+    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyXFloor,parentPropertyXCeiling,parentPropertyYFloor,parentPropertyYCeiling,parentPropertyZFloor,parentPropertyZCeiling,pCallback,pArg,callbackCookie) ) 
 
 #define IGSFunctioNater_put_OnChangeCallback(This,pCallback,pArg,callbackCookie)	\
     ( (This)->lpVtbl -> put_OnChangeCallback(This,pCallback,pArg,callbackCookie) ) 

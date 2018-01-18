@@ -70,6 +70,7 @@ BOOL CALLBACK findChildWindowWithFunction(HWND hwndTest,LPARAM lParam);
 BOOL CALLBACK doDescendantWindowsWithFunction(HWND hwndTest,LPARAM lParam);
 
 long HashCode(char *pszInput);
+long HashCode(WCHAR *pszwInput);
 
 void ASCIIHexDecodeInPlace(char *pszInput);
 void ASCIIHexEncode(char *pszInput,long valueSize,char **ppszResult);

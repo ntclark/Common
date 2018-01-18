@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Jan 10 17:10:34 2018
+/* at Thu Jan 18 11:00:13 2018
  */
 /* Compiler settings for Axis.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -268,8 +268,12 @@ EXTERN_C const IID IID_IAxis;
             /* [in] */ IAxis *pYAxis,
             /* [in] */ IAxis *pZAxis,
             /* [in] */ /* external definition not present */ IGProperty *pIPropertyPlotView,
-            /* [in] */ /* external definition not present */ IGProperty *pPropertyFloor,
-            /* [in] */ /* external definition not present */ IGProperty *pPropertyCeiling,
+            /* [in] */ /* external definition not present */ IGProperty *pPropertyXFloor,
+            /* [in] */ /* external definition not present */ IGProperty *pPropertyXCeiling,
+            /* [in] */ /* external definition not present */ IGProperty *pProeprtyYFloor,
+            /* [in] */ /* external definition not present */ IGProperty *pProeprtyYCeiling,
+            /* [in] */ /* external definition not present */ IGProperty *pPropertyZFloor,
+            /* [in] */ /* external definition not present */ IGProperty *pPropertyZCeiling,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyOpenGLText,
             /* [in] */ /* external definition not present */ IDataSet *pIDomainDataSet,
             /* [in] */ /* external definition not present */ IOpenGLImplementation *__MIDL__IAxis0006,
@@ -538,8 +542,12 @@ EXTERN_C const IID IID_IAxis;
             /* [in] */ IAxis *pYAxis,
             /* [in] */ IAxis *pZAxis,
             /* [in] */ /* external definition not present */ IGProperty *pIPropertyPlotView,
-            /* [in] */ /* external definition not present */ IGProperty *pPropertyFloor,
-            /* [in] */ /* external definition not present */ IGProperty *pPropertyCeiling,
+            /* [in] */ /* external definition not present */ IGProperty *pPropertyXFloor,
+            /* [in] */ /* external definition not present */ IGProperty *pPropertyXCeiling,
+            /* [in] */ /* external definition not present */ IGProperty *pProeprtyYFloor,
+            /* [in] */ /* external definition not present */ IGProperty *pProeprtyYCeiling,
+            /* [in] */ /* external definition not present */ IGProperty *pPropertyZFloor,
+            /* [in] */ /* external definition not present */ IGProperty *pPropertyZCeiling,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyOpenGLText,
             /* [in] */ /* external definition not present */ IDataSet *pIDomainDataSet,
             /* [in] */ /* external definition not present */ IOpenGLImplementation *__MIDL__IAxis0006,
@@ -746,8 +754,8 @@ EXTERN_C const IID IID_IAxis;
 #define IAxis_get_GridLinesPerTick(This,pGridLines)	\
     ( (This)->lpVtbl -> get_GridLinesPerTick(This,pGridLines) ) 
 
-#define IAxis_Initialize(This,hwndOwner,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyFloor,pPropertyCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie)	\
-    ( (This)->lpVtbl -> Initialize(This,hwndOwner,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyFloor,pPropertyCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie) ) 
+#define IAxis_Initialize(This,hwndOwner,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyXFloor,pPropertyXCeiling,pProeprtyYFloor,pProeprtyYCeiling,pPropertyZFloor,pPropertyZCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie)	\
+    ( (This)->lpVtbl -> Initialize(This,hwndOwner,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyXFloor,pPropertyXCeiling,pProeprtyYFloor,pProeprtyYCeiling,pPropertyZFloor,pPropertyZCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie) ) 
 
 #define IAxis_get_DataSet(This,__MIDL__IAxis0009)	\
     ( (This)->lpVtbl -> get_DataSet(This,__MIDL__IAxis0009) ) 

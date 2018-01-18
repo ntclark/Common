@@ -349,6 +349,7 @@
    return;
    }
 
+
    long HashCode(char *pszInput) {
    long hashCode = 0L;
    long part = 0L;
@@ -366,6 +367,23 @@
    return hashCode;
    }
 
+
+   long HashCode(WCHAR *pszwInput) {
+   long hashCode = 0L;
+   long part = 0L;
+   long n = (DWORD)wcslen(pszwInput);
+   char *psz = new char[n + 4];
+   memset(psz,0,(n + 4) * sizeof(char));
+   WideCharToMultiByte(CP_ACP,0,pszwInput,-1,psz,n + 4,0,0);
+   char *p = psz;
+   for ( long k = 0; k < n; k += 4 ) {
+      memcpy(&part,p,4 * sizeof(char));
+      hashCode ^= part;
+      p += 4;
+   }
+   delete [] psz;
+   return hashCode;
+   }
 
    void ASCIIHexDecodeInPlace(char *pszInput) {
 

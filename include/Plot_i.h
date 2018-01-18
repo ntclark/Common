@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Jan 12 10:00:54 2018
+/* at Thu Jan 18 11:05:55 2018
  */
 /* Compiler settings for Plot.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -553,8 +553,12 @@ EXTERN_C const IID IID_IBasePlot;
             /* external definition not present */ IEvaluator *pIEvaluator,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight,
-            /* external definition not present */ IGProperty *pIPropertyFloor,
-            /* external definition not present */ IGProperty *pIPropertyCeiling) = 0;
+            /* external definition not present */ IGProperty *pIPropertyXFloor,
+            /* external definition not present */ IGProperty *pIPropertyXCeiling,
+            /* external definition not present */ IGProperty *pIPropertyYFloor,
+            /* external definition not present */ IGProperty *pIPropertyYCeiling,
+            /* external definition not present */ IGProperty *pIPropertyZFloor,
+            /* external definition not present */ IGProperty *pIPropertyZCeiling) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Erase( void) = 0;
         
@@ -688,8 +692,12 @@ EXTERN_C const IID IID_IBasePlot;
             /* external definition not present */ IEvaluator *pIEvaluator,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight,
-            /* external definition not present */ IGProperty *pIPropertyFloor,
-            /* external definition not present */ IGProperty *pIPropertyCeiling);
+            /* external definition not present */ IGProperty *pIPropertyXFloor,
+            /* external definition not present */ IGProperty *pIPropertyXCeiling,
+            /* external definition not present */ IGProperty *pIPropertyYFloor,
+            /* external definition not present */ IGProperty *pIPropertyYCeiling,
+            /* external definition not present */ IGProperty *pIPropertyZFloor,
+            /* external definition not present */ IGProperty *pIPropertyZCeiling);
         
         HRESULT ( STDMETHODCALLTYPE *Erase )( 
             IBasePlot * This);
@@ -810,8 +818,8 @@ EXTERN_C const IID IID_IBasePlot;
 #define IBasePlot_Destroy(This)	\
     ( (This)->lpVtbl -> Destroy(This) ) 
 
-#define IBasePlot_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,pIPropertyFloor,pIPropertyCeiling)	\
-    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,pIPropertyFloor,pIPropertyCeiling) ) 
+#define IBasePlot_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,pIPropertyXFloor,pIPropertyXCeiling,pIPropertyYFloor,pIPropertyYCeiling,pIPropertyZFloor,pIPropertyZCeiling)	\
+    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,pIPropertyXFloor,pIPropertyXCeiling,pIPropertyYFloor,pIPropertyYCeiling,pIPropertyZFloor,pIPropertyZCeiling) ) 
 
 #define IBasePlot_Erase(This)	\
     ( (This)->lpVtbl -> Erase(This) ) 
@@ -988,8 +996,12 @@ EXTERN_C const IID IID_IPlot;
             /* external definition not present */ IGProperty *parentPropertyDefault2DPlotSubType,
             /* external definition not present */ IGProperty *parentPropertyDefault3DPlotSubType,
             /* external definition not present */ IGProperty *parentPropertyBackgroundColor,
-            /* external definition not present */ IGProperty *parentPropertyFloor,
-            /* external definition not present */ IGProperty *parentPropertyCeiling,
+            /* external definition not present */ IGProperty *parentPropertyXFloor,
+            /* external definition not present */ IGProperty *parentPropertyXCeiling,
+            /* external definition not present */ IGProperty *parentPropertyYFloor,
+            /* external definition not present */ IGProperty *parentPropertyYCeiling,
+            /* external definition not present */ IGProperty *parentPropertyZFloor,
+            /* external definition not present */ IGProperty *parentPropertyZCeiling,
             /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
                 void *__MIDL__IPlot0002,
                 ULONG_PTR __MIDL__IPlot0003),
@@ -1258,8 +1270,12 @@ EXTERN_C const IID IID_IPlot;
             /* external definition not present */ IGProperty *parentPropertyDefault2DPlotSubType,
             /* external definition not present */ IGProperty *parentPropertyDefault3DPlotSubType,
             /* external definition not present */ IGProperty *parentPropertyBackgroundColor,
-            /* external definition not present */ IGProperty *parentPropertyFloor,
-            /* external definition not present */ IGProperty *parentPropertyCeiling,
+            /* external definition not present */ IGProperty *parentPropertyXFloor,
+            /* external definition not present */ IGProperty *parentPropertyXCeiling,
+            /* external definition not present */ IGProperty *parentPropertyYFloor,
+            /* external definition not present */ IGProperty *parentPropertyYCeiling,
+            /* external definition not present */ IGProperty *parentPropertyZFloor,
+            /* external definition not present */ IGProperty *parentPropertyZCeiling,
             /* [in] */ void ( STDMETHODCALLTYPE *pCallback )( 
                 void *__MIDL__IPlot0002,
                 ULONG_PTR __MIDL__IPlot0003),
@@ -1475,8 +1491,8 @@ EXTERN_C const IID IID_IPlot;
 #define IPlot_GetSegments(This,pSegmentArray)	\
     ( (This)->lpVtbl -> GetSegments(This,pSegmentArray) ) 
 
-#define IPlot_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg,callbackCookie)	\
-    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyFloor,parentPropertyCeiling,pCallback,pArg,callbackCookie) ) 
+#define IPlot_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyXFloor,parentPropertyXCeiling,parentPropertyYFloor,parentPropertyYCeiling,parentPropertyZFloor,parentPropertyZCeiling,pCallback,pArg,callbackCookie)	\
+    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyXFloor,parentPropertyXCeiling,parentPropertyYFloor,parentPropertyYCeiling,parentPropertyZFloor,parentPropertyZCeiling,pCallback,pArg,callbackCookie) ) 
 
 #define IPlot_PrepareForData(This)	\
     ( (This)->lpVtbl -> PrepareForData(This) ) 
