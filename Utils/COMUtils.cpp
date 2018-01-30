@@ -64,7 +64,7 @@
  
       RegCreateKeyEx(keyHandle,szCLSID,0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&clsidHandle,&disposition);
       sprintf(szTemp,objectName);
-      RegSetValueEx(clsidHandle,NULL,0,REG_SZ,(BYTE *)szTemp,strlen(szTemp));
+      RegSetValueEx(clsidHandle,NULL,0,REG_SZ,(BYTE *)szTemp,(DWORD)strlen(szTemp));
  
       if ( isControl ) {
          sprintf(szTemp,"Control");
@@ -84,21 +84,21 @@
       sprintf(szTemp,"ProgID");
       RegCreateKeyEx(clsidHandle,szTemp,0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandle,&disposition);
       sprintf(szTemp,versionDependentName);
-      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,strlen(szTemp));
+      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,(DWORD)strlen(szTemp));
 
       sprintf(szTemp,"VersionIndependentProgID");
       RegCreateKeyEx(clsidHandle,szTemp,0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandle,&disposition);
       sprintf(szTemp,versionIndependentName);
-      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,strlen(szTemp));
+      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,(DWORD)strlen(szTemp));
  
       sprintf(szTemp,"InprocServer32");
       RegCreateKeyEx(clsidHandle,szTemp,0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandle,&disposition);
-      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szModuleName,strlen(szModuleName));
+      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szModuleName,(DWORD)strlen(szModuleName));
 
 //      RegSetValueEx(keyHandle,"ThreadingModel",0,REG_SZ,(BYTE *)"Apartment",strlen("Apartment"));
 //      RegSetValueEx(keyHandle,"ThreadingModel",0,REG_SZ,(BYTE *)"Neutral",strlen("Neutral"));
 //      RegSetValueEx(keyHandle,"ThreadingModel",0,REG_SZ,(BYTE *)"Free",strlen("Free"));
-      RegSetValueEx(keyHandle,"ThreadingModel",0,REG_SZ,(BYTE *)"Both",strlen("Both"));
+      RegSetValueEx(keyHandle,"ThreadingModel",0,REG_SZ,(BYTE *)"Both",(DWORD)strlen("Both"));
 
 #if 0
       sprintf(szTemp,"InprocHandler32");
@@ -114,42 +114,42 @@
       WideCharToMultiByte(CP_ACP,0,oleString,-1,szTemp,256,0,0);
       CoTaskMemFree(oleString);
 
-      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,strlen(szTemp));
+      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,(DWORD)strlen(szTemp));
         
       sprintf(szTemp,"ToolboxBitmap32");
       RegCreateKeyEx(clsidHandle,szTemp,0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandle,&disposition);
       if ( bitmapIndex != 0 )
          sprintf(szTemp,"%s, %ld",szModuleName,bitmapIndex);
-      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,strlen(szTemp));
+      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,(DWORD)strlen(szTemp));
  
       sprintf(szTemp,"Version");
       RegCreateKeyEx(clsidHandle,szTemp,0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandle,&disposition);
       sprintf(szTemp,"1.0");
-      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,strlen(szTemp));
+      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,(DWORD)strlen(szTemp));
  
       sprintf(szTemp,"MiscStatus");
       RegCreateKeyEx(clsidHandle,szTemp,0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandle,&disposition);
       sprintf(szTemp,"0");
-      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,strlen(szTemp));
+      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,(DWORD)strlen(szTemp));
  
       sprintf(szTemp,"1");
       RegCreateKeyEx(keyHandle,szTemp,0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandle,&disposition);
       sprintf(szTemp,"%ld", oleMisc);
-      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,strlen(szTemp));
+      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,(DWORD)strlen(szTemp));
  
    RegCreateKeyEx(HKEY_CLASSES_ROOT,versionIndependentName,0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandle,&disposition);
       keyHandleTemp = keyHandle;
-      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)objectName,strlen(objectName));
+      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)objectName,(DWORD)strlen(objectName));
       RegCreateKeyEx(keyHandle,"CurVer",0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandle,&disposition);
       sprintf(szTemp,versionDependentName);
-      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,strlen(szTemp));
+      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szTemp,(DWORD)strlen(szTemp));
       RegCreateKeyEx(keyHandleTemp,"CLSID",0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandle,&disposition);
-      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szCLSID,strlen(szCLSID));
+      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)szCLSID,(DWORD)strlen(szCLSID));
  
    RegCreateKeyEx(HKEY_CLASSES_ROOT,versionDependentName,0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandle,&disposition);
-      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)objectName,strlen(objectName));
+      RegSetValueEx(keyHandle,NULL,0,REG_SZ,(BYTE *)objectName,(DWORD)strlen(objectName));
       RegCreateKeyEx(keyHandle,"CLSID",0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandleTemp,&disposition);
-      RegSetValueEx(keyHandleTemp,NULL,0,REG_SZ,(BYTE *)szCLSID,strlen(szCLSID));
+      RegSetValueEx(keyHandleTemp,NULL,0,REG_SZ,(BYTE *)szCLSID,(DWORD)strlen(szCLSID));
       RegCreateKeyEx(keyHandle,"Insertable",0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&keyHandle,&disposition);
 
    if ( pCategoryIDs ) {

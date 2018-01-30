@@ -36,7 +36,7 @@
    };
  
  
-   template<class T> int List<T>::Add(T *newItem,char *itemName,long idNumber) {
+   template<class T> int List<T>::Add(T *newItem,char *itemName,ULONG_PTR idNumber) {
    if ( ! lastListItem ) {
       firstListItem = new ListItem;
       currentListItem = firstListItem;
@@ -312,10 +312,10 @@
    }
  
  
-   template<class T> T *List<T>::Get(long idNumber) {
+   template<class T> T *List<T>::Get(ULONG_PTR idNumber) {
    ListItem *p = firstListItem;
    while ( p ) {
-      if ( p -> id == idNumber && p -> id != -1) return p -> member;
+      if ( p -> id == idNumber && ! ( -1 == p -> id ) ) return p -> member;
       p = p -> next;
    }
    return (T *)NULL;
@@ -356,11 +356,12 @@
    }
  
  
-   template<class T> int List<T>::ID(T *item,long newIDNumber) {
+   template<class T> ULONG_PTR List<T>::ID(T *item,ULONG_PTR newIDNumber) {
    ListItem *p = firstListItem;
    while ( p ) {
       if ( p -> member == item ) {
-         if ( newIDNumber != -1 ) p -> id = newIDNumber;
+         if ( ! ( -1 == newIDNumber ) ) 
+            p -> id = newIDNumber;
          return p -> id;
       }
       p = p -> next;

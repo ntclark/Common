@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sun Jan 21 11:07:26 2018
+/* at Tue Jan 30 10:26:53 2018
  */
 /* Compiler settings for DataSet.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -133,6 +133,7 @@ EXTERN_C const IID IID_IDataSet;
         virtual HRESULT STDMETHODCALLTYPE Initialize( 
             void *pvIDataSet_Domain,
             void *pIOpenGLImplementation,
+            /* external definition not present */ IEvaluator *pIEvaluator,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight,
             /* external definition not present */ IGProperty *parentPropertyPlotView,
@@ -330,7 +331,7 @@ EXTERN_C const IID IID_IDataSet;
             IDataSet *pIDataSetBoundingBox) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE GenerateGDICoordinates( 
-            IUnknown *castablePtrToIOpenGLImplementation) = 0;
+            void *pIOpenGLImplementation) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE PushExtents( void) = 0;
         
@@ -417,6 +418,7 @@ EXTERN_C const IID IID_IDataSet;
             IDataSet * This,
             void *pvIDataSet_Domain,
             void *pIOpenGLImplementation,
+            /* external definition not present */ IEvaluator *pIEvaluator,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight,
             /* external definition not present */ IGProperty *parentPropertyPlotView,
@@ -667,7 +669,7 @@ EXTERN_C const IID IID_IDataSet;
         
         HRESULT ( STDMETHODCALLTYPE *GenerateGDICoordinates )( 
             IDataSet * This,
-            IUnknown *castablePtrToIOpenGLImplementation);
+            void *pIOpenGLImplementation);
         
         HRESULT ( STDMETHODCALLTYPE *PushExtents )( 
             IDataSet * This);
@@ -749,8 +751,8 @@ EXTERN_C const IID IID_IDataSet;
 #define IDataSet_get_IPlot(This,ppIPlot)	\
     ( (This)->lpVtbl -> get_IPlot(This,ppIPlot) ) 
 
-#define IDataSet_Initialize(This,pvIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyXFloor,parentPropertyXCeiling,parentPropertyYFloor,parentPropertyYCeiling,parentPropertyTFloor,parentPropertyZCeiling,pCallback,pArg,cookie)	\
-    ( (This)->lpVtbl -> Initialize(This,pvIDataSet_Domain,pIOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyXFloor,parentPropertyXCeiling,parentPropertyYFloor,parentPropertyYCeiling,parentPropertyTFloor,parentPropertyZCeiling,pCallback,pArg,cookie) ) 
+#define IDataSet_Initialize(This,pvIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyXFloor,parentPropertyXCeiling,parentPropertyYFloor,parentPropertyYCeiling,parentPropertyTFloor,parentPropertyZCeiling,pCallback,pArg,cookie)	\
+    ( (This)->lpVtbl -> Initialize(This,pvIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyXFloor,parentPropertyXCeiling,parentPropertyYFloor,parentPropertyYCeiling,parentPropertyTFloor,parentPropertyZCeiling,pCallback,pArg,cookie) ) 
 
 #define IDataSet_put_OnChangeCallback(This,pCallback,pArg,cookie)	\
     ( (This)->lpVtbl -> put_OnChangeCallback(This,pCallback,pArg,cookie) ) 
@@ -908,8 +910,8 @@ EXTERN_C const IID IID_IDataSet;
 #define IDataSet_GenerateBoundingBox(This,pIDataSetBoundingBox)	\
     ( (This)->lpVtbl -> GenerateBoundingBox(This,pIDataSetBoundingBox) ) 
 
-#define IDataSet_GenerateGDICoordinates(This,castablePtrToIOpenGLImplementation)	\
-    ( (This)->lpVtbl -> GenerateGDICoordinates(This,castablePtrToIOpenGLImplementation) ) 
+#define IDataSet_GenerateGDICoordinates(This,pIOpenGLImplementation)	\
+    ( (This)->lpVtbl -> GenerateGDICoordinates(This,pIOpenGLImplementation) ) 
 
 #define IDataSet_PushExtents(This)	\
     ( (This)->lpVtbl -> PushExtents(This) ) 

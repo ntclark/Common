@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sun Jan 21 11:01:33 2018
+/* at Tue Jan 30 10:18:00 2018
  */
 /* Compiler settings for Plot.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -178,6 +178,8 @@ EXTERN_C const IID IID_IGraphicSegmentAction;
         
         virtual HRESULT STDMETHODCALLTYPE MouseRelease( void) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE DefaultAction( void) = 0;
+        
     };
     
     
@@ -219,6 +221,9 @@ EXTERN_C const IID IID_IGraphicSegmentAction;
             POINT *ptMouse);
         
         HRESULT ( STDMETHODCALLTYPE *MouseRelease )( 
+            IGraphicSegmentAction * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *DefaultAction )( 
             IGraphicSegmentAction * This);
         
         END_INTERFACE
@@ -265,6 +270,9 @@ EXTERN_C const IID IID_IGraphicSegmentAction;
 #define IGraphicSegmentAction_MouseRelease(This)	\
     ( (This)->lpVtbl -> MouseRelease(This) ) 
 
+#define IGraphicSegmentAction_DefaultAction(This)	\
+    ( (This)->lpVtbl -> DefaultAction(This) ) 
+
 #endif /* COBJMACROS */
 
 
@@ -292,7 +300,7 @@ EXTERN_C const IID IID_IGraphicSegment;
     {
     public:
         virtual HRESULT STDMETHODCALLTYPE Initialize( 
-            /* external definition not present */ IOpenGLImplementation *openGLImplementation,
+            void *pvOpenGLImplementation,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight) = 0;
         
@@ -352,7 +360,7 @@ EXTERN_C const IID IID_IGraphicSegment;
         
         HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IGraphicSegment * This,
-            /* external definition not present */ IOpenGLImplementation *openGLImplementation,
+            void *pvOpenGLImplementation,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight);
         
@@ -424,8 +432,8 @@ EXTERN_C const IID IID_IGraphicSegment;
     ( (This)->lpVtbl -> Release(This) ) 
 
 
-#define IGraphicSegment_Initialize(This,openGLImplementation,pIPropertyLineColor,pIPropertyLineWeight)	\
-    ( (This)->lpVtbl -> Initialize(This,openGLImplementation,pIPropertyLineColor,pIPropertyLineWeight) ) 
+#define IGraphicSegment_Initialize(This,pvOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight)	\
+    ( (This)->lpVtbl -> Initialize(This,pvOpenGLImplementation,pIPropertyLineColor,pIPropertyLineWeight) ) 
 
 #define IGraphicSegment_get_SegmentID(This,getID)	\
     ( (This)->lpVtbl -> get_SegmentID(This,getID) ) 
@@ -549,7 +557,7 @@ EXTERN_C const IID IID_IBasePlot;
         
         virtual HRESULT STDMETHODCALLTYPE Initialize( 
             /* external definition not present */ IDataSet *pIDataSet_Domain,
-            /* external definition not present */ IOpenGLImplementation *pIOpenGLImplementation,
+            void *pvIOpenGLImplementation,
             /* external definition not present */ IEvaluator *pIEvaluator,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight,
@@ -688,7 +696,7 @@ EXTERN_C const IID IID_IBasePlot;
         HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IBasePlot * This,
             /* external definition not present */ IDataSet *pIDataSet_Domain,
-            /* external definition not present */ IOpenGLImplementation *pIOpenGLImplementation,
+            void *pvIOpenGLImplementation,
             /* external definition not present */ IEvaluator *pIEvaluator,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight,
@@ -818,8 +826,8 @@ EXTERN_C const IID IID_IBasePlot;
 #define IBasePlot_Destroy(This)	\
     ( (This)->lpVtbl -> Destroy(This) ) 
 
-#define IBasePlot_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,pIPropertyXFloor,pIPropertyXCeiling,pIPropertyYFloor,pIPropertyYCeiling,pIPropertyZFloor,pIPropertyZCeiling)	\
-    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,pIPropertyXFloor,pIPropertyXCeiling,pIPropertyYFloor,pIPropertyYCeiling,pIPropertyZFloor,pIPropertyZCeiling) ) 
+#define IBasePlot_Initialize(This,pIDataSet_Domain,pvIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,pIPropertyXFloor,pIPropertyXCeiling,pIPropertyYFloor,pIPropertyYCeiling,pIPropertyZFloor,pIPropertyZCeiling)	\
+    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pvIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,pIPropertyXFloor,pIPropertyXCeiling,pIPropertyYFloor,pIPropertyYCeiling,pIPropertyZFloor,pIPropertyZCeiling) ) 
 
 #define IBasePlot_Erase(This)	\
     ( (This)->lpVtbl -> Erase(This) ) 
@@ -986,9 +994,12 @@ EXTERN_C const IID IID_IPlot;
         virtual /* [hidden] */ HRESULT STDMETHODCALLTYPE GetSegments( 
             /* [in] */ long *pSegmentArray) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE GetTextList( 
+            /* [retval][out] */ void **getList) = 0;
+        
         virtual HRESULT STDMETHODCALLTYPE Initialize( 
             /* external definition not present */ IDataSet *pIDataSet_Domain,
-            /* external definition not present */ IOpenGLImplementation *pIOpenGLImplementation,
+            void *pvIOpenGLImplementation,
             /* external definition not present */ IEvaluator *pIEvaluator,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight,
@@ -1036,6 +1047,10 @@ EXTERN_C const IID IID_IPlot;
         virtual HRESULT STDMETHODCALLTYPE Draw( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Redraw( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DrawOpenGLText( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DrawGDIText( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Erase( void) = 0;
         
@@ -1259,10 +1274,14 @@ EXTERN_C const IID IID_IPlot;
             IPlot * This,
             /* [in] */ long *pSegmentArray);
         
+        HRESULT ( STDMETHODCALLTYPE *GetTextList )( 
+            IPlot * This,
+            /* [retval][out] */ void **getList);
+        
         HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IPlot * This,
             /* external definition not present */ IDataSet *pIDataSet_Domain,
-            /* external definition not present */ IOpenGLImplementation *pIOpenGLImplementation,
+            void *pvIOpenGLImplementation,
             /* external definition not present */ IEvaluator *pIEvaluator,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight,
@@ -1320,6 +1339,12 @@ EXTERN_C const IID IID_IPlot;
             IPlot * This);
         
         HRESULT ( STDMETHODCALLTYPE *Redraw )( 
+            IPlot * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *DrawOpenGLText )( 
+            IPlot * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *DrawGDIText )( 
             IPlot * This);
         
         HRESULT ( STDMETHODCALLTYPE *Erase )( 
@@ -1491,8 +1516,11 @@ EXTERN_C const IID IID_IPlot;
 #define IPlot_GetSegments(This,pSegmentArray)	\
     ( (This)->lpVtbl -> GetSegments(This,pSegmentArray) ) 
 
-#define IPlot_Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyXFloor,parentPropertyXCeiling,parentPropertyYFloor,parentPropertyYCeiling,parentPropertyZFloor,parentPropertyZCeiling,pCallback,pArg,callbackCookie)	\
-    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyXFloor,parentPropertyXCeiling,parentPropertyYFloor,parentPropertyYCeiling,parentPropertyZFloor,parentPropertyZCeiling,pCallback,pArg,callbackCookie) ) 
+#define IPlot_GetTextList(This,getList)	\
+    ( (This)->lpVtbl -> GetTextList(This,getList) ) 
+
+#define IPlot_Initialize(This,pIDataSet_Domain,pvIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyXFloor,parentPropertyXCeiling,parentPropertyYFloor,parentPropertyYCeiling,parentPropertyZFloor,parentPropertyZCeiling,pCallback,pArg,callbackCookie)	\
+    ( (This)->lpVtbl -> Initialize(This,pIDataSet_Domain,pvIOpenGLImplementation,pIEvaluator,pIPropertyLineColor,pIPropertyLineWeight,parentPropertyPlotView,parentPropertyDefault2DPlotSubType,parentPropertyDefault3DPlotSubType,parentPropertyBackgroundColor,parentPropertyXFloor,parentPropertyXCeiling,parentPropertyYFloor,parentPropertyYCeiling,parentPropertyZFloor,parentPropertyZCeiling,pCallback,pArg,callbackCookie) ) 
 
 #define IPlot_PrepareForData(This)	\
     ( (This)->lpVtbl -> PrepareForData(This) ) 
@@ -1526,6 +1554,12 @@ EXTERN_C const IID IID_IPlot;
 
 #define IPlot_Redraw(This)	\
     ( (This)->lpVtbl -> Redraw(This) ) 
+
+#define IPlot_DrawOpenGLText(This)	\
+    ( (This)->lpVtbl -> DrawOpenGLText(This) ) 
+
+#define IPlot_DrawGDIText(This)	\
+    ( (This)->lpVtbl -> DrawGDIText(This) ) 
 
 #define IPlot_Erase(This)	\
     ( (This)->lpVtbl -> Erase(This) ) 

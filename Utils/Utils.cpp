@@ -47,16 +47,16 @@
  
    while ( *c && (*c == ' ' || *c == ',') ) c += 1;
  
-   if ( !*c ) return c - instring;
+   if ( !*c ) return (int)(c - instring);
    if ( c != instring ) strcpy(instring,c);
    
-   c = instring + strlen(instring) - 1;
+   c = instring + (DWORD)strlen(instring) - 1;
    while ( *c && (*c == ' ' || *c == ',') ) {
       *c = '\0';
       c -= 1;
    }
  
-   return c - instring;  
+   return (int)(c - instring);  
    }
  
  
@@ -84,7 +84,7 @@
  
  
    BSTR bstrFromStr(char *source) {
-   int n = strlen(source);
+   int n = (DWORD)strlen(source);
    OLECHAR *szwWide = new OLECHAR[n + 1];
    memset(szwWide,0,(n + 1) * sizeof(OLECHAR));
    MultiByteToWideChar(CP_ACP, 0, source, -1, szwWide, n);

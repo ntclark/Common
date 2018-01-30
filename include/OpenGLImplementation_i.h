@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sun Jan 21 11:02:27 2018
+/* at Tue Jan 30 10:18:00 2018
  */
 /* Compiler settings for OpenGLImplementation.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -315,10 +315,10 @@ EXTERN_C const IID IID_IOpenGLImplementation;
         virtual HRESULT STDMETHODCALLTYPE Finalize( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE SetColor( 
-            /* external definition not present */ IGProperty *__MIDL__IOpenGLImplementation0005) = 0;
+            float *__MIDL__IOpenGLImplementation0005) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE SetLineWeight( 
-            /* external definition not present */ IGProperty *__MIDL__IOpenGLImplementation0006) = 0;
+            float __MIDL__IOpenGLImplementation0006) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Normal3dv( 
             double *normal) = 0;
@@ -700,11 +700,11 @@ EXTERN_C const IID IID_IOpenGLImplementation;
         
         HRESULT ( STDMETHODCALLTYPE *SetColor )( 
             IOpenGLImplementation * This,
-            /* external definition not present */ IGProperty *__MIDL__IOpenGLImplementation0005);
+            float *__MIDL__IOpenGLImplementation0005);
         
         HRESULT ( STDMETHODCALLTYPE *SetLineWeight )( 
             IOpenGLImplementation * This,
-            /* external definition not present */ IGProperty *__MIDL__IOpenGLImplementation0006);
+            float __MIDL__IOpenGLImplementation0006);
         
         HRESULT ( STDMETHODCALLTYPE *Normal3dv )( 
             IOpenGLImplementation * This,

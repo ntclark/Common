@@ -23,6 +23,7 @@
 #define IND_VAR_SIZE                  32
 
 #define DEFAULT_LINE_WEIGHT            2
+#define DEFAULT_LEGEND_LEADER_LENGTH 128
 
 #define MAX_QUEUE_BUFFER_SIZE      63488
 
@@ -86,24 +87,24 @@
      LONG x,y;
   } LDATAPOINT;
 
-  typedef struct CallTable {
-     int (*selector)(void *);
-     int (*unselector)(void *);
-     int (*menuRequest)(void *);
-     int (*leftMouse)(void *);
-     int (*rightMouse)(void *);
-  } CallTable;
+  //typedef struct CallTable {
+  //   int (*selector)(void *);
+  //   int (*unselector)(void *);
+  //   int (*menuRequest)(void *);
+  //   int (*leftMouse)(void *);
+  //   int (*rightMouse)(void *);
+  //} CallTable;
 
-  typedef struct MessageTableEntry {
-     UINT messageNumber;
-     LRESULT (*messageInterface)(void *,HWND,UINT,WPARAM,LPARAM);
-     HWND hwndTarget;
-  } MessageTableEntry;
+  //typedef struct MessageTableEntry {
+  //   UINT messageNumber;
+  //   LRESULT (*messageInterface)(void *,HWND,UINT,WPARAM,LPARAM);
+  //   HWND hwndTarget;
+  //} MessageTableEntry;
 
-  typedef struct MessageTable {
-     int size;
-     MessageTableEntry *start;
-  } MessageTable ;
+  //typedef struct MessageTable {
+  //   int size;
+  //   MessageTableEntry *start;
+  //} MessageTable ;
 
 #define _atold(x) atol(x)
 

@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sun Jan 21 11:03:55 2018
+/* at Mon Jan 29 13:10:21 2018
  */
 /* Compiler settings for GraphicControl.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -442,31 +442,31 @@ EXTERN_C const IID IID_IGSGraphic;
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE ClearAllData( void) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE PrepareForData( 
-            /* [in] */ long plotNumber) = 0;
+            /* [in] */ ULONG_PTR plotNumber) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE TakeDataString( 
             /* [in] */ BSTR stringOfNumbers,
-            /* [in] */ long plotNumber) = 0;
+            /* [in] */ ULONG_PTR plotNumber) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE TakeDataArray( 
             /* [in] */ SAFEARRAY * *pArray,
-            /* [in] */ long plotNumber) = 0;
+            /* [in] */ ULONG_PTR plotNumber) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE TakeFile( 
             /* [in] */ BSTR fileName,
-            /* [in] */ long plotNumber) = 0;
+            /* [in] */ ULONG_PTR plotNumber) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE TakeDataSet( 
             /* [in] */ long ds,
-            /* [in] */ long plotNumber) = 0;
+            /* [in] */ ULONG_PTR plotNumber) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE FinishedWithData( 
-            /* [in] */ long plotNumber) = 0;
+            /* [in] */ ULONG_PTR plotNumber) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE PrepareForDataSets( void) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Draw( 
-            /* [in] */ long plotNumber) = 0;
+            /* [in] */ ULONG_PTR plotNumber) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE SetProperties( void) = 0;
         
@@ -777,38 +777,38 @@ EXTERN_C const IID IID_IGSGraphic;
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *PrepareForData )( 
             IGSGraphic * This,
-            /* [in] */ long plotNumber);
+            /* [in] */ ULONG_PTR plotNumber);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *TakeDataString )( 
             IGSGraphic * This,
             /* [in] */ BSTR stringOfNumbers,
-            /* [in] */ long plotNumber);
+            /* [in] */ ULONG_PTR plotNumber);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *TakeDataArray )( 
             IGSGraphic * This,
             /* [in] */ SAFEARRAY * *pArray,
-            /* [in] */ long plotNumber);
+            /* [in] */ ULONG_PTR plotNumber);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *TakeFile )( 
             IGSGraphic * This,
             /* [in] */ BSTR fileName,
-            /* [in] */ long plotNumber);
+            /* [in] */ ULONG_PTR plotNumber);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *TakeDataSet )( 
             IGSGraphic * This,
             /* [in] */ long ds,
-            /* [in] */ long plotNumber);
+            /* [in] */ ULONG_PTR plotNumber);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *FinishedWithData )( 
             IGSGraphic * This,
-            /* [in] */ long plotNumber);
+            /* [in] */ ULONG_PTR plotNumber);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *PrepareForDataSets )( 
             IGSGraphic * This);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Draw )( 
             IGSGraphic * This,
-            /* [in] */ long plotNumber);
+            /* [in] */ ULONG_PTR plotNumber);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetProperties )( 
             IGSGraphic * This);

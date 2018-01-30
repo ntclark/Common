@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sun Jan 21 11:05:25 2018
+/* at Tue Jan 30 10:19:17 2018
  */
 /* Compiler settings for Function.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -390,7 +390,7 @@ EXTERN_C const IID IID_IGSFunctioNater;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Initialize( 
             /* external definition not present */ IDataSet *pIDataSet_Domain,
-            /* external definition not present */ IOpenGLImplementation *pIOpenGLImplementation,
+            void *pIOpenGLImplementation,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight,
             /* external definition not present */ IGProperty *parentPropertyPlotView,
@@ -680,7 +680,7 @@ EXTERN_C const IID IID_IGSFunctioNater;
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IGSFunctioNater * This,
             /* external definition not present */ IDataSet *pIDataSet_Domain,
-            /* external definition not present */ IOpenGLImplementation *pIOpenGLImplementation,
+            void *pIOpenGLImplementation,
             /* external definition not present */ IGProperty *pIPropertyLineColor,
             /* external definition not present */ IGProperty *pIPropertyLineWeight,
             /* external definition not present */ IGProperty *parentPropertyPlotView,

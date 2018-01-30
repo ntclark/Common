@@ -43,7 +43,7 @@
    v -> put_IEvaluator(pIEvaluator);
 
    if ( varName ) {
-      BSTR bstrValue = SysAllocStringLen(NULL,strlen(varName) + 1);
+      BSTR bstrValue = SysAllocStringLen(NULL,(DWORD)strlen(varName) + 1);
       MultiByteToWideChar(CP_ACP,0,varName,-1,bstrValue,1024);
       v -> put_Name(bstrValue);
       SysFreeString(bstrValue);

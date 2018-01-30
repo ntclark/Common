@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sun Jan 21 11:14:21 2018
+/* at Tue Jan 30 10:26:53 2018
  */
 /* Compiler settings for Axis.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -110,8 +110,9 @@ enum AxisMethodsID
         axisMethodGetDataSet	= ( axisMethodGetTextList + 1 ) ,
         axisMethodPrepData	= ( axisMethodGetDataSet + 1 ) ,
         axisMethodDraw	= ( axisMethodPrepData + 1 ) ,
-        axisMethodDrawLabels	= ( axisMethodDraw + 1 ) ,
-        axisMethodRedraw	= ( axisMethodDrawLabels + 1 ) ,
+        axisMethodDrawOpenGLLabels	= ( axisMethodDraw + 1 ) ,
+        axisMethodDrawGDILabels	= ( axisMethodDrawOpenGLLabels + 1 ) ,
+        axisMethodRedraw	= ( axisMethodDrawGDILabels + 1 ) ,
         axisMethodErase	= ( axisMethodRedraw + 1 ) ,
         axisMethodAdviseGSystemStatusBar	= ( axisMethodErase + 1 ) ,
         axisMethodPrepText	= ( axisMethodAdviseGSystemStatusBar + 1 ) ,
@@ -262,7 +263,6 @@ EXTERN_C const IID IID_IAxis;
             /* [retval][out] */ long *pGridLines) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Initialize( 
-            /* [in] */ HWND hwndOwner,
             /* [in] */ char type,
             /* [in] */ IAxis *pXAxis,
             /* [in] */ IAxis *pYAxis,
@@ -276,7 +276,7 @@ EXTERN_C const IID IID_IAxis;
             /* [in] */ /* external definition not present */ IGProperty *pPropertyZCeiling,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyOpenGLText,
             /* [in] */ /* external definition not present */ IDataSet *pIDomainDataSet,
-            /* [in] */ /* external definition not present */ IOpenGLImplementation *__MIDL__IAxis0006,
+            /* [in] */ void *__MIDL__IAxis0006,
             /* [in] */ /* external definition not present */ IEvaluator *__MIDL__IAxis0007,
             /* [in] */ void ( STDMETHODCALLTYPE *pWhenChangedCallback )( 
                 void *pvArg,
@@ -296,7 +296,9 @@ EXTERN_C const IID IID_IAxis;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE Draw( void) = 0;
         
-        virtual /* [id] */ HRESULT STDMETHODCALLTYPE DrawLabels( void) = 0;
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE DrawOpenGLLabels( void) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE DrawGDILabels( void) = 0;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE Redraw( void) = 0;
         
@@ -536,7 +538,6 @@ EXTERN_C const IID IID_IAxis;
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IAxis * This,
-            /* [in] */ HWND hwndOwner,
             /* [in] */ char type,
             /* [in] */ IAxis *pXAxis,
             /* [in] */ IAxis *pYAxis,
@@ -550,7 +551,7 @@ EXTERN_C const IID IID_IAxis;
             /* [in] */ /* external definition not present */ IGProperty *pPropertyZCeiling,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyOpenGLText,
             /* [in] */ /* external definition not present */ IDataSet *pIDomainDataSet,
-            /* [in] */ /* external definition not present */ IOpenGLImplementation *__MIDL__IAxis0006,
+            /* [in] */ void *__MIDL__IAxis0006,
             /* [in] */ /* external definition not present */ IEvaluator *__MIDL__IAxis0007,
             /* [in] */ void ( STDMETHODCALLTYPE *pWhenChangedCallback )( 
                 void *pvArg,
@@ -575,7 +576,10 @@ EXTERN_C const IID IID_IAxis;
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *Draw )( 
             IAxis * This);
         
-        /* [id] */ HRESULT ( STDMETHODCALLTYPE *DrawLabels )( 
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *DrawOpenGLLabels )( 
+            IAxis * This);
+        
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *DrawGDILabels )( 
             IAxis * This);
         
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *Redraw )( 
@@ -754,8 +758,8 @@ EXTERN_C const IID IID_IAxis;
 #define IAxis_get_GridLinesPerTick(This,pGridLines)	\
     ( (This)->lpVtbl -> get_GridLinesPerTick(This,pGridLines) ) 
 
-#define IAxis_Initialize(This,hwndOwner,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyXFloor,pPropertyXCeiling,pProeprtyYFloor,pProeprtyYCeiling,pPropertyZFloor,pPropertyZCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie)	\
-    ( (This)->lpVtbl -> Initialize(This,hwndOwner,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyXFloor,pPropertyXCeiling,pProeprtyYFloor,pProeprtyYCeiling,pPropertyZFloor,pPropertyZCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie) ) 
+#define IAxis_Initialize(This,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyXFloor,pPropertyXCeiling,pProeprtyYFloor,pProeprtyYCeiling,pPropertyZFloor,pPropertyZCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie)	\
+    ( (This)->lpVtbl -> Initialize(This,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyXFloor,pPropertyXCeiling,pProeprtyYFloor,pProeprtyYCeiling,pPropertyZFloor,pPropertyZCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie) ) 
 
 #define IAxis_get_DataSet(This,__MIDL__IAxis0009)	\
     ( (This)->lpVtbl -> get_DataSet(This,__MIDL__IAxis0009) ) 
@@ -772,8 +776,11 @@ EXTERN_C const IID IID_IAxis;
 #define IAxis_Draw(This)	\
     ( (This)->lpVtbl -> Draw(This) ) 
 
-#define IAxis_DrawLabels(This)	\
-    ( (This)->lpVtbl -> DrawLabels(This) ) 
+#define IAxis_DrawOpenGLLabels(This)	\
+    ( (This)->lpVtbl -> DrawOpenGLLabels(This) ) 
+
+#define IAxis_DrawGDILabels(This)	\
+    ( (This)->lpVtbl -> DrawGDILabels(This) ) 
 
 #define IAxis_Redraw(This)	\
     ( (This)->lpVtbl -> Redraw(This) ) 

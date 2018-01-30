@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sun Jan 21 11:00:22 2018
+/* at Mon Jan 29 13:49:02 2018
  */
 /* Compiler settings for Text.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -460,7 +460,6 @@ EXTERN_C const IID IID_IText;
             ITextNotify *pITextNotify) = 0;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE Initialize( 
-            HWND hwndOwner,
             /* external definition not present */ IOpenGLImplementation *__MIDL__IText0017,
             /* external definition not present */ IEvaluator *__MIDL__IText0018,
             /* external definition not present */ IDataSet *__MIDL__IText0019,
@@ -859,7 +858,6 @@ EXTERN_C const IID IID_IText;
         
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IText * This,
-            HWND hwndOwner,
             /* external definition not present */ IOpenGLImplementation *__MIDL__IText0017,
             /* external definition not present */ IEvaluator *__MIDL__IText0018,
             /* external definition not present */ IDataSet *__MIDL__IText0019,
@@ -1171,8 +1169,8 @@ EXTERN_C const IID IID_IText;
 #define IText_put_TextNotify(This,pITextNotify)	\
     ( (This)->lpVtbl -> put_TextNotify(This,pITextNotify) ) 
 
-#define IText_Initialize(This,hwndOwner,__MIDL__IText0017,__MIDL__IText0018,__MIDL__IText0019,pPropXFloor,pPropXCeiling,pPropYFloor,pPropYCeiling,pPropZFloor,pPropZCeiling,pPropOpenGLRendering,text,position,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie)	\
-    ( (This)->lpVtbl -> Initialize(This,hwndOwner,__MIDL__IText0017,__MIDL__IText0018,__MIDL__IText0019,pPropXFloor,pPropXCeiling,pPropYFloor,pPropYCeiling,pPropZFloor,pPropZCeiling,pPropOpenGLRendering,text,position,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie) ) 
+#define IText_Initialize(This,__MIDL__IText0017,__MIDL__IText0018,__MIDL__IText0019,pPropXFloor,pPropXCeiling,pPropYFloor,pPropYCeiling,pPropZFloor,pPropZCeiling,pPropOpenGLRendering,text,position,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie)	\
+    ( (This)->lpVtbl -> Initialize(This,__MIDL__IText0017,__MIDL__IText0018,__MIDL__IText0019,pPropXFloor,pPropXCeiling,pPropYFloor,pPropYCeiling,pPropZFloor,pPropZCeiling,pPropOpenGLRendering,text,position,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie) ) 
 
 #define IText_PrepData(This)	\
     ( (This)->lpVtbl -> PrepData(This) ) 

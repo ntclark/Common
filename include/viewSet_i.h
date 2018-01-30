@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sun Jan 21 10:58:44 2018
+/* at Mon Jan 29 13:49:02 2018
  */
 /* Compiler settings for viewSet.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -94,7 +94,6 @@ EXTERN_C const IID IID_IViewSet;
     {
     public:
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Initialize( 
-            HWND hwndOwner,
             /* external definition not present */ IOpenGLImplementation *pIOpenGLImplementation,
             /* external definition not present */ IEvaluator *pIEvaluator,
             /* external definition not present */ IGProperty *parentPlotView,
@@ -109,6 +108,7 @@ EXTERN_C const IID IID_IViewSet;
             /* external definition not present */ IAxis *pIAxis_Z) = 0;
         
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Properties( 
+            /* [in] */ HWND hwndParent,
             /* [in] */ void ( STDMETHODCALLTYPE *pWhenDoneCallback )( 
                 void *__MIDL__IViewSet0000),
             /* [in] */ void *pArg) = 0;
@@ -136,7 +136,6 @@ EXTERN_C const IID IID_IViewSet;
         
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IViewSet * This,
-            HWND hwndOwner,
             /* external definition not present */ IOpenGLImplementation *pIOpenGLImplementation,
             /* external definition not present */ IEvaluator *pIEvaluator,
             /* external definition not present */ IGProperty *parentPlotView,
@@ -152,6 +151,7 @@ EXTERN_C const IID IID_IViewSet;
         
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Properties )( 
             IViewSet * This,
+            /* [in] */ HWND hwndParent,
             /* [in] */ void ( STDMETHODCALLTYPE *pWhenDoneCallback )( 
                 void *__MIDL__IViewSet0000),
             /* [in] */ void *pArg);
@@ -179,11 +179,11 @@ EXTERN_C const IID IID_IViewSet;
     ( (This)->lpVtbl -> Release(This) ) 
 
 
-#define IViewSet_Initialize(This,hwndOwner,pIOpenGLImplementation,pIEvaluator,parentPlotView,parentTheta,parentPhi,parentSpin,parentFloor,parentCeiling,pIDataSet,pIAxis_X,pIAxis_Y,pIAxis_Z)	\
-    ( (This)->lpVtbl -> Initialize(This,hwndOwner,pIOpenGLImplementation,pIEvaluator,parentPlotView,parentTheta,parentPhi,parentSpin,parentFloor,parentCeiling,pIDataSet,pIAxis_X,pIAxis_Y,pIAxis_Z) ) 
+#define IViewSet_Initialize(This,pIOpenGLImplementation,pIEvaluator,parentPlotView,parentTheta,parentPhi,parentSpin,parentFloor,parentCeiling,pIDataSet,pIAxis_X,pIAxis_Y,pIAxis_Z)	\
+    ( (This)->lpVtbl -> Initialize(This,pIOpenGLImplementation,pIEvaluator,parentPlotView,parentTheta,parentPhi,parentSpin,parentFloor,parentCeiling,pIDataSet,pIAxis_X,pIAxis_Y,pIAxis_Z) ) 
 
-#define IViewSet_Properties(This,pWhenDoneCallback,pArg)	\
-    ( (This)->lpVtbl -> Properties(This,pWhenDoneCallback,pArg) ) 
+#define IViewSet_Properties(This,hwndParent,pWhenDoneCallback,pArg)	\
+    ( (This)->lpVtbl -> Properties(This,hwndParent,pWhenDoneCallback,pArg) ) 
 
 #endif /* COBJMACROS */
 

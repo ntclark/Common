@@ -7,7 +7,7 @@
    private:
       struct ListItem {
          char name[NAME_SIZE];
-         long id;
+         ULONG_PTR id;
          struct ListItem *previous,*next;
          T *member;
          public:
@@ -26,7 +26,7 @@
       List();
       virtual ~List();
 
-      virtual int Add(T *newItem,char *itemName = (char *)NULL,long idNumber = -1);
+      virtual int Add(T *newItem,char *itemName = (char *)NULL,ULONG_PTR idNumber = -1);
 
       virtual int Remove(T *removeItem);
       virtual int Delete(T *deleteItem = (T *)NULL);
@@ -54,14 +54,14 @@
       T *GetNext(T *afterThisOne);
       T *GetPrevious(T *beforeThisOne);
       T *Get(char *itemName);
-      T *Get(long idNumber);
+      T *Get(ULONG_PTR idNumber);
       T *Get(T* item);
       T *GetByIndex(int itemIndex);
 
       int Clone(T *memberToClone = NULL,void *spaceToPutIt = NULL);
       int UnClone(void *spaceWithOldList);
       char *Name(T *item,char *newName = (char *)NULL);
-      int ID(T *item,long idNumber = -1);
+      ULONG_PTR ID(T *item,ULONG_PTR idNumber = -1);
       int Count();
       int Find(T *item);
       int IndexOf(T* ofItem);

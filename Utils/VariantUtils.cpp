@@ -181,7 +181,7 @@
       VARIANT_SIZE(v -> pdate,v -> date)
 
    case ( VT_BSTR ) :
-      return 2 * wcslen(byRef ? *v -> pbstrVal : v -> bstrVal);
+      return 2 * (DWORD)wcslen(byRef ? *v -> pbstrVal : v -> bstrVal);
 
    default:
       break;
@@ -281,7 +281,7 @@
          break;
 
       case ( VT_BSTR ) :
-         *cntBytes = 2 * wcslen(byRef ? *v -> pbstrVal : v -> bstrVal);
+         *cntBytes = 2 * (DWORD)wcslen(byRef ? *v -> pbstrVal : v -> bstrVal);
          *pResult = new BYTE[*cntBytes];
          memcpy(*pResult,byRef ? *v -> pbstrVal : v -> bstrVal,*cntBytes);
          *pvtOveride = vtOwnerArray;
@@ -368,7 +368,7 @@
       break;
 
    case ( VT_BSTR ) :
-      *cntBytes = 2 * wcslen(byRef ? *v -> pbstrVal : v -> bstrVal);
+      *cntBytes = 2 * (DWORD)wcslen(byRef ? *v -> pbstrVal : v -> bstrVal);
       *pResult = new BYTE[*cntBytes];
       memcpy(*pResult,byRef ? *v -> pbstrVal : v -> bstrVal,*cntBytes);
       break;
@@ -385,8 +385,8 @@
    VARIANT vBstr = {VT_EMPTY};
    GVariantClear(&vBstr);
    vBstr.vt = VT_BSTR;
-   vBstr.bstrVal = SysAllocStringLen(NULL,strlen(szString) + 1);
-   MultiByteToWideChar(CP_ACP,0,szString,-1,vBstr.bstrVal,strlen(szString) + 1);
+   vBstr.bstrVal = SysAllocStringLen(NULL,(DWORD)strlen(szString) + 1);
+   MultiByteToWideChar(CP_ACP,0,szString,-1,vBstr.bstrVal,(DWORD)strlen(szString) + 1);
    VariantChangeType(v,&vBstr,VARIANT_ALPHABOOL,v -> vt);
    return 0;
    }
@@ -399,7 +399,7 @@
    GVariantClear(&vDestination);
    if ( ! SUCCEEDED(VariantChangeType(&vDestination,v,VARIANT_ALPHABOOL,VT_BSTR)) )
       return E_INVALIDARG;
-   long cbString = wcslen(vDestination.bstrVal) + 1;
+   long cbString = (DWORD)wcslen(vDestination.bstrVal) + 1;
    *pszString = new char[cbString];
    memset(*pszString,0,cbString);
    WideCharToMultiByte(CP_ACP,0,vDestination.bstrVal,-1,*pszString,cbString,0,0);
@@ -500,8 +500,8 @@
    VARTYPE vt = pv -> vt;
    if ( VT_EMPTY == vt ) {
       pv -> vt = VT_BSTR;
-      pv -> bstrVal = SysAllocStringLen(NULL,strlen(szString));
-      MultiByteToWideChar(CP_ACP,0,szString,-1,pv -> bstrVal,strlen(szString));
+      pv -> bstrVal = SysAllocStringLen(NULL,(DWORD)strlen(szString));
+      MultiByteToWideChar(CP_ACP,0,szString,-1,pv -> bstrVal,(DWORD)strlen(szString));
       return S_OK;
    }
    std::list<char *> strings;
@@ -527,15 +527,15 @@
          SAFEARRAYBOUND rgsa;
          memcpy(&rgsa,pv -> parray -> rgsabound,sizeof(SAFEARRAYBOUND));
          SafeArrayDestroy(pv -> parray);
-         rgsa.cElements = strings.size();
+         rgsa.cElements = (DWORD)strings.size();
          pv -> parray = SafeArrayCreate(VT_BSTR,1,&rgsa);
          //char *s = (char *)NULL;
          BSTR *pbstrArray;
          SafeArrayAccessData(pv -> parray,reinterpret_cast<void**>(&pbstrArray));
          long n = 0;
          for ( char *ps : strings ) { //while ( s = strings.GetFirst() ) {
-            pbstrArray[n++] = SysAllocStringLen(NULL,strlen(ps));
-            MultiByteToWideChar(CP_ACP,0,ps,-1,pbstrArray[n],strlen(ps));
+            pbstrArray[n++] = SysAllocStringLen(NULL,(DWORD)strlen(ps));
+            MultiByteToWideChar(CP_ACP,0,ps,-1,pbstrArray[n],(DWORD)strlen(ps));
             //strings.Remove(s);
             delete [] ps;
          }
@@ -545,7 +545,7 @@
          long n = 0;
          //char *s = (char *)NULL;
          for ( char *ps : strings ) //while ( s = strings.GetNext(s) ) {
-            n += strlen(ps) + 1;
+            n += (DWORD)strlen(ps) + 1;
          //}
          char *pszTemp = new char[n + 1];
          char *p = pszTemp;
@@ -573,7 +573,7 @@
       SAFEARRAYBOUND rgsa;
       memcpy(&rgsa,pv -> parray -> rgsabound,sizeof(SAFEARRAYBOUND));
       SafeArrayDestroy(pv -> parray);
-      rgsa.cElements = strings.size();
+      rgsa.cElements = (DWORD)strings.size();
       pv -> parray = SafeArrayCreate(vt,1,&rgsa);
 
       void *pData;
@@ -652,8 +652,8 @@
          for ( unsigned k = 0; k < psaValues -> rgsabound[j].cElements; k++ ) {
             if ( bstrArray[n] ) {
                char* pszTemp = new char[wcslen(bstrArray[n]) + 1];
-               WideCharToMultiByte(CP_ACP,0,bstrArray[n],-1,pszTemp,wcslen(bstrArray[n]) + 1,0,0);
-               if ( (long)strlen(szResult) + (long)strlen(pszTemp) > cbResult ) {
+               WideCharToMultiByte(CP_ACP,0,bstrArray[n],-1,pszTemp,(DWORD)wcslen(bstrArray[n]) + 1,0,0);
+               if ( (long)( (DWORD)strlen(szResult) + (DWORD)strlen(pszTemp) ) > cbResult ) {
                   delete [] pszTemp;
                   return E_INVALIDARG;
                }
