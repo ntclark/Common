@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Mon Jan 29 13:10:21 2018
+/* at Wed Feb 07 18:50:54 2018
  */
 /* Compiler settings for GraphicControl.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -152,21 +152,29 @@ enum GraphicMethodsID
 
 EXTERN_C const IID LIBID_Graphic;
 
-#ifndef __IGSGraphicEvents_DISPINTERFACE_DEFINED__
-#define __IGSGraphicEvents_DISPINTERFACE_DEFINED__
+#ifndef __IGSGraphicEvents_INTERFACE_DEFINED__
+#define __IGSGraphicEvents_INTERFACE_DEFINED__
 
-/* dispinterface IGSGraphicEvents */
+/* interface IGSGraphicEvents */
 /* [helpstring][uuid] */ 
 
 
-EXTERN_C const IID DIID_IGSGraphicEvents;
+EXTERN_C const IID IID_IGSGraphicEvents;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-
+    
     MIDL_INTERFACE("8CAEFD71-55E6-11d3-8365-006008BD5BC3")
-    IGSGraphicEvents : public IDispatch
+    IGSGraphicEvents
     {
+    public:
+        BEGIN_INTERFACE
+        virtual HRESULT STDMETHODCALLTYPE Clicked( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ReDraw( void) = 0;
+        
+        END_INTERFACE
     };
+    
     
 #else 	/* C style interface */
 
@@ -174,54 +182,11 @@ EXTERN_C const IID DIID_IGSGraphicEvents;
     {
         BEGIN_INTERFACE
         
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
-            IGSGraphicEvents * This,
-            /* [in] */ REFIID riid,
-            /* [annotation][iid_is][out] */ 
-            _COM_Outptr_  void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+        HRESULT ( STDMETHODCALLTYPE *Clicked )( 
             IGSGraphicEvents * This);
         
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+        HRESULT ( STDMETHODCALLTYPE *ReDraw )( 
             IGSGraphicEvents * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
-            IGSGraphicEvents * This,
-            /* [out] */ UINT *pctinfo);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
-            IGSGraphicEvents * This,
-            /* [in] */ UINT iTInfo,
-            /* [in] */ LCID lcid,
-            /* [out] */ ITypeInfo **ppTInfo);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
-            IGSGraphicEvents * This,
-            /* [in] */ REFIID riid,
-            /* [size_is][in] */ LPOLESTR *rgszNames,
-            /* [range][in] */ UINT cNames,
-            /* [in] */ LCID lcid,
-            /* [size_is][out] */ DISPID *rgDispId);
-        
-        /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
-            IGSGraphicEvents * This,
-            /* [annotation][in] */ 
-            _In_  DISPID dispIdMember,
-            /* [annotation][in] */ 
-            _In_  REFIID riid,
-            /* [annotation][in] */ 
-            _In_  LCID lcid,
-            /* [annotation][in] */ 
-            _In_  WORD wFlags,
-            /* [annotation][out][in] */ 
-            _In_  DISPPARAMS *pDispParams,
-            /* [annotation][out] */ 
-            _Out_opt_  VARIANT *pVarResult,
-            /* [annotation][out] */ 
-            _Out_opt_  EXCEPINFO *pExcepInfo,
-            /* [annotation][out] */ 
-            _Out_opt_  UINT *puArgErr);
         
         END_INTERFACE
     } IGSGraphicEventsVtbl;
@@ -236,27 +201,11 @@ EXTERN_C const IID DIID_IGSGraphicEvents;
 #ifdef COBJMACROS
 
 
-#define IGSGraphicEvents_QueryInterface(This,riid,ppvObject)	\
-    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+#define IGSGraphicEvents_Clicked(This)	\
+    ( (This)->lpVtbl -> Clicked(This) ) 
 
-#define IGSGraphicEvents_AddRef(This)	\
-    ( (This)->lpVtbl -> AddRef(This) ) 
-
-#define IGSGraphicEvents_Release(This)	\
-    ( (This)->lpVtbl -> Release(This) ) 
-
-
-#define IGSGraphicEvents_GetTypeInfoCount(This,pctinfo)	\
-    ( (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo) ) 
-
-#define IGSGraphicEvents_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
-    ( (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo) ) 
-
-#define IGSGraphicEvents_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
-    ( (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId) ) 
-
-#define IGSGraphicEvents_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
-    ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
+#define IGSGraphicEvents_ReDraw(This)	\
+    ( (This)->lpVtbl -> ReDraw(This) ) 
 
 #endif /* COBJMACROS */
 
@@ -264,7 +213,9 @@ EXTERN_C const IID DIID_IGSGraphicEvents;
 #endif 	/* C style interface */
 
 
-#endif 	/* __IGSGraphicEvents_DISPINTERFACE_DEFINED__ */
+
+
+#endif 	/* __IGSGraphicEvents_INTERFACE_DEFINED__ */
 
 
 #ifndef __IGSGraphic_INTERFACE_DEFINED__

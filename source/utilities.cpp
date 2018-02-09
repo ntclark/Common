@@ -451,7 +451,7 @@
    return;
    }
 
-   int pixelToHiMetric(SIZEL *pPixels,SIZEL *phiMetric) {
+   int pixelsToHiMetric(SIZEL *pPixels,SIZEL *phiMetric) {
    HDC hdc = GetDC(0);
    int pxlsX,pxlsY;
  
@@ -465,7 +465,7 @@
    return TRUE;
    }
 
-   int hiMetricToPixel(SIZEL *phiMetric,SIZEL *pPixels) {
+   int hiMetricToPixels(SIZEL *phiMetric,SIZEL *pPixels) {
    HDC hdc = GetDC(0);
    int pxlsX,pxlsY;
 

@@ -117,33 +117,33 @@
    }
    
  
-   int hiMetricToPixel(SIZEL *phiMetric,SIZEL *pPixels) {
-   HDC hdc = GetDC(0);
-   int pxlsX,pxlsY;
+   //int hiMetricToPixel(SIZEL *phiMetric,SIZEL *pPixels) {
+   //HDC hdc = GetDC(0);
+   //int pxlsX,pxlsY;
  
-   pxlsX = GetDeviceCaps(hdc,LOGPIXELSX);
-   pxlsY = GetDeviceCaps(hdc,LOGPIXELSY);
-   ReleaseDC(0,hdc);
+   //pxlsX = GetDeviceCaps(hdc,LOGPIXELSX);
+   //pxlsY = GetDeviceCaps(hdc,LOGPIXELSY);
+   //ReleaseDC(0,hdc);
  
-   pPixels -> cx = HIMETRIC_TO_PIXELS(phiMetric -> cx,pxlsX);
-   pPixels -> cy = HIMETRIC_TO_PIXELS(phiMetric -> cy,pxlsY);
+   //pPixels -> cx = HIMETRIC_TO_PIXELS(phiMetric -> cx,pxlsX);
+   //pPixels -> cy = HIMETRIC_TO_PIXELS(phiMetric -> cy,pxlsY);
  
-   return TRUE;
-   }
+   //return TRUE;
+   //}
  
  
-   int pixelsToHiMetric(SIZEL *pPixels,SIZEL *phiMetric) {
-   HDC hdc = GetDC(0);
-   int pxlsX,pxlsY;
+   //int pixelsToHiMetric(SIZEL *pPixels,SIZEL *phiMetric) {
+   //HDC hdc = GetDC(0);
+   //int pxlsX,pxlsY;
  
-   pxlsX = GetDeviceCaps(hdc,LOGPIXELSX);
-   pxlsY = GetDeviceCaps(hdc,LOGPIXELSY);
-   ReleaseDC(0,hdc);
+   //pxlsX = GetDeviceCaps(hdc,LOGPIXELSX);
+   //pxlsY = GetDeviceCaps(hdc,LOGPIXELSY);
+   //ReleaseDC(0,hdc);
  
-   phiMetric -> cx = PIXELS_TO_HIMETRIC(pPixels -> cx,pxlsX);
-   phiMetric -> cy = PIXELS_TO_HIMETRIC(pPixels -> cy,pxlsY);
-   return TRUE;
-   }
+   //phiMetric -> cx = PIXELS_TO_HIMETRIC(pPixels -> cx,pxlsX);
+   //phiMetric -> cy = PIXELS_TO_HIMETRIC(pPixels -> cy,pxlsY);
+   //return TRUE;
+   //}
  
  
    int subtractRect(RECT* rect,RECT* minusThis,RECT* equalsThis) {

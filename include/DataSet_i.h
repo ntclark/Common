@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Jan 30 10:26:53 2018
+/* at Thu Feb 08 15:59:26 2018
  */
 /* Compiler settings for DataSet.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -249,7 +249,12 @@ EXTERN_C const IID IID_IDataSet;
             char *valueString) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE pushDataPoint( 
-            struct /* external definition not present */ DataPoint *point) = 0;
+            struct /* external definition not present */ DataPoint *point,
+            /* [defaultvalue][optional] */ void ( STDMETHODCALLTYPE *pAction )( 
+                void *__MIDL__IDataSet0014,
+                void *__MIDL__IDataSet0015) = 0,
+            /* [defaultvalue][optional] */ void *pArg1 = 0,
+            /* [defaultvalue][optional] */ void *pArg2 = 0) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE popDataPoint( 
             struct /* external definition not present */ DataPoint *point) = 0;
@@ -270,7 +275,7 @@ EXTERN_C const IID IID_IDataSet;
         virtual HRESULT STDMETHODCALLTYPE makeUnitSize( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE ResetLimits( 
-            struct /* external definition not present */ DataPoint *__MIDL__IDataSet0014) = 0;
+            struct /* external definition not present */ DataPoint *__MIDL__IDataSet0017) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE SetDomain( 
             struct /* external definition not present */ DataPoint *minPoint,
@@ -293,7 +298,7 @@ EXTERN_C const IID IID_IDataSet;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_IsIncludedDomain( 
             /* [in] */ IDataSet *pOtherDataSet,
-            /* [retval][out] */ boolean *__MIDL__IDataSet0015) = 0;
+            /* [retval][out] */ boolean *__MIDL__IDataSet0018) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE RemoveIncludedDomain( 
             IDataSet *pTheOtherDataSet) = 0;
@@ -302,6 +307,9 @@ EXTERN_C const IID IID_IDataSet;
             double *red,
             double *green,
             double *blue) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetFirstNaturalPoint( 
+            struct /* external definition not present */ DataPoint *pPoint) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Scale( 
             struct /* external definition not present */ DataPoint *scaleVector) = 0;
@@ -330,8 +338,11 @@ EXTERN_C const IID IID_IDataSet;
         virtual HRESULT STDMETHODCALLTYPE GenerateBoundingBox( 
             IDataSet *pIDataSetBoundingBox) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE GenerateGDICoordinates( 
-            void *pIOpenGLImplementation) = 0;
+        virtual HRESULT STDMETHODCALLTYPE GenerateGDICoordinates( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ConvertGDIToWorld( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE SaveAsGDICoordinates( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE PushExtents( void) = 0;
         
@@ -348,10 +359,10 @@ EXTERN_C const IID IID_IDataSet;
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE Start( void) = 0;
         
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE AdviseGSystemStatusBar( 
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IDataSet0016) = 0;
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IDataSet0019) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE AdviseGSGraphicServices( 
-            void *__MIDL__IDataSet0017) = 0;
+            void *__MIDL__IDataSet0020) = 0;
         
     };
     
@@ -564,7 +575,12 @@ EXTERN_C const IID IID_IDataSet;
         
         HRESULT ( STDMETHODCALLTYPE *pushDataPoint )( 
             IDataSet * This,
-            struct /* external definition not present */ DataPoint *point);
+            struct /* external definition not present */ DataPoint *point,
+            /* [defaultvalue][optional] */ void ( STDMETHODCALLTYPE *pAction )( 
+                void *__MIDL__IDataSet0014,
+                void *__MIDL__IDataSet0015),
+            /* [defaultvalue][optional] */ void *pArg1,
+            /* [defaultvalue][optional] */ void *pArg2);
         
         HRESULT ( STDMETHODCALLTYPE *popDataPoint )( 
             IDataSet * This,
@@ -592,7 +608,7 @@ EXTERN_C const IID IID_IDataSet;
         
         HRESULT ( STDMETHODCALLTYPE *ResetLimits )( 
             IDataSet * This,
-            struct /* external definition not present */ DataPoint *__MIDL__IDataSet0014);
+            struct /* external definition not present */ DataPoint *__MIDL__IDataSet0017);
         
         HRESULT ( STDMETHODCALLTYPE *SetDomain )( 
             IDataSet * This,
@@ -620,7 +636,7 @@ EXTERN_C const IID IID_IDataSet;
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_IsIncludedDomain )( 
             IDataSet * This,
             /* [in] */ IDataSet *pOtherDataSet,
-            /* [retval][out] */ boolean *__MIDL__IDataSet0015);
+            /* [retval][out] */ boolean *__MIDL__IDataSet0018);
         
         HRESULT ( STDMETHODCALLTYPE *RemoveIncludedDomain )( 
             IDataSet * This,
@@ -631,6 +647,10 @@ EXTERN_C const IID IID_IDataSet;
             double *red,
             double *green,
             double *blue);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetFirstNaturalPoint )( 
+            IDataSet * This,
+            struct /* external definition not present */ DataPoint *pPoint);
         
         HRESULT ( STDMETHODCALLTYPE *Scale )( 
             IDataSet * This,
@@ -668,8 +688,13 @@ EXTERN_C const IID IID_IDataSet;
             IDataSet *pIDataSetBoundingBox);
         
         HRESULT ( STDMETHODCALLTYPE *GenerateGDICoordinates )( 
-            IDataSet * This,
-            void *pIOpenGLImplementation);
+            IDataSet * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *ConvertGDIToWorld )( 
+            IDataSet * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *SaveAsGDICoordinates )( 
+            IDataSet * This);
         
         HRESULT ( STDMETHODCALLTYPE *PushExtents )( 
             IDataSet * This);
@@ -692,11 +717,11 @@ EXTERN_C const IID IID_IDataSet;
         
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *AdviseGSystemStatusBar )( 
             IDataSet * This,
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IDataSet0016);
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IDataSet0019);
         
         HRESULT ( STDMETHODCALLTYPE *AdviseGSGraphicServices )( 
             IDataSet * This,
-            void *__MIDL__IDataSet0017);
+            void *__MIDL__IDataSet0020);
         
         END_INTERFACE
     } IDataSetVtbl;
@@ -841,8 +866,8 @@ EXTERN_C const IID IID_IDataSet;
 #define IDataSet_pushString(This,valueString)	\
     ( (This)->lpVtbl -> pushString(This,valueString) ) 
 
-#define IDataSet_pushDataPoint(This,point)	\
-    ( (This)->lpVtbl -> pushDataPoint(This,point) ) 
+#define IDataSet_pushDataPoint(This,point,pAction,pArg1,pArg2)	\
+    ( (This)->lpVtbl -> pushDataPoint(This,point,pAction,pArg1,pArg2) ) 
 
 #define IDataSet_popDataPoint(This,point)	\
     ( (This)->lpVtbl -> popDataPoint(This,point) ) 
@@ -862,8 +887,8 @@ EXTERN_C const IID IID_IDataSet;
 #define IDataSet_makeUnitSize(This)	\
     ( (This)->lpVtbl -> makeUnitSize(This) ) 
 
-#define IDataSet_ResetLimits(This,__MIDL__IDataSet0014)	\
-    ( (This)->lpVtbl -> ResetLimits(This,__MIDL__IDataSet0014) ) 
+#define IDataSet_ResetLimits(This,__MIDL__IDataSet0017)	\
+    ( (This)->lpVtbl -> ResetLimits(This,__MIDL__IDataSet0017) ) 
 
 #define IDataSet_SetDomain(This,minPoint,maxPoint)	\
     ( (This)->lpVtbl -> SetDomain(This,minPoint,maxPoint) ) 
@@ -877,14 +902,17 @@ EXTERN_C const IID IID_IDataSet;
 #define IDataSet_IncludeDomain(This,pTheOtherDataSet)	\
     ( (This)->lpVtbl -> IncludeDomain(This,pTheOtherDataSet) ) 
 
-#define IDataSet_get_IsIncludedDomain(This,pOtherDataSet,__MIDL__IDataSet0015)	\
-    ( (This)->lpVtbl -> get_IsIncludedDomain(This,pOtherDataSet,__MIDL__IDataSet0015) ) 
+#define IDataSet_get_IsIncludedDomain(This,pOtherDataSet,__MIDL__IDataSet0018)	\
+    ( (This)->lpVtbl -> get_IsIncludedDomain(This,pOtherDataSet,__MIDL__IDataSet0018) ) 
 
 #define IDataSet_RemoveIncludedDomain(This,pTheOtherDataSet)	\
     ( (This)->lpVtbl -> RemoveIncludedDomain(This,pTheOtherDataSet) ) 
 
 #define IDataSet_SetColorRGB(This,red,green,blue)	\
     ( (This)->lpVtbl -> SetColorRGB(This,red,green,blue) ) 
+
+#define IDataSet_GetFirstNaturalPoint(This,pPoint)	\
+    ( (This)->lpVtbl -> GetFirstNaturalPoint(This,pPoint) ) 
 
 #define IDataSet_Scale(This,scaleVector)	\
     ( (This)->lpVtbl -> Scale(This,scaleVector) ) 
@@ -910,8 +938,14 @@ EXTERN_C const IID IID_IDataSet;
 #define IDataSet_GenerateBoundingBox(This,pIDataSetBoundingBox)	\
     ( (This)->lpVtbl -> GenerateBoundingBox(This,pIDataSetBoundingBox) ) 
 
-#define IDataSet_GenerateGDICoordinates(This,pIOpenGLImplementation)	\
-    ( (This)->lpVtbl -> GenerateGDICoordinates(This,pIOpenGLImplementation) ) 
+#define IDataSet_GenerateGDICoordinates(This)	\
+    ( (This)->lpVtbl -> GenerateGDICoordinates(This) ) 
+
+#define IDataSet_ConvertGDIToWorld(This)	\
+    ( (This)->lpVtbl -> ConvertGDIToWorld(This) ) 
+
+#define IDataSet_SaveAsGDICoordinates(This)	\
+    ( (This)->lpVtbl -> SaveAsGDICoordinates(This) ) 
 
 #define IDataSet_PushExtents(This)	\
     ( (This)->lpVtbl -> PushExtents(This) ) 
@@ -928,11 +962,11 @@ EXTERN_C const IID IID_IDataSet;
 #define IDataSet_Start(This)	\
     ( (This)->lpVtbl -> Start(This) ) 
 
-#define IDataSet_AdviseGSystemStatusBar(This,__MIDL__IDataSet0016)	\
-    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IDataSet0016) ) 
+#define IDataSet_AdviseGSystemStatusBar(This,__MIDL__IDataSet0019)	\
+    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IDataSet0019) ) 
 
-#define IDataSet_AdviseGSGraphicServices(This,__MIDL__IDataSet0017)	\
-    ( (This)->lpVtbl -> AdviseGSGraphicServices(This,__MIDL__IDataSet0017) ) 
+#define IDataSet_AdviseGSGraphicServices(This,__MIDL__IDataSet0020)	\
+    ( (This)->lpVtbl -> AdviseGSGraphicServices(This,__MIDL__IDataSet0020) ) 
 
 #endif /* COBJMACROS */
 

@@ -75,8 +75,8 @@ long HashCode(WCHAR *pszwInput);
 void ASCIIHexDecodeInPlace(char *pszInput);
 void ASCIIHexEncode(char *pszInput,long valueSize,char **ppszResult);
 
-int pixelToHiMetric(SIZEL *pPixels,SIZEL *phiMetric);
-int hiMetricToPixel(SIZEL *phiMetric,SIZEL *pPixels);
+int pixelsToHiMetric(SIZEL *pPixels,SIZEL *phiMetric);
+int hiMetricToPixels(SIZEL *phiMetric,SIZEL *pPixels);
 
 void adjustPropertiesDialogSize(SIZEL *pSizelDesired,DLGTEMPLATEEX *pDialog,long cyReservedHeader);
 

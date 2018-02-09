@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Jan 30 11:19:22 2018
+/* at Thu Feb 08 19:17:59 2018
  */
 /* Compiler settings for Axis.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -110,9 +110,8 @@ enum AxisMethodsID
         axisMethodGetDataSet	= ( axisMethodGetTextList + 1 ) ,
         axisMethodPrepData	= ( axisMethodGetDataSet + 1 ) ,
         axisMethodDraw	= ( axisMethodPrepData + 1 ) ,
-        axisMethodDrawOpenGLLabels	= ( axisMethodDraw + 1 ) ,
-        axisMethodDrawGDILabels	= ( axisMethodDrawOpenGLLabels + 1 ) ,
-        axisMethodRedraw	= ( axisMethodDrawGDILabels + 1 ) ,
+        axisMethodDrawLabels	= ( axisMethodDraw + 1 ) ,
+        axisMethodRedraw	= ( axisMethodDrawLabels + 1 ) ,
         axisMethodErase	= ( axisMethodRedraw + 1 ) ,
         axisMethodAdviseGSystemStatusBar	= ( axisMethodErase + 1 ) ,
         axisMethodPrepText	= ( axisMethodAdviseGSystemStatusBar + 1 ) ,
@@ -136,6 +135,9 @@ EXTERN_C const IID IID_IAxis;
     IAxis : public IDispatch
     {
     public:
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_Type( 
+            /* [in] */ char type) = 0;
+        
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_Type( 
             /* [retval][out] */ char *pType) = 0;
         
@@ -296,9 +298,7 @@ EXTERN_C const IID IID_IAxis;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE Draw( void) = 0;
         
-        virtual /* [id] */ HRESULT STDMETHODCALLTYPE DrawOpenGLLabels( void) = 0;
-        
-        virtual /* [id] */ HRESULT STDMETHODCALLTYPE DrawGDILabels( void) = 0;
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE DrawLabels( void) = 0;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE Redraw( void) = 0;
         
@@ -367,6 +367,10 @@ EXTERN_C const IID IID_IAxis;
             _Out_opt_  EXCEPINFO *pExcepInfo,
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Type )( 
+            IAxis * This,
+            /* [in] */ char type);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Type )( 
             IAxis * This,
@@ -576,10 +580,7 @@ EXTERN_C const IID IID_IAxis;
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *Draw )( 
             IAxis * This);
         
-        /* [id] */ HRESULT ( STDMETHODCALLTYPE *DrawOpenGLLabels )( 
-            IAxis * This);
-        
-        /* [id] */ HRESULT ( STDMETHODCALLTYPE *DrawGDILabels )( 
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE *DrawLabels )( 
             IAxis * This);
         
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *Redraw )( 
@@ -631,6 +632,9 @@ EXTERN_C const IID IID_IAxis;
 #define IAxis_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
     ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
 
+
+#define IAxis_put_Type(This,type)	\
+    ( (This)->lpVtbl -> put_Type(This,type) ) 
 
 #define IAxis_get_Type(This,pType)	\
     ( (This)->lpVtbl -> get_Type(This,pType) ) 
@@ -776,11 +780,8 @@ EXTERN_C const IID IID_IAxis;
 #define IAxis_Draw(This)	\
     ( (This)->lpVtbl -> Draw(This) ) 
 
-#define IAxis_DrawOpenGLLabels(This)	\
-    ( (This)->lpVtbl -> DrawOpenGLLabels(This) ) 
-
-#define IAxis_DrawGDILabels(This)	\
-    ( (This)->lpVtbl -> DrawGDILabels(This) ) 
+#define IAxis_DrawLabels(This)	\
+    ( (This)->lpVtbl -> DrawLabels(This) ) 
 
 #define IAxis_Redraw(This)	\
     ( (This)->lpVtbl -> Redraw(This) ) 

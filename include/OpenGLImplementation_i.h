@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Jan 30 10:18:00 2018
+/* at Thu Feb 08 11:47:55 2018
  */
 /* Compiler settings for OpenGLImplementation.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -303,14 +303,26 @@ EXTERN_C const IID IID_IOpenGLImplementation;
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_BackgroundColor( 
             /* [retval][out] */ /* external definition not present */ IGProperty **pIPropertyBackgroundColor) = 0;
         
-        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ViewTheta( 
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ViewThetaRadians( 
             /* [retval][out] */ double *pViewTheta) = 0;
         
-        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ViewPhi( 
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ViewPhiRadians( 
             /* [retval][out] */ double *pViewPhi) = 0;
         
-        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ViewSpin( 
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ViewSpinRadians( 
             /* [retval][out] */ double *pViewSpin) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ViewThetaDegrees( 
+            /* [retval][out] */ double *pViewTheta) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ViewPhiDegrees( 
+            /* [retval][out] */ double *pViewPhi) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_ViewSpinDegrees( 
+            /* [retval][out] */ double *pViewSpin) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_PlotView( 
+            /* [retval][out] */ long *pPlotView) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Finalize( void) = 0;
         
@@ -683,17 +695,33 @@ EXTERN_C const IID IID_IOpenGLImplementation;
             IOpenGLImplementation * This,
             /* [retval][out] */ /* external definition not present */ IGProperty **pIPropertyBackgroundColor);
         
-        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ViewTheta )( 
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ViewThetaRadians )( 
             IOpenGLImplementation * This,
             /* [retval][out] */ double *pViewTheta);
         
-        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ViewPhi )( 
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ViewPhiRadians )( 
             IOpenGLImplementation * This,
             /* [retval][out] */ double *pViewPhi);
         
-        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ViewSpin )( 
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ViewSpinRadians )( 
             IOpenGLImplementation * This,
             /* [retval][out] */ double *pViewSpin);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ViewThetaDegrees )( 
+            IOpenGLImplementation * This,
+            /* [retval][out] */ double *pViewTheta);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ViewPhiDegrees )( 
+            IOpenGLImplementation * This,
+            /* [retval][out] */ double *pViewPhi);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ViewSpinDegrees )( 
+            IOpenGLImplementation * This,
+            /* [retval][out] */ double *pViewSpin);
+        
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PlotView )( 
+            IOpenGLImplementation * This,
+            /* [retval][out] */ long *pPlotView);
         
         HRESULT ( STDMETHODCALLTYPE *Finalize )( 
             IOpenGLImplementation * This);
@@ -956,14 +984,26 @@ EXTERN_C const IID IID_IOpenGLImplementation;
 #define IOpenGLImplementation_get_BackgroundColor(This,pIPropertyBackgroundColor)	\
     ( (This)->lpVtbl -> get_BackgroundColor(This,pIPropertyBackgroundColor) ) 
 
-#define IOpenGLImplementation_get_ViewTheta(This,pViewTheta)	\
-    ( (This)->lpVtbl -> get_ViewTheta(This,pViewTheta) ) 
+#define IOpenGLImplementation_get_ViewThetaRadians(This,pViewTheta)	\
+    ( (This)->lpVtbl -> get_ViewThetaRadians(This,pViewTheta) ) 
 
-#define IOpenGLImplementation_get_ViewPhi(This,pViewPhi)	\
-    ( (This)->lpVtbl -> get_ViewPhi(This,pViewPhi) ) 
+#define IOpenGLImplementation_get_ViewPhiRadians(This,pViewPhi)	\
+    ( (This)->lpVtbl -> get_ViewPhiRadians(This,pViewPhi) ) 
 
-#define IOpenGLImplementation_get_ViewSpin(This,pViewSpin)	\
-    ( (This)->lpVtbl -> get_ViewSpin(This,pViewSpin) ) 
+#define IOpenGLImplementation_get_ViewSpinRadians(This,pViewSpin)	\
+    ( (This)->lpVtbl -> get_ViewSpinRadians(This,pViewSpin) ) 
+
+#define IOpenGLImplementation_get_ViewThetaDegrees(This,pViewTheta)	\
+    ( (This)->lpVtbl -> get_ViewThetaDegrees(This,pViewTheta) ) 
+
+#define IOpenGLImplementation_get_ViewPhiDegrees(This,pViewPhi)	\
+    ( (This)->lpVtbl -> get_ViewPhiDegrees(This,pViewPhi) ) 
+
+#define IOpenGLImplementation_get_ViewSpinDegrees(This,pViewSpin)	\
+    ( (This)->lpVtbl -> get_ViewSpinDegrees(This,pViewSpin) ) 
+
+#define IOpenGLImplementation_get_PlotView(This,pPlotView)	\
+    ( (This)->lpVtbl -> get_PlotView(This,pPlotView) ) 
 
 #define IOpenGLImplementation_Finalize(This)	\
     ( (This)->lpVtbl -> Finalize(This) ) 

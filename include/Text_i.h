@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Mon Jan 29 13:49:02 2018
+/* at Thu Feb 08 16:01:35 2018
  */
 /* Compiler settings for Text.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -97,14 +97,6 @@ enum TextPropertiesID
         textPropertyPositionY	= 9,
         textPropertyPositionZ	= 10,
         textPropertyWindowPosition	= 11,
-        textPropertyDirectionForward	= 12,
-        textPropertyDirectionForwardX	= 13,
-        textPropertyDirectionForwardY	= 14,
-        textPropertyDirectionForwardZ	= 15,
-        textPropertyDirectionUp	= 16,
-        textPropertyDirectionUpX	= 17,
-        textPropertyDirectionUpY	= 18,
-        textPropertyDirectionUpZ	= 19,
         textPropertyColor	= 20,
         textPropertyLineWeight	= 21,
         textPropertySegmentiD	= 22,
@@ -112,20 +104,21 @@ enum TextPropertiesID
         textPropertyCoordinatePlane	= 24,
         textPropertyFlipHorizontal	= 25,
         textPropertyFlipVertical	= 26,
-        textPropertyMinX	= 27,
-        textPropertyMinY	= 28,
-        textPropertyMinZ	= 29,
-        textPropertyMaxX	= 30,
-        textPropertyMaxY	= 31,
-        textPropertyMaxZ	= 32,
-        textPropertyPartOfWorldDomain	= 33,
-        textPropertyDescription	= 34,
-        textpropertyPartOfMainGraphic	= 35,
-        textPropertyShowContentPropertyPage	= 36,
-        textPropertyEnablePositionSettings	= 37,
-        textPropertyTextNotify	= 38,
-        textPropertyPositionString	= 39,
-        textPropertyRender	= 40
+        textPropertyRotation	= 27,
+        textPropertyMinX	= 28,
+        textPropertyMinY	= 29,
+        textPropertyMinZ	= 30,
+        textPropertyMaxX	= 31,
+        textPropertyMaxY	= 32,
+        textPropertyMaxZ	= 33,
+        textPropertyPartOfWorldDomain	= 34,
+        textPropertyDescription	= 35,
+        textpropertyPartOfMainGraphic	= 36,
+        textPropertyShowContentPropertyPage	= 37,
+        textPropertyEnablePositionSettings	= 38,
+        textPropertyTextNotify	= 39,
+        textPropertyPositionString	= 40,
+        textPropertyRender	= 41
     } ;
 
 enum TextMethodsID
@@ -245,10 +238,10 @@ EXTERN_C const IID IID_IText;
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_Text( 
             /* [retval][out] */ BSTR *getText) = 0;
         
-        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_TextRender( 
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_TextRenderOpenGL( 
             /* [in] */ boolean __MIDL__IText0000) = 0;
         
-        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_TextRender( 
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_TextRenderOpenGL( 
             /* [retval][out] */ boolean *__MIDL__IText0001) = 0;
         
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_Format( 
@@ -315,54 +308,6 @@ EXTERN_C const IID IID_IText;
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_WindowPosition( 
             /* [retval][out] */ POINTL *getWindowPoint) = 0;
         
-        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_DirectionForward( 
-            /* [in] */ SAFEARRAY * direction) = 0;
-        
-        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_DirectionForward( 
-            /* [retval][out] */ SAFEARRAY * *pDirection) = 0;
-        
-        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_DirectionForwardX( 
-            /* [in] */ double directionX) = 0;
-        
-        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_DirectionForwardX( 
-            /* [retval][out] */ double *pDirectionX) = 0;
-        
-        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_DirectionForwardY( 
-            /* [in] */ double directionY) = 0;
-        
-        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_DirectionForwardY( 
-            /* [retval][out] */ double *pDirectionY) = 0;
-        
-        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_DirectionForwardZ( 
-            /* [in] */ double directionZ) = 0;
-        
-        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_DirectionForwardZ( 
-            /* [retval][out] */ double *pDirectionZ) = 0;
-        
-        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_DirectionUp( 
-            /* [in] */ SAFEARRAY * direction) = 0;
-        
-        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_DirectionUp( 
-            /* [retval][out] */ SAFEARRAY * *pDirection) = 0;
-        
-        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_DirectionUpX( 
-            /* [in] */ double directionX) = 0;
-        
-        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_DirectionUpX( 
-            /* [retval][out] */ double *pDirectionX) = 0;
-        
-        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_DirectionUpY( 
-            /* [in] */ double directionY) = 0;
-        
-        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_DirectionUpY( 
-            /* [retval][out] */ double *pDirectionY) = 0;
-        
-        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_DirectionUpZ( 
-            /* [in] */ double directionZ) = 0;
-        
-        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_DirectionUpZ( 
-            /* [retval][out] */ double *pDirectionZ) = 0;
-        
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_Color( 
             /* [in] */ SAFEARRAY * color) = 0;
         
@@ -398,6 +343,12 @@ EXTERN_C const IID IID_IText;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_FlipVertical( 
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IText0008) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_Rotation( 
+            /* [in] */ double rotation) = 0;
+        
+        virtual /* [id][propget] */ HRESULT STDMETHODCALLTYPE get_Rotation( 
+            /* [retval][out] */ double *pRotation) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_minX( 
             /* [retval][out] */ double *__MIDL__IText0009) = 0;
@@ -571,11 +522,11 @@ EXTERN_C const IID IID_IText;
             IText * This,
             /* [retval][out] */ BSTR *getText);
         
-        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_TextRender )( 
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_TextRenderOpenGL )( 
             IText * This,
             /* [in] */ boolean __MIDL__IText0000);
         
-        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_TextRender )( 
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_TextRenderOpenGL )( 
             IText * This,
             /* [retval][out] */ boolean *__MIDL__IText0001);
         
@@ -664,70 +615,6 @@ EXTERN_C const IID IID_IText;
             IText * This,
             /* [retval][out] */ POINTL *getWindowPoint);
         
-        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_DirectionForward )( 
-            IText * This,
-            /* [in] */ SAFEARRAY * direction);
-        
-        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DirectionForward )( 
-            IText * This,
-            /* [retval][out] */ SAFEARRAY * *pDirection);
-        
-        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_DirectionForwardX )( 
-            IText * This,
-            /* [in] */ double directionX);
-        
-        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DirectionForwardX )( 
-            IText * This,
-            /* [retval][out] */ double *pDirectionX);
-        
-        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_DirectionForwardY )( 
-            IText * This,
-            /* [in] */ double directionY);
-        
-        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DirectionForwardY )( 
-            IText * This,
-            /* [retval][out] */ double *pDirectionY);
-        
-        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_DirectionForwardZ )( 
-            IText * This,
-            /* [in] */ double directionZ);
-        
-        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DirectionForwardZ )( 
-            IText * This,
-            /* [retval][out] */ double *pDirectionZ);
-        
-        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_DirectionUp )( 
-            IText * This,
-            /* [in] */ SAFEARRAY * direction);
-        
-        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DirectionUp )( 
-            IText * This,
-            /* [retval][out] */ SAFEARRAY * *pDirection);
-        
-        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_DirectionUpX )( 
-            IText * This,
-            /* [in] */ double directionX);
-        
-        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DirectionUpX )( 
-            IText * This,
-            /* [retval][out] */ double *pDirectionX);
-        
-        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_DirectionUpY )( 
-            IText * This,
-            /* [in] */ double directionY);
-        
-        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DirectionUpY )( 
-            IText * This,
-            /* [retval][out] */ double *pDirectionY);
-        
-        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_DirectionUpZ )( 
-            IText * This,
-            /* [in] */ double directionZ);
-        
-        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DirectionUpZ )( 
-            IText * This,
-            /* [retval][out] */ double *pDirectionZ);
-        
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Color )( 
             IText * This,
             /* [in] */ SAFEARRAY * color);
@@ -775,6 +662,14 @@ EXTERN_C const IID IID_IText;
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_FlipVertical )( 
             IText * This,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IText0008);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Rotation )( 
+            IText * This,
+            /* [in] */ double rotation);
+        
+        /* [id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Rotation )( 
+            IText * This,
+            /* [retval][out] */ double *pRotation);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_minX )( 
             IText * This,
@@ -956,11 +851,11 @@ EXTERN_C const IID IID_IText;
 #define IText_get_Text(This,getText)	\
     ( (This)->lpVtbl -> get_Text(This,getText) ) 
 
-#define IText_put_TextRender(This,__MIDL__IText0000)	\
-    ( (This)->lpVtbl -> put_TextRender(This,__MIDL__IText0000) ) 
+#define IText_put_TextRenderOpenGL(This,__MIDL__IText0000)	\
+    ( (This)->lpVtbl -> put_TextRenderOpenGL(This,__MIDL__IText0000) ) 
 
-#define IText_get_TextRender(This,__MIDL__IText0001)	\
-    ( (This)->lpVtbl -> get_TextRender(This,__MIDL__IText0001) ) 
+#define IText_get_TextRenderOpenGL(This,__MIDL__IText0001)	\
+    ( (This)->lpVtbl -> get_TextRenderOpenGL(This,__MIDL__IText0001) ) 
 
 #define IText_put_Format(This,setTextFormat)	\
     ( (This)->lpVtbl -> put_Format(This,setTextFormat) ) 
@@ -1025,54 +920,6 @@ EXTERN_C const IID IID_IText;
 #define IText_get_WindowPosition(This,getWindowPoint)	\
     ( (This)->lpVtbl -> get_WindowPosition(This,getWindowPoint) ) 
 
-#define IText_put_DirectionForward(This,direction)	\
-    ( (This)->lpVtbl -> put_DirectionForward(This,direction) ) 
-
-#define IText_get_DirectionForward(This,pDirection)	\
-    ( (This)->lpVtbl -> get_DirectionForward(This,pDirection) ) 
-
-#define IText_put_DirectionForwardX(This,directionX)	\
-    ( (This)->lpVtbl -> put_DirectionForwardX(This,directionX) ) 
-
-#define IText_get_DirectionForwardX(This,pDirectionX)	\
-    ( (This)->lpVtbl -> get_DirectionForwardX(This,pDirectionX) ) 
-
-#define IText_put_DirectionForwardY(This,directionY)	\
-    ( (This)->lpVtbl -> put_DirectionForwardY(This,directionY) ) 
-
-#define IText_get_DirectionForwardY(This,pDirectionY)	\
-    ( (This)->lpVtbl -> get_DirectionForwardY(This,pDirectionY) ) 
-
-#define IText_put_DirectionForwardZ(This,directionZ)	\
-    ( (This)->lpVtbl -> put_DirectionForwardZ(This,directionZ) ) 
-
-#define IText_get_DirectionForwardZ(This,pDirectionZ)	\
-    ( (This)->lpVtbl -> get_DirectionForwardZ(This,pDirectionZ) ) 
-
-#define IText_put_DirectionUp(This,direction)	\
-    ( (This)->lpVtbl -> put_DirectionUp(This,direction) ) 
-
-#define IText_get_DirectionUp(This,pDirection)	\
-    ( (This)->lpVtbl -> get_DirectionUp(This,pDirection) ) 
-
-#define IText_put_DirectionUpX(This,directionX)	\
-    ( (This)->lpVtbl -> put_DirectionUpX(This,directionX) ) 
-
-#define IText_get_DirectionUpX(This,pDirectionX)	\
-    ( (This)->lpVtbl -> get_DirectionUpX(This,pDirectionX) ) 
-
-#define IText_put_DirectionUpY(This,directionY)	\
-    ( (This)->lpVtbl -> put_DirectionUpY(This,directionY) ) 
-
-#define IText_get_DirectionUpY(This,pDirectionY)	\
-    ( (This)->lpVtbl -> get_DirectionUpY(This,pDirectionY) ) 
-
-#define IText_put_DirectionUpZ(This,directionZ)	\
-    ( (This)->lpVtbl -> put_DirectionUpZ(This,directionZ) ) 
-
-#define IText_get_DirectionUpZ(This,pDirectionZ)	\
-    ( (This)->lpVtbl -> get_DirectionUpZ(This,pDirectionZ) ) 
-
 #define IText_put_Color(This,color)	\
     ( (This)->lpVtbl -> put_Color(This,color) ) 
 
@@ -1108,6 +955,12 @@ EXTERN_C const IID IID_IText;
 
 #define IText_get_FlipVertical(This,__MIDL__IText0008)	\
     ( (This)->lpVtbl -> get_FlipVertical(This,__MIDL__IText0008) ) 
+
+#define IText_put_Rotation(This,rotation)	\
+    ( (This)->lpVtbl -> put_Rotation(This,rotation) ) 
+
+#define IText_get_Rotation(This,pRotation)	\
+    ( (This)->lpVtbl -> get_Rotation(This,pRotation) ) 
 
 #define IText_get_minX(This,__MIDL__IText0009)	\
     ( (This)->lpVtbl -> get_minX(This,__MIDL__IText0009) ) 

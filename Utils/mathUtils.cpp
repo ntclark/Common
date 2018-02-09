@@ -20,6 +20,7 @@
    LONG isLessBackward(double a,double b)     { return a > b ? TRUE : FALSE ; }
 
    static double degToRad = 0.0;
+   static double piOver2 = 0.0;
 
    double eval(IEvaluator *pEvaluator,char *v) {
    double d;
@@ -236,6 +237,17 @@
    return TRUE;
    }
  
+   int VxV(float *a,float *b,float *c) {
+   float d[3];
+   d[0] =  ( a[1]*b[2] - a[2]*b[1] );
+   d[1] = -( a[0]*b[2] - a[2]*b[0] );
+   d[2] =  ( a[0]*b[1] - a[1]*b[0] );
+   c[0] = d[0];
+   c[1] = d[1];
+   c[2] = d[2];
+   return TRUE;
+   }
+
    int VxV_DP(DataPoint a,DataPoint b,DataPoint *c) {
    DataPoint d;
    d.x =  ( a.y*b.z - a.z*b.y );
@@ -253,6 +265,13 @@
    return TRUE;
    }
  
+   int unitVector(float *a,float *b) {
+   float mag = sqrtf(a[0]*a[0] + a[1]*a[1] + a[2]*a[2]);
+   b[0] = a[0]/mag;
+   b[1] = a[1]/mag;          
+   b[2] = a[2]/mag;
+   return TRUE;
+   }
 
    int unitPoint(DataPoint *a,DataPoint *b) {
    double mag = sqrtl(a -> x * a -> x + a -> y * a -> y + a -> z * a -> z);
@@ -262,7 +281,31 @@
    return TRUE;
    }
 
-    
+   double radiansFromXY(double x,double y) {
+
+   if ( 0.0 == piOver2 )
+      piOver2 = 2.0 * atan(1.0);
+
+   if ( 0.0 == x )
+      return piOver2;
+
+   if ( 1.0 == x ) 
+      return 0.0;
+
+   double radians = atan(y / x);
+
+   if ( x < 0.0 && y > 0.0 )
+      return radians + 2.0 * piOver2;
+
+   if ( x < 0.0 && y < 0.0 )
+      return radians + 2.0 * piOver2;
+
+   if ( x > 0.0 && y < 0.0 )
+      return radians + 4.0 * piOver2;
+
+   return radians;
+   }
+
 // NOTE.  The (x,y,z) coordinate system is assumed to be right-handed.
 // Coordinate axis rotation matrices are of the form
 //   RX =    1       0       0
@@ -531,7 +574,8 @@
       }
    }
  
-   for ( k = 0; k < size; k++ ) solution[k] = 0.0;
+   for ( k = 0; k < size; k++ ) 
+      solution[k] = 0.0;
  
    for ( row = size - 1; row > -1; row-- ) {
       solution[row] = work[row * rectangle + size];
@@ -541,6 +585,7 @@
    }
  
    delete [] work;
+
    return TRUE;
    }
  

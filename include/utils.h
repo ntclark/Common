@@ -11,7 +11,7 @@
 #include "Evaluator_i.h"
 
 #ifdef __cplusplus
-  extern "C" {
+  //extern "C" {
 #endif
 
   LONG isLessConventional(double,double);
@@ -46,17 +46,18 @@
 
   HRESULT PutDataPointSafeArray(SAFEARRAY **ppDoubles,DataPoint *values);
   HRESULT GetDataPointSafeArray(SAFEARRAY *pArray,DataPoint *values);
- 
-  int pixelsToHiMetric(SIZEL *pPixels,SIZEL *phiMetric);
-  int hiMetricToPixel(SIZEL *phiMetric,SIZEL *pPixels);
 
   int subtractRect(RECT* rect,RECT* minusThis,RECT* equalsThis);
   
   int unitVector(double *input,double *output);
+  int unitVector(float *input,float *output);
   int unitPoint(DataPoint *,DataPoint *);
+
+  double radiansFromXY(double x,double y);
 
   double magnitude(double *input);
   int VxV(double *inputVector1,double *inputVector2,double *outputVector);
+  int VxV(float *inputVector1,float *inputVector2,float *outputVector);
   int VxV_DP(DataPoint in1,DataPoint in2,DataPoint *outputPoint);
   int MxV(double *inputMatrix,double *inputVector,double *outputVector);
   int MxPoint(double *inputMatrix,DataPoint *inputPoint,DataPoint *outputPoint);
@@ -113,7 +114,7 @@
   long countSafeArrayItems(SAFEARRAY* psa);
 
 #ifdef __cplusplus
-  }
+//  }
 #endif
 
 #define PIXELS_TO_HIMETRIC(x,ppli)  ( (2540*(x) + ((ppli) >> 1)) / (ppli) )
