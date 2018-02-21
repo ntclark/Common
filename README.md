@@ -5,24 +5,18 @@
 
 The projects here are <strong>interrelated</strong>.
    
-Here's the one strategy to allow these projects to be built:
+I have created a "Environment Variable" to allow you put these repositories in any arbitrary location <strong>EXCEPT</strong> they still MUST be siblings.
 
-      1. clone them all to the root of some drive
+This environment variable is GSYSTEM_HOME.
 
-If you do this, all projects in these repositories should build fine.
+Note, you can accomplish the definition in 1 of two ways.
 
-Note that currently all of my repositories expect to be cloned into the root of a drive so that they are 1) siblings, and 2) interrelated artifacts are found at: \Common....
+Obviously, create the environment variable in Control Panel - System Settings - Advanced, as you would other environment variables.
 
-In the future, I might implement a simple environment variable so that you can clone these off of the root (though they would still have to be siblings), but for now, they need to be at the root of a drive.
+OR - in Visual Studio, go to the Property Manager tab usually a sibling to the Solution Explorer tab, double click on "Compiler Options" under any configuration of any project - these are the "global" configuration settings for all projects (indeed, for all projects from every repository).
 
-### Putting the repositories elsewhere
+![set environment variable](settingEnvironmentVariable.png)
 
-If you <strong>would</strong> like to put these repositories somewhere else, simply "create" a drive for them using the SUBST command
-
-However, fair warning, note that if you SUBST a drive as a normal user - then a process running "As Administrator" cannot see that drive, and vice-versa.
-
-This may be an issue if, for example, you run Visual Studio as Administrator - which is very useful if your "post build" commands are going to register the just built artifact, which in turn is very useful as it negates the need for an installer build for the testing cycles. 
-
-However, for now, this is how project inter-relation is handled with these repositories.
+Please note that if you create an environment variable in the old way - then you SHOULD clear the value as shown above - or at least make sure it is the same value.
 
 
