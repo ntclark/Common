@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Feb 08 16:01:35 2018
+/* at Tue Feb 20 16:38:05 2018
  */
 /* Compiler settings for Text.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -115,10 +115,12 @@ enum TextPropertiesID
         textPropertyDescription	= 35,
         textpropertyPartOfMainGraphic	= 36,
         textPropertyShowContentPropertyPage	= 37,
-        textPropertyEnablePositionSettings	= 38,
-        textPropertyTextNotify	= 39,
-        textPropertyPositionString	= 40,
-        textPropertyRender	= 41
+        textPropertyShowStylePropertyPage	= 38,
+        textPropertyShowOrientationPropertyPage	= 39,
+        textPropertyEnablePositionSettings	= 40,
+        textPropertyShowPositionSettings	= 41,
+        textPropertyTextNotify	= 42,
+        textPropertyPositionString	= 43
     } ;
 
 enum TextMethodsID
@@ -238,12 +240,6 @@ EXTERN_C const IID IID_IText;
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_Text( 
             /* [retval][out] */ BSTR *getText) = 0;
         
-        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_TextRenderOpenGL( 
-            /* [in] */ boolean __MIDL__IText0000) = 0;
-        
-        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_TextRenderOpenGL( 
-            /* [retval][out] */ boolean *__MIDL__IText0001) = 0;
-        
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_Format( 
             /* [in] */ long setTextFormat) = 0;
         
@@ -324,25 +320,25 @@ EXTERN_C const IID IID_IText;
             /* [retval][out] */ long *pID) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_ActionTable( 
-            /* [retval][out] */ /* external definition not present */ IGraphicSegmentAction **__MIDL__IText0002) = 0;
+            /* [retval][out] */ /* external definition not present */ IGraphicSegmentAction **__MIDL__IText0000) = 0;
         
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_CoordinatePlane( 
-            /* [in] */ enum /* external definition not present */ CoordinatePlane __MIDL__IText0003) = 0;
+            /* [in] */ enum /* external definition not present */ CoordinatePlane __MIDL__IText0001) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_CoordinatePlane( 
-            /* [retval][out] */ enum /* external definition not present */ CoordinatePlane *__MIDL__IText0004) = 0;
+            /* [retval][out] */ enum /* external definition not present */ CoordinatePlane *__MIDL__IText0002) = 0;
         
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_FlipHorizontal( 
-            /* [in] */ VARIANT_BOOL __MIDL__IText0005) = 0;
+            /* [in] */ VARIANT_BOOL __MIDL__IText0003) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_FlipHorizontal( 
-            /* [retval][out] */ VARIANT_BOOL *__MIDL__IText0006) = 0;
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__IText0004) = 0;
         
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_FlipVertical( 
-            /* [in] */ VARIANT_BOOL __MIDL__IText0007) = 0;
+            /* [in] */ VARIANT_BOOL __MIDL__IText0005) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_FlipVertical( 
-            /* [retval][out] */ VARIANT_BOOL *__MIDL__IText0008) = 0;
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__IText0006) = 0;
         
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_Rotation( 
             /* [in] */ double rotation) = 0;
@@ -351,22 +347,22 @@ EXTERN_C const IID IID_IText;
             /* [retval][out] */ double *pRotation) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_minX( 
-            /* [retval][out] */ double *__MIDL__IText0009) = 0;
+            /* [retval][out] */ double *__MIDL__IText0007) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_minY( 
-            /* [retval][out] */ double *__MIDL__IText0010) = 0;
+            /* [retval][out] */ double *__MIDL__IText0008) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_minZ( 
-            /* [retval][out] */ double *__MIDL__IText0011) = 0;
+            /* [retval][out] */ double *__MIDL__IText0009) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_maxX( 
-            /* [retval][out] */ double *__MIDL__IText0012) = 0;
+            /* [retval][out] */ double *__MIDL__IText0010) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_maxY( 
-            /* [retval][out] */ double *__MIDL__IText0013) = 0;
+            /* [retval][out] */ double *__MIDL__IText0011) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_maxZ( 
-            /* [retval][out] */ double *__MIDL__IText0014) = 0;
+            /* [retval][out] */ double *__MIDL__IText0012) = 0;
         
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_PartOfWorldDomain( 
             /* [in] */ VARIANT_BOOL bIsPart) = 0;
@@ -387,10 +383,10 @@ EXTERN_C const IID IID_IText;
             /* [retval][out] */ VARIANT_BOOL *pBoolFalseToPreventDrawingOnMainGraphic) = 0;
         
         virtual /* [hidden][id][propget] */ HRESULT STDMETHODCALLTYPE get_SegmentCount( 
-            /* [in] */ long *__MIDL__IText0015) = 0;
+            /* [in] */ long *__MIDL__IText0013) = 0;
         
         virtual /* [hidden] */ HRESULT STDMETHODCALLTYPE GetSegments( 
-            /* [in] */ long *__MIDL__IText0016) = 0;
+            /* [in] */ long *__MIDL__IText0014) = 0;
         
         virtual /* [id][helpstring] */ HRESULT STDMETHODCALLTYPE TextColorProperty( 
             /* [in] */ /* external definition not present */ IGProperty *pIPropertyTextColor) = 0;
@@ -401,31 +397,48 @@ EXTERN_C const IID IID_IText;
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_ShowContentPropertyPage( 
             /* [retval][out] */ VARIANT_BOOL *pbShow) = 0;
         
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_ShowStylePropertyPage( 
+            /* [in] */ VARIANT_BOOL bShow) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_ShowStylePropertyPage( 
+            /* [retval][out] */ VARIANT_BOOL *pbShow) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_ShowOrientationPropertyPage( 
+            /* [in] */ VARIANT_BOOL bShow) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_ShowOrientationPropertyPage( 
+            /* [retval][out] */ VARIANT_BOOL *pbShow) = 0;
+        
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_EnablePositionSettings( 
             /* [in] */ VARIANT_BOOL bEnable) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_EnablePositionSettings( 
             /* [retval][out] */ VARIANT_BOOL *pbEnable) = 0;
         
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_ShowPositionSettings( 
+            /* [in] */ VARIANT_BOOL bEnable) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_ShowPositionSettings( 
+            /* [retval][out] */ VARIANT_BOOL *pbEnable) = 0;
+        
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_TextNotify( 
             ITextNotify *pITextNotify) = 0;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE Initialize( 
-            /* external definition not present */ IOpenGLImplementation *__MIDL__IText0017,
-            /* external definition not present */ IEvaluator *__MIDL__IText0018,
-            /* external definition not present */ IDataSet *__MIDL__IText0019,
+            /* external definition not present */ IOpenGLImplementation *__MIDL__IText0015,
+            /* external definition not present */ IEvaluator *__MIDL__IText0016,
+            /* external definition not present */ IDataSet *__MIDL__IText0017,
             /* external definition not present */ IGProperty *pPropXFloor,
             /* external definition not present */ IGProperty *pPropXCeiling,
             /* external definition not present */ IGProperty *pPropYFloor,
             /* external definition not present */ IGProperty *pPropYCeiling,
             /* external definition not present */ IGProperty *pPropZFloor,
             /* external definition not present */ IGProperty *pPropZCeiling,
-            /* external definition not present */ IGProperty *pPropOpenGLRendering,
             char *text,
             struct /* external definition not present */ DataPoint *position,
             /* [in] */ void ( STDMETHODCALLTYPE *pWhenChangedCallback )( 
-                void *__MIDL__IText0020,
-                ULONG_PTR __MIDL__IText0021),
+                void *__MIDL__IText0018,
+                ULONG_PTR __MIDL__IText0019),
             /* [in] */ void *pWhenChangedArg,
             /* [in] */ ULONG_PTR whenChangedCookie) = 0;
         
@@ -438,7 +451,7 @@ EXTERN_C const IID IID_IText;
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE Redraw( void) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE AdviseGSystemStatusBar( 
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IText0023) = 0;
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IText0021) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE EditProperties( void) = 0;
         
@@ -446,15 +459,20 @@ EXTERN_C const IID IID_IText;
             IText *pIText_Source) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_GDIBoundingBox( 
-            /* [retval][out] */ RECT *__MIDL__IText0024) = 0;
+            /* [retval][out] */ RECT *__MIDL__IText0022) = 0;
         
         virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_GDIBoundingBox( 
-            /* [in] */ RECT *__MIDL__IText0025) = 0;
+            /* [in] */ RECT *__MIDL__IText0023) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE LineUp( void) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_DataSet( 
-            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IText0026) = 0;
+            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IText0024) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE HasContent( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE AdviseGSGraphicServices( 
+            void *__MIDL__IText0025) = 0;
         
     };
     
@@ -521,14 +539,6 @@ EXTERN_C const IID IID_IText;
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Text )( 
             IText * This,
             /* [retval][out] */ BSTR *getText);
-        
-        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_TextRenderOpenGL )( 
-            IText * This,
-            /* [in] */ boolean __MIDL__IText0000);
-        
-        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_TextRenderOpenGL )( 
-            IText * This,
-            /* [retval][out] */ boolean *__MIDL__IText0001);
         
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Format )( 
             IText * This,
@@ -637,31 +647,31 @@ EXTERN_C const IID IID_IText;
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_ActionTable )( 
             IText * This,
-            /* [retval][out] */ /* external definition not present */ IGraphicSegmentAction **__MIDL__IText0002);
+            /* [retval][out] */ /* external definition not present */ IGraphicSegmentAction **__MIDL__IText0000);
         
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_CoordinatePlane )( 
             IText * This,
-            /* [in] */ enum /* external definition not present */ CoordinatePlane __MIDL__IText0003);
+            /* [in] */ enum /* external definition not present */ CoordinatePlane __MIDL__IText0001);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_CoordinatePlane )( 
             IText * This,
-            /* [retval][out] */ enum /* external definition not present */ CoordinatePlane *__MIDL__IText0004);
+            /* [retval][out] */ enum /* external definition not present */ CoordinatePlane *__MIDL__IText0002);
         
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_FlipHorizontal )( 
             IText * This,
-            /* [in] */ VARIANT_BOOL __MIDL__IText0005);
+            /* [in] */ VARIANT_BOOL __MIDL__IText0003);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_FlipHorizontal )( 
             IText * This,
-            /* [retval][out] */ VARIANT_BOOL *__MIDL__IText0006);
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__IText0004);
         
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_FlipVertical )( 
             IText * This,
-            /* [in] */ VARIANT_BOOL __MIDL__IText0007);
+            /* [in] */ VARIANT_BOOL __MIDL__IText0005);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_FlipVertical )( 
             IText * This,
-            /* [retval][out] */ VARIANT_BOOL *__MIDL__IText0008);
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__IText0006);
         
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_Rotation )( 
             IText * This,
@@ -673,27 +683,27 @@ EXTERN_C const IID IID_IText;
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_minX )( 
             IText * This,
-            /* [retval][out] */ double *__MIDL__IText0009);
+            /* [retval][out] */ double *__MIDL__IText0007);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_minY )( 
             IText * This,
-            /* [retval][out] */ double *__MIDL__IText0010);
+            /* [retval][out] */ double *__MIDL__IText0008);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_minZ )( 
             IText * This,
-            /* [retval][out] */ double *__MIDL__IText0011);
+            /* [retval][out] */ double *__MIDL__IText0009);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_maxX )( 
             IText * This,
-            /* [retval][out] */ double *__MIDL__IText0012);
+            /* [retval][out] */ double *__MIDL__IText0010);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_maxY )( 
             IText * This,
-            /* [retval][out] */ double *__MIDL__IText0013);
+            /* [retval][out] */ double *__MIDL__IText0011);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_maxZ )( 
             IText * This,
-            /* [retval][out] */ double *__MIDL__IText0014);
+            /* [retval][out] */ double *__MIDL__IText0012);
         
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_PartOfWorldDomain )( 
             IText * This,
@@ -721,11 +731,11 @@ EXTERN_C const IID IID_IText;
         
         /* [hidden][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_SegmentCount )( 
             IText * This,
-            /* [in] */ long *__MIDL__IText0015);
+            /* [in] */ long *__MIDL__IText0013);
         
         /* [hidden] */ HRESULT ( STDMETHODCALLTYPE *GetSegments )( 
             IText * This,
-            /* [in] */ long *__MIDL__IText0016);
+            /* [in] */ long *__MIDL__IText0014);
         
         /* [id][helpstring] */ HRESULT ( STDMETHODCALLTYPE *TextColorProperty )( 
             IText * This,
@@ -739,11 +749,35 @@ EXTERN_C const IID IID_IText;
             IText * This,
             /* [retval][out] */ VARIANT_BOOL *pbShow);
         
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_ShowStylePropertyPage )( 
+            IText * This,
+            /* [in] */ VARIANT_BOOL bShow);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_ShowStylePropertyPage )( 
+            IText * This,
+            /* [retval][out] */ VARIANT_BOOL *pbShow);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_ShowOrientationPropertyPage )( 
+            IText * This,
+            /* [in] */ VARIANT_BOOL bShow);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_ShowOrientationPropertyPage )( 
+            IText * This,
+            /* [retval][out] */ VARIANT_BOOL *pbShow);
+        
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_EnablePositionSettings )( 
             IText * This,
             /* [in] */ VARIANT_BOOL bEnable);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_EnablePositionSettings )( 
+            IText * This,
+            /* [retval][out] */ VARIANT_BOOL *pbEnable);
+        
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_ShowPositionSettings )( 
+            IText * This,
+            /* [in] */ VARIANT_BOOL bEnable);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_ShowPositionSettings )( 
             IText * This,
             /* [retval][out] */ VARIANT_BOOL *pbEnable);
         
@@ -753,21 +787,20 @@ EXTERN_C const IID IID_IText;
         
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IText * This,
-            /* external definition not present */ IOpenGLImplementation *__MIDL__IText0017,
-            /* external definition not present */ IEvaluator *__MIDL__IText0018,
-            /* external definition not present */ IDataSet *__MIDL__IText0019,
+            /* external definition not present */ IOpenGLImplementation *__MIDL__IText0015,
+            /* external definition not present */ IEvaluator *__MIDL__IText0016,
+            /* external definition not present */ IDataSet *__MIDL__IText0017,
             /* external definition not present */ IGProperty *pPropXFloor,
             /* external definition not present */ IGProperty *pPropXCeiling,
             /* external definition not present */ IGProperty *pPropYFloor,
             /* external definition not present */ IGProperty *pPropYCeiling,
             /* external definition not present */ IGProperty *pPropZFloor,
             /* external definition not present */ IGProperty *pPropZCeiling,
-            /* external definition not present */ IGProperty *pPropOpenGLRendering,
             char *text,
             struct /* external definition not present */ DataPoint *position,
             /* [in] */ void ( STDMETHODCALLTYPE *pWhenChangedCallback )( 
-                void *__MIDL__IText0020,
-                ULONG_PTR __MIDL__IText0021),
+                void *__MIDL__IText0018,
+                ULONG_PTR __MIDL__IText0019),
             /* [in] */ void *pWhenChangedArg,
             /* [in] */ ULONG_PTR whenChangedCookie);
         
@@ -785,7 +818,7 @@ EXTERN_C const IID IID_IText;
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *AdviseGSystemStatusBar )( 
             IText * This,
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IText0023);
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IText0021);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *EditProperties )( 
             IText * This);
@@ -796,18 +829,25 @@ EXTERN_C const IID IID_IText;
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_GDIBoundingBox )( 
             IText * This,
-            /* [retval][out] */ RECT *__MIDL__IText0024);
+            /* [retval][out] */ RECT *__MIDL__IText0022);
         
         /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_GDIBoundingBox )( 
             IText * This,
-            /* [in] */ RECT *__MIDL__IText0025);
+            /* [in] */ RECT *__MIDL__IText0023);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *LineUp )( 
             IText * This);
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataSet )( 
             IText * This,
-            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IText0026);
+            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IText0024);
+        
+        HRESULT ( STDMETHODCALLTYPE *HasContent )( 
+            IText * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *AdviseGSGraphicServices )( 
+            IText * This,
+            void *__MIDL__IText0025);
         
         END_INTERFACE
     } ITextVtbl;
@@ -850,12 +890,6 @@ EXTERN_C const IID IID_IText;
 
 #define IText_get_Text(This,getText)	\
     ( (This)->lpVtbl -> get_Text(This,getText) ) 
-
-#define IText_put_TextRenderOpenGL(This,__MIDL__IText0000)	\
-    ( (This)->lpVtbl -> put_TextRenderOpenGL(This,__MIDL__IText0000) ) 
-
-#define IText_get_TextRenderOpenGL(This,__MIDL__IText0001)	\
-    ( (This)->lpVtbl -> get_TextRenderOpenGL(This,__MIDL__IText0001) ) 
 
 #define IText_put_Format(This,setTextFormat)	\
     ( (This)->lpVtbl -> put_Format(This,setTextFormat) ) 
@@ -935,26 +969,26 @@ EXTERN_C const IID IID_IText;
 #define IText_get_SegmentID(This,pID)	\
     ( (This)->lpVtbl -> get_SegmentID(This,pID) ) 
 
-#define IText_get_ActionTable(This,__MIDL__IText0002)	\
-    ( (This)->lpVtbl -> get_ActionTable(This,__MIDL__IText0002) ) 
+#define IText_get_ActionTable(This,__MIDL__IText0000)	\
+    ( (This)->lpVtbl -> get_ActionTable(This,__MIDL__IText0000) ) 
 
-#define IText_put_CoordinatePlane(This,__MIDL__IText0003)	\
-    ( (This)->lpVtbl -> put_CoordinatePlane(This,__MIDL__IText0003) ) 
+#define IText_put_CoordinatePlane(This,__MIDL__IText0001)	\
+    ( (This)->lpVtbl -> put_CoordinatePlane(This,__MIDL__IText0001) ) 
 
-#define IText_get_CoordinatePlane(This,__MIDL__IText0004)	\
-    ( (This)->lpVtbl -> get_CoordinatePlane(This,__MIDL__IText0004) ) 
+#define IText_get_CoordinatePlane(This,__MIDL__IText0002)	\
+    ( (This)->lpVtbl -> get_CoordinatePlane(This,__MIDL__IText0002) ) 
 
-#define IText_put_FlipHorizontal(This,__MIDL__IText0005)	\
-    ( (This)->lpVtbl -> put_FlipHorizontal(This,__MIDL__IText0005) ) 
+#define IText_put_FlipHorizontal(This,__MIDL__IText0003)	\
+    ( (This)->lpVtbl -> put_FlipHorizontal(This,__MIDL__IText0003) ) 
 
-#define IText_get_FlipHorizontal(This,__MIDL__IText0006)	\
-    ( (This)->lpVtbl -> get_FlipHorizontal(This,__MIDL__IText0006) ) 
+#define IText_get_FlipHorizontal(This,__MIDL__IText0004)	\
+    ( (This)->lpVtbl -> get_FlipHorizontal(This,__MIDL__IText0004) ) 
 
-#define IText_put_FlipVertical(This,__MIDL__IText0007)	\
-    ( (This)->lpVtbl -> put_FlipVertical(This,__MIDL__IText0007) ) 
+#define IText_put_FlipVertical(This,__MIDL__IText0005)	\
+    ( (This)->lpVtbl -> put_FlipVertical(This,__MIDL__IText0005) ) 
 
-#define IText_get_FlipVertical(This,__MIDL__IText0008)	\
-    ( (This)->lpVtbl -> get_FlipVertical(This,__MIDL__IText0008) ) 
+#define IText_get_FlipVertical(This,__MIDL__IText0006)	\
+    ( (This)->lpVtbl -> get_FlipVertical(This,__MIDL__IText0006) ) 
 
 #define IText_put_Rotation(This,rotation)	\
     ( (This)->lpVtbl -> put_Rotation(This,rotation) ) 
@@ -962,23 +996,23 @@ EXTERN_C const IID IID_IText;
 #define IText_get_Rotation(This,pRotation)	\
     ( (This)->lpVtbl -> get_Rotation(This,pRotation) ) 
 
-#define IText_get_minX(This,__MIDL__IText0009)	\
-    ( (This)->lpVtbl -> get_minX(This,__MIDL__IText0009) ) 
+#define IText_get_minX(This,__MIDL__IText0007)	\
+    ( (This)->lpVtbl -> get_minX(This,__MIDL__IText0007) ) 
 
-#define IText_get_minY(This,__MIDL__IText0010)	\
-    ( (This)->lpVtbl -> get_minY(This,__MIDL__IText0010) ) 
+#define IText_get_minY(This,__MIDL__IText0008)	\
+    ( (This)->lpVtbl -> get_minY(This,__MIDL__IText0008) ) 
 
-#define IText_get_minZ(This,__MIDL__IText0011)	\
-    ( (This)->lpVtbl -> get_minZ(This,__MIDL__IText0011) ) 
+#define IText_get_minZ(This,__MIDL__IText0009)	\
+    ( (This)->lpVtbl -> get_minZ(This,__MIDL__IText0009) ) 
 
-#define IText_get_maxX(This,__MIDL__IText0012)	\
-    ( (This)->lpVtbl -> get_maxX(This,__MIDL__IText0012) ) 
+#define IText_get_maxX(This,__MIDL__IText0010)	\
+    ( (This)->lpVtbl -> get_maxX(This,__MIDL__IText0010) ) 
 
-#define IText_get_maxY(This,__MIDL__IText0013)	\
-    ( (This)->lpVtbl -> get_maxY(This,__MIDL__IText0013) ) 
+#define IText_get_maxY(This,__MIDL__IText0011)	\
+    ( (This)->lpVtbl -> get_maxY(This,__MIDL__IText0011) ) 
 
-#define IText_get_maxZ(This,__MIDL__IText0014)	\
-    ( (This)->lpVtbl -> get_maxZ(This,__MIDL__IText0014) ) 
+#define IText_get_maxZ(This,__MIDL__IText0012)	\
+    ( (This)->lpVtbl -> get_maxZ(This,__MIDL__IText0012) ) 
 
 #define IText_put_PartOfWorldDomain(This,bIsPart)	\
     ( (This)->lpVtbl -> put_PartOfWorldDomain(This,bIsPart) ) 
@@ -998,11 +1032,11 @@ EXTERN_C const IID IID_IText;
 #define IText_get_PartOfMainGraphic(This,pBoolFalseToPreventDrawingOnMainGraphic)	\
     ( (This)->lpVtbl -> get_PartOfMainGraphic(This,pBoolFalseToPreventDrawingOnMainGraphic) ) 
 
-#define IText_get_SegmentCount(This,__MIDL__IText0015)	\
-    ( (This)->lpVtbl -> get_SegmentCount(This,__MIDL__IText0015) ) 
+#define IText_get_SegmentCount(This,__MIDL__IText0013)	\
+    ( (This)->lpVtbl -> get_SegmentCount(This,__MIDL__IText0013) ) 
 
-#define IText_GetSegments(This,__MIDL__IText0016)	\
-    ( (This)->lpVtbl -> GetSegments(This,__MIDL__IText0016) ) 
+#define IText_GetSegments(This,__MIDL__IText0014)	\
+    ( (This)->lpVtbl -> GetSegments(This,__MIDL__IText0014) ) 
 
 #define IText_TextColorProperty(This,pIPropertyTextColor)	\
     ( (This)->lpVtbl -> TextColorProperty(This,pIPropertyTextColor) ) 
@@ -1013,17 +1047,35 @@ EXTERN_C const IID IID_IText;
 #define IText_get_ShowContentPropertyPage(This,pbShow)	\
     ( (This)->lpVtbl -> get_ShowContentPropertyPage(This,pbShow) ) 
 
+#define IText_put_ShowStylePropertyPage(This,bShow)	\
+    ( (This)->lpVtbl -> put_ShowStylePropertyPage(This,bShow) ) 
+
+#define IText_get_ShowStylePropertyPage(This,pbShow)	\
+    ( (This)->lpVtbl -> get_ShowStylePropertyPage(This,pbShow) ) 
+
+#define IText_put_ShowOrientationPropertyPage(This,bShow)	\
+    ( (This)->lpVtbl -> put_ShowOrientationPropertyPage(This,bShow) ) 
+
+#define IText_get_ShowOrientationPropertyPage(This,pbShow)	\
+    ( (This)->lpVtbl -> get_ShowOrientationPropertyPage(This,pbShow) ) 
+
 #define IText_put_EnablePositionSettings(This,bEnable)	\
     ( (This)->lpVtbl -> put_EnablePositionSettings(This,bEnable) ) 
 
 #define IText_get_EnablePositionSettings(This,pbEnable)	\
     ( (This)->lpVtbl -> get_EnablePositionSettings(This,pbEnable) ) 
 
+#define IText_put_ShowPositionSettings(This,bEnable)	\
+    ( (This)->lpVtbl -> put_ShowPositionSettings(This,bEnable) ) 
+
+#define IText_get_ShowPositionSettings(This,pbEnable)	\
+    ( (This)->lpVtbl -> get_ShowPositionSettings(This,pbEnable) ) 
+
 #define IText_put_TextNotify(This,pITextNotify)	\
     ( (This)->lpVtbl -> put_TextNotify(This,pITextNotify) ) 
 
-#define IText_Initialize(This,__MIDL__IText0017,__MIDL__IText0018,__MIDL__IText0019,pPropXFloor,pPropXCeiling,pPropYFloor,pPropYCeiling,pPropZFloor,pPropZCeiling,pPropOpenGLRendering,text,position,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie)	\
-    ( (This)->lpVtbl -> Initialize(This,__MIDL__IText0017,__MIDL__IText0018,__MIDL__IText0019,pPropXFloor,pPropXCeiling,pPropYFloor,pPropYCeiling,pPropZFloor,pPropZCeiling,pPropOpenGLRendering,text,position,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie) ) 
+#define IText_Initialize(This,__MIDL__IText0015,__MIDL__IText0016,__MIDL__IText0017,pPropXFloor,pPropXCeiling,pPropYFloor,pPropYCeiling,pPropZFloor,pPropZCeiling,text,position,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie)	\
+    ( (This)->lpVtbl -> Initialize(This,__MIDL__IText0015,__MIDL__IText0016,__MIDL__IText0017,pPropXFloor,pPropXCeiling,pPropYFloor,pPropYCeiling,pPropZFloor,pPropZCeiling,text,position,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie) ) 
 
 #define IText_PrepData(This)	\
     ( (This)->lpVtbl -> PrepData(This) ) 
@@ -1037,8 +1089,8 @@ EXTERN_C const IID IID_IText;
 #define IText_Redraw(This)	\
     ( (This)->lpVtbl -> Redraw(This) ) 
 
-#define IText_AdviseGSystemStatusBar(This,__MIDL__IText0023)	\
-    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IText0023) ) 
+#define IText_AdviseGSystemStatusBar(This,__MIDL__IText0021)	\
+    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IText0021) ) 
 
 #define IText_EditProperties(This)	\
     ( (This)->lpVtbl -> EditProperties(This) ) 
@@ -1046,17 +1098,23 @@ EXTERN_C const IID IID_IText;
 #define IText_CopyFrom(This,pIText_Source)	\
     ( (This)->lpVtbl -> CopyFrom(This,pIText_Source) ) 
 
-#define IText_get_GDIBoundingBox(This,__MIDL__IText0024)	\
-    ( (This)->lpVtbl -> get_GDIBoundingBox(This,__MIDL__IText0024) ) 
+#define IText_get_GDIBoundingBox(This,__MIDL__IText0022)	\
+    ( (This)->lpVtbl -> get_GDIBoundingBox(This,__MIDL__IText0022) ) 
 
-#define IText_put_GDIBoundingBox(This,__MIDL__IText0025)	\
-    ( (This)->lpVtbl -> put_GDIBoundingBox(This,__MIDL__IText0025) ) 
+#define IText_put_GDIBoundingBox(This,__MIDL__IText0023)	\
+    ( (This)->lpVtbl -> put_GDIBoundingBox(This,__MIDL__IText0023) ) 
 
 #define IText_LineUp(This)	\
     ( (This)->lpVtbl -> LineUp(This) ) 
 
-#define IText_get_DataSet(This,__MIDL__IText0026)	\
-    ( (This)->lpVtbl -> get_DataSet(This,__MIDL__IText0026) ) 
+#define IText_get_DataSet(This,__MIDL__IText0024)	\
+    ( (This)->lpVtbl -> get_DataSet(This,__MIDL__IText0024) ) 
+
+#define IText_HasContent(This)	\
+    ( (This)->lpVtbl -> HasContent(This) ) 
+
+#define IText_AdviseGSGraphicServices(This,__MIDL__IText0025)	\
+    ( (This)->lpVtbl -> AdviseGSGraphicServices(This,__MIDL__IText0025) ) 
 
 #endif /* COBJMACROS */
 

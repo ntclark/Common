@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Feb 08 19:17:59 2018
+/* at Tue Feb 20 20:54:08 2018
  */
 /* Compiler settings for Axis.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -273,13 +273,12 @@ EXTERN_C const IID IID_IAxis;
             /* [in] */ /* external definition not present */ IGProperty *pPropertyXFloor,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyXCeiling,
             /* [in] */ /* external definition not present */ IGProperty *pProeprtyYFloor,
-            /* [in] */ /* external definition not present */ IGProperty *pProeprtyYCeiling,
+            /* [in] */ /* external definition not present */ IGProperty *pPropertyYCeiling,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyZFloor,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyZCeiling,
-            /* [in] */ /* external definition not present */ IGProperty *pPropertyOpenGLText,
             /* [in] */ /* external definition not present */ IDataSet *pIDomainDataSet,
-            /* [in] */ void *__MIDL__IAxis0006,
-            /* [in] */ /* external definition not present */ IEvaluator *__MIDL__IAxis0007,
+            /* [in] */ void *pvIOpenGLImplementation,
+            /* [in] */ /* external definition not present */ IEvaluator *pIEvaluator,
             /* [in] */ void ( STDMETHODCALLTYPE *pWhenChangedCallback )( 
                 void *pvArg,
                 ULONG_PTR cookie),
@@ -287,7 +286,7 @@ EXTERN_C const IID IID_IAxis;
             ULONG_PTR whenChangedCookie) = 0;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_DataSet( 
-            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IAxis0009) = 0;
+            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IAxis0007) = 0;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE PrepText( void) = 0;
         
@@ -305,10 +304,13 @@ EXTERN_C const IID IID_IAxis;
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE Erase( void) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE AdviseGSystemStatusBar( 
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IAxis0010) = 0;
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IAxis0008) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE ShowProperties( 
             HWND hwndParent) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE AdviseGSGraphicServices( 
+            void *pvIGSGraphicServices) = 0;
         
     };
     
@@ -550,13 +552,12 @@ EXTERN_C const IID IID_IAxis;
             /* [in] */ /* external definition not present */ IGProperty *pPropertyXFloor,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyXCeiling,
             /* [in] */ /* external definition not present */ IGProperty *pProeprtyYFloor,
-            /* [in] */ /* external definition not present */ IGProperty *pProeprtyYCeiling,
+            /* [in] */ /* external definition not present */ IGProperty *pPropertyYCeiling,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyZFloor,
             /* [in] */ /* external definition not present */ IGProperty *pPropertyZCeiling,
-            /* [in] */ /* external definition not present */ IGProperty *pPropertyOpenGLText,
             /* [in] */ /* external definition not present */ IDataSet *pIDomainDataSet,
-            /* [in] */ void *__MIDL__IAxis0006,
-            /* [in] */ /* external definition not present */ IEvaluator *__MIDL__IAxis0007,
+            /* [in] */ void *pvIOpenGLImplementation,
+            /* [in] */ /* external definition not present */ IEvaluator *pIEvaluator,
             /* [in] */ void ( STDMETHODCALLTYPE *pWhenChangedCallback )( 
                 void *pvArg,
                 ULONG_PTR cookie),
@@ -565,7 +566,7 @@ EXTERN_C const IID IID_IAxis;
         
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_DataSet )( 
             IAxis * This,
-            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IAxis0009);
+            /* [retval][out] */ /* external definition not present */ IDataSet **__MIDL__IAxis0007);
         
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *PrepText )( 
             IAxis * This);
@@ -591,11 +592,15 @@ EXTERN_C const IID IID_IAxis;
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *AdviseGSystemStatusBar )( 
             IAxis * This,
-            /* external definition not present */ IGSystemStatusBar *__MIDL__IAxis0010);
+            /* external definition not present */ IGSystemStatusBar *__MIDL__IAxis0008);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *ShowProperties )( 
             IAxis * This,
             HWND hwndParent);
+        
+        HRESULT ( STDMETHODCALLTYPE *AdviseGSGraphicServices )( 
+            IAxis * This,
+            void *pvIGSGraphicServices);
         
         END_INTERFACE
     } IAxisVtbl;
@@ -762,11 +767,11 @@ EXTERN_C const IID IID_IAxis;
 #define IAxis_get_GridLinesPerTick(This,pGridLines)	\
     ( (This)->lpVtbl -> get_GridLinesPerTick(This,pGridLines) ) 
 
-#define IAxis_Initialize(This,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyXFloor,pPropertyXCeiling,pProeprtyYFloor,pProeprtyYCeiling,pPropertyZFloor,pPropertyZCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie)	\
-    ( (This)->lpVtbl -> Initialize(This,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyXFloor,pPropertyXCeiling,pProeprtyYFloor,pProeprtyYCeiling,pPropertyZFloor,pPropertyZCeiling,pPropertyOpenGLText,pIDomainDataSet,__MIDL__IAxis0006,__MIDL__IAxis0007,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie) ) 
+#define IAxis_Initialize(This,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyXFloor,pPropertyXCeiling,pProeprtyYFloor,pPropertyYCeiling,pPropertyZFloor,pPropertyZCeiling,pIDomainDataSet,pvIOpenGLImplementation,pIEvaluator,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie)	\
+    ( (This)->lpVtbl -> Initialize(This,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyXFloor,pPropertyXCeiling,pProeprtyYFloor,pPropertyYCeiling,pPropertyZFloor,pPropertyZCeiling,pIDomainDataSet,pvIOpenGLImplementation,pIEvaluator,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie) ) 
 
-#define IAxis_get_DataSet(This,__MIDL__IAxis0009)	\
-    ( (This)->lpVtbl -> get_DataSet(This,__MIDL__IAxis0009) ) 
+#define IAxis_get_DataSet(This,__MIDL__IAxis0007)	\
+    ( (This)->lpVtbl -> get_DataSet(This,__MIDL__IAxis0007) ) 
 
 #define IAxis_PrepText(This)	\
     ( (This)->lpVtbl -> PrepText(This) ) 
@@ -789,11 +794,14 @@ EXTERN_C const IID IID_IAxis;
 #define IAxis_Erase(This)	\
     ( (This)->lpVtbl -> Erase(This) ) 
 
-#define IAxis_AdviseGSystemStatusBar(This,__MIDL__IAxis0010)	\
-    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IAxis0010) ) 
+#define IAxis_AdviseGSystemStatusBar(This,__MIDL__IAxis0008)	\
+    ( (This)->lpVtbl -> AdviseGSystemStatusBar(This,__MIDL__IAxis0008) ) 
 
 #define IAxis_ShowProperties(This,hwndParent)	\
     ( (This)->lpVtbl -> ShowProperties(This,hwndParent) ) 
+
+#define IAxis_AdviseGSGraphicServices(This,pvIGSGraphicServices)	\
+    ( (This)->lpVtbl -> AdviseGSGraphicServices(This,pvIGSGraphicServices) ) 
 
 #endif /* COBJMACROS */
 

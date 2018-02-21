@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Feb 08 15:58:27 2018
+/* at Tue Feb 20 15:47:21 2018
  */
 /* Compiler settings for Plot.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -1048,9 +1048,7 @@ EXTERN_C const IID IID_IPlot;
         
         virtual HRESULT STDMETHODCALLTYPE Redraw( void) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE DrawOpenGLText( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE DrawGDIText( void) = 0;
+        virtual HRESULT STDMETHODCALLTYPE DrawText( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Erase( void) = 0;
         
@@ -1341,10 +1339,7 @@ EXTERN_C const IID IID_IPlot;
         HRESULT ( STDMETHODCALLTYPE *Redraw )( 
             IPlot * This);
         
-        HRESULT ( STDMETHODCALLTYPE *DrawOpenGLText )( 
-            IPlot * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *DrawGDIText )( 
+        HRESULT ( STDMETHODCALLTYPE *DrawText )( 
             IPlot * This);
         
         HRESULT ( STDMETHODCALLTYPE *Erase )( 
@@ -1555,11 +1550,8 @@ EXTERN_C const IID IID_IPlot;
 #define IPlot_Redraw(This)	\
     ( (This)->lpVtbl -> Redraw(This) ) 
 
-#define IPlot_DrawOpenGLText(This)	\
-    ( (This)->lpVtbl -> DrawOpenGLText(This) ) 
-
-#define IPlot_DrawGDIText(This)	\
-    ( (This)->lpVtbl -> DrawGDIText(This) ) 
+#define IPlot_DrawText(This)	\
+    ( (This)->lpVtbl -> DrawText(This) ) 
 
 #define IPlot_Erase(This)	\
     ( (This)->lpVtbl -> Erase(This) ) 

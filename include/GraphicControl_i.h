@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Feb 07 18:50:54 2018
+/* at Tue Feb 20 15:12:19 2018
  */
 /* Compiler settings for GraphicControl.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -1093,6 +1093,9 @@ EXTERN_C const IID IID_IGSGraphicServices;
     public:
         virtual HRESULT STDMETHODCALLTYPE ActivateLighting( void) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE AnyOpenGLHere( 
+            RECT *pRect) = 0;
+        
     };
     
     
@@ -1116,6 +1119,10 @@ EXTERN_C const IID IID_IGSGraphicServices;
         
         HRESULT ( STDMETHODCALLTYPE *ActivateLighting )( 
             IGSGraphicServices * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *AnyOpenGLHere )( 
+            IGSGraphicServices * This,
+            RECT *pRect);
         
         END_INTERFACE
     } IGSGraphicServicesVtbl;
@@ -1142,6 +1149,9 @@ EXTERN_C const IID IID_IGSGraphicServices;
 
 #define IGSGraphicServices_ActivateLighting(This)	\
     ( (This)->lpVtbl -> ActivateLighting(This) ) 
+
+#define IGSGraphicServices_AnyOpenGLHere(This,pRect)	\
+    ( (This)->lpVtbl -> AnyOpenGLHere(This,pRect) ) 
 
 #endif /* COBJMACROS */
 

@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Feb 08 11:47:55 2018
+/* at Tue Feb 20 15:27:24 2018
  */
 /* Compiler settings for OpenGLImplementation.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -340,7 +340,8 @@ EXTERN_C const IID IID_IOpenGLImplementation;
         
         virtual HRESULT STDMETHODCALLTYPE GetPickBoxHits( 
             POINTL *ptl,
-            long pickWindowSize,
+            long pickWindowWidth,
+            long pickWindowHeight,
             unsigned int *hitTable,
             long hitTableSize,
             long *pCallLists,
@@ -745,7 +746,8 @@ EXTERN_C const IID IID_IOpenGLImplementation;
         HRESULT ( STDMETHODCALLTYPE *GetPickBoxHits )( 
             IOpenGLImplementation * This,
             POINTL *ptl,
-            long pickWindowSize,
+            long pickWindowWidth,
+            long pickWindowHeight,
             unsigned int *hitTable,
             long hitTableSize,
             long *pCallLists,
@@ -1020,8 +1022,8 @@ EXTERN_C const IID IID_IOpenGLImplementation;
 #define IOpenGLImplementation_SetColor3dv(This,__MIDL__IOpenGLImplementation0007)	\
     ( (This)->lpVtbl -> SetColor3dv(This,__MIDL__IOpenGLImplementation0007) ) 
 
-#define IOpenGLImplementation_GetPickBoxHits(This,ptl,pickWindowSize,hitTable,hitTableSize,pCallLists,hitTableHits)	\
-    ( (This)->lpVtbl -> GetPickBoxHits(This,ptl,pickWindowSize,hitTable,hitTableSize,pCallLists,hitTableHits) ) 
+#define IOpenGLImplementation_GetPickBoxHits(This,ptl,pickWindowWidth,pickWindowHeight,hitTable,hitTableSize,pCallLists,hitTableHits)	\
+    ( (This)->lpVtbl -> GetPickBoxHits(This,ptl,pickWindowWidth,pickWindowHeight,hitTable,hitTableSize,pCallLists,hitTableHits) ) 
 
 #define IOpenGLImplementation_OpenSegment(This,segmentID,pPropLineColor,pPropLineWeight)	\
     ( (This)->lpVtbl -> OpenSegment(This,segmentID,pPropLineColor,pPropLineWeight) ) 
