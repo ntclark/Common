@@ -2,41 +2,48 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets">
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+    <GSYSTEM_HOME>D:\</GSYSTEM_HOME>
+  </PropertyGroup>
   <PropertyGroup>
     <_ProjectFileVersion>14.0.24720.0</_ProjectFileVersion>
-    <OutDir>\Common\Artifacts\$(Configuration)\$(Platform)\</OutDir>
+    <OutDir>$(GSYSTEM_HOME)\Common\Artifacts\$(Configuration)\$(Platform)\</OutDir>
     <IntDir>$(ProjectDir)$(Configuration)\$(Platform)\</IntDir>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;\Common\include;\Visio Logger\Common\include;\Common\include\pdfEnabler;\Common\source;$(SolutionDir);$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;%GSYSTEM_HOME%\Common\include;%GSYSTEM_HOME%\Common\source;$(SolutionDir);$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0603;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>\Common\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>\Common\lib\$(Platform)\$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>%GSYSTEM_HOME%\Common\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>%GSYSTEM_HOME%\Common\lib\$(Platform)\$(TargetName).lib</ImportLibrary>
       <TargetMachine>NotSet</TargetMachine>
       <AdditionalOptions>/SECTION:.rsrc,rw %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>comctl32.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>\Common\include;\Visio Logger\Common\odl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <OutputDirectory>\Common\Include</OutputDirectory>
-      <HeaderFileName>\Common\Include\%(Filename)_i.h</HeaderFileName>
-      <InterfaceIdentifierFileName>\Common\Include\%(Filename)_i.c</InterfaceIdentifierFileName>
-      <TypeLibraryName>\Common\Include\%(Filename).tlb</TypeLibraryName>
+      <AdditionalIncludeDirectories>%GSYSTEM_HOME%\Common\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>%GSYSTEM_HOME%\Common\Include</OutputDirectory>
+      <HeaderFileName>%GSYSTEM_HOME%\Common\Include\%(Filename)_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>%GSYSTEM_HOME%\Common\Include\%(Filename)_i.c</InterfaceIdentifierFileName>
+      <TypeLibraryName>%GSYSTEM_HOME%\Common\Include\%(Filename).tlb</TypeLibraryName>
       <DefaultCharType>Ascii</DefaultCharType>
     </Midl>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\include;\Common\include;\Common\resources;$(SolutionDir);$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\include;%GSYSTEM_HOME%\Common\include;%GSYSTEM_HOME%\Common\resources;$(SolutionDir);$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Lib>
-      <OutputFile>\Common\lib\$(Platform)\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>%GSYSTEM_HOME%\Common\lib\$(Platform)\$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BuildMacro Include="GSYSTEM_HOME">
+      <Value>$(GSYSTEM_HOME)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
 </Project>
