@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Dec 22 09:07:40 2017
+/* at Thu Mar 08 09:42:03 2018
  */
 /* Compiler settings for CursiVision.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 

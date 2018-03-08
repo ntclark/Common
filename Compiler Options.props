@@ -13,7 +13,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;%GSYSTEM_HOME%\Common\include;%GSYSTEM_HOME%\Common\source;$(SolutionDir);$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;%GSYSTEM_HOME%\Common\include;%GSYSTEM_HOME%\Common\source;%GSYSTEM_HOME%\Common\include\pdfEnabler;%GSYSTEM_HOME%\Visio Logger\Common\include;$(SolutionDir);$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0603;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
