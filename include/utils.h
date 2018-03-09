@@ -52,13 +52,23 @@
   int unitVector(double *input,double *output);
   int unitVector(float *input,float *output);
   int unitPoint(DataPoint *,DataPoint *);
+  int unitVector(DataPoint *pDPIn,DataPoint *pResult);
 
   double radiansFromXY(double x,double y);
 
   double magnitude(double *input);
   int VxV(double *inputVector1,double *inputVector2,double *outputVector);
   int VxV(float *inputVector1,float *inputVector2,float *outputVector);
-  int VxV_DP(DataPoint in1,DataPoint in2,DataPoint *outputPoint);
+  int VxV(DataPoint *pDP1,DataPoint *pDP2,DataPoint *outputPoint);
+
+  int VplusV(double *inputVector1,double *inputVector2,double *outputVector);
+  int VplusV(float *inputVector1,float *inputVector2,float *outputVector);
+  int VminusV(double *inputVector1,double *inputVector2,double *outputVector);
+  int VminusV(float *inputVector1,float *inputVector2,float *outputVector);
+
+  int VplusV(DataPoint *pDP1,DataPoint *pDP2,DataPoint *pResult);
+  int VminusV(DataPoint *pDP1,DataPoint *pDP2,DataPoint *pResult);
+
   int MxV(double *inputMatrix,double *inputVector,double *outputVector);
   int MxPoint(double *inputMatrix,DataPoint *inputPoint,DataPoint *outputPoint);
 

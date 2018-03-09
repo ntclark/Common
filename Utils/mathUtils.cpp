@@ -237,6 +237,34 @@
    return TRUE;
    }
  
+   int VplusV(double *a,double *b,double *c) {
+   c[0] = a[0] + b[0];
+   c[1] = a[1] + b[1];
+   c[2] = a[2] + b[2];
+   return TRUE;
+   }
+
+   int VminusV(double *a,double *b,double *c) {
+   c[0] = a[0] - b[0];
+   c[1] = a[1] - b[1];
+   c[2] = a[2] - b[2];
+   return TRUE;
+   }
+
+   int VplusV(DataPoint *pDP1,DataPoint *pDP2,DataPoint *pResult) {
+   pResult -> x = pDP1 -> x + pDP2 -> x;
+   pResult -> y = pDP1 -> y + pDP2 -> y;
+   pResult -> z = pDP1 -> z + pDP2 -> z;
+   return TRUE;
+   }
+
+   int VminusV(DataPoint *pDP1,DataPoint *pDP2,DataPoint *pResult) {
+   pResult -> x = pDP1 -> x - pDP2 -> x;
+   pResult -> y = pDP1 -> y - pDP2 -> y;
+   pResult -> z = pDP1 -> z - pDP2 -> z;
+   return TRUE;
+   }
+
    int VxV(float *a,float *b,float *c) {
    float d[3];
    d[0] =  ( a[1]*b[2] - a[2]*b[1] );
@@ -248,12 +276,28 @@
    return TRUE;
    }
 
-   int VxV_DP(DataPoint a,DataPoint b,DataPoint *c) {
+   int VplusV(float *a,float *b,float *c) {
+   c[0] = a[0] + b[0];
+   c[1] = a[1] + b[1];
+   c[2] = a[2] + b[2];
+   return TRUE;
+   }
+
+   int VminusV(float *a,float *b,float *c) {
+   c[0] = a[0] - b[0];
+   c[1] = a[1] - b[1];
+   c[2] = a[2] - b[2];
+   return TRUE;
+   }
+
+   int VxV(DataPoint *pA,DataPoint *pB,DataPoint *pResult) {
    DataPoint d;
-   d.x =  ( a.y*b.z - a.z*b.y );
-   d.y = -( a.x*b.z - a.z*b.x );
-   d.z =  ( a.x*b.y - a.y*b.x );
-   *c = d;
+   d.x =  ( pA -> y * pB -> z - pA -> z * pB -> y );
+   d.y = -( pA -> x * pB -> z - pA -> z * pB -> x );
+   d.z =  ( pA -> x * pB -> y - pA -> y * pB -> x );
+   pResult -> x = d.x;
+   pResult -> y = d.y;
+   pResult -> z = d.z;
    return TRUE;
    }
  
@@ -270,6 +314,14 @@
    b[0] = a[0]/mag;
    b[1] = a[1]/mag;          
    b[2] = a[2]/mag;
+   return TRUE;
+   }
+
+   int unitVector(DataPoint *pA,DataPoint *pResult) {
+   double mag = sqrtl(pA -> x * pA -> x + pA -> y * pA -> y + pA -> z * pA -> z);
+   pResult -> x = pA -> x / mag;
+   pResult -> y = pA -> y / mag;          
+   pResult -> z = pA -> z / mag;
    return TRUE;
    }
 
@@ -882,7 +934,7 @@
           vz(order),
           a(order,order)) float bin(53);
 */
-   long i,j,k,l,n,np1,ipt,index;
+   long i,j,k,m,n,np1,ipt,index;
 
 /*
   declare (i,j,k,l,m,n,np1,ipt,index) fixed binary(31);
@@ -904,9 +956,9 @@
    index = 0;//1;
    for ( n = 0; n < degree; n++ ) {
       np1 = n + 1;
-      for ( l = 0; l < np1; l++ ) { //do l = 1 to np1;
+      for ( m = 0; m < np1; m++ ) { //do l = 1 to np1;
          index = index + 1;
-         j = l - 1;
+         j = m - 1;
          k = n - j;
          vzsum = 0.0;
          for ( ipt = 0; ipt < npoints; ipt++ ) { // do ipt = 1 to npoints;

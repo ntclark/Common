@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Feb 22 18:01:21 2018
+/* at Fri Mar 09 11:16:14 2018
  */
 /* Compiler settings for OpenGLImplementation.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -334,6 +334,9 @@ EXTERN_C const IID IID_IOpenGLImplementation;
         
         virtual HRESULT STDMETHODCALLTYPE Normal3dv( 
             double *normal) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE NormalDp( 
+            struct /* external definition not present */ DataPoint *pDP) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE SetColor3dv( 
             double *__MIDL__IOpenGLImplementation0007) = 0;
@@ -739,6 +742,10 @@ EXTERN_C const IID IID_IOpenGLImplementation;
             IOpenGLImplementation * This,
             double *normal);
         
+        HRESULT ( STDMETHODCALLTYPE *NormalDp )( 
+            IOpenGLImplementation * This,
+            struct /* external definition not present */ DataPoint *pDP);
+        
         HRESULT ( STDMETHODCALLTYPE *SetColor3dv )( 
             IOpenGLImplementation * This,
             double *__MIDL__IOpenGLImplementation0007);
@@ -1018,6 +1025,9 @@ EXTERN_C const IID IID_IOpenGLImplementation;
 
 #define IOpenGLImplementation_Normal3dv(This,normal)	\
     ( (This)->lpVtbl -> Normal3dv(This,normal) ) 
+
+#define IOpenGLImplementation_NormalDp(This,pDP)	\
+    ( (This)->lpVtbl -> NormalDp(This,pDP) ) 
 
 #define IOpenGLImplementation_SetColor3dv(This,__MIDL__IOpenGLImplementation0007)	\
     ( (This)->lpVtbl -> SetColor3dv(This,__MIDL__IOpenGLImplementation0007) ) 

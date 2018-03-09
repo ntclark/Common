@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Feb 22 17:44:02 2018
+/* at Fri Mar 09 09:57:45 2018
  */
 /* Compiler settings for Axis.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -96,11 +96,12 @@ enum AxisPropertiesID
         axisPropertyTickCount	= 15,
         axisPropertyTickSize	= 16,
         axisPropertyTickPercentAbove	= 17,
-        axisPropertyTickPrecision	= 18,
-        axisPropertyGridLinesPerTick	= 19,
-        axispropertyLineWeight	= 20,
-        axisPropertyLineColor	= 21,
-        axisPropertyDefinesDomain	= 22
+        axisPropertyIsHidden	= 18,
+        axisPropertyTickPrecision	= 19,
+        axisPropertyGridLinesPerTick	= 20,
+        axispropertyLineWeight	= 21,
+        axisPropertyLineColor	= 22,
+        axisPropertyDefinesDomain	= 23
     } ;
 
 enum AxisMethodsID
@@ -263,6 +264,12 @@ EXTERN_C const IID IID_IAxis;
         
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_GridLinesPerTick( 
             /* [retval][out] */ long *pGridLines) = 0;
+        
+        virtual /* [helpstring][id][propput] */ HRESULT STDMETHODCALLTYPE put_IsHidden( 
+            /* [in] */ VARIANT_BOOL isHidden) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_IsHidden( 
+            /* [retval][out] */ VARIANT_BOOL *pIsHidden) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Initialize( 
             /* [in] */ char type,
@@ -542,6 +549,14 @@ EXTERN_C const IID IID_IAxis;
             IAxis * This,
             /* [retval][out] */ long *pGridLines);
         
+        /* [helpstring][id][propput] */ HRESULT ( STDMETHODCALLTYPE *put_IsHidden )( 
+            IAxis * This,
+            /* [in] */ VARIANT_BOOL isHidden);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_IsHidden )( 
+            IAxis * This,
+            /* [retval][out] */ VARIANT_BOOL *pIsHidden);
+        
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IAxis * This,
             /* [in] */ char type,
@@ -766,6 +781,12 @@ EXTERN_C const IID IID_IAxis;
 
 #define IAxis_get_GridLinesPerTick(This,pGridLines)	\
     ( (This)->lpVtbl -> get_GridLinesPerTick(This,pGridLines) ) 
+
+#define IAxis_put_IsHidden(This,isHidden)	\
+    ( (This)->lpVtbl -> put_IsHidden(This,isHidden) ) 
+
+#define IAxis_get_IsHidden(This,pIsHidden)	\
+    ( (This)->lpVtbl -> get_IsHidden(This,pIsHidden) ) 
 
 #define IAxis_Initialize(This,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyXFloor,pPropertyXCeiling,pProeprtyYFloor,pPropertyYCeiling,pPropertyZFloor,pPropertyZCeiling,pIDomainDataSet,pvIOpenGLImplementation,pIEvaluator,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie)	\
     ( (This)->lpVtbl -> Initialize(This,type,pXAxis,pYAxis,pZAxis,pIPropertyPlotView,pPropertyXFloor,pPropertyXCeiling,pProeprtyYFloor,pPropertyYCeiling,pPropertyZFloor,pPropertyZCeiling,pIDomainDataSet,pvIOpenGLImplementation,pIEvaluator,pWhenChangedCallback,pWhenChangedArg,whenChangedCookie) ) 
