@@ -243,5 +243,33 @@
    pSizel -> cx = (long)((double)(PDFPageWidth()) * (double)xPixelsPerInch / 72.0);
    pSizel -> cy = (long)((double)(PDFPageHeight()) * (double)yPixelsPerInch / 72.0);
 
+   HWND hwndParent = NULL;
+
+   pICursiVisionServices -> get_ParentWindow(&hwndParent);
+
+   if ( ! ( NULL == hwndParent ) ) {
+
+      WINDOWPLACEMENT windowPlacement = {0};
+
+      windowPlacement.length = sizeof(WINDOWPLACEMENT);
+
+      GetWindowPlacement(hwndParent,&windowPlacement);
+
+      HMONITOR hMonitor = MonitorFromRect(&windowPlacement.rcNormalPosition,MONITOR_DEFAULTTOPRIMARY);
+
+      MONITORINFO monitorInfo = {0};
+
+      monitorInfo.cbSize = sizeof(MONITORINFO);
+
+      GetMonitorInfo(hMonitor,&monitorInfo);
+
+      if ( pSizel -> cy > ( monitorInfo.rcWork.bottom - monitorInfo.rcWork.top) / 2 ) {
+         double aspect = (double)pSizel -> cy / (double)pSizel -> cx;
+         pSizel -> cy = (long)(1.0 * (double)( monitorInfo.rcWork.bottom - monitorInfo.rcWork.top) / 2.0);
+         pSizel -> cx = (long)((double)pSizel -> cy / aspect);
+      }
+
+   }
+
    return;
    }
