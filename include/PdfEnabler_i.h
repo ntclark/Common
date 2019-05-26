@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Mar 08 09:39:28 2018
+/* at Sun May 26 10:19:52 2019
  */
 /* Compiler settings for PdfEnabler.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
@@ -90,7 +90,7 @@ extern "C"{
 /* [version][lcid][helpstring][helpfile][uuid] */ 
 
 
-DEFINE_GUID(LIBID_PdfEnabler,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x15);
+EXTERN_C const IID LIBID_PdfEnabler;
 
 #ifndef __IPdfPage_INTERFACE_DEFINED__
 #define __IPdfPage_INTERFACE_DEFINED__
@@ -99,7 +99,7 @@ DEFINE_GUID(LIBID_PdfEnabler,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0
 /* [object][unique][nonextensible][oleautomation][dual][helpstring][uuid] */ 
 
 
-DEFINE_GUID(IID_IPdfPage,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x16);
+EXTERN_C const IID IID_IPdfPage;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -399,7 +399,7 @@ DEFINE_GUID(IID_IPdfPage,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,
 /* [object][unique][nonextensible][oleautomation][dual][helpstring][uuid] */ 
 
 
-DEFINE_GUID(IID_IPdfDocument,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x17);
+EXTERN_C const IID IID_IPdfDocument;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -803,7 +803,7 @@ DEFINE_GUID(IID_IPdfDocument,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0
 /* [object][unique][nonextensible][oleautomation][dual][helpstring][uuid] */ 
 
 
-DEFINE_GUID(IID_IPdfEnabler,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x18);
+EXTERN_C const IID IID_IPdfEnabler;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -926,7 +926,7 @@ DEFINE_GUID(IID_IPdfEnabler,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x
 #endif 	/* __IPdfEnabler_INTERFACE_DEFINED__ */
 
 
-DEFINE_GUID(CLSID_PdfEnabler,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x19);
+EXTERN_C const CLSID CLSID_PdfEnabler;
 
 #ifdef __cplusplus
 

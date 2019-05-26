@@ -6,9 +6,9 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Mar 08 09:51:29 2018
+/* at Sun May 26 11:42:48 2019
  */
-/* Compiler settings for D:\Phablet-API\..\Common\source\SignaturePad.odl:
+/* Compiler settings for ..\..\Common\source\SignaturePad.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 

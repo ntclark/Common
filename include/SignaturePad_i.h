@@ -4,9 +4,9 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Mar 08 09:51:29 2018
+/* at Sun May 26 11:42:48 2019
  */
-/* Compiler settings for D:\Phablet-API\..\Common\source\SignaturePad.odl:
+/* Compiler settings for ..\..\Common\source\SignaturePad.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
@@ -83,7 +83,7 @@ extern "C"{
 /* [version][lcid][helpstring][helpfile][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionSignaturePad;
+DEFINE_GUID(LIBID_CursiVisionSignaturePad,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x20);
 
 #ifndef __ISignaturePad_INTERFACE_DEFINED__
 #define __ISignaturePad_INTERFACE_DEFINED__
@@ -92,7 +92,7 @@ EXTERN_C const IID LIBID_CursiVisionSignaturePad;
 /* [object][unique][nonextensible][helpstring][uuid] */ 
 
 
-EXTERN_C const IID IID_ISignaturePad;
+DEFINE_GUID(IID_ISignaturePad,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x21);
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -796,7 +796,7 @@ EXTERN_C const IID IID_ISignaturePad;
 /* [object][uuid] */ 
 
 
-EXTERN_C const IID IID_ISignaturePadEvents;
+DEFINE_GUID(IID_ISignaturePadEvents,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x22);
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -911,7 +911,7 @@ EXTERN_C const IID IID_ISignaturePadEvents;
 #endif 	/* __ISignaturePadEvents_INTERFACE_DEFINED__ */
 
 
-EXTERN_C const CLSID CLSID_CursiVisionSignaturePad;
+DEFINE_GUID(CLSID_CursiVisionSignaturePad,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x23);
 
 #ifdef __cplusplus
 

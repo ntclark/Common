@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Wed Mar 28 16:34:25 2018
+/* at Sat May 04 11:28:00 2019
  */
 /* Compiler settings for COM Implementation\PDFiumControl.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -352,6 +352,10 @@ EXTERN_C const IID IID_IPDFiumControl;
         
         virtual HRESULT STDMETHODCALLTYPE Cleanup( void) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE ResizePDFDocument( 
+            long cxImagePixels,
+            long cyImagePixels) = 0;
+        
     };
     
     
@@ -565,6 +569,11 @@ EXTERN_C const IID IID_IPDFiumControl;
         HRESULT ( STDMETHODCALLTYPE *Cleanup )( 
             IPDFiumControl * This);
         
+        HRESULT ( STDMETHODCALLTYPE *ResizePDFDocument )( 
+            IPDFiumControl * This,
+            long cxImagePixels,
+            long cyImagePixels);
+        
         END_INTERFACE
     } IPDFiumControlVtbl;
 
@@ -705,6 +714,9 @@ EXTERN_C const IID IID_IPDFiumControl;
 
 #define IPDFiumControl_Cleanup(This)	\
     ( (This)->lpVtbl -> Cleanup(This) ) 
+
+#define IPDFiumControl_ResizePDFDocument(This,cxImagePixels,cyImagePixels)	\
+    ( (This)->lpVtbl -> ResizePDFDocument(This,cxImagePixels,cyImagePixels) ) 
 
 #endif /* COBJMACROS */
 
