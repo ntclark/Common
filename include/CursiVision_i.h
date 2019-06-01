@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sun May 26 10:20:36 2019
+/* at Fri May 31 16:22:40 2019
  */
 /* Compiler settings for CursiVision.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -158,26 +158,20 @@ DEFINE_GUID(IID_ICursiVisionFrontEnd,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
         virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_showCursiVisionStatusbar( 
             /* [retval][out] */ VARIANT_BOOL *__MIDL__ICursiVisionFrontEnd0005) = 0;
         
-        virtual /* [helpstring][propput][id] */ HRESULT STDMETHODCALLTYPE put_showAdobeToolbar( 
-            /* [in] */ VARIANT_BOOL __MIDL__ICursiVisionFrontEnd0006) = 0;
-        
-        virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_showAdobeToolbar( 
-            /* [retval][out] */ VARIANT_BOOL *__MIDL__ICursiVisionFrontEnd0007) = 0;
-        
         virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_PDFEnabler( 
-            /* [retval][out] */ /* external definition not present */ IPdfEnabler **__MIDL__ICursiVisionFrontEnd0008) = 0;
+            /* [retval][out] */ /* external definition not present */ IPdfEnabler **__MIDL__ICursiVisionFrontEnd0006) = 0;
         
         virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_PDFDocument( 
-            /* [retval][out] */ /* external definition not present */ IPdfDocument **__MIDL__ICursiVisionFrontEnd0009) = 0;
+            /* [retval][out] */ /* external definition not present */ IPdfDocument **__MIDL__ICursiVisionFrontEnd0007) = 0;
         
         virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_SignaturePad( 
-            /* [retval][out] */ /* external definition not present */ ISignaturePad **__MIDL__ICursiVisionFrontEnd0010) = 0;
+            /* [retval][out] */ /* external definition not present */ ISignaturePad **__MIDL__ICursiVisionFrontEnd0008) = 0;
         
         virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_signedDocument( 
-            /* [retval][out] */ BSTR *__MIDL__ICursiVisionFrontEnd0011) = 0;
+            /* [retval][out] */ BSTR *__MIDL__ICursiVisionFrontEnd0009) = 0;
         
         virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_signingLocationCount( 
-            /* [retval][out] */ long *__MIDL__ICursiVisionFrontEnd0012) = 0;
+            /* [retval][out] */ long *__MIDL__ICursiVisionFrontEnd0010) = 0;
         
         virtual /* [propput][id] */ HRESULT STDMETHODCALLTYPE put_profileRepository( 
             /* [in] */ BSTR repositoryLocation) = 0;
@@ -192,7 +186,7 @@ DEFINE_GUID(IID_ICursiVisionFrontEnd,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
             /* [retval][out] */ BSTR *pProfileFileName) = 0;
         
         virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_IsPadConnected( 
-            /* [retval][out] */ VARIANT_BOOL *__MIDL__ICursiVisionFrontEnd0013) = 0;
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__ICursiVisionFrontEnd0011) = 0;
         
         virtual /* [id] */ HRESULT STDMETHODCALLTYPE Sign( void) = 0;
         
@@ -317,33 +311,25 @@ DEFINE_GUID(IID_ICursiVisionFrontEnd,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
             ICursiVisionFrontEnd * This,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__ICursiVisionFrontEnd0005);
         
-        /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_showAdobeToolbar )( 
-            ICursiVisionFrontEnd * This,
-            /* [in] */ VARIANT_BOOL __MIDL__ICursiVisionFrontEnd0006);
-        
-        /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_showAdobeToolbar )( 
-            ICursiVisionFrontEnd * This,
-            /* [retval][out] */ VARIANT_BOOL *__MIDL__ICursiVisionFrontEnd0007);
-        
         /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_PDFEnabler )( 
             ICursiVisionFrontEnd * This,
-            /* [retval][out] */ /* external definition not present */ IPdfEnabler **__MIDL__ICursiVisionFrontEnd0008);
+            /* [retval][out] */ /* external definition not present */ IPdfEnabler **__MIDL__ICursiVisionFrontEnd0006);
         
         /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_PDFDocument )( 
             ICursiVisionFrontEnd * This,
-            /* [retval][out] */ /* external definition not present */ IPdfDocument **__MIDL__ICursiVisionFrontEnd0009);
+            /* [retval][out] */ /* external definition not present */ IPdfDocument **__MIDL__ICursiVisionFrontEnd0007);
         
         /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_SignaturePad )( 
             ICursiVisionFrontEnd * This,
-            /* [retval][out] */ /* external definition not present */ ISignaturePad **__MIDL__ICursiVisionFrontEnd0010);
+            /* [retval][out] */ /* external definition not present */ ISignaturePad **__MIDL__ICursiVisionFrontEnd0008);
         
         /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_signedDocument )( 
             ICursiVisionFrontEnd * This,
-            /* [retval][out] */ BSTR *__MIDL__ICursiVisionFrontEnd0011);
+            /* [retval][out] */ BSTR *__MIDL__ICursiVisionFrontEnd0009);
         
         /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_signingLocationCount )( 
             ICursiVisionFrontEnd * This,
-            /* [retval][out] */ long *__MIDL__ICursiVisionFrontEnd0012);
+            /* [retval][out] */ long *__MIDL__ICursiVisionFrontEnd0010);
         
         /* [propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_profileRepository )( 
             ICursiVisionFrontEnd * This,
@@ -363,7 +349,7 @@ DEFINE_GUID(IID_ICursiVisionFrontEnd,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
         
         /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_IsPadConnected )( 
             ICursiVisionFrontEnd * This,
-            /* [retval][out] */ VARIANT_BOOL *__MIDL__ICursiVisionFrontEnd0013);
+            /* [retval][out] */ VARIANT_BOOL *__MIDL__ICursiVisionFrontEnd0011);
         
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *Sign )( 
             ICursiVisionFrontEnd * This);
@@ -463,26 +449,20 @@ DEFINE_GUID(IID_ICursiVisionFrontEnd,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
 #define ICursiVisionFrontEnd_get_showCursiVisionStatusbar(This,__MIDL__ICursiVisionFrontEnd0005)	\
     ( (This)->lpVtbl -> get_showCursiVisionStatusbar(This,__MIDL__ICursiVisionFrontEnd0005) ) 
 
-#define ICursiVisionFrontEnd_put_showAdobeToolbar(This,__MIDL__ICursiVisionFrontEnd0006)	\
-    ( (This)->lpVtbl -> put_showAdobeToolbar(This,__MIDL__ICursiVisionFrontEnd0006) ) 
+#define ICursiVisionFrontEnd_get_PDFEnabler(This,__MIDL__ICursiVisionFrontEnd0006)	\
+    ( (This)->lpVtbl -> get_PDFEnabler(This,__MIDL__ICursiVisionFrontEnd0006) ) 
 
-#define ICursiVisionFrontEnd_get_showAdobeToolbar(This,__MIDL__ICursiVisionFrontEnd0007)	\
-    ( (This)->lpVtbl -> get_showAdobeToolbar(This,__MIDL__ICursiVisionFrontEnd0007) ) 
+#define ICursiVisionFrontEnd_get_PDFDocument(This,__MIDL__ICursiVisionFrontEnd0007)	\
+    ( (This)->lpVtbl -> get_PDFDocument(This,__MIDL__ICursiVisionFrontEnd0007) ) 
 
-#define ICursiVisionFrontEnd_get_PDFEnabler(This,__MIDL__ICursiVisionFrontEnd0008)	\
-    ( (This)->lpVtbl -> get_PDFEnabler(This,__MIDL__ICursiVisionFrontEnd0008) ) 
+#define ICursiVisionFrontEnd_get_SignaturePad(This,__MIDL__ICursiVisionFrontEnd0008)	\
+    ( (This)->lpVtbl -> get_SignaturePad(This,__MIDL__ICursiVisionFrontEnd0008) ) 
 
-#define ICursiVisionFrontEnd_get_PDFDocument(This,__MIDL__ICursiVisionFrontEnd0009)	\
-    ( (This)->lpVtbl -> get_PDFDocument(This,__MIDL__ICursiVisionFrontEnd0009) ) 
+#define ICursiVisionFrontEnd_get_signedDocument(This,__MIDL__ICursiVisionFrontEnd0009)	\
+    ( (This)->lpVtbl -> get_signedDocument(This,__MIDL__ICursiVisionFrontEnd0009) ) 
 
-#define ICursiVisionFrontEnd_get_SignaturePad(This,__MIDL__ICursiVisionFrontEnd0010)	\
-    ( (This)->lpVtbl -> get_SignaturePad(This,__MIDL__ICursiVisionFrontEnd0010) ) 
-
-#define ICursiVisionFrontEnd_get_signedDocument(This,__MIDL__ICursiVisionFrontEnd0011)	\
-    ( (This)->lpVtbl -> get_signedDocument(This,__MIDL__ICursiVisionFrontEnd0011) ) 
-
-#define ICursiVisionFrontEnd_get_signingLocationCount(This,__MIDL__ICursiVisionFrontEnd0012)	\
-    ( (This)->lpVtbl -> get_signingLocationCount(This,__MIDL__ICursiVisionFrontEnd0012) ) 
+#define ICursiVisionFrontEnd_get_signingLocationCount(This,__MIDL__ICursiVisionFrontEnd0010)	\
+    ( (This)->lpVtbl -> get_signingLocationCount(This,__MIDL__ICursiVisionFrontEnd0010) ) 
 
 #define ICursiVisionFrontEnd_put_profileRepository(This,repositoryLocation)	\
     ( (This)->lpVtbl -> put_profileRepository(This,repositoryLocation) ) 
@@ -496,8 +476,8 @@ DEFINE_GUID(IID_ICursiVisionFrontEnd,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
 #define ICursiVisionFrontEnd_get_profile(This,pProfileFileName)	\
     ( (This)->lpVtbl -> get_profile(This,pProfileFileName) ) 
 
-#define ICursiVisionFrontEnd_get_IsPadConnected(This,__MIDL__ICursiVisionFrontEnd0013)	\
-    ( (This)->lpVtbl -> get_IsPadConnected(This,__MIDL__ICursiVisionFrontEnd0013) ) 
+#define ICursiVisionFrontEnd_get_IsPadConnected(This,__MIDL__ICursiVisionFrontEnd0011)	\
+    ( (This)->lpVtbl -> get_IsPadConnected(This,__MIDL__ICursiVisionFrontEnd0011) ) 
 
 #define ICursiVisionFrontEnd_Sign(This)	\
     ( (This)->lpVtbl -> Sign(This) ) 

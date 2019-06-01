@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sat Jul 14 09:49:03 2018
+/* at Fri May 31 18:13:11 2019
  */
 /* Compiler settings for forwardToReceptor.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -76,7 +76,7 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-DEFINE_GUID(LIBID_CursiVisionForwardToReceptorBackEnd,0xC78A8C5E,0x89DC,0x4957,0xA2,0x63,0x83,0x1B,0xFA,0xC3,0x00,0xE1);
+EXTERN_C const IID LIBID_CursiVisionForwardToReceptorBackEnd;
 
 #ifndef __ICursiVisionForwardToReceptorBackEnd_INTERFACE_DEFINED__
 #define __ICursiVisionForwardToReceptorBackEnd_INTERFACE_DEFINED__
@@ -85,7 +85,7 @@ DEFINE_GUID(LIBID_CursiVisionForwardToReceptorBackEnd,0xC78A8C5E,0x89DC,0x4957,0
 /* [object][uuid] */ 
 
 
-DEFINE_GUID(IID_ICursiVisionForwardToReceptorBackEnd,0xC78A8C5E,0x89DC,0x4957,0xA2,0x63,0x83,0x1B,0xFA,0xC3,0x00,0xE3);
+EXTERN_C const IID IID_ICursiVisionForwardToReceptorBackEnd;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -168,7 +168,7 @@ DEFINE_GUID(IID_ICursiVisionForwardToReceptorBackEnd,0xC78A8C5E,0x89DC,0x4957,0x
 #endif 	/* __ICursiVisionForwardToReceptorBackEnd_INTERFACE_DEFINED__ */
 
 
-DEFINE_GUID(CLSID_CursiVisionForwardToReceptorBackEnd,0xC78A8C5E,0x89DC,0x4957,0xA2,0x63,0x83,0x1B,0xFA,0xC3,0x00,0xE2);
+EXTERN_C const CLSID CLSID_CursiVisionForwardToReceptorBackEnd;
 
 #ifdef __cplusplus
 

@@ -6,10 +6,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sat May 04 13:41:50 2019
+/* at Mon May 27 11:27:37 2019
  */
 /* Compiler settings for ImagingBackEnd.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 

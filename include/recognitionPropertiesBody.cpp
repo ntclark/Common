@@ -15,10 +15,13 @@
       p = (resultDisposition *)pPage -> lParam;
       SetWindowLongPtr(hwnd,GWLP_USERDATA,(ULONG_PTR)p);
       pObject = (OBJECT_WITH_PROPERTIES *)p -> pParent;
-      pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwnd,16,80,drawSelections);
+      pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwnd,16,100,drawSelections);
       oldPotentialIndex = -1L;
       activePotentialIndex = -1L;
       char szTemp[256];
+      SendDlgItemMessage(hwnd,IDDI_CV_RECOGNITION_BYNAME,BM_SETCHECK,pObject -> recognizeByName ? BST_CHECKED : BST_UNCHECKED,0L);
+      EnableWindow(GetDlgItem(hwnd,IDDI_CV_RECOGNITION_INSTRUCTIONS),pObject -> recognizeByName ? FALSE : TRUE);
+      EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_RESET),pObject -> recognizeByName ? FALSE : TRUE);
       LoadString(hModule,IDDI_CV_RECOGNITION_INSTRUCTIONS,szTemp,256);
       SetDlgItemText(hwnd,IDDI_CV_RECOGNITION_INSTRUCTIONS,szTemp);
       LoadString(hModule,IDDI_CV_LIMIT_REACHED,szMaxSelectionsReached,128);
@@ -450,6 +453,12 @@
    case WM_COMMAND: {
 
       switch ( LOWORD(wParam) ) {
+      case IDDI_CV_RECOGNITION_BYNAME: {
+         BOOL isChecked = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_RECOGNITION_BYNAME,BM_GETCHECK,0L,0L);
+         EnableWindow(GetDlgItem(hwnd,IDDI_CV_RECOGNITION_INSTRUCTIONS),isChecked ? FALSE : TRUE);
+         EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_RESET),isChecked ? FALSE : TRUE);
+         }
+         break;
       case IDDI_CV_LOCATIONS_RESET: 
          countSelections = 0;
          memset(selections,0,sizeof(selections));
@@ -474,6 +483,7 @@
          memcpy(pObject -> expectedRects,selections,sizeof(pObject -> expectedRects));
          memcpy(pObject -> expectedText,textSelections,sizeof(textSelections));
          memcpy(pObject -> expectedPage,pageSelections,sizeof(pageSelections));
+         pObject -> recognizeByName = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_RECOGNITION_BYNAME,BM_GETCHECK,0L,0L);
       }
       }
       break;

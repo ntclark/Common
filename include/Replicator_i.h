@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sat Jul 14 09:49:04 2018
+/* at Fri May 31 18:13:10 2019
  */
 /* Compiler settings for Replicator.odl:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
@@ -69,9 +69,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-DEFINE_GUID(LIBID_CursiVisionEnhancedReplicatorBackEnd,0x8870FA7E,0xCF04,0x4a03,0xA2,0x0E,0xBB,0x5B,0x83,0x07,0x1E,0x0D);
+EXTERN_C const IID LIBID_CursiVisionEnhancedReplicatorBackEnd;
 
-DEFINE_GUID(CLSID_CursiVisionEnhancedReplicatorBackEnd,0x8870FA7E,0xCF04,0x4a03,0xA2,0x0E,0xBB,0x5B,0x83,0x07,0x1E,0x0E);
+EXTERN_C const CLSID CLSID_CursiVisionEnhancedReplicatorBackEnd;
 
 #ifdef __cplusplus
 

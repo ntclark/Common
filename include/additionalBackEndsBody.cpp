@@ -136,7 +136,7 @@
             if ( pc )
                *pc = '\0';
 
-            sprintf(buttonPairs[countRows].szSettingsFileName + strlen(buttonPairs[countRows].szSettingsFileName),"_%s.settings",(*it) -> szCodeName);
+            sprintf(buttonPairs[countRows].szSettingsFileName + strlen(buttonPairs[countRows].szSettingsFileName),"_%s.settings","--unknown--");//(*it) -> szCodeName);
 
          } else {
 
@@ -399,12 +399,6 @@
          SendMessage(pSource -> hwndList,LVM_GETITEM,(WPARAM)0L,(LPARAM)&lvItem);
 
          ICursiVisionBackEnd *pICursiVisionBackEnd = NULL;
-
-#ifdef IS_CURSIVISION_CONTROL_HANDLER
-
-         pSource -> pIUnknown_Object -> QueryInterface(IID_ICursiVisionBackEnd,reinterpret_cast<void **>(&pICursiVisionBackEnd));
-
-#else
    
          HRESULT rc = CoCreateInstance(pSource -> objectId,NULL,CLSCTX_INPROC_SERVER,IID_ICursiVisionBackEnd,reinterpret_cast<void **>(&pICursiVisionBackEnd));
 
@@ -413,6 +407,30 @@
          BSTR bstrSettingsFile = SysAllocStringLen(NULL,MAX_PATH);
 
          if ( 0 != strlen(PARENT_OBJECT_PREFERRED_SETTINGS_FILE_NAME) ) {
+
+            char *pUnk = strstr(pSource -> szSettingsFileName,"--unknown--");
+   
+            if ( pUnk ) {
+
+               *pUnk = '\0';
+
+               char szWithCode[MAX_PATH];
+               char szTemp[MAX_PATH];
+               BSTR bstrCode;
+
+               strcpy(szWithCode,pSource -> szSettingsFileName);
+
+               pICursiVisionBackEnd -> get_CodeName(&bstrCode);
+
+               WideCharToMultiByte(CP_ACP,0,bstrCode,-1,szTemp,MAX_PATH,0,0);
+
+               strcat(szWithCode,szTemp);
+   
+               sprintf(szWithCode + strlen(szWithCode),"%s",pUnk + 11);
+
+               strcpy(pSource -> szSettingsFileName,szWithCode);
+
+            }
 
             MultiByteToWideChar(CP_ACP,0,pSource -> szSettingsFileName,-1,bstrSettingsFile,MAX_PATH);
 
@@ -427,7 +445,6 @@
          pICursiVisionBackEnd -> put_PropertiesFileName(bstrSettingsFile);
 
          SysFreeString(bstrSettingsFile);
-#endif
 
          pICursiVisionBackEnd -> ServicesAdvise(CURSIVISION_SERVICES_INTERFACE);
 

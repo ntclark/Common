@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sat May 04 13:40:38 2019
+/* at Fri May 31 15:54:32 2019
  */
 /* Compiler settings for PrintingSupport.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -494,6 +494,11 @@ EXTERN_C const IID IID_IPrintingSupport;
         
         virtual BOOL STDMETHODCALLTYPE NonAdminCanChange( void) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE InitializeThreaded( 
+            void ( STDMETHODCALLTYPE *pCallback )( 
+                void *pvCallerObject),
+            void *pvCallerObj) = 0;
+        
     };
     
     
@@ -537,6 +542,12 @@ EXTERN_C const IID IID_IPrintingSupport;
         BOOL ( STDMETHODCALLTYPE *NonAdminCanChange )( 
             IPrintingSupport * This);
         
+        HRESULT ( STDMETHODCALLTYPE *InitializeThreaded )( 
+            IPrintingSupport * This,
+            void ( STDMETHODCALLTYPE *pCallback )( 
+                void *pvCallerObject),
+            void *pvCallerObj);
+        
         END_INTERFACE
     } IPrintingSupportVtbl;
 
@@ -574,6 +585,9 @@ EXTERN_C const IID IID_IPrintingSupport;
 
 #define IPrintingSupport_NonAdminCanChange(This)	\
     ( (This)->lpVtbl -> NonAdminCanChange(This) ) 
+
+#define IPrintingSupport_InitializeThreaded(This,pCallback,pvCallerObj)	\
+    ( (This)->lpVtbl -> InitializeThreaded(This,pCallback,pvCallerObj) ) 
 
 #endif /* COBJMACROS */
 
