@@ -6,10 +6,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Thu Aug 09 11:46:14 2018
+/* at Tue Jun 11 14:13:46 2019
  */
 /* Compiler settings for PadKiller.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 

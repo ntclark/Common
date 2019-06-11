@@ -208,8 +208,6 @@
 
    GetClientRect(hwndPane,&rcHost);
 
-   //pIOleObject_HTML -> DoVerb(OLEIVERB_SHOW,NULL,pIOleClientSite_HTML_Host,0,hwndPane,&rcHost);
-
    pIPDFiumControl -> DisplayDocument(logBrush.lbColor,rcHost.right - rcHost.left - 64,rcHost.bottom - rcHost.top - 32,bstrURL,0);
 
    SysFreeString(bstrURL);
@@ -427,7 +425,6 @@
       PAINTSTRUCT ps;
       BeginPaint(hwnd,&ps);
       EndPaint(hwnd,&ps);
-      //SetTimer(hwnd,TIMER_ID_PAINT,TIMER_PAINT_DURATION,NULL);
       }
       return LRESULT(0);
 

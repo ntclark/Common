@@ -14,6 +14,9 @@
       hdc = GetDC(pDocument -> hwndPane);
    }
 
+   RECT rcPane;
+   GetClientRect(pDocument -> hwndPane,&rcPane);
+
    HPEN hPen = CreatePen(PS_SOLID,1,RGB(0,0,0));
    HGDIOBJ oldPen = SelectObject(hdc,hPen);
 
@@ -22,11 +25,9 @@
 
    struct writingLocation *pLocation = pCurrentLocations;
    
-   if ( 0 == rectShiftX && 0 == rectShiftY ) {
-      memset(visibleRects,0,sizeof(visibleRects));
-      memset(visibleRectIndexes,0,sizeof(visibleRectIndexes));
-      memset(inverseVisibleRectIndexes,0,sizeof(inverseVisibleRectIndexes));
-   }
+   memset(visibleRects,0,sizeof(visibleRects));
+   memset(visibleRectIndexes,0,sizeof(visibleRectIndexes));
+   memset(inverseVisibleRectIndexes,0,sizeof(inverseVisibleRectIndexes));
 
    long vrIndex = 0L;
    long allRectIndex = -1L;
@@ -35,48 +36,44 @@
 
       allRectIndex++;
 
-      if ( k == rectIgnoreIndex || pDocument -> currentPageNumber != pLocation -> zzpdfPageNumber ) 
+      if ( k == rectIgnoreIndex )
          continue;
 
       RECT r;
 
       memcpy(&r,&pLocation -> documentRect,sizeof(RECT));
 
-      pDocument -> convertToPanePixels(pDocument -> currentPageNumber,&r);
+      pDocument -> convertToPanePixels(pLocation -> zzpdfPageNumber,&r);
+
+      if ( r.bottom < pDocument -> rcPDFPagePixels.top )
+         continue;
+
+      if ( r.top > pDocument -> rcPDFPagePixels.bottom )
+         continue;
 
       RECT rcText;
 
-      if ( rectShiftX || rectShiftY ) {
+      rcText.left = max(pDocument -> rcPDFPagePixels.left,r.left);
+      rcText.right = min(pDocument -> rcPDFPagePixels.right,r.right);
+      rcText.top = max(pDocument -> rcPDFPagePixels.top,r.top);
+      rcText.bottom = min(pDocument -> rcPDFPagePixels.bottom,r.bottom);
 
-         r.left += rectShiftX;
-         r.right += rectShiftX;
-         r.top += rectShiftY;
-         r.bottom += rectShiftY;
+      if ( ! ( -1L == candidateRectIndex ) && candidateRectIndex == allRectIndex ) 
+         DRAW_GREEN_BOX_IN_PIXELS(pDocument,PS_SOLID,(&rcText),2)
+      else
+         DRAW_BOX_IN_PIXELS(pDocument,PS_SOLID,(&rcText),2)
 
-         DRAW_BOX_NOCLIP(pDocument,PS_SOLID,&pLocation -> documentRect,2)
+      memcpy(&visibleRects[vrIndex],&r,sizeof(RECT));
 
-         memcpy(&rcText,&r,sizeof(RECT));
+      visibleRectIndexes[vrIndex] = allRectIndex;
 
-      } else {
+      inverseVisibleRectIndexes[allRectIndex] = vrIndex;
 
-         DRAW_BOX(pDocument,PS_SOLID,&pLocation -> documentRect,2)
-
-         rcText.left = max(pDocument -> rcPDFPagePixels.left,r.left);
-         rcText.right = min(pDocument -> rcPDFPagePixels.right,r.right);
-         rcText.top = max(pDocument -> rcPDFPagePixels.top,r.top);
-         rcText.bottom = min(pDocument -> rcPDFPagePixels.bottom,r.bottom);
-
-         memcpy(&visibleRects[vrIndex],&pLocation -> documentRect,sizeof(RECT));
-         visibleRectIndexes[vrIndex] = allRectIndex;
-         inverseVisibleRectIndexes[allRectIndex] = vrIndex;
-
-         vrIndex++;
-
-      }
+      vrIndex++;
 
       char szIndex[64];
 
-      sprintf(szIndex,"Page %ld - %ld",pDocument -> currentPageNumber,allRectIndex + 1);
+      sprintf(szIndex,"Page %ld - %ld",pLocation -> zzpdfPageNumber,allRectIndex + 1);
 
       DrawTextEx(hdc,szIndex,(int)strlen(szIndex),&rcText,DT_CENTER | DT_VCENTER | DT_SINGLELINE,NULL);
 

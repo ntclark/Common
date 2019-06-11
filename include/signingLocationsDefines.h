@@ -21,8 +21,6 @@
 
    static bool commitChanges = false;
 
-   static long rectShiftX = 0L;
-   static long rectShiftY = 0L;
    static long rectIgnoreIndex = -1L;
 
    static RECT visibleRects[32];
@@ -53,17 +51,17 @@
 
 #define CORNER_PROXIMITY 8
 
-#define WM_REDRAW_THE_FUCKING_WINDOW         (WM_USER + 1)
+#define WM_REDRAW_THE_WINDOW         (WM_USER + 1)
 
-#define REDRAW_THE_FUCKING_WINDOW                                                                           \
+#define REDRAW_THE_WINDOW                                                                                   \
 InvalidateRect(pTemplateDocumentUI -> hwndVellum,NULL,TRUE);                                                \
 UpdateWindow(pTemplateDocumentUI -> hwndVellum);                                                            \
 RedrawWindow(pTemplateDocumentUI -> hwndVellum,NULL,NULL,RDW_ERASE | RDW_INVALIDATE | RDW_INTERNALPAINT);   \
 ShowWindow(pTemplateDocumentUI -> hwndVellum,SW_HIDE);                                                      \
 ShowWindow(pTemplateDocumentUI -> hwndVellum,SW_SHOW);                                                      \
-PostMessage(hwnd,WM_REDRAW_THE_FUCKING_WINDOW,0L,0L);
+PostMessage(hwnd,WM_REDRAW_THE_WINDOW,0L,0L);
 
-#define REDRAW_THE_FUCKING_WINDOW_2                                                                         \
+#define REDRAW_THE_WINDOW_2                                                                                 \
 InvalidateRect(pTemplateDocumentUI -> hwndVellum,NULL,TRUE);                                                \
 UpdateWindow(pTemplateDocumentUI -> hwndVellum);                                                            \
 RedrawWindow(pTemplateDocumentUI -> hwndVellum,NULL,NULL,RDW_ERASE | RDW_INVALIDATE | RDW_INTERNALPAINT);   \

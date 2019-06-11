@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri May 31 18:13:12 2019
+/* at Tue Jun 11 14:14:48 2019
  */
 /* Compiler settings for ftpBackEnd.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -69,9 +69,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionFTPBackEnd;
+DEFINE_GUID(LIBID_CursiVisionFTPBackEnd,0xCDC6E109,0x9B34,0x4405,0x87,0xB8,0x0D,0x82,0xD3,0xB6,0x23,0xD6);
 
-EXTERN_C const CLSID CLSID_CursiVisionFTPBackEnd;
+DEFINE_GUID(CLSID_CursiVisionFTPBackEnd,0xCDC6E109,0x9B34,0x4405,0x87,0xB8,0x0D,0x82,0xD3,0xB6,0x23,0xD7);
 
 #ifdef __cplusplus
 

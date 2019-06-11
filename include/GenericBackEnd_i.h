@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri May 31 18:13:12 2019
+/* at Tue Jun 11 14:14:48 2019
  */
 /* Compiler settings for GenericBackEnd.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -69,9 +69,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionGenericBackEnd;
+DEFINE_GUID(LIBID_CursiVisionGenericBackEnd,0x52A9EE3A,0x5C46,0x48b4,0xA1,0xA4,0x56,0x92,0x9E,0xD0,0x5E,0x55);
 
-EXTERN_C const CLSID CLSID_CursiVisionGenericBackEnd;
+DEFINE_GUID(CLSID_CursiVisionGenericBackEnd,0x52A9EE3A,0x5C46,0x48b4,0xA1,0xA4,0x56,0x92,0x9E,0xD0,0x5E,0x56);
 
 #ifdef __cplusplus
 

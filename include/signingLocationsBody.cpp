@@ -56,6 +56,8 @@
       if ( ! pSignaturePad ) 
          MessageBox(hwnd,"There is no signature pad selected for CursiVision to use.\n\nTherefore, CursiVision does not know the size of the signature pad "
                            "and is not able to assist in defining signature locations.","Note",MB_ICONEXCLAMATION);
+      else
+         pSignaturePad -> Load(NULL,NULL,NULL);
 
 #ifdef ADDITIONAL_INITIALIZATION
       ADDITIONAL_INITIALIZATION
@@ -68,8 +70,8 @@
       pTemplateDocumentUI -> size();
       break;
 
-   case WM_REDRAW_THE_FUCKING_WINDOW:
-      REDRAW_THE_FUCKING_WINDOW_2
+   case WM_REDRAW_THE_WINDOW:
+      REDRAW_THE_WINDOW_2
       break;
 
    case WM_LBUTTONDOWN: {
@@ -87,15 +89,10 @@
 
       memcpy(&rBase,&visibleRects[inverseVisibleRectIndexes[candidateRectIndex]],sizeof(RECT));
 
-      rectShiftX = 0;
-      rectShiftY = 0;
-
       rectIgnoreIndex = candidateRectIndex;
 
       drawSigningAreas(NULL,pTemplateDocumentUI);
 
-      rectShiftX = 0L;
-      rectShiftY = 0L;
       rectIgnoreIndex = -1L;
 
       }
@@ -106,11 +103,17 @@
       if ( -1L == candidateRectIndex ) 
          break;
 
-      memcpy(&pCurrentLocations[candidateRectIndex].documentRect,&visibleRects[inverseVisibleRectIndexes[candidateRectIndex]],sizeof(RECT));
+      RECT rTemp;
+
+      memcpy(&rTemp,&visibleRects[inverseVisibleRectIndexes[candidateRectIndex]],sizeof(RECT));
+
+      memcpy(&pCurrentLocations[candidateRectIndex].documentRect,&rTemp,sizeof(RECT));
+
+      pTemplateDocumentUI -> convertToPoints(&pCurrentLocations[candidateRectIndex].documentRect);
 
       candidateRectIndex = -1L;
 
-      REDRAW_THE_FUCKING_WINDOW
+      REDRAW_THE_WINDOW
 
       }
       break;
@@ -261,9 +264,6 @@
             if ( 0 == deltaX || 0 == deltaY )
                break;
 
-            deltaX = (long)((double)deltaX / pTemplateDocumentUI -> scaleToPixels);
-            deltaY = (long)((double)deltaY / pTemplateDocumentUI -> scaleToPixels);
-
             double aspectRatio = pSignaturePad -> WidthInInches() / pSignaturePad -> HeightInInches();
 
             deltaY = (long)((double)deltaX / aspectRatio);
@@ -272,7 +272,7 @@
 
             case 0:
                visibleRects[sourceIndex].left = rBase.left + deltaX;
-               visibleRects[sourceIndex].top = rBase.top - deltaY;
+               visibleRects[sourceIndex].top = rBase.top + deltaY;
                visibleRects[sourceIndex].right = rBase.right;
                visibleRects[sourceIndex].bottom = rBase.bottom;
                break;
@@ -280,7 +280,7 @@
             case 1:
                visibleRects[sourceIndex].left = rBase.left;
                visibleRects[sourceIndex].right = rBase.right + deltaX;
-               visibleRects[sourceIndex].top = rBase.top + deltaY;
+               visibleRects[sourceIndex].top = rBase.top - deltaY;
                visibleRects[sourceIndex].bottom = rBase.bottom;
                break;
 
@@ -288,36 +288,36 @@
                visibleRects[sourceIndex].left = rBase.left;
                visibleRects[sourceIndex].top = rBase.top;
                visibleRects[sourceIndex].right = rBase.right + deltaX;
-               visibleRects[sourceIndex].bottom = rBase.bottom - deltaY;
+               visibleRects[sourceIndex].bottom = rBase.bottom + deltaY;
                break;
 
             case 3:
                visibleRects[sourceIndex].left = rBase.left + deltaX;
                visibleRects[sourceIndex].top = rBase.top;
                visibleRects[sourceIndex].right = rBase.right;
-               visibleRects[sourceIndex].bottom = rBase.bottom + deltaY;
+               visibleRects[sourceIndex].bottom = rBase.bottom - deltaY;
                break;
 
             }
 
             double cx = (double)(visibleRects[sourceIndex].right - visibleRects[sourceIndex].left) / 72.0;
-            double cy = (double)(visibleRects[sourceIndex].top - visibleRects[sourceIndex].bottom) / 72.0;
+            double cy = (double)(visibleRects[sourceIndex].bottom - visibleRects[sourceIndex].top) / 72.0;
 
             sprintf(szMessage,"The signature is %4.2lf inches wide and %4.2lf inches high",cx,cy);
 
          } else {
 
-            visibleRects[sourceIndex].left = rBase.left + (long)((double)deltaX / pTemplateDocumentUI -> scaleToPixels);
-            visibleRects[sourceIndex].right = rBase.right + (long)((double)deltaX / pTemplateDocumentUI -> scaleToPixels);
+            visibleRects[sourceIndex].left = rBase.left + (long)((double)deltaX);
+            visibleRects[sourceIndex].right = rBase.right + (long)((double)deltaX);
 
-            visibleRects[sourceIndex].top = rBase.top - (long)((double)deltaY / pTemplateDocumentUI -> scaleToPixels);
-            visibleRects[sourceIndex].bottom = rBase.bottom - (long)((double)deltaY / pTemplateDocumentUI -> scaleToPixels);
+            visibleRects[sourceIndex].top = rBase.top + (long)((double)deltaY);
+            visibleRects[sourceIndex].bottom = rBase.bottom + (long)((double)deltaY);
 
             double pdfWidth = (double)(pTemplateDocumentUI -> Parent() -> PDFPageWidth() ) / 72.0;
             double pdfHeight = (double)(pTemplateDocumentUI -> Parent() -> PDFPageHeight() ) / 72.0;
 
             double x = (double)visibleRects[sourceIndex].left / 72.0;
-            double y = (double)(pTemplateDocumentUI -> Parent() -> PDFPageHeight() - visibleRects[sourceIndex].top) / 72.0;
+            double y = (double)(pTemplateDocumentUI -> Parent() -> PDFPageHeight() + visibleRects[sourceIndex].top / pTemplateDocumentUI -> scaleToPixels ) / 72.0;
 
             sprintf(szMessage,"The top left of the signature is at: %4.2lf inches across and %4.2lf inches down",x,y);
 
@@ -325,11 +325,13 @@
 
          SetDlgItemText(hwnd,IDDI_CV_LOCATIONS_ADDITIONAL_INFO,szMessage);
 
-         DRAW_GREEN_BOX(pTemplateDocumentUI,PS_SOLID,&visibleRects[sourceIndex],2)
+         DRAW_GREEN_BOX_IN_PIXELS(pTemplateDocumentUI,PS_SOLID,(&visibleRects[sourceIndex]),2)
 
          break;
 
       }
+
+      cornerGrabIndex = -2L;
 
       if ( currentMouseX < pTemplateDocumentUI -> rcPageParentCoordinates.left || currentMouseX > pTemplateDocumentUI -> rcPageParentCoordinates.right || 
                   currentMouseY < pTemplateDocumentUI -> rcPageParentCoordinates.top || currentMouseY > pTemplateDocumentUI -> rcPageParentCoordinates.bottom ) 
@@ -343,8 +345,6 @@
 
       POINTL ptlMouse = {currentMouseX - pTemplateDocumentUI -> rcPageParentCoordinates.left,currentMouseY - pTemplateDocumentUI -> rcPageParentCoordinates.top};
 
-      pTemplateDocumentUI -> convertToPoints(&ptlMouse);
-
       RECT *pr = &visibleRects[0];
 
       cornerGrabIndex = -1L;
@@ -353,9 +353,9 @@
 
          vrIndex++;
 
-         if ( ptlMouse.x < pr -> left || ptlMouse.x > pr -> right || ptlMouse.y > pr -> top || ptlMouse.y < pr -> bottom ) {
+         if ( ptlMouse.x < pr -> left || ptlMouse.x > pr -> right || ptlMouse.y < pr -> top || ptlMouse.y > pr -> bottom ) {
 
-            DRAW_BLACK_BOX(pTemplateDocumentUI,PS_SOLID,pr,2)
+            DRAW_BOX_IN_PIXELS(pTemplateDocumentUI,PS_SOLID,pr,2)
 
             if ( ! noteEmitted )
                SetWindowText(hwndInstructions,"Right click for Options");
@@ -365,9 +365,9 @@
 
          } else {
 
-            candidateRectIndex = visibleRectIndexes[vrIndex];
+            DRAW_GREEN_BOX_IN_PIXELS(pTemplateDocumentUI,PS_SOLID,pr,2)
 
-            DRAW_GREEN_BOX(pTemplateDocumentUI,PS_SOLID,pr,2)
+            candidateRectIndex = visibleRectIndexes[vrIndex];
 
             if ( ! noteEmitted )
                SetWindowText(hwndInstructions,"Right click for Options, Left click to move\rResize by dragging corners.");
@@ -400,6 +400,28 @@
       }
       return (LRESULT)0;
 
+   case WM_SETCURSOR:
+      switch ( cornerGrabIndex ) {
+      case 0:
+         SetCursor(LoadCursor(NULL,IDC_SIZENWSE));
+         break;
+      case 3:
+         SetCursor(LoadCursor(NULL,IDC_SIZENESW));
+         break;
+      case 1:
+         SetCursor(LoadCursor(NULL,IDC_SIZENESW));
+         break;
+      case 2:
+         SetCursor(LoadCursor(NULL,IDC_SIZENWSE));
+         break;
+      case -1:
+         SetCursor(LoadCursor(NULL,IDC_HAND));
+         break;
+      default:
+         SetCursor(LoadCursor(NULL,IDC_ARROW));
+         break;
+      }
+      return TRUE;
    
    case WM_COMMAND: {
 
@@ -412,7 +434,7 @@
       case IDDI_CV_LOCATIONS_RESET: 
          memset(pCurrentLocations,0,sizeof(pDoodleOptionProps -> theLocations));
          entryCountRects = 0L;
-         REDRAW_THE_FUCKING_WINDOW
+         REDRAW_THE_WINDOW
          break;
 
       case IDDI_SIGNING_LOCATIONS_ORDER: {
@@ -443,7 +465,7 @@
          pCurrentLocations[oldCandidateRectIndex].pdfAdobePageNumber = pCurrentLocations[candidateRectIndex].pdfAdobePageNumber;
          pCurrentLocations[candidateRectIndex].pdfAdobePageNumber = pnTemp;
 
-         REDRAW_THE_FUCKING_WINDOW
+         REDRAW_THE_WINDOW
          }
          break;
 
@@ -461,6 +483,13 @@
 
          mouseMenuX -= pTemplateDocumentUI -> rcPageParentCoordinates.left;
          mouseMenuY -= pTemplateDocumentUI -> rcPageParentCoordinates.top;
+
+         POINTL ptlMouse{mouseMenuX,mouseMenuY};
+
+         pTemplateDocumentUI -> resolveCurrentPageNumber(&ptlMouse);
+
+         mouseMenuX -= pTemplateDocumentUI -> rcPDFPagePixelsInView.left;
+         mouseMenuY -= pTemplateDocumentUI -> rcPDFPagePixelsInView.top;
 
          RECT *pTarget = &pCurrentLocations[0].documentRect;
 
@@ -491,6 +520,13 @@
 
          mouseMenuX -= pTemplateDocumentUI -> rcPageParentCoordinates.left;
          mouseMenuY -= pTemplateDocumentUI -> rcPageParentCoordinates.top;
+
+         POINTL ptlMouse{mouseMenuX,mouseMenuY};
+
+         pTemplateDocumentUI -> resolveCurrentPageNumber(&ptlMouse);
+
+         mouseMenuX -= pTemplateDocumentUI -> rcPDFPagePixelsInView.left;
+         mouseMenuY -= pTemplateDocumentUI -> rcPDFPagePixelsInView.top;
 
          RECT *pSource = &pCurrentLocations[copySourceRectIndex].documentRect;
 
@@ -546,17 +582,17 @@
          if ( -1L == candidateRectIndex )
             break;
 
-         struct writingLocation *wl = &pCurrentLocations[candidateRectIndex];
+         struct writingLocation *pWL = &pCurrentLocations[candidateRectIndex];
 
-         long lastIndex = candidateRectIndex;
-         while ( wl[lastIndex - candidateRectIndex].documentRect.left != wl[lastIndex - candidateRectIndex].documentRect.right )
+         long lastIndex = candidateRectIndex + 1;
+         while ( pWL[lastIndex - candidateRectIndex].documentRect.left != pWL[lastIndex - candidateRectIndex].documentRect.right )
             lastIndex++;
 
          long n = (lastIndex - candidateRectIndex) * sizeof(struct writingLocation);
          BYTE *pX = new BYTE[n];
 
-         memcpy(pX,&wl[candidateRectIndex + 1],n);
-         memcpy(&wl[candidateRectIndex],pX,n);
+         memcpy(pX,&pCurrentLocations[candidateRectIndex + 1],n);
+         memcpy(pWL,pX,n);
 
          delete [] pX;         
 
@@ -564,7 +600,7 @@
 
          candidateRectIndex = -1L;
 
-         REDRAW_THE_FUCKING_WINDOW
+         REDRAW_THE_WINDOW
 
          }
          break;
@@ -628,6 +664,7 @@
 #ifdef IDDI_SIGNING_LOCATIONS_SKIP_SIGNING
       }
 #endif
+      //PostMessage(hwnd,WM_REDRAW_THE_WINDOW,0L,0L);
       }
       break;
 

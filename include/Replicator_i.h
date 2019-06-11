@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri May 31 18:13:10 2019
+/* at Tue Jun 11 14:14:47 2019
  */
 /* Compiler settings for Replicator.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -69,9 +69,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionEnhancedReplicatorBackEnd;
+DEFINE_GUID(LIBID_CursiVisionEnhancedReplicatorBackEnd,0x8870FA7E,0xCF04,0x4a03,0xA2,0x0E,0xBB,0x5B,0x83,0x07,0x1E,0x0D);
 
-EXTERN_C const CLSID CLSID_CursiVisionEnhancedReplicatorBackEnd;
+DEFINE_GUID(CLSID_CursiVisionEnhancedReplicatorBackEnd,0x8870FA7E,0xCF04,0x4a03,0xA2,0x0E,0xBB,0x5B,0x83,0x07,0x1E,0x0E);
 
 #ifdef __cplusplus
 
