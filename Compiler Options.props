@@ -13,13 +13,13 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;%GSYSTEM_HOME%\Common\include;%GSYSTEM_HOME%\Common\source;%GSYSTEM_HOME%\Common\include\pdfEnabler;%GSYSTEM_HOME%\Visio Logger\Common\include;$(SolutionDir);$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;%GSYSTEM_HOME%\Common\include;%GSYSTEM_HOME%\Common\source;%GSYSTEM_HOME%\Common\include\pdfEnabler;%GSYSTEM_HOME%\Visio Logger\Common\include;$(SolutionDir);$(SolutionDir)include;D:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0603;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>%GSYSTEM_HOME%\Common\lib\$(Configuration)\$(Platform);%GSYSTEM_HOME%\Common\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%GSYSTEM_HOME%\Common\lib\$(Configuration)\$(Platform);%GSYSTEM_HOME%\Common\lib\$(Platform);D:\Program Files (x86)\Windows Kits\10\Lib\10.0.15063.0\ucrt\x86;D:\Program Files (x86)\Windows Kits\10\Lib\10.0.15063.0\ucrt\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>$(GSYSTEM_HOME)\Common\lib\$(Platform)\$(TargetName).lib</ImportLibrary>
       <TargetMachine>NotSet</TargetMachine>
       <AdditionalOptions>/SECTION:.rsrc,rw %(AdditionalOptions)</AdditionalOptions>
