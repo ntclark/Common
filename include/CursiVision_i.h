@@ -3,12 +3,12 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Jun 11 14:17:49 2019
+ /* File created by MIDL compiler version 8.01.0622 */
+/* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for CursiVision.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
-    protocol : dce , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
+    protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -16,12 +16,11 @@
 */
 /* @@MIDL_FILE_HEADING(  ) */
 
-#pragma warning( disable: 4049 )  /* more than 64k source lines */
 
 
 /* verify that the <rpcndr.h> version is high enough to compile this file*/
 #ifndef __REQUIRED_RPCNDR_H_VERSION__
-#define __REQUIRED_RPCNDR_H_VERSION__ 475
+#define __REQUIRED_RPCNDR_H_VERSION__ 500
 #endif
 
 #include "rpc.h"
@@ -29,7 +28,7 @@
 
 #ifndef __RPCNDR_H_VERSION__
 #error this stub requires an updated version of <rpcndr.h>
-#endif // __RPCNDR_H_VERSION__
+#endif /* __RPCNDR_H_VERSION__ */
 
 
 #ifndef __CursiVision_i_h__
@@ -1050,7 +1049,6 @@ DEFINE_GUID(IID_ICursiVisionBackEnd,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE
             BSTR resultsFile,
             BSTR graphicDataFile,
             BSTR settingsFileName,
-            BSTR topazSignature,
             BOOL isTempFile) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE CanRunFromTools( void) = 0;
@@ -1119,7 +1117,6 @@ DEFINE_GUID(IID_ICursiVisionBackEnd,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE
             BSTR resultsFile,
             BSTR graphicDataFile,
             BSTR settingsFileName,
-            BSTR topazSignature,
             BOOL isTempFile);
         
         HRESULT ( STDMETHODCALLTYPE *CanRunFromTools )( 
@@ -1179,8 +1176,8 @@ DEFINE_GUID(IID_ICursiVisionBackEnd,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE
 #define ICursiVisionBackEnd_get_Description(This,pDescription)	\
     ( (This)->lpVtbl -> get_Description(This,pDescription) ) 
 
-#define ICursiVisionBackEnd_Dispose(This,inputFile,resultsFile,graphicDataFile,settingsFileName,topazSignature,isTempFile)	\
-    ( (This)->lpVtbl -> Dispose(This,inputFile,resultsFile,graphicDataFile,settingsFileName,topazSignature,isTempFile) ) 
+#define ICursiVisionBackEnd_Dispose(This,inputFile,resultsFile,graphicDataFile,settingsFileName,isTempFile)	\
+    ( (This)->lpVtbl -> Dispose(This,inputFile,resultsFile,graphicDataFile,settingsFileName,isTempFile) ) 
 
 #define ICursiVisionBackEnd_CanRunFromTools(This)	\
     ( (This)->lpVtbl -> CanRunFromTools(This) ) 
