@@ -176,10 +176,10 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         virtual long STDMETHODCALLTYPE ClearSigningRects( void) = 0;
         
         virtual long STDMETHODCALLTYPE Save( 
-            /* [defaultvalue][optional] */ char *pszNewName = 0) = 0;
+            /* [defaultvalue] */ char *pszNewName = 0) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Destroy( 
-            /* [defaultvalue][optional] */ BOOL keepOutlines = 0) = 0;
+            /* [defaultvalue] */ BOOL keepOutlines = 0) = 0;
         
         virtual char *STDMETHODCALLTYPE GetDispositionSettingsFileName( void) = 0;
         
@@ -306,11 +306,11 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         
         long ( STDMETHODCALLTYPE *Save )( 
             IPrintingSupportProfile * This,
-            /* [defaultvalue][optional] */ char *pszNewName);
+            /* [defaultvalue] */ char *pszNewName);
         
         HRESULT ( STDMETHODCALLTYPE *Destroy )( 
             IPrintingSupportProfile * This,
-            /* [defaultvalue][optional] */ BOOL keepOutlines);
+            /* [defaultvalue] */ BOOL keepOutlines);
         
         char *( STDMETHODCALLTYPE *GetDispositionSettingsFileName )( 
             IPrintingSupportProfile * This);

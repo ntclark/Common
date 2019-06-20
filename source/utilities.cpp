@@ -480,6 +480,7 @@
    return TRUE;
    }
 
+
    void adjustPropertiesDialogSize(SIZEL *pSizelDesired,DLGTEMPLATEEX *pDialog,long cyReservedHeader) {
 
    if ( ! pSizelDesired -> cx )
