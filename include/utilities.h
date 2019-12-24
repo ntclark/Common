@@ -25,6 +25,14 @@ typedef struct DLGTEMPLATEEX {
    short y;
    short cx;
    short cy;
+
+   BYTE menu[2];
+   BYTE windowClass[2];
+   BYTE title[2];
+   short pointsize;
+   short weight;
+   short bItalic;
+   WCHAR font[32];
 #if 0
    sz_Or_Ord menu;
    sz_Or_Ord windowClass;

@@ -3,12 +3,12 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Mar 09 13:39:14 2018
+ /* File created by MIDL compiler version 8.01.0622 */
+/* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for OpenGLImplementation.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
-    protocol : dce , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
+    protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -16,12 +16,11 @@
 */
 /* @@MIDL_FILE_HEADING(  ) */
 
-#pragma warning( disable: 4049 )  /* more than 64k source lines */
 
 
 /* verify that the <rpcndr.h> version is high enough to compile this file*/
 #ifndef __REQUIRED_RPCNDR_H_VERSION__
-#define __REQUIRED_RPCNDR_H_VERSION__ 475
+#define __REQUIRED_RPCNDR_H_VERSION__ 500
 #endif
 
 #include "rpc.h"
@@ -29,7 +28,7 @@
 
 #ifndef __RPCNDR_H_VERSION__
 #error this stub requires an updated version of <rpcndr.h>
-#endif // __RPCNDR_H_VERSION__
+#endif /* __RPCNDR_H_VERSION__ */
 
 
 #ifndef __OpenGLImplementation_i_h__
@@ -46,6 +45,13 @@
 typedef interface IOpenGLImplementation IOpenGLImplementation;
 
 #endif 	/* __IOpenGLImplementation_FWD_DEFINED__ */
+
+
+#ifndef __IOpenGL_FWD_DEFINED__
+#define __IOpenGL_FWD_DEFINED__
+typedef interface IOpenGL IOpenGL;
+
+#endif 	/* __IOpenGL_FWD_DEFINED__ */
 
 
 #ifndef __OpenGLImplementor_FWD_DEFINED__
@@ -223,6 +229,10 @@ EXTERN_C const IID IID_IOpenGLImplementation;
             long x2,
             long y2,
             BYTE *pResult) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE EnableOpenGLCapability( 
+            int GlEnum,
+            BOOL isEnabled) = 0;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_HDC( 
             HDC *getHDC) = 0;
@@ -598,6 +608,11 @@ EXTERN_C const IID IID_IOpenGLImplementation;
             long y2,
             BYTE *pResult);
         
+        HRESULT ( STDMETHODCALLTYPE *EnableOpenGLCapability )( 
+            IOpenGLImplementation * This,
+            int GlEnum,
+            BOOL isEnabled);
+        
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_HDC )( 
             IOpenGLImplementation * This,
             HDC *getHDC);
@@ -927,6 +942,9 @@ EXTERN_C const IID IID_IOpenGLImplementation;
 #define IOpenGLImplementation_GetPixels(This,x1,y1,x2,y2,pResult)	\
     ( (This)->lpVtbl -> GetPixels(This,x1,y1,x2,y2,pResult) ) 
 
+#define IOpenGLImplementation_EnableOpenGLCapability(This,GlEnum,isEnabled)	\
+    ( (This)->lpVtbl -> EnableOpenGLCapability(This,GlEnum,isEnabled) ) 
+
 #define IOpenGLImplementation_get_HDC(This,getHDC)	\
     ( (This)->lpVtbl -> get_HDC(This,getHDC) ) 
 
@@ -1068,6 +1086,916 @@ EXTERN_C const IID IID_IOpenGLImplementation;
 
 
 #endif 	/* __IOpenGLImplementation_INTERFACE_DEFINED__ */
+
+
+#ifndef __IOpenGL_INTERFACE_DEFINED__
+#define __IOpenGL_INTERFACE_DEFINED__
+
+/* interface IOpenGL */
+/* [object][helpstring][uuid] */ 
+
+
+EXTERN_C const IID IID_IOpenGL;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("8CAEFD99-55E6-11d3-8365-006008BD5BC3")
+    IOpenGL : public IUnknown
+    {
+    public:
+        virtual HRESULT STDMETHODCALLTYPE SetOpenGLTargetWindow( 
+            HWND hwndTarget) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ClearColor( 
+            float red,
+            float green,
+            float blue,
+            float alpha) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ClearDepth( 
+            double depth) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Clear( 
+            unsigned int bitField) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ChooseAndSetPixelFormat( 
+            UINT_PTR deviceContext,
+            int *pAttributes,
+            int *pResult) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE CreateContext( 
+            UINT_PTR deviceContext,
+            UINT_PTR *pResult) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DeleteContext( 
+            UINT_PTR renderingContext,
+            BOOL *pResult) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE MakeCurrent( 
+            UINT_PTR deviceContext,
+            UINT_PTR renderingContext,
+            BOOL *pResult) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetFloatv( 
+            unsigned int GLenum,
+            float *pResult) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Enable( 
+            unsigned int glEnum) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Disable( 
+            unsigned int glEnum) = 0;
+        
+        virtual BOOL STDMETHODCALLTYPE IsEnabled( 
+            unsigned int glEnum) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ColorMask( 
+            unsigned char red,
+            unsigned char green,
+            unsigned char blue,
+            unsigned char alpha) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DepthFunc( 
+            unsigned int v) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DepthMask( 
+            unsigned char __MIDL__IOpenGL0000) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Viewport( 
+            int __MIDL__IOpenGL0001,
+            int __MIDL__IOpenGL0002,
+            int __MIDL__IOpenGL0003,
+            int __MIDL__IOpenGL0004) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Scissor( 
+            int __MIDL__IOpenGL0005,
+            int __MIDL__IOpenGL0006,
+            int __MIDL__IOpenGL0007,
+            int __MIDL__IOpenGL0008) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE CullFace( 
+            unsigned int __MIDL__IOpenGL0009) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetIntegerv( 
+            unsigned int GLenum,
+            int *pResult) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE PixelStorei( 
+            unsigned int GLenum,
+            int value) = 0;
+        
+        virtual unsigned char *STDMETHODCALLTYPE GetString( 
+            unsigned int GLenum) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Flush( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetCurrentContext( 
+            UINT_PTR *pResult) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DrawBuffer( 
+            unsigned int GLenum) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ReadBuffer( 
+            unsigned int GLenum) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetFramebufferAttachmentParameteriv( 
+            unsigned int target,
+            unsigned int attachment,
+            unsigned int pName,
+            int *pParams) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE PointSize( 
+            float size) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DeleteBuffers( 
+            int countBuffers,
+            unsigned int *pBuffers) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE BindBuffer( 
+            unsigned int target,
+            int buffer) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE BufferData( 
+            unsigned int target,
+            long long size,
+            void *pData,
+            unsigned int usage) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GenBuffers( 
+            int count,
+            unsigned int *pBuffers) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE BindVertexArray( 
+            unsigned int array) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DeleteVertexArrays( 
+            int count,
+            unsigned int *pArrays) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GenVertexArrays( 
+            int count,
+            unsigned int *pArrays) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE EnableVertexAttribArray( 
+            unsigned int index) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE VertexAttribPointer( 
+            unsigned int index,
+            int size,
+            unsigned int type,
+            boolean normalized,
+            int strid,
+            void *pointer) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE VertexAttribDivisorARB( 
+            unsigned int index,
+            unsigned int divisor) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DisableVertexAttribArray( 
+            unsigned int index) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ShaderSource( 
+            unsigned int shader,
+            int count,
+            const char *const *ppString,
+            int *pLength) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE CompileShader( 
+            int shader) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE CreateProgram( 
+            unsigned int *pResult) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE CreateShader( 
+            unsigned int type,
+            unsigned int *pResult) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetShaderiv( 
+            unsigned int shader,
+            unsigned int pname,
+            int *pParam) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetShaderInfoLog( 
+            unsigned int shader,
+            int bufSize,
+            int *pLength,
+            char *infoLog) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DeleteShader( 
+            unsigned int shader) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE AttachShader( 
+            unsigned int program,
+            unsigned int shader) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DetachShader( 
+            unsigned int program,
+            unsigned int shader) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DrawRangeElements( 
+            unsigned int mode,
+            int start,
+            int end,
+            int count,
+            unsigned int type,
+            const void *indices) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE BindFragDataLocation( 
+            int program,
+            int colorNumber,
+            const char *name) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE LinkProgram( 
+            int program) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetProgramiv( 
+            int program,
+            unsigned int pname,
+            int *param) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetProgramInfoLog( 
+            int program,
+            int bufferSize,
+            int *oKength,
+            char *infoLog) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE UseProgram( 
+            int program) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE DeleteProgram( 
+            int program) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetUniformLocation( 
+            int program,
+            const char *name,
+            int *pResult) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Uniform1i( 
+            int location,
+            int v0) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Uniform1iv( 
+            int location,
+            int count,
+            const int *value) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Uniform1f( 
+            int location,
+            float v0) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Uniform1fv( 
+            int location,
+            int count,
+            const float *value) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Uniform2iv( 
+            int location,
+            int count,
+            const int *value) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Uniform2fv( 
+            int location,
+            int count,
+            const float *value) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Uniform3fv( 
+            int location,
+            int count,
+            const float *value) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Uniform4fv( 
+            int location,
+            int count,
+            const float *value) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetAttribLocation( 
+            int program,
+            const char *name,
+            int *pResult) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE UniformMatrix4fv( 
+            int location,
+            int count,
+            boolean transpose,
+            const float *value) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE BlendFuncSeparate( 
+            unsigned int sfactorRGB,
+            unsigned int dfactorRGB,
+            unsigned int sfactorAlpha,
+            unsigned int dfactorAlpha) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE BlendEquationSeparate( 
+            unsigned int modeRGB,
+            unsigned int modeAlpha) = 0;
+        
+    };
+    
+    
+#else 	/* C style interface */
+
+    typedef struct IOpenGLVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            IOpenGL * This,
+            /* [in] */ REFIID riid,
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            IOpenGL * This);
+        
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            IOpenGL * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *SetOpenGLTargetWindow )( 
+            IOpenGL * This,
+            HWND hwndTarget);
+        
+        HRESULT ( STDMETHODCALLTYPE *ClearColor )( 
+            IOpenGL * This,
+            float red,
+            float green,
+            float blue,
+            float alpha);
+        
+        HRESULT ( STDMETHODCALLTYPE *ClearDepth )( 
+            IOpenGL * This,
+            double depth);
+        
+        HRESULT ( STDMETHODCALLTYPE *Clear )( 
+            IOpenGL * This,
+            unsigned int bitField);
+        
+        HRESULT ( STDMETHODCALLTYPE *ChooseAndSetPixelFormat )( 
+            IOpenGL * This,
+            UINT_PTR deviceContext,
+            int *pAttributes,
+            int *pResult);
+        
+        HRESULT ( STDMETHODCALLTYPE *CreateContext )( 
+            IOpenGL * This,
+            UINT_PTR deviceContext,
+            UINT_PTR *pResult);
+        
+        HRESULT ( STDMETHODCALLTYPE *DeleteContext )( 
+            IOpenGL * This,
+            UINT_PTR renderingContext,
+            BOOL *pResult);
+        
+        HRESULT ( STDMETHODCALLTYPE *MakeCurrent )( 
+            IOpenGL * This,
+            UINT_PTR deviceContext,
+            UINT_PTR renderingContext,
+            BOOL *pResult);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetFloatv )( 
+            IOpenGL * This,
+            unsigned int GLenum,
+            float *pResult);
+        
+        HRESULT ( STDMETHODCALLTYPE *Enable )( 
+            IOpenGL * This,
+            unsigned int glEnum);
+        
+        HRESULT ( STDMETHODCALLTYPE *Disable )( 
+            IOpenGL * This,
+            unsigned int glEnum);
+        
+        BOOL ( STDMETHODCALLTYPE *IsEnabled )( 
+            IOpenGL * This,
+            unsigned int glEnum);
+        
+        HRESULT ( STDMETHODCALLTYPE *ColorMask )( 
+            IOpenGL * This,
+            unsigned char red,
+            unsigned char green,
+            unsigned char blue,
+            unsigned char alpha);
+        
+        HRESULT ( STDMETHODCALLTYPE *DepthFunc )( 
+            IOpenGL * This,
+            unsigned int v);
+        
+        HRESULT ( STDMETHODCALLTYPE *DepthMask )( 
+            IOpenGL * This,
+            unsigned char __MIDL__IOpenGL0000);
+        
+        HRESULT ( STDMETHODCALLTYPE *Viewport )( 
+            IOpenGL * This,
+            int __MIDL__IOpenGL0001,
+            int __MIDL__IOpenGL0002,
+            int __MIDL__IOpenGL0003,
+            int __MIDL__IOpenGL0004);
+        
+        HRESULT ( STDMETHODCALLTYPE *Scissor )( 
+            IOpenGL * This,
+            int __MIDL__IOpenGL0005,
+            int __MIDL__IOpenGL0006,
+            int __MIDL__IOpenGL0007,
+            int __MIDL__IOpenGL0008);
+        
+        HRESULT ( STDMETHODCALLTYPE *CullFace )( 
+            IOpenGL * This,
+            unsigned int __MIDL__IOpenGL0009);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetIntegerv )( 
+            IOpenGL * This,
+            unsigned int GLenum,
+            int *pResult);
+        
+        HRESULT ( STDMETHODCALLTYPE *PixelStorei )( 
+            IOpenGL * This,
+            unsigned int GLenum,
+            int value);
+        
+        unsigned char *( STDMETHODCALLTYPE *GetString )( 
+            IOpenGL * This,
+            unsigned int GLenum);
+        
+        HRESULT ( STDMETHODCALLTYPE *Flush )( 
+            IOpenGL * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetCurrentContext )( 
+            IOpenGL * This,
+            UINT_PTR *pResult);
+        
+        HRESULT ( STDMETHODCALLTYPE *DrawBuffer )( 
+            IOpenGL * This,
+            unsigned int GLenum);
+        
+        HRESULT ( STDMETHODCALLTYPE *ReadBuffer )( 
+            IOpenGL * This,
+            unsigned int GLenum);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetFramebufferAttachmentParameteriv )( 
+            IOpenGL * This,
+            unsigned int target,
+            unsigned int attachment,
+            unsigned int pName,
+            int *pParams);
+        
+        HRESULT ( STDMETHODCALLTYPE *PointSize )( 
+            IOpenGL * This,
+            float size);
+        
+        HRESULT ( STDMETHODCALLTYPE *DeleteBuffers )( 
+            IOpenGL * This,
+            int countBuffers,
+            unsigned int *pBuffers);
+        
+        HRESULT ( STDMETHODCALLTYPE *BindBuffer )( 
+            IOpenGL * This,
+            unsigned int target,
+            int buffer);
+        
+        HRESULT ( STDMETHODCALLTYPE *BufferData )( 
+            IOpenGL * This,
+            unsigned int target,
+            long long size,
+            void *pData,
+            unsigned int usage);
+        
+        HRESULT ( STDMETHODCALLTYPE *GenBuffers )( 
+            IOpenGL * This,
+            int count,
+            unsigned int *pBuffers);
+        
+        HRESULT ( STDMETHODCALLTYPE *BindVertexArray )( 
+            IOpenGL * This,
+            unsigned int array);
+        
+        HRESULT ( STDMETHODCALLTYPE *DeleteVertexArrays )( 
+            IOpenGL * This,
+            int count,
+            unsigned int *pArrays);
+        
+        HRESULT ( STDMETHODCALLTYPE *GenVertexArrays )( 
+            IOpenGL * This,
+            int count,
+            unsigned int *pArrays);
+        
+        HRESULT ( STDMETHODCALLTYPE *EnableVertexAttribArray )( 
+            IOpenGL * This,
+            unsigned int index);
+        
+        HRESULT ( STDMETHODCALLTYPE *VertexAttribPointer )( 
+            IOpenGL * This,
+            unsigned int index,
+            int size,
+            unsigned int type,
+            boolean normalized,
+            int strid,
+            void *pointer);
+        
+        HRESULT ( STDMETHODCALLTYPE *VertexAttribDivisorARB )( 
+            IOpenGL * This,
+            unsigned int index,
+            unsigned int divisor);
+        
+        HRESULT ( STDMETHODCALLTYPE *DisableVertexAttribArray )( 
+            IOpenGL * This,
+            unsigned int index);
+        
+        HRESULT ( STDMETHODCALLTYPE *ShaderSource )( 
+            IOpenGL * This,
+            unsigned int shader,
+            int count,
+            const char *const *ppString,
+            int *pLength);
+        
+        HRESULT ( STDMETHODCALLTYPE *CompileShader )( 
+            IOpenGL * This,
+            int shader);
+        
+        HRESULT ( STDMETHODCALLTYPE *CreateProgram )( 
+            IOpenGL * This,
+            unsigned int *pResult);
+        
+        HRESULT ( STDMETHODCALLTYPE *CreateShader )( 
+            IOpenGL * This,
+            unsigned int type,
+            unsigned int *pResult);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetShaderiv )( 
+            IOpenGL * This,
+            unsigned int shader,
+            unsigned int pname,
+            int *pParam);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetShaderInfoLog )( 
+            IOpenGL * This,
+            unsigned int shader,
+            int bufSize,
+            int *pLength,
+            char *infoLog);
+        
+        HRESULT ( STDMETHODCALLTYPE *DeleteShader )( 
+            IOpenGL * This,
+            unsigned int shader);
+        
+        HRESULT ( STDMETHODCALLTYPE *AttachShader )( 
+            IOpenGL * This,
+            unsigned int program,
+            unsigned int shader);
+        
+        HRESULT ( STDMETHODCALLTYPE *DetachShader )( 
+            IOpenGL * This,
+            unsigned int program,
+            unsigned int shader);
+        
+        HRESULT ( STDMETHODCALLTYPE *DrawRangeElements )( 
+            IOpenGL * This,
+            unsigned int mode,
+            int start,
+            int end,
+            int count,
+            unsigned int type,
+            const void *indices);
+        
+        HRESULT ( STDMETHODCALLTYPE *BindFragDataLocation )( 
+            IOpenGL * This,
+            int program,
+            int colorNumber,
+            const char *name);
+        
+        HRESULT ( STDMETHODCALLTYPE *LinkProgram )( 
+            IOpenGL * This,
+            int program);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetProgramiv )( 
+            IOpenGL * This,
+            int program,
+            unsigned int pname,
+            int *param);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetProgramInfoLog )( 
+            IOpenGL * This,
+            int program,
+            int bufferSize,
+            int *oKength,
+            char *infoLog);
+        
+        HRESULT ( STDMETHODCALLTYPE *UseProgram )( 
+            IOpenGL * This,
+            int program);
+        
+        HRESULT ( STDMETHODCALLTYPE *DeleteProgram )( 
+            IOpenGL * This,
+            int program);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetUniformLocation )( 
+            IOpenGL * This,
+            int program,
+            const char *name,
+            int *pResult);
+        
+        HRESULT ( STDMETHODCALLTYPE *Uniform1i )( 
+            IOpenGL * This,
+            int location,
+            int v0);
+        
+        HRESULT ( STDMETHODCALLTYPE *Uniform1iv )( 
+            IOpenGL * This,
+            int location,
+            int count,
+            const int *value);
+        
+        HRESULT ( STDMETHODCALLTYPE *Uniform1f )( 
+            IOpenGL * This,
+            int location,
+            float v0);
+        
+        HRESULT ( STDMETHODCALLTYPE *Uniform1fv )( 
+            IOpenGL * This,
+            int location,
+            int count,
+            const float *value);
+        
+        HRESULT ( STDMETHODCALLTYPE *Uniform2iv )( 
+            IOpenGL * This,
+            int location,
+            int count,
+            const int *value);
+        
+        HRESULT ( STDMETHODCALLTYPE *Uniform2fv )( 
+            IOpenGL * This,
+            int location,
+            int count,
+            const float *value);
+        
+        HRESULT ( STDMETHODCALLTYPE *Uniform3fv )( 
+            IOpenGL * This,
+            int location,
+            int count,
+            const float *value);
+        
+        HRESULT ( STDMETHODCALLTYPE *Uniform4fv )( 
+            IOpenGL * This,
+            int location,
+            int count,
+            const float *value);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetAttribLocation )( 
+            IOpenGL * This,
+            int program,
+            const char *name,
+            int *pResult);
+        
+        HRESULT ( STDMETHODCALLTYPE *UniformMatrix4fv )( 
+            IOpenGL * This,
+            int location,
+            int count,
+            boolean transpose,
+            const float *value);
+        
+        HRESULT ( STDMETHODCALLTYPE *BlendFuncSeparate )( 
+            IOpenGL * This,
+            unsigned int sfactorRGB,
+            unsigned int dfactorRGB,
+            unsigned int sfactorAlpha,
+            unsigned int dfactorAlpha);
+        
+        HRESULT ( STDMETHODCALLTYPE *BlendEquationSeparate )( 
+            IOpenGL * This,
+            unsigned int modeRGB,
+            unsigned int modeAlpha);
+        
+        END_INTERFACE
+    } IOpenGLVtbl;
+
+    interface IOpenGL
+    {
+        CONST_VTBL struct IOpenGLVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IOpenGL_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define IOpenGL_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define IOpenGL_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#define IOpenGL_SetOpenGLTargetWindow(This,hwndTarget)	\
+    ( (This)->lpVtbl -> SetOpenGLTargetWindow(This,hwndTarget) ) 
+
+#define IOpenGL_ClearColor(This,red,green,blue,alpha)	\
+    ( (This)->lpVtbl -> ClearColor(This,red,green,blue,alpha) ) 
+
+#define IOpenGL_ClearDepth(This,depth)	\
+    ( (This)->lpVtbl -> ClearDepth(This,depth) ) 
+
+#define IOpenGL_Clear(This,bitField)	\
+    ( (This)->lpVtbl -> Clear(This,bitField) ) 
+
+#define IOpenGL_ChooseAndSetPixelFormat(This,deviceContext,pAttributes,pResult)	\
+    ( (This)->lpVtbl -> ChooseAndSetPixelFormat(This,deviceContext,pAttributes,pResult) ) 
+
+#define IOpenGL_CreateContext(This,deviceContext,pResult)	\
+    ( (This)->lpVtbl -> CreateContext(This,deviceContext,pResult) ) 
+
+#define IOpenGL_DeleteContext(This,renderingContext,pResult)	\
+    ( (This)->lpVtbl -> DeleteContext(This,renderingContext,pResult) ) 
+
+#define IOpenGL_MakeCurrent(This,deviceContext,renderingContext,pResult)	\
+    ( (This)->lpVtbl -> MakeCurrent(This,deviceContext,renderingContext,pResult) ) 
+
+#define IOpenGL_GetFloatv(This,GLenum,pResult)	\
+    ( (This)->lpVtbl -> GetFloatv(This,GLenum,pResult) ) 
+
+#define IOpenGL_Enable(This,glEnum)	\
+    ( (This)->lpVtbl -> Enable(This,glEnum) ) 
+
+#define IOpenGL_Disable(This,glEnum)	\
+    ( (This)->lpVtbl -> Disable(This,glEnum) ) 
+
+#define IOpenGL_IsEnabled(This,glEnum)	\
+    ( (This)->lpVtbl -> IsEnabled(This,glEnum) ) 
+
+#define IOpenGL_ColorMask(This,red,green,blue,alpha)	\
+    ( (This)->lpVtbl -> ColorMask(This,red,green,blue,alpha) ) 
+
+#define IOpenGL_DepthFunc(This,v)	\
+    ( (This)->lpVtbl -> DepthFunc(This,v) ) 
+
+#define IOpenGL_DepthMask(This,__MIDL__IOpenGL0000)	\
+    ( (This)->lpVtbl -> DepthMask(This,__MIDL__IOpenGL0000) ) 
+
+#define IOpenGL_Viewport(This,__MIDL__IOpenGL0001,__MIDL__IOpenGL0002,__MIDL__IOpenGL0003,__MIDL__IOpenGL0004)	\
+    ( (This)->lpVtbl -> Viewport(This,__MIDL__IOpenGL0001,__MIDL__IOpenGL0002,__MIDL__IOpenGL0003,__MIDL__IOpenGL0004) ) 
+
+#define IOpenGL_Scissor(This,__MIDL__IOpenGL0005,__MIDL__IOpenGL0006,__MIDL__IOpenGL0007,__MIDL__IOpenGL0008)	\
+    ( (This)->lpVtbl -> Scissor(This,__MIDL__IOpenGL0005,__MIDL__IOpenGL0006,__MIDL__IOpenGL0007,__MIDL__IOpenGL0008) ) 
+
+#define IOpenGL_CullFace(This,__MIDL__IOpenGL0009)	\
+    ( (This)->lpVtbl -> CullFace(This,__MIDL__IOpenGL0009) ) 
+
+#define IOpenGL_GetIntegerv(This,GLenum,pResult)	\
+    ( (This)->lpVtbl -> GetIntegerv(This,GLenum,pResult) ) 
+
+#define IOpenGL_PixelStorei(This,GLenum,value)	\
+    ( (This)->lpVtbl -> PixelStorei(This,GLenum,value) ) 
+
+#define IOpenGL_GetString(This,GLenum)	\
+    ( (This)->lpVtbl -> GetString(This,GLenum) ) 
+
+#define IOpenGL_Flush(This)	\
+    ( (This)->lpVtbl -> Flush(This) ) 
+
+#define IOpenGL_GetCurrentContext(This,pResult)	\
+    ( (This)->lpVtbl -> GetCurrentContext(This,pResult) ) 
+
+#define IOpenGL_DrawBuffer(This,GLenum)	\
+    ( (This)->lpVtbl -> DrawBuffer(This,GLenum) ) 
+
+#define IOpenGL_ReadBuffer(This,GLenum)	\
+    ( (This)->lpVtbl -> ReadBuffer(This,GLenum) ) 
+
+#define IOpenGL_GetFramebufferAttachmentParameteriv(This,target,attachment,pName,pParams)	\
+    ( (This)->lpVtbl -> GetFramebufferAttachmentParameteriv(This,target,attachment,pName,pParams) ) 
+
+#define IOpenGL_PointSize(This,size)	\
+    ( (This)->lpVtbl -> PointSize(This,size) ) 
+
+#define IOpenGL_DeleteBuffers(This,countBuffers,pBuffers)	\
+    ( (This)->lpVtbl -> DeleteBuffers(This,countBuffers,pBuffers) ) 
+
+#define IOpenGL_BindBuffer(This,target,buffer)	\
+    ( (This)->lpVtbl -> BindBuffer(This,target,buffer) ) 
+
+#define IOpenGL_BufferData(This,target,size,pData,usage)	\
+    ( (This)->lpVtbl -> BufferData(This,target,size,pData,usage) ) 
+
+#define IOpenGL_GenBuffers(This,count,pBuffers)	\
+    ( (This)->lpVtbl -> GenBuffers(This,count,pBuffers) ) 
+
+#define IOpenGL_BindVertexArray(This,array)	\
+    ( (This)->lpVtbl -> BindVertexArray(This,array) ) 
+
+#define IOpenGL_DeleteVertexArrays(This,count,pArrays)	\
+    ( (This)->lpVtbl -> DeleteVertexArrays(This,count,pArrays) ) 
+
+#define IOpenGL_GenVertexArrays(This,count,pArrays)	\
+    ( (This)->lpVtbl -> GenVertexArrays(This,count,pArrays) ) 
+
+#define IOpenGL_EnableVertexAttribArray(This,index)	\
+    ( (This)->lpVtbl -> EnableVertexAttribArray(This,index) ) 
+
+#define IOpenGL_VertexAttribPointer(This,index,size,type,normalized,strid,pointer)	\
+    ( (This)->lpVtbl -> VertexAttribPointer(This,index,size,type,normalized,strid,pointer) ) 
+
+#define IOpenGL_VertexAttribDivisorARB(This,index,divisor)	\
+    ( (This)->lpVtbl -> VertexAttribDivisorARB(This,index,divisor) ) 
+
+#define IOpenGL_DisableVertexAttribArray(This,index)	\
+    ( (This)->lpVtbl -> DisableVertexAttribArray(This,index) ) 
+
+#define IOpenGL_ShaderSource(This,shader,count,ppString,pLength)	\
+    ( (This)->lpVtbl -> ShaderSource(This,shader,count,ppString,pLength) ) 
+
+#define IOpenGL_CompileShader(This,shader)	\
+    ( (This)->lpVtbl -> CompileShader(This,shader) ) 
+
+#define IOpenGL_CreateProgram(This,pResult)	\
+    ( (This)->lpVtbl -> CreateProgram(This,pResult) ) 
+
+#define IOpenGL_CreateShader(This,type,pResult)	\
+    ( (This)->lpVtbl -> CreateShader(This,type,pResult) ) 
+
+#define IOpenGL_GetShaderiv(This,shader,pname,pParam)	\
+    ( (This)->lpVtbl -> GetShaderiv(This,shader,pname,pParam) ) 
+
+#define IOpenGL_GetShaderInfoLog(This,shader,bufSize,pLength,infoLog)	\
+    ( (This)->lpVtbl -> GetShaderInfoLog(This,shader,bufSize,pLength,infoLog) ) 
+
+#define IOpenGL_DeleteShader(This,shader)	\
+    ( (This)->lpVtbl -> DeleteShader(This,shader) ) 
+
+#define IOpenGL_AttachShader(This,program,shader)	\
+    ( (This)->lpVtbl -> AttachShader(This,program,shader) ) 
+
+#define IOpenGL_DetachShader(This,program,shader)	\
+    ( (This)->lpVtbl -> DetachShader(This,program,shader) ) 
+
+#define IOpenGL_DrawRangeElements(This,mode,start,end,count,type,indices)	\
+    ( (This)->lpVtbl -> DrawRangeElements(This,mode,start,end,count,type,indices) ) 
+
+#define IOpenGL_BindFragDataLocation(This,program,colorNumber,name)	\
+    ( (This)->lpVtbl -> BindFragDataLocation(This,program,colorNumber,name) ) 
+
+#define IOpenGL_LinkProgram(This,program)	\
+    ( (This)->lpVtbl -> LinkProgram(This,program) ) 
+
+#define IOpenGL_GetProgramiv(This,program,pname,param)	\
+    ( (This)->lpVtbl -> GetProgramiv(This,program,pname,param) ) 
+
+#define IOpenGL_GetProgramInfoLog(This,program,bufferSize,oKength,infoLog)	\
+    ( (This)->lpVtbl -> GetProgramInfoLog(This,program,bufferSize,oKength,infoLog) ) 
+
+#define IOpenGL_UseProgram(This,program)	\
+    ( (This)->lpVtbl -> UseProgram(This,program) ) 
+
+#define IOpenGL_DeleteProgram(This,program)	\
+    ( (This)->lpVtbl -> DeleteProgram(This,program) ) 
+
+#define IOpenGL_GetUniformLocation(This,program,name,pResult)	\
+    ( (This)->lpVtbl -> GetUniformLocation(This,program,name,pResult) ) 
+
+#define IOpenGL_Uniform1i(This,location,v0)	\
+    ( (This)->lpVtbl -> Uniform1i(This,location,v0) ) 
+
+#define IOpenGL_Uniform1iv(This,location,count,value)	\
+    ( (This)->lpVtbl -> Uniform1iv(This,location,count,value) ) 
+
+#define IOpenGL_Uniform1f(This,location,v0)	\
+    ( (This)->lpVtbl -> Uniform1f(This,location,v0) ) 
+
+#define IOpenGL_Uniform1fv(This,location,count,value)	\
+    ( (This)->lpVtbl -> Uniform1fv(This,location,count,value) ) 
+
+#define IOpenGL_Uniform2iv(This,location,count,value)	\
+    ( (This)->lpVtbl -> Uniform2iv(This,location,count,value) ) 
+
+#define IOpenGL_Uniform2fv(This,location,count,value)	\
+    ( (This)->lpVtbl -> Uniform2fv(This,location,count,value) ) 
+
+#define IOpenGL_Uniform3fv(This,location,count,value)	\
+    ( (This)->lpVtbl -> Uniform3fv(This,location,count,value) ) 
+
+#define IOpenGL_Uniform4fv(This,location,count,value)	\
+    ( (This)->lpVtbl -> Uniform4fv(This,location,count,value) ) 
+
+#define IOpenGL_GetAttribLocation(This,program,name,pResult)	\
+    ( (This)->lpVtbl -> GetAttribLocation(This,program,name,pResult) ) 
+
+#define IOpenGL_UniformMatrix4fv(This,location,count,transpose,value)	\
+    ( (This)->lpVtbl -> UniformMatrix4fv(This,location,count,transpose,value) ) 
+
+#define IOpenGL_BlendFuncSeparate(This,sfactorRGB,dfactorRGB,sfactorAlpha,dfactorAlpha)	\
+    ( (This)->lpVtbl -> BlendFuncSeparate(This,sfactorRGB,dfactorRGB,sfactorAlpha,dfactorAlpha) ) 
+
+#define IOpenGL_BlendEquationSeparate(This,modeRGB,modeAlpha)	\
+    ( (This)->lpVtbl -> BlendEquationSeparate(This,modeRGB,modeAlpha) ) 
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IOpenGL_INTERFACE_DEFINED__ */
 
 
 EXTERN_C const CLSID CLSID_OpenGLImplementor;

@@ -7,8 +7,8 @@
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for ImagingBackEnd.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
-    protocol : all , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0622 
+    protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -40,16 +40,40 @@
 
 /* Forward Declarations */ 
 
-#ifndef __CursiVisionImagingBackEnd_FWD_DEFINED__
-#define __CursiVisionImagingBackEnd_FWD_DEFINED__
+#ifndef __VisioLoggerImagingNewRow_FWD_DEFINED__
+#define __VisioLoggerImagingNewRow_FWD_DEFINED__
 
 #ifdef __cplusplus
-typedef class CursiVisionImagingBackEnd CursiVisionImagingBackEnd;
+typedef class VisioLoggerImagingNewRow VisioLoggerImagingNewRow;
 #else
-typedef struct CursiVisionImagingBackEnd CursiVisionImagingBackEnd;
+typedef struct VisioLoggerImagingNewRow VisioLoggerImagingNewRow;
 #endif /* __cplusplus */
 
-#endif 	/* __CursiVisionImagingBackEnd_FWD_DEFINED__ */
+#endif 	/* __VisioLoggerImagingNewRow_FWD_DEFINED__ */
+
+
+#ifndef __VisioLoggerImagingAction_FWD_DEFINED__
+#define __VisioLoggerImagingAction_FWD_DEFINED__
+
+#ifdef __cplusplus
+typedef class VisioLoggerImagingAction VisioLoggerImagingAction;
+#else
+typedef struct VisioLoggerImagingAction VisioLoggerImagingAction;
+#endif /* __cplusplus */
+
+#endif 	/* __VisioLoggerImagingAction_FWD_DEFINED__ */
+
+
+#ifndef __VisioLoggerImagingPreSignature_FWD_DEFINED__
+#define __VisioLoggerImagingPreSignature_FWD_DEFINED__
+
+#ifdef __cplusplus
+typedef class VisioLoggerImagingPreSignature VisioLoggerImagingPreSignature;
+#else
+typedef struct VisioLoggerImagingPreSignature VisioLoggerImagingPreSignature;
+#endif /* __cplusplus */
+
+#endif 	/* __VisioLoggerImagingPreSignature_FWD_DEFINED__ */
 
 
 /* header files for imported files */
@@ -61,23 +85,39 @@ extern "C"{
 
 
 
-#ifndef __CursiVisionImagingBackEnd_LIBRARY_DEFINED__
-#define __CursiVisionImagingBackEnd_LIBRARY_DEFINED__
+#ifndef __VisioLoggerImaging_LIBRARY_DEFINED__
+#define __VisioLoggerImaging_LIBRARY_DEFINED__
 
-/* library CursiVisionImagingBackEnd */
+/* library VisioLoggerImaging */
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionImagingBackEnd;
+EXTERN_C const IID LIBID_VisioLoggerImaging;
 
-EXTERN_C const CLSID CLSID_CursiVisionImagingBackEnd;
+EXTERN_C const CLSID CLSID_VisioLoggerImagingNewRow;
 
 #ifdef __cplusplus
 
 class DECLSPEC_UUID("A8DF7F28-4775-48ac-A3FD-F693C0E96F1F")
-CursiVisionImagingBackEnd;
+VisioLoggerImagingNewRow;
 #endif
-#endif /* __CursiVisionImagingBackEnd_LIBRARY_DEFINED__ */
+
+EXTERN_C const CLSID CLSID_VisioLoggerImagingAction;
+
+#ifdef __cplusplus
+
+class DECLSPEC_UUID("A8DF7F28-4775-48ac-A3FD-F693C0E96F20")
+VisioLoggerImagingAction;
+#endif
+
+EXTERN_C const CLSID CLSID_VisioLoggerImagingPreSignature;
+
+#ifdef __cplusplus
+
+class DECLSPEC_UUID("A8DF7F28-4775-48ac-A3FD-F693C0E96F21")
+VisioLoggerImagingPreSignature;
+#endif
+#endif /* __VisioLoggerImaging_LIBRARY_DEFINED__ */
 
 /* Additional Prototypes for ALL interfaces */
 

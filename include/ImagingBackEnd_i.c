@@ -9,8 +9,8 @@
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for ImagingBackEnd.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
-    protocol : all , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0622 
+    protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -66,10 +66,16 @@ typedef IID CLSID;
 
 #endif // !_MIDL_USE_GUIDDEF_
 
-MIDL_DEFINE_GUID(IID, LIBID_CursiVisionImagingBackEnd,0xA8DF7F28,0x4775,0x48ac,0xA3,0xFD,0xF6,0x93,0xC0,0xE9,0x6F,0x1E);
+MIDL_DEFINE_GUID(IID, LIBID_VisioLoggerImaging,0xA8DF7F28,0x4775,0x48ac,0xA3,0xFD,0xF6,0x93,0xC0,0xE9,0x6F,0x1E);
 
 
-MIDL_DEFINE_GUID(CLSID, CLSID_CursiVisionImagingBackEnd,0xA8DF7F28,0x4775,0x48ac,0xA3,0xFD,0xF6,0x93,0xC0,0xE9,0x6F,0x1F);
+MIDL_DEFINE_GUID(CLSID, CLSID_VisioLoggerImagingNewRow,0xA8DF7F28,0x4775,0x48ac,0xA3,0xFD,0xF6,0x93,0xC0,0xE9,0x6F,0x1F);
+
+
+MIDL_DEFINE_GUID(CLSID, CLSID_VisioLoggerImagingAction,0xA8DF7F28,0x4775,0x48ac,0xA3,0xFD,0xF6,0x93,0xC0,0xE9,0x6F,0x20);
+
+
+MIDL_DEFINE_GUID(CLSID, CLSID_VisioLoggerImagingPreSignature,0xA8DF7F28,0x4775,0x48ac,0xA3,0xFD,0xF6,0x93,0xC0,0xE9,0x6F,0x21);
 
 #undef MIDL_DEFINE_GUID
 

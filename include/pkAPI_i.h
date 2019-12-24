@@ -248,6 +248,11 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             long cx,
             long cy) = 0;
         
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE CreatePage( 
+            BSTR title,
+            long pageNumber,
+            BOOL isVisible) = 0;
+        
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE CreateButton( 
             BSTR buttonText,
             long eventID,
@@ -353,6 +358,13 @@ EXTERN_C const IID IID_IBasicSignaturePad;
         virtual /* [propput][helpstring] */ HRESULT STDMETHODCALLTYPE put_DrawingWindowHandle( 
             /* [in] */ HWND hwndDrawingWindow) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE ShowPage( 
+            /* [in] */ long pageNumber,
+            BOOL doShow) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ShowMessage( 
+            /* [in] */ BSTR bstrMessage) = 0;
+        
         virtual HRESULT STDMETHODCALLTYPE ClearInk( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE ClearEverything( void) = 0;
@@ -373,6 +385,12 @@ EXTERN_C const IID IID_IBasicSignaturePad;
         virtual HRESULT STDMETHODCALLTYPE FireSelection( 
             long controlId,
             BSTR selectedItem) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE FireKeyStroke( 
+            long controlId,
+            WPARAM keyStroke) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE FireShuttingDown( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Hide( void) = 0;
         
@@ -611,6 +629,12 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             long cx,
             long cy);
         
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreatePage )( 
+            IBasicSignaturePad * This,
+            BSTR title,
+            long pageNumber,
+            BOOL isVisible);
+        
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateButton )( 
             IBasicSignaturePad * This,
             BSTR buttonText,
@@ -733,6 +757,15 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             IBasicSignaturePad * This,
             /* [in] */ HWND hwndDrawingWindow);
         
+        HRESULT ( STDMETHODCALLTYPE *ShowPage )( 
+            IBasicSignaturePad * This,
+            /* [in] */ long pageNumber,
+            BOOL doShow);
+        
+        HRESULT ( STDMETHODCALLTYPE *ShowMessage )( 
+            IBasicSignaturePad * This,
+            /* [in] */ BSTR bstrMessage);
+        
         HRESULT ( STDMETHODCALLTYPE *ClearInk )( 
             IBasicSignaturePad * This);
         
@@ -760,6 +793,14 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             IBasicSignaturePad * This,
             long controlId,
             BSTR selectedItem);
+        
+        HRESULT ( STDMETHODCALLTYPE *FireKeyStroke )( 
+            IBasicSignaturePad * This,
+            long controlId,
+            WPARAM keyStroke);
+        
+        HRESULT ( STDMETHODCALLTYPE *FireShuttingDown )( 
+            IBasicSignaturePad * This);
         
         HRESULT ( STDMETHODCALLTYPE *Hide )( 
             IBasicSignaturePad * This);
@@ -942,6 +983,9 @@ EXTERN_C const IID IID_IBasicSignaturePad;
 #define IBasicSignaturePad_AreaBitmapHandle(This,hBitmap,x,y,cx,cy)	\
     ( (This)->lpVtbl -> AreaBitmapHandle(This,hBitmap,x,y,cx,cy) ) 
 
+#define IBasicSignaturePad_CreatePage(This,title,pageNumber,isVisible)	\
+    ( (This)->lpVtbl -> CreatePage(This,title,pageNumber,isVisible) ) 
+
 #define IBasicSignaturePad_CreateButton(This,buttonText,eventID,x,y,isVisible)	\
     ( (This)->lpVtbl -> CreateButton(This,buttonText,eventID,x,y,isVisible) ) 
 
@@ -993,6 +1037,12 @@ EXTERN_C const IID IID_IBasicSignaturePad;
 #define IBasicSignaturePad_put_DrawingWindowHandle(This,hwndDrawingWindow)	\
     ( (This)->lpVtbl -> put_DrawingWindowHandle(This,hwndDrawingWindow) ) 
 
+#define IBasicSignaturePad_ShowPage(This,pageNumber,doShow)	\
+    ( (This)->lpVtbl -> ShowPage(This,pageNumber,doShow) ) 
+
+#define IBasicSignaturePad_ShowMessage(This,bstrMessage)	\
+    ( (This)->lpVtbl -> ShowMessage(This,bstrMessage) ) 
+
 #define IBasicSignaturePad_ClearInk(This)	\
     ( (This)->lpVtbl -> ClearInk(This) ) 
 
@@ -1013,6 +1063,12 @@ EXTERN_C const IID IID_IBasicSignaturePad;
 
 #define IBasicSignaturePad_FireSelection(This,controlId,selectedItem)	\
     ( (This)->lpVtbl -> FireSelection(This,controlId,selectedItem) ) 
+
+#define IBasicSignaturePad_FireKeyStroke(This,controlId,keyStroke)	\
+    ( (This)->lpVtbl -> FireKeyStroke(This,controlId,keyStroke) ) 
+
+#define IBasicSignaturePad_FireShuttingDown(This)	\
+    ( (This)->lpVtbl -> FireShuttingDown(This) ) 
 
 #define IBasicSignaturePad_Hide(This)	\
     ( (This)->lpVtbl -> Hide(This) ) 
@@ -1286,6 +1342,12 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             long cx,
             long cy);
         
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreatePage )( 
+            IPhabletSignaturePad * This,
+            BSTR title,
+            long pageNumber,
+            BOOL isVisible);
+        
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateButton )( 
             IPhabletSignaturePad * This,
             BSTR buttonText,
@@ -1408,6 +1470,15 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             IPhabletSignaturePad * This,
             /* [in] */ HWND hwndDrawingWindow);
         
+        HRESULT ( STDMETHODCALLTYPE *ShowPage )( 
+            IPhabletSignaturePad * This,
+            /* [in] */ long pageNumber,
+            BOOL doShow);
+        
+        HRESULT ( STDMETHODCALLTYPE *ShowMessage )( 
+            IPhabletSignaturePad * This,
+            /* [in] */ BSTR bstrMessage);
+        
         HRESULT ( STDMETHODCALLTYPE *ClearInk )( 
             IPhabletSignaturePad * This);
         
@@ -1435,6 +1506,14 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             IPhabletSignaturePad * This,
             long controlId,
             BSTR selectedItem);
+        
+        HRESULT ( STDMETHODCALLTYPE *FireKeyStroke )( 
+            IPhabletSignaturePad * This,
+            long controlId,
+            WPARAM keyStroke);
+        
+        HRESULT ( STDMETHODCALLTYPE *FireShuttingDown )( 
+            IPhabletSignaturePad * This);
         
         HRESULT ( STDMETHODCALLTYPE *Hide )( 
             IPhabletSignaturePad * This);
@@ -1625,6 +1704,9 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
 #define IPhabletSignaturePad_AreaBitmapHandle(This,hBitmap,x,y,cx,cy)	\
     ( (This)->lpVtbl -> AreaBitmapHandle(This,hBitmap,x,y,cx,cy) ) 
 
+#define IPhabletSignaturePad_CreatePage(This,title,pageNumber,isVisible)	\
+    ( (This)->lpVtbl -> CreatePage(This,title,pageNumber,isVisible) ) 
+
 #define IPhabletSignaturePad_CreateButton(This,buttonText,eventID,x,y,isVisible)	\
     ( (This)->lpVtbl -> CreateButton(This,buttonText,eventID,x,y,isVisible) ) 
 
@@ -1676,6 +1758,12 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
 #define IPhabletSignaturePad_put_DrawingWindowHandle(This,hwndDrawingWindow)	\
     ( (This)->lpVtbl -> put_DrawingWindowHandle(This,hwndDrawingWindow) ) 
 
+#define IPhabletSignaturePad_ShowPage(This,pageNumber,doShow)	\
+    ( (This)->lpVtbl -> ShowPage(This,pageNumber,doShow) ) 
+
+#define IPhabletSignaturePad_ShowMessage(This,bstrMessage)	\
+    ( (This)->lpVtbl -> ShowMessage(This,bstrMessage) ) 
+
 #define IPhabletSignaturePad_ClearInk(This)	\
     ( (This)->lpVtbl -> ClearInk(This) ) 
 
@@ -1696,6 +1784,12 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
 
 #define IPhabletSignaturePad_FireSelection(This,controlId,selectedItem)	\
     ( (This)->lpVtbl -> FireSelection(This,controlId,selectedItem) ) 
+
+#define IPhabletSignaturePad_FireKeyStroke(This,controlId,keyStroke)	\
+    ( (This)->lpVtbl -> FireKeyStroke(This,controlId,keyStroke) ) 
+
+#define IPhabletSignaturePad_FireShuttingDown(This)	\
+    ( (This)->lpVtbl -> FireShuttingDown(This) ) 
 
 #define IPhabletSignaturePad_Hide(This)	\
     ( (This)->lpVtbl -> Hide(This) ) 
@@ -1787,6 +1881,8 @@ EXTERN_C const IID IID_IPhabletSignaturePadEvents;
             long controlId,
             WPARAM keyStroke) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE ShuttingDown( void) = 0;
+        
     };
     
     
@@ -1854,6 +1950,9 @@ EXTERN_C const IID IID_IPhabletSignaturePadEvents;
             long controlId,
             WPARAM keyStroke);
         
+        HRESULT ( STDMETHODCALLTYPE *ShuttingDown )( 
+            IPhabletSignaturePadEvents * This);
+        
         END_INTERFACE
     } IPhabletSignaturePadEventsVtbl;
 
@@ -1906,6 +2005,9 @@ EXTERN_C const IID IID_IPhabletSignaturePadEvents;
 
 #define IPhabletSignaturePadEvents_KeyStroke(This,controlId,keyStroke)	\
     ( (This)->lpVtbl -> KeyStroke(This,controlId,keyStroke) ) 
+
+#define IPhabletSignaturePadEvents_ShuttingDown(This)	\
+    ( (This)->lpVtbl -> ShuttingDown(This) ) 
 
 #endif /* COBJMACROS */
 
