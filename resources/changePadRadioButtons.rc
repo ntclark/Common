@@ -1,0 +1,14 @@
+
+   LTEXT "Choose your active signature pad", IDDI_PAD_MODEL_CHOICE_LABEL1,                            10, ROLLUP, 128 + 64 + 32, 12
+
+   AUTORADIOBUTTON STR_PHABLET_MODEL,     IDDI_PAD_MODEL_PHABLET,    16, ROLLUP + 14, 256, 12
+
+   AUTORADIOBUTTON STR_SIGNOTEC_MODEL,    IDDI_PAD_MODEL_SIGNOTEC,   16, ROLLUP + 52, 256, 12
+   AUTORADIOBUTTON STR_WACOM_MODEL,       IDDI_PAD_MODEL_WACOM_LCD,  16, ROLLUP + 52 + 14, 256, 12
+   AUTORADIOBUTTON STR_SCRIPTEL_MODEL,    IDDI_PAD_MODEL_SCRIPTEL,   16, ROLLUP + 52 + 28, 256, 12
+   AUTORADIOBUTTON STR_TABLETPC_MODEL,    IDDI_PAD_MODEL_TABLETPC,   16, ROLLUP + 52 + 42, 256, 12
+
+   LTEXT "An Android tablet OR Windows PC, including this one.",     IDDI_PAD_MODEL_PHABLET_NOTE1     32, ROLLUP + 14 + 14, 256, 12
+   LTEXT "For windows, touch screen works best, otherwise mouse signing can be used.",
+                                                                     IDDI_PAD_MODEL_PHABLET_NOTE2     32, ROLLUP + 14 + 14 + 12, 256, 12
+

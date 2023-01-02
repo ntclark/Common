@@ -1,0 +1,91 @@
+
+IDD_GLOBAL_TEMPLATE_PROFILE DIALOGEX 0, 0, 450, 256 + 128
+STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+   LTEXT "",IDDI_CV_IMAGE_RECOGNITION_INSTRUCTIONS,   8,16, 370,36
+
+   LTEXT "", IDDI_GLOBAL_TEMPLATE_SIGNATURE_FIELD_IMAGES_LABEL,     8, 58, 100, 34
+   LTEXT "", IDDI_GLOBAL_TEMPLATE_SIGNATURE_FIELDS_LABEL,           8, 58, 128, 34
+   LTEXT "", IDDI_GLOBAL_TEMPLATE_DATE_FIELDS_LABEL,                8, 58, 100, 34
+
+   LTEXT "",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,0,0,380, 12 
+
+END
+
+
+IDD_GLOBAL_TEMPLATE_ROOT_PROFILE DIALOGEX 0,0,400, 256
+STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+   LTEXT "",IDDI_GLOBAL_TEMPLATE_ROOT_INSTRUCTIONS,   8,16, 380,120
+
+   LTEXT "", IDDI_GLOBAL_TEMPLATE_SIGNATURE_ROOT_FIELD_IMAGES_LABEL, 8, 58, 220, 48
+
+   LTEXT "",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,0,0,380, 12 
+
+END
+
+STRINGTABLE {
+
+    IDSTR_PRINTING_INSTRUCTIONS_GLOBAL_TEMPLATE, "\
+The Global Template Document recognition strategy uses image recognition to find locations in the document that match images \r\
+you define using the Global Template Document settings.\r\r\
+The default, or root, Template Document configuration consists of any number of these images and wherever they are found in \r\
+the document, a signature area is presented from the document at a configured offset from that image.\r\r\
+Other Template Document configurations consist of a precise set of images all of which must be present to activate \r\
+the profile for that document.\r\r\
+The default is for generic document recognition, whereas other profiles allow for a more precise selection of options \r\
+for the resulting document management, using the toolbox components, for example."
+
+
+    IDDI_CV_IMAGE_RECOGNITION_INSTRUCTIONS "\
+These are the settings for an image recognition printing profile.\r\r\
+These profiles use the images you have defined in Global Template Document settings that are\r\
+""Locator"" image fields.\r\r\
+These types of fields can contain one or more signature (and optionally date) areas inside of them\r\
+and when found in the printed document, those signature areas are presented to the signer.\r\r\
+This is in contrast to the images in the Root, or default printing profile, which consists of \r\
+""Companion Locator"" image fields. THOSE fields specify an offset and size of a signature area \r\
+(and optional date) and IF they are found on a printed document, THEN the signature area specified \r\
+at the offset is presented to the signer.\r\r\
+In the left table below, select the exact combination of fields that must be found in the document\r\
+in order to ""activate"" this profile. You should not have more than one profile in the system with\r\
+the same combination. Otherwise, the system cannot distinguish between the them.\r\
+If you have very similar documents that need separate profiles, add a new image definition to one of them.\r\r\
+In the middle table, select those signature areas that should be presented to the signer, and finally\r\r\
+In the right table, indicate which date fields should be auto-populated.\r"
+
+    IDDI_GLOBAL_TEMPLATE_ROOT_INSTRUCTIONS "\
+These are the settings for the root (default) Global Template Document printing profile.\r\r\
+In Global Template Document settings, you specify sample documents, and from those documents, \r\
+drag out regions called ""fields"" using the mouse. In the field properties, you can specify \r\
+the field is a ""Companion Locator"" field.\r\r\
+When an instance of this type of field's image is found on a document printed with the \r\
+CursiVision Print Driver, a signature will be captured from a ""Companion"" signature field, also \r\
+defined in the field properties. An automatically populated date area can also be configured.\r\r\
+There can be any number of such fields found, and therefore signatures captured, on an incoming document.\r\
+In this case, the field is not required to be found in the incoming document, only those that are found\r\
+will result in signature capture from the companion location, that is, if the companion location has a non-zero\r\
+width.\r\r\
+The following table contains all of the Companion Locator fields that are currently defined."
+
+    IDDI_GLOBAL_TEMPLATE_SIGNATURE_FIELD_IMAGES_LABEL "\
+All Image fields: Select those that must be present in the document for this profile to become active"
+
+    IDDI_GLOBAL_TEMPLATE_SIGNATURE_FIELDS_LABEL "\
+All Signature fields: Select those that will be used with this profile"
+
+    IDDI_GLOBAL_TEMPLATE_DATE_FIELDS_LABEL "\
+All date fields: Select those that will be used with this profile"
+
+    IDDI_GLOBAL_TEMPLATE_SIGNATURE_ROOT_FIELD_IMAGES_LABEL "\
+All Companion Locator Image fields:\r\
+Select those that must be active in the image search process.\r\
+Note that activating the field does not mean that it must be found,\r\
+it only means that the system will search for it"
+}

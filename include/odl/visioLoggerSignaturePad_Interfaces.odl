@@ -1,0 +1,81 @@
+// Copyright 2017 InnoVisioNate Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+    [uuid(6E6621BD-F297-4E50-A5CC-41D4A6AFC5E2)] 
+
+    interface IVisioLoggerSignaturePad : IUnknown {
+
+      HRESULT Initialize(BSTR padName,UINT_PTR hwndHost);
+
+      HRESULT Clear();
+
+      HRESULT ClearDisplay();
+
+      HRESULT ShowBitmap(long x,long y,long width,long height,UINT_PTR hBitmap,long durationInMilliseconds);
+      HRESULT AddBitmap(long x,long y,long width,long height,UINT_PTR hBitmap,long durationInMilliseconds);
+      HRESULT FlushBitmap();
+
+      HRESULT Start();
+      HRESULT Stop();
+
+      HRESULT Kill();
+
+      [propget] HRESULT IsConnected([out,retval] long *);
+
+      [propget] HRESULT HasLCD([out,retval] long *);
+
+      [propget] HRESULT Width([out,retval] long *pWidth);
+      [propput] HRESULT Width([in] long xSize);
+
+      [propget] HRESULT Height([out,retval] long *pLCDYSize);
+      [propput] HRESULT Height([in] long ySize);
+
+      [propget] HRESULT PadScaleX([out,retval] double *pPadScaleX);
+      [propget] HRESULT PadScaleY([out,retval] double *pPadScaleY);
+
+      [propget] HRESULT MenuMode([out,retval] long *pResult);
+      [propput] HRESULT MenuMode([in] long menuMode);
+
+      [propget] HRESULT SmallFontSize([out,retval] long *pResult);
+      [propget] HRESULT MediumFontSize([out,retval] long *pResult);
+      [propget] HRESULT LargeFontSize([out,retval] long *pResult);
+
+      [propget] HRESULT SmallFontPixels([out,retval] long *pResult);
+      [propget] HRESULT MediumFontPixels([out,retval] long *pResult);
+      [propget] HRESULT LargeFontPixels([out,retval] long *pResult);
+
+      [propput] HRESULT BitDepth([in] long bitDepth);
+
+      HRESULT ShowProperties();
+
+      [propget] HRESULT NativeSizeImage([out,retval] UINT_PTR *pImageInPadDimensions);
+
+	};
+
+    [uuid(6E6621BD-F297-4E50-A5CC-41D4A6AFC5E3) ]
+    interface IVisioLoggerSignaturePadEvents : IUnknown {
+        HRESULT TabletTimerEvent();
+        HRESULT PenDown(long x,long y);
+        HRESULT PenUp(long x,long y);
+        HRESULT Clicked();
+        HRESULT PenPoint(long x,long y,float inkWeight);
+        HRESULT OptionSelected(long optionNumber);
+    };
+
+    [uuid(6E6621BD-F297-4E50-A5CC-41D4A6AFC5E4) ]
+    interface IVisioLoggerKioskPad : IUnknown {
+
+       HRESULT Connect([in] BSTR networkNameOrIPAddress);
+       HRESULT HostWidth([in] long);
+       HRESULT HostHeight([in] long);
+
+       [propput] HRESULT Background([in] UINT_PTR hBitmap);
+
+    };
+
+    [uuid(6E6621BD-F297-4E50-A5CC-41D4A6AFC5E5) ]
+    interface IVisioLoggerKioskPadEvents : IUnknown {
+
+    };
+

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.24720.0</_ProjectFileVersion>
+    <OutDir>$(GSYSTEM_HOME)\Common\Artifacts\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\$(Platform)\</IntDir>
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>No</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;%GSYSTEM_HOME%\Common\include;%GSYSTEM_HOME%\Common\include\cpp;%GSYSTEM_HOME%\Common\source;$(SolutionDir);$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32_WINNT=0x0601;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <MinimalRebuild />
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>%GSYSTEM_HOME%\Common\lib\$(Configuration)\$(Platform);%GSYSTEM_HOME%\Common\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>$(GSYSTEM_HOME)\Common\lib\$(Configuration)\$(Platform)\$(TargetName).lib</ImportLibrary>
+      <TargetMachine>NotSet</TargetMachine>
+      <AdditionalOptions>/SECTION:.rsrc,rw %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>commonUtilities.lib;comctl32.lib;shlwapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <AdditionalIncludeDirectories>%GSYSTEM_HOME%\Common\include;%GSYSTEM_HOME%\Common\include\odl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(GSYSTEM_HOME)\Common\Include</OutputDirectory>
+      <HeaderFileName>$(GSYSTEM_HOME)\Common\Include\%(Filename)_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>$(GSYSTEM_HOME)\Common\Include\%(Filename)_i.c</InterfaceIdentifierFileName>
+      <TypeLibraryName>$(GSYSTEM_HOME)\Common\Include\%(Filename).tlb</TypeLibraryName>
+      <DefaultCharType>Ascii</DefaultCharType>
+    </Midl>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\include;%GSYSTEM_HOME%\Common\include;%GSYSTEM_HOME%\Common\resources;$(SolutionDir);$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(GSYSTEM_HOME)\Common\lib\$(Configuration)\$(Platform)\$(TargetName)$(TargetExt)</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

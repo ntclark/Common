@@ -1,0 +1,152 @@
+
+import "ocidl.idl";
+
+#include <olectl.h>
+
+[ 
+   uuid(A64AB7AF-8A26-4f07-8877-56FE99570320),
+   helpfile("SignaturePad.hlp"),
+   helpstring("InnoVisioNate CursiVision Signature Pad"), 
+   lcid(0x0), 
+   version(1.0)
+] 
+
+library CursiVisionSignaturePad { 
+
+    importlib(STDOLE_TLB); 
+    importlib(STDTYPE_TLB);
+
+    [uuid(A64AB7AF-8A26-4f07-8877-56FE99570321),
+      helpstring("CursiVision Signature Pad Interface"),
+      nonextensible,pointer_default(unique)] 
+
+    interface ISignaturePad : IUnknown {
+
+        long TakeFrameWindow(HWND hwndFrame);
+
+        long HostHandle(HWND hwnd);
+
+        [helpstring("When Load is called with the first two arguments NULL - it means to check to see if the device CAN be connected - not necessarily to connect and stay connected")]
+        long Load(char *pszName,HWND hwndClientHost,void *pvICursiVisionServices);
+
+        long Start();
+
+        long Unload();
+        long Stop();
+
+        BOOL IsActive();
+
+        long Width();
+        long Height();
+
+        long LCDWidth();
+        long LCDHeight();
+
+        double WidthInInches();
+        double HeightInInches();
+
+        double PadToLCDScaleX();
+        double PadToLCDScaleY();
+
+        double PadTimeout();
+
+        double SetZoomFactor(double zoomFactor);
+
+        char *DeviceName();
+        char *DeviceProductName();
+        char *DeviceModel();
+
+        long IsLCD();
+        long IsFullPage();
+        long HasScaling();
+        long IsTabletPC();
+
+        void PrepareForPage(RECT *pRect);
+
+        void DisplaySignatureBitmapFile(char *pszImageFile,[optional,defaultvalue(0)] BOOL populatePad,[optional,defaultvalue(1)] BOOL isLastPage);
+        void DisplaySignatureBitmapHandle(UINT_PTR hBitmap,HDC hdc,long x,long y,long cx,long cy);
+        void OverlaySignatureBitmapHandle(UINT_PTR hBitmap,HDC hdc,long x,long y,long cx,long cy);
+
+        void DisplayHotSpotFile(char *pszFile,long eventID,long x,long y,long cx,long cy);
+        void DisplayHotSpotHandle(UINT_PTR hBitmap,HDC hdc,long eventID,long x,long y,long cx,long cy);
+
+        void DisplayOk(long eventID);
+        void DisplayClear(long eventID);
+        void DisplayCancel(long eventID);
+
+        short KeyPadQueryHotSpot(short KeyCode);
+
+        void SetBackgroundFile(BSTR bstrFileName);
+        void SetBackgroundHandle(OLE_HANDLE);
+
+        void GetRect(RECT *);
+        void GetHotSpot(long hotSpotNumber,RECT *);
+
+        long ClearInk(); // Return E_NOTIMPL if the pad can't clear only the ink and not the background.
+
+        long SignatureData();
+        double *SignatureDataX();
+        double *SignatureDataY();
+        void ClearSignatureData();
+        void DeleteSignatureData();
+
+        void PutLCDCaptureMode(long mode);
+
+        void TabletState(long);
+        BOOL EnableTablet();
+        void ClearTablet();
+        BOOL DisableTablet();
+
+        void LCDRefresh(long Mode,long XPos,long YPos,long XSize,long YSize);
+
+        void SetSigWindow();
+        void SetInkArea();
+
+        long GetPixelBits(HDC);
+
+        long MaximumX();
+
+        long MaximumY();
+    
+        long MinimumX();
+
+        long MinimumY();
+
+        long MaximumSignableY();
+
+        long FireOption(long optionNumber);
+
+        long OriginPointX();
+
+        long OriginPointY();
+
+        long BaselinePointX();
+   
+        long BaselinePointY();
+
+        DWORD InkColor();
+
+        long InkWeight();
+
+        HRESULT ShowProperties();
+
+    };
+
+    [uuid(A64AB7AF-8A26-4f07-8877-56FE99570322) ]
+    interface ISignaturePadEvents : IUnknown {
+        HRESULT PenDown();
+        HRESULT PenUp();
+        HRESULT PenPoint(long x,long y,float inkWeight);
+        HRESULT OptionSelected(long optionNumber);
+        HRESULT ItemSelected(long controlId,BSTR selectedItem);
+    };
+
+
+    [uuid(A64AB7AF-8A26-4f07-8877-56FE99570323),
+    helpstring("CursiVision Signature Pad Object")]
+    coclass CursiVisionSignaturePad {
+        [default] interface ISignaturePad;
+        [source] interface ISignaturePadEvents;
+    };
+
+};

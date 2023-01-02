@@ -1,0 +1,15 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+[ uuid(D4DA40D3-4311-4DCB-A2CE-CC9D3A9C76F1) ]
+
+library WritingLocation { 
+
+    typedef struct writingLocation {
+        long pdfPageNumber;
+        RECT documentRect;
+        BOOL isWrittenTo;
+        BOOL isRequestedViewSet;
+        char szDescription[128];
+   };
+}

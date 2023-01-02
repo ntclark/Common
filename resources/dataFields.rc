@@ -1,0 +1,45 @@
+
+IDD_DATA_FIELDS DIALOGEX 0, 0, 256 + 32, 256 + 128
+STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+   LTEXT "",IDDI_NO_TEMPLATE_LABEL,     8,  8, 300,64
+   LTEXT "",IDDI_NO_TEMPLATE_LABEL2,    8, 72, 300,12
+
+   PUSHBUTTON "Reset",IDDI_DATA_FIELDS_RESET,           8, 16,  32, 12
+   LTEXT "",IDDI_DATA_FIELDS_INSTRUCTIONS,              56,16 ,256 + 128, 24
+
+   LTEXT "",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,8,8,380, 12 
+
+END
+
+
+IDD_DATA_FIELDS_LABEL DIALOGEX  0, 0, 128 + 32, 66
+CAPTION "Field label"
+STYLE DS_SETFONT | DS_3DLOOK | WS_POPUP | WS_CHILD | WS_VISIBLE
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+   LTEXT "Field label:", -1,8,8 + 4, 40, 14
+
+   EDITTEXT IDDI_FIELDS_LABEL_LABEL, 8 + 40, 8, 64, 14
+
+   AUTOCHECKBOX "This field is required to have a value",IDDI_FIELDS_VALUE_REQUIRED, 10, 8 + 20, 140, 14
+
+   DEFPUSHBUTTON "Ok", IDDI_FIELDS_LABEL_OK, 8, 8 + 20 + 14 + 6, 32, 14
+   PUSHBUTTON "Cancel", IDDI_FIELDS_LABEL_CANCEL, 8 + 32 + 8, 8 + 20 + 14 + 6, 32, 14
+
+END
+
+STRINGTABLE {
+
+IDDI_DATA_FIELDS_GENERATE_LABEL 
+"The document has not yet been analyzed for data field contents.\r\
+If you intend to use content document recognition or a tool box item that uses document content\r\
+in it's function, click Generate\r\
+Otherwise, this step is not required."
+
+}
