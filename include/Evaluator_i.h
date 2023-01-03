@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0622 */
+ /* File created by MIDL compiler version 8.01.0628 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for Evaluator.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -36,6 +36,14 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
+#endif
+
+#ifndef DECLSPEC_XFGVIRT
+#if defined(_CONTROL_FLOW_GUARD_XFG)
+#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
+#else
+#define DECLSPEC_XFGVIRT(base, func)
+#endif
 #endif
 
 /* Forward Declarations */ 
@@ -173,28 +181,34 @@ EXTERN_C const IID IID_IEvaluator;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IEvaluator * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IEvaluator * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IEvaluator * This);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfoCount)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IEvaluator * This,
             /* [out] */ UINT *pctinfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfo)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IEvaluator * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo **ppTInfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetIDsOfNames)
         HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IEvaluator * This,
             /* [in] */ REFIID riid,
@@ -203,6 +217,7 @@ EXTERN_C const IID IID_IEvaluator;
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
+        DECLSPEC_XFGVIRT(IDispatch, Invoke)
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IEvaluator * This,
             /* [annotation][in] */ 
@@ -222,53 +237,66 @@ EXTERN_C const IID IID_IEvaluator;
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
         
+        DECLSPEC_XFGVIRT(IEvaluator, get_Eval)
         /* [helpstring][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Eval )( 
             IEvaluator * This,
             /* [in] */ BSTR theExpression,
             /* [retval][out] */ double *theValue);
         
+        DECLSPEC_XFGVIRT(IEvaluator, Evaluate_szExpression)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Evaluate_szExpression )( 
             IEvaluator * This,
             /* [in] */ char *expression,
             /* [retval][out] */ double *__MIDL__IEvaluator0000);
         
+        DECLSPEC_XFGVIRT(IEvaluator, Evaluate_szFunction)
         HRESULT ( STDMETHODCALLTYPE *Evaluate_szFunction )( 
             IEvaluator * This,
             /* [in] */ char *theFunction);
         
+        DECLSPEC_XFGVIRT(IEvaluator, Consume_szExpression)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Consume_szExpression )( 
             IEvaluator * This,
             /* [in] */ char *expression,
             /* [retval][out] */ double *__MIDL__IEvaluator0001);
         
+        DECLSPEC_XFGVIRT(IEvaluator, UndefineVariable)
         HRESULT ( STDMETHODCALLTYPE *UndefineVariable )( 
             IEvaluator * This,
             /* [in] */ /* external definition not present */ IVariable *v);
         
+        DECLSPEC_XFGVIRT(IEvaluator, DefineVariable)
         HRESULT ( STDMETHODCALLTYPE *DefineVariable )( 
             IEvaluator * This,
             /* [in] */ /* external definition not present */ IVariable *v);
         
+        DECLSPEC_XFGVIRT(IEvaluator, UndefineAllVariables)
         HRESULT ( STDMETHODCALLTYPE *UndefineAllVariables )( 
             IEvaluator * This);
         
+        DECLSPEC_XFGVIRT(IEvaluator, IsVariable)
         HRESULT ( STDMETHODCALLTYPE *IsVariable )( 
             IEvaluator * This,
             /* [in] */ BSTR bstrVariableName,
             BOOL *isKnown);
         
+        DECLSPEC_XFGVIRT(IEvaluator, Terminate)
         HRESULT ( STDMETHODCALLTYPE *Terminate )( 
             IEvaluator * This);
         
+        DECLSPEC_XFGVIRT(IEvaluator, Suspend)
         HRESULT ( STDMETHODCALLTYPE *Suspend )( 
             IEvaluator * This);
         
+        DECLSPEC_XFGVIRT(IEvaluator, Resume)
         HRESULT ( STDMETHODCALLTYPE *Resume )( 
             IEvaluator * This);
         
+        DECLSPEC_XFGVIRT(IEvaluator, IsBusy)
         HRESULT ( STDMETHODCALLTYPE *IsBusy )( 
             IEvaluator * This);
         
+        DECLSPEC_XFGVIRT(IEvaluator, Evaluate_bstrExpression)
         HRESULT ( STDMETHODCALLTYPE *Evaluate_bstrExpression )( 
             IEvaluator * This,
             /* [in] */ BSTR bstrExpression,
@@ -410,28 +438,34 @@ EXTERN_C const IID IID_IEvaluatorEvents;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IEvaluatorEvents * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IEvaluatorEvents * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IEvaluatorEvents * This);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfoCount)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IEvaluatorEvents * This,
             /* [out] */ UINT *pctinfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfo)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IEvaluatorEvents * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo **ppTInfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetIDsOfNames)
         HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IEvaluatorEvents * This,
             /* [in] */ REFIID riid,
@@ -440,6 +474,7 @@ EXTERN_C const IID IID_IEvaluatorEvents;
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
+        DECLSPEC_XFGVIRT(IDispatch, Invoke)
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IEvaluatorEvents * This,
             /* [annotation][in] */ 
@@ -459,35 +494,43 @@ EXTERN_C const IID IID_IEvaluatorEvents;
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
         
+        DECLSPEC_XFGVIRT(IEvaluatorEvents, Started)
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *Started )( 
             IEvaluatorEvents * This,
             long expectedIterations);
         
+        DECLSPEC_XFGVIRT(IEvaluatorEvents, TakeResultString)
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *TakeResultString )( 
             IEvaluatorEvents * This,
             /* [in] */ long iterationCount,
             /* [in] */ char *pszVarNames,
             /* [in] */ char *pszResults);
         
+        DECLSPEC_XFGVIRT(IEvaluatorEvents, UnknownVariable)
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *UnknownVariable )( 
             IEvaluatorEvents * This,
             /* [in] */ BSTR variableName);
         
+        DECLSPEC_XFGVIRT(IEvaluatorEvents, UnknownFunction)
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *UnknownFunction )( 
             IEvaluatorEvents * This,
             /* [in] */ BSTR functionName);
         
+        DECLSPEC_XFGVIRT(IEvaluatorEvents, MathError)
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *MathError )( 
             IEvaluatorEvents * This,
             /* [in] */ BSTR functionName,
             /* [in] */ double argument);
         
+        DECLSPEC_XFGVIRT(IEvaluatorEvents, Finished)
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *Finished )( 
             IEvaluatorEvents * This);
         
+        DECLSPEC_XFGVIRT(IEvaluatorEvents, DivideByZero)
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *DivideByZero )( 
             IEvaluatorEvents * This);
         
+        DECLSPEC_XFGVIRT(IEvaluatorEvents, InvalidArgument)
         /* [id] */ HRESULT ( STDMETHODCALLTYPE *InvalidArgument )( 
             IEvaluatorEvents * This,
             /* [in] */ BSTR functionName,

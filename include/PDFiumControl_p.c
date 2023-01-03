@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the proxy stub code */
 
 
- /* File created by MIDL compiler version 8.01.0628 */
+ /* File created by MIDL compiler version 8.01.0622 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for COM Implementation\PDFiumControl.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -71,65 +71,11 @@ typedef struct _PDFiumControl_MIDL_EXPR_FORMAT_STRING
     } PDFiumControl_MIDL_EXPR_FORMAT_STRING;
 
 
-static const RPC_SYNTAX_IDENTIFIER  _RpcTransferSyntax_2_0 = 
+static const RPC_SYNTAX_IDENTIFIER  _RpcTransferSyntax = 
 {{0x8A885D04,0x1CEB,0x11C9,{0x9F,0xE8,0x08,0x00,0x2B,0x10,0x48,0x60}},{2,0}};
 
-static const RPC_SYNTAX_IDENTIFIER  _NDR64_RpcTransferSyntax_1_0 = 
+static const RPC_SYNTAX_IDENTIFIER  _NDR64_RpcTransferSyntax = 
 {{0x71710533,0xbeba,0x4937,{0x83,0x19,0xb5,0xdb,0xef,0x9c,0xcc,0x36}},{1,0}};
-
-#if defined(_CONTROL_FLOW_GUARD_XFG)
-#define XFG_TRAMPOLINES(ObjectType)\
-NDR_SHAREABLE unsigned long ObjectType ## _UserSize_XFG(unsigned long * pFlags, unsigned long Offset, void * pObject)\
-{\
-return  ObjectType ## _UserSize(pFlags, Offset, (ObjectType *)pObject);\
-}\
-NDR_SHAREABLE unsigned char * ObjectType ## _UserMarshal_XFG(unsigned long * pFlags, unsigned char * pBuffer, void * pObject)\
-{\
-return ObjectType ## _UserMarshal(pFlags, pBuffer, (ObjectType *)pObject);\
-}\
-NDR_SHAREABLE unsigned char * ObjectType ## _UserUnmarshal_XFG(unsigned long * pFlags, unsigned char * pBuffer, void * pObject)\
-{\
-return ObjectType ## _UserUnmarshal(pFlags, pBuffer, (ObjectType *)pObject);\
-}\
-NDR_SHAREABLE void ObjectType ## _UserFree_XFG(unsigned long * pFlags, void * pObject)\
-{\
-ObjectType ## _UserFree(pFlags, (ObjectType *)pObject);\
-}
-#define XFG_TRAMPOLINES64(ObjectType)\
-NDR_SHAREABLE unsigned long ObjectType ## _UserSize64_XFG(unsigned long * pFlags, unsigned long Offset, void * pObject)\
-{\
-return  ObjectType ## _UserSize64(pFlags, Offset, (ObjectType *)pObject);\
-}\
-NDR_SHAREABLE unsigned char * ObjectType ## _UserMarshal64_XFG(unsigned long * pFlags, unsigned char * pBuffer, void * pObject)\
-{\
-return ObjectType ## _UserMarshal64(pFlags, pBuffer, (ObjectType *)pObject);\
-}\
-NDR_SHAREABLE unsigned char * ObjectType ## _UserUnmarshal64_XFG(unsigned long * pFlags, unsigned char * pBuffer, void * pObject)\
-{\
-return ObjectType ## _UserUnmarshal64(pFlags, pBuffer, (ObjectType *)pObject);\
-}\
-NDR_SHAREABLE void ObjectType ## _UserFree64_XFG(unsigned long * pFlags, void * pObject)\
-{\
-ObjectType ## _UserFree64(pFlags, (ObjectType *)pObject);\
-}
-#define XFG_BIND_TRAMPOLINES(HandleType, ObjectType)\
-static void* ObjectType ## _bind_XFG(HandleType pObject)\
-{\
-return ObjectType ## _bind((ObjectType) pObject);\
-}\
-static void ObjectType ## _unbind_XFG(HandleType pObject, handle_t ServerHandle)\
-{\
-ObjectType ## _unbind((ObjectType) pObject, ServerHandle);\
-}
-#define XFG_TRAMPOLINE_FPTR(Function) Function ## _XFG
-#define XFG_TRAMPOLINE_FPTR_DEPENDENT_SYMBOL(Symbol) Symbol ## _XFG
-#else
-#define XFG_TRAMPOLINES(ObjectType)
-#define XFG_TRAMPOLINES64(ObjectType)
-#define XFG_BIND_TRAMPOLINES(HandleType, ObjectType)
-#define XFG_TRAMPOLINE_FPTR(Function) Function
-#define XFG_TRAMPOLINE_FPTR_DEPENDENT_SYMBOL(Symbol) Symbol
-#endif
 
 
 
@@ -137,14 +83,8 @@ extern const PDFiumControl_MIDL_TYPE_FORMAT_STRING PDFiumControl__MIDL_TypeForma
 extern const PDFiumControl_MIDL_PROC_FORMAT_STRING PDFiumControl__MIDL_ProcFormatString;
 extern const PDFiumControl_MIDL_EXPR_FORMAT_STRING PDFiumControl__MIDL_ExprFormatString;
 
-#ifdef __cplusplus
-namespace {
-#endif
 
 extern const MIDL_STUB_DESC Object_StubDesc;
-#ifdef __cplusplus
-}
-#endif
 
 
 extern const MIDL_SERVER_INFO PDFium_DWebBrowserEvents2_ServerInfo;
@@ -206,11 +146,11 @@ static const unsigned short PDFium_DWebBrowserEvents2_FormatStringOffsetTable[] 
 /* this ALWAYS GENERATED file contains the proxy stub code */
 
 
- /* File created by MIDL compiler version 8.01.0628 */
+ /* File created by MIDL compiler version 8.01.0622 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for COM Implementation\PDFiumControl.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -231,9 +171,6 @@ static const unsigned short PDFium_DWebBrowserEvents2_FormatStringOffsetTable[] 
 
 #include "ndr64types.h"
 #include "pshpack8.h"
-#ifdef __cplusplus
-namespace {
-#endif
 
 
 typedef 
@@ -243,9 +180,6 @@ extern const __midl_frag1_t __midl_frag1;
 
 static const __midl_frag1_t __midl_frag1 =
 (NDR64_UINT32) 0 /* 0x0 */;
-#ifdef __cplusplus
-}
-#endif
 
 
 #include "poppack.h"
@@ -303,7 +237,7 @@ static const MIDL_STUBLESS_PROXY_INFO PDFium_DWebBrowserEvents2_ProxyInfo =
     &Object_StubDesc,
     PDFiumControl__MIDL_ProcFormatString.Format,
     &PDFium_DWebBrowserEvents2_FormatStringOffsetTable[-3],
-    (RPC_SYNTAX_IDENTIFIER*)&_RpcTransferSyntax_2_0,
+    (RPC_SYNTAX_IDENTIFIER*)&_RpcTransferSyntax,
     2,
     (MIDL_SYNTAX_INFO*)PDFium_DWebBrowserEvents2_SyntaxInfo
     
@@ -317,7 +251,7 @@ static const MIDL_SERVER_INFO PDFium_DWebBrowserEvents2_ServerInfo =
     PDFiumControl__MIDL_ProcFormatString.Format,
     (unsigned short *) &PDFium_DWebBrowserEvents2_FormatStringOffsetTable[-3],
     0,
-    (RPC_SYNTAX_IDENTIFIER*)&_NDR64_RpcTransferSyntax_1_0,
+    (RPC_SYNTAX_IDENTIFIER*)&_NDR64_RpcTransferSyntax,
     2,
     (MIDL_SYNTAX_INFO*)PDFium_DWebBrowserEvents2_SyntaxInfo
     };
@@ -335,7 +269,7 @@ CINTERFACE_PROXY_VTABLE(7) _PDFium_DWebBrowserEvents2ProxyVtbl =
 };
 
 
-EXTERN_C DECLSPEC_SELECTANY const PRPC_STUB_FUNCTION PDFium_DWebBrowserEvents2_table[] =
+static const PRPC_STUB_FUNCTION PDFium_DWebBrowserEvents2_table[] =
 {
     STUB_FORWARDING_FUNCTION,
     STUB_FORWARDING_FUNCTION,
@@ -352,9 +286,6 @@ CInterfaceStubVtbl _PDFium_DWebBrowserEvents2StubVtbl =
     CStdStubBuffer_DELEGATING_METHODS
 };
 
-#ifdef __cplusplus
-namespace {
-#endif
 static const MIDL_STUB_DESC Object_StubDesc = 
     {
     0,
@@ -369,7 +300,7 @@ static const MIDL_STUB_DESC Object_StubDesc =
     1, /* -error bounds_check flag */
     0x60001, /* Ndr library version */
     0,
-    0x8010274, /* MIDL Version 8.1.628 */
+    0x801026e, /* MIDL Version 8.1.622 */
     0,
     0,
     0,  /* notify & notify_flag routine table */
@@ -378,9 +309,6 @@ static const MIDL_STUB_DESC Object_StubDesc =
     0,   /* proxy/server info */
     0
     };
-#ifdef __cplusplus
-}
-#endif
 
 const CInterfaceProxyVtbl * const _PDFiumControl_ProxyVtblList[] = 
 {
@@ -421,7 +349,7 @@ int __stdcall _PDFiumControl_IID_Lookup( const IID * pIID, int * pIndex )
     return 0;
 }
 
-EXTERN_C const ExtendedProxyFileInfo PDFiumControl_ProxyFileInfo = 
+const ExtendedProxyFileInfo PDFiumControl_ProxyFileInfo = 
 {
     (PCInterfaceProxyVtblList *) & _PDFiumControl_ProxyVtblList,
     (PCInterfaceStubVtblList *) & _PDFiumControl_StubVtblList,

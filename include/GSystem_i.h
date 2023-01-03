@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0622 */
-/* at Mon Jan 18 21:14:07 2038
+ /* File created by MIDL compiler version 8.01.0628 */
+/* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for GSystem.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0622 
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -36,6 +36,14 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
+#endif
+
+#ifndef DECLSPEC_XFGVIRT
+#if defined(_CONTROL_FLOW_GUARD_XFG)
+#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
+#else
+#define DECLSPEC_XFGVIRT(base, func)
+#endif
 #endif
 
 /* Forward Declarations */ 
@@ -264,23 +272,28 @@ EXTERN_C const IID IID_IGSystemStatusBar;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IGSystemStatusBar * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IGSystemStatusBar * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IGSystemStatusBar * This);
         
+        DECLSPEC_XFGVIRT(IGSystemStatusBar, put_StatusText)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_StatusText )( 
             IGSystemStatusBar * This,
             /* [in] */ long zeroBasedPaneIndex,
             /* [in] */ char *pszText);
         
+        DECLSPEC_XFGVIRT(IGSystemStatusBar, get_StatusText)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_StatusText )( 
             IGSystemStatusBar * This,
             /* [in] */ long zeroBasedPaneIndex,
@@ -401,59 +414,71 @@ EXTERN_C const IID IID_IGSystemPlotType;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IGSystemPlotType * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IGSystemPlotType * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IGSystemPlotType * This);
         
+        DECLSPEC_XFGVIRT(IGSystemPlotType, get_Count)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Count )( 
             IGSystemPlotType * This,
             /* [retval][out] */ long *pCountProvided);
         
+        DECLSPEC_XFGVIRT(IGSystemPlotType, get_Name)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Name )( 
             IGSystemPlotType * This,
             /* [in] */ long item,
             /* [retval][out] */ BSTR *pBstr);
         
+        DECLSPEC_XFGVIRT(IGSystemPlotType, get_Is3DOnly)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Is3DOnly )( 
             IGSystemPlotType * This,
             /* [in] */ long item,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IGSystemPlotType0000);
         
+        DECLSPEC_XFGVIRT(IGSystemPlotType, get_UsesMaterialShading)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_UsesMaterialShading )( 
             IGSystemPlotType * This,
             /* [in] */ long item,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IGSystemPlotType0001);
         
+        DECLSPEC_XFGVIRT(IGSystemPlotType, get_HasProperties)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_HasProperties )( 
             IGSystemPlotType * This,
             /* [in] */ long item,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IGSystemPlotType0002);
         
+        DECLSPEC_XFGVIRT(IGSystemPlotType, InitNew)
         HRESULT ( STDMETHODCALLTYPE *InitNew )( 
             IGSystemPlotType * This,
             /* [in] */ long item,
             /* [in] */ REFIID instanceGUID);
         
+        DECLSPEC_XFGVIRT(IGSystemPlotType, Save)
         HRESULT ( STDMETHODCALLTYPE *Save )( 
             IGSystemPlotType * This,
             /* [in] */ long item,
             /* [in] */ REFIID instanceGUID,
             /* [in] */ void *pvIStream);
         
+        DECLSPEC_XFGVIRT(IGSystemPlotType, Load)
         HRESULT ( STDMETHODCALLTYPE *Load )( 
             IGSystemPlotType * This,
             /* [in] */ long item,
             /* [in] */ REFIID instanceGUID,
             /* [in] */ void *pvIStream);
         
+        DECLSPEC_XFGVIRT(IGSystemPlotType, ShowProperties)
         HRESULT ( STDMETHODCALLTYPE *ShowProperties )( 
             IGSystemPlotType * This,
             /* [in] */ long item,
@@ -465,6 +490,7 @@ EXTERN_C const IID IID_IGSystemPlotType;
             void *pArg,
             ULONG_PTR cookie);
         
+        DECLSPEC_XFGVIRT(IGSystemPlotType, Execute)
         HRESULT ( STDMETHODCALLTYPE *Execute )( 
             IGSystemPlotType * This,
             /* [in] */ long item,

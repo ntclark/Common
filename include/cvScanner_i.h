@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0628 */
+ /* File created by MIDL compiler version 8.01.0622 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for COM Implementation\cvScanner.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -36,14 +36,6 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
-#endif
-
-#ifndef DECLSPEC_XFGVIRT
-#if defined(_CONTROL_FLOW_GUARD_XFG)
-#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
-#else
-#define DECLSPEC_XFGVIRT(base, func)
-#endif
 #endif
 
 /* Forward Declarations */ 
@@ -160,22 +152,18 @@ EXTERN_C const IID IID_ICVScanner;
     {
         BEGIN_INTERFACE
         
-        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             ICVScanner * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
-        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             ICVScanner * This);
         
-        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             ICVScanner * This);
         
-        DECLSPEC_XFGVIRT(ICVScanner, RegisterComputer)
         HRESULT ( STDMETHODCALLTYPE *RegisterComputer )( 
             ICVScanner * This,
             char *szContactInfoString,
@@ -184,62 +172,53 @@ EXTERN_C const IID IID_ICVScanner;
             char *pszID,
             long cbBuffer);
         
-        DECLSPEC_XFGVIRT(ICVScanner, ProcessorFromRegistration)
         HRESULT ( STDMETHODCALLTYPE *ProcessorFromRegistration )( 
             ICVScanner * This,
             char *szContactInfoString,
             char *pszProcessorID,
             long cbBuffer);
         
-        DECLSPEC_XFGVIRT(ICVScanner, ProcessorID)
         HRESULT ( STDMETHODCALLTYPE *ProcessorID )( 
             ICVScanner * This,
             char *pszProcessorID,
             long cbBuffer);
         
-        DECLSPEC_XFGVIRT(ICVScanner, UnregisterComputer)
         HRESULT ( STDMETHODCALLTYPE *UnregisterComputer )( 
             ICVScanner * This,
             char *pszContactInfoString,
             char *pszRegisteredVersion,
             char *pszRegistrationDate);
         
-        DECLSPEC_XFGVIRT(ICVScanner, BumpAmounts)
         HRESULT ( STDMETHODCALLTYPE *BumpAmounts )( 
             ICVScanner * This,
             char *pszGuid,
             long documentsSigned,
             long signaturesApplied);
         
-        DECLSPEC_XFGVIRT(ICVScanner, GetHeader)
         HRESULT ( STDMETHODCALLTYPE *GetHeader )( 
             ICVScanner * This,
             char *pszContactInfoString,
             char *pszReturnValue,
             long cbBuffer);
         
-        DECLSPEC_XFGVIRT(ICVScanner, GetDetails)
         HRESULT ( STDMETHODCALLTYPE *GetDetails )( 
             ICVScanner * This,
             char *pszDocumentName,
             char *pszReturnValue,
             long cbBuffer);
         
-        DECLSPEC_XFGVIRT(ICVScanner, ListFiles)
         HRESULT ( STDMETHODCALLTYPE *ListFiles )( 
             ICVScanner * This,
             char *pszBucket,
             char *pszKey,
             SAFEARRAY **ppResult);
         
-        DECLSPEC_XFGVIRT(ICVScanner, GetFile)
         HRESULT ( STDMETHODCALLTYPE *GetFile )( 
             ICVScanner * This,
             char *pszBucket,
             char *pszKey,
             char *pszFileName);
         
-        DECLSPEC_XFGVIRT(ICVScanner, PutFile)
         HRESULT ( STDMETHODCALLTYPE *PutFile )( 
             ICVScanner * This,
             char *pszBucket,

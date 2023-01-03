@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0628 */
+ /* File created by MIDL compiler version 8.01.0622 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for PrintingSupport.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -36,14 +36,6 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
-#endif
-
-#ifndef DECLSPEC_XFGVIRT
-#if defined(_CONTROL_FLOW_GUARD_XFG)
-#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
-#else
-#define DECLSPEC_XFGVIRT(base, func)
-#endif
 #endif
 
 /* Forward Declarations */ 
@@ -236,22 +228,18 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
     {
         BEGIN_INTERFACE
         
-        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IPrintingSupportProfile * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
-        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, Initialize)
         HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IPrintingSupportProfile * This,
             char *pszOriginalDocument,
@@ -261,63 +249,51 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
             boolean resetSignatureLocations,
             boolean isImageDrivenProfile);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, Start)
         HRESULT ( STDMETHODCALLTYPE *Start )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, ClearTargets)
         HRESULT ( STDMETHODCALLTYPE *ClearTargets )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, SaveTarget)
         HRESULT ( STDMETHODCALLTYPE *SaveTarget )( 
             IPrintingSupportProfile * This,
             long targetIndex,
             void *pLocation);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, ReplaceTarget)
         HRESULT ( STDMETHODCALLTYPE *ReplaceTarget )( 
             IPrintingSupportProfile * This,
             long targetIndex,
             void *pLocation);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, GetTarget)
         HRESULT ( STDMETHODCALLTYPE *GetTarget )( 
             IPrintingSupportProfile * This,
             long targetIndex,
             void *pLocation);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, Begin)
         HRESULT ( STDMETHODCALLTYPE *Begin )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, SaveProperties)
         HRESULT ( STDMETHODCALLTYPE *SaveProperties )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, GetResultDisposition)
         HRESULT ( STDMETHODCALLTYPE *GetResultDisposition )( 
             IPrintingSupportProfile * This,
             void **ppResultDisposition);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, GetDoodleProperties)
         HRESULT ( STDMETHODCALLTYPE *GetDoodleProperties )( 
             IPrintingSupportProfile * This,
             void **ppResultDisposition);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, ShowProperties)
         HRESULT ( STDMETHODCALLTYPE *ShowProperties )( 
             IPrintingSupportProfile * This,
             HWND hwndOwner,
             IUnknown *__MIDL__IPrintingSupportProfile0000);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, Match)
         long ( STDMETHODCALLTYPE *Match )( 
             IPrintingSupportProfile * This,
             char *pszPDFDocument,
             char *pszProfileFile);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, ImageRecognitionMatch)
         long ( STDMETHODCALLTYPE *ImageRecognitionMatch )( 
             IPrintingSupportProfile * This,
             UINT_PTR *ptrPDFIumControl,
@@ -326,107 +302,84 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
             char *pszOriginalDocument,
             char *pszOutlinesFile);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, Name)
         char *( STDMETHODCALLTYPE *Name )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, IsDefined)
         BOOL ( STDMETHODCALLTYPE *IsDefined )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, RecognizeByName)
         BOOL ( STDMETHODCALLTYPE *RecognizeByName )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, SetRecognizeByName)
         long ( STDMETHODCALLTYPE *SetRecognizeByName )( 
             IPrintingSupportProfile * This,
             BOOL recognizeByName);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, SigningRectangleCount)
         long ( STDMETHODCALLTYPE *SigningRectangleCount )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, ClearSigningRects)
         long ( STDMETHODCALLTYPE *ClearSigningRects )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, ClearDateRects)
         long ( STDMETHODCALLTYPE *ClearDateRects )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, Save)
         long ( STDMETHODCALLTYPE *Save )( 
             IPrintingSupportProfile * This,
             /* [defaultvalue] */ char *pszNewName);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, Destroy)
         HRESULT ( STDMETHODCALLTYPE *Destroy )( 
             IPrintingSupportProfile * This,
             /* [defaultvalue] */ BOOL keepOutlines);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, GetDispositionSettingsFileName)
         char *( STDMETHODCALLTYPE *GetDispositionSettingsFileName )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, SignatureGraphicFileName)
         char *( STDMETHODCALLTYPE *SignatureGraphicFileName )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, GetTextOutlines)
         void *( STDMETHODCALLTYPE *GetTextOutlines )( 
             IPrintingSupportProfile * This,
             long pageNumber,
             long *pReportedPageWidth,
             long *pReportedPageHeight);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, FreeTextOutlines)
         void ( STDMETHODCALLTYPE *FreeTextOutlines )( 
             IPrintingSupportProfile * This,
             void *pvTextOutlines);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, DocumentName)
         char *( STDMETHODCALLTYPE *DocumentName )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, OutlinesFileName)
         char *( STDMETHODCALLTYPE *OutlinesFileName )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, DoSignatureCapture)
         BOOL ( STDMETHODCALLTYPE *DoSignatureCapture )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, SetAllowTemplateDocumentChange)
         void ( STDMETHODCALLTYPE *SetAllowTemplateDocumentChange )( 
             IPrintingSupportProfile * This,
             boolean v);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, SetAllowDocumentRecognitionSettings)
         void ( STDMETHODCALLTYPE *SetAllowDocumentRecognitionSettings )( 
             IPrintingSupportProfile * This,
             boolean v);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, SetAllowNameChange)
         void ( STDMETHODCALLTYPE *SetAllowNameChange )( 
             IPrintingSupportProfile * This,
             boolean v);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, SetAllowSigningLocationSettings)
         void ( STDMETHODCALLTYPE *SetAllowSigningLocationSettings )( 
             IPrintingSupportProfile * This,
             boolean v);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, IsImageRecognitionProfile)
         BOOL ( STDMETHODCALLTYPE *IsImageRecognitionProfile )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, OverrideAllowSaveProperties)
         HRESULT ( STDMETHODCALLTYPE *OverrideAllowSaveProperties )( 
             IPrintingSupportProfile * This,
             boolean doAllow);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, AllowPrintProfileChanges)
         BOOL ( STDMETHODCALLTYPE *AllowPrintProfileChanges )( 
             IPrintingSupportProfile * This);
         
@@ -644,27 +597,22 @@ EXTERN_C const IID IID_IPrintingSupport;
     {
         BEGIN_INTERFACE
         
-        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IPrintingSupport * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
-        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IPrintingSupport * This);
         
-        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IPrintingSupport * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, TakeMainWindow)
         HRESULT ( STDMETHODCALLTYPE *TakeMainWindow )( 
             IPrintingSupport * This,
             HWND hwndMainWindow);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, TakeDocumentInfo)
         HRESULT ( STDMETHODCALLTYPE *TakeDocumentInfo )( 
             IPrintingSupport * This,
             char *pszPDFFileName,
@@ -672,31 +620,26 @@ EXTERN_C const IID IID_IPrintingSupport;
             void *pvIPdfDocument,
             boolean createGlobalPrintingProfile);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, GetPropertiesWindow)
         HRESULT ( STDMETHODCALLTYPE *GetPropertiesWindow )( 
             IPrintingSupport * This,
             HWND *__MIDL__IPrintingSupport0000);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, ServicesAdvise)
         HRESULT ( STDMETHODCALLTYPE *ServicesAdvise )( 
             IPrintingSupport * This,
             void *pvICursiVisionServices);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, InitializeThreaded)
         HRESULT ( STDMETHODCALLTYPE *InitializeThreaded )( 
             IPrintingSupport * This,
             void ( STDMETHODCALLTYPE *pCallback )( 
                 void *pvCallerObject),
             void *pvCallerObj);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, NewImageDrivenProfileDialog)
         HRESULT ( STDMETHODCALLTYPE *NewImageDrivenProfileDialog )( 
             IPrintingSupport * This,
             HWND hwndParent,
             IPrintingSupportProfile **ppIPrintingSupportProfile,
             boolean isRootProfile);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, CreateImageDrivenPrintProfile)
         HRESULT ( STDMETHODCALLTYPE *CreateImageDrivenPrintProfile )( 
             IPrintingSupport * This,
             char *pszPDFFileName,
@@ -708,26 +651,21 @@ EXTERN_C const IID IID_IPrintingSupport;
             boolean allowDocumentRecognitionSettings,
             boolean allowSigningLocationSettings);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, GetAllImageDrivenProfiles)
         HRESULT ( STDMETHODCALLTYPE *GetAllImageDrivenProfiles )( 
             IPrintingSupport * This,
             SAFEARRAY **ppProfilesSafeArray);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, DeleteAllImageDrivenProfiles)
         HRESULT ( STDMETHODCALLTYPE *DeleteAllImageDrivenProfiles )( 
             IPrintingSupport * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, DeleteProfile)
         HRESULT ( STDMETHODCALLTYPE *DeleteProfile )( 
             IPrintingSupport * This,
             IPrintingSupportProfile *pProfile);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, OverrideAllowSaveProperties)
         HRESULT ( STDMETHODCALLTYPE *OverrideAllowSaveProperties )( 
             IPrintingSupport * This,
             boolean doAllow);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, AllowPrintProfileChanges)
         BOOL ( STDMETHODCALLTYPE *AllowPrintProfileChanges )( 
             IPrintingSupport * This);
         

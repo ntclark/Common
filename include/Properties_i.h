@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0628 */
+ /* File created by MIDL compiler version 8.01.0622 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for Com-Implementation\Properties.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -36,14 +36,6 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
-#endif
-
-#ifndef DECLSPEC_XFGVIRT
-#if defined(_CONTROL_FLOW_GUARD_XFG)
-#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
-#else
-#define DECLSPEC_XFGVIRT(base, func)
-#endif
 #endif
 
 /* Forward Declarations */ 
@@ -198,34 +190,28 @@ EXTERN_C const IID IID_IGPropertyClient;
     {
         BEGIN_INTERFACE
         
-        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IGPropertyClient * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
-        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IGPropertyClient * This);
         
-        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IGPropertyClient * This);
         
-        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfoCount)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IGPropertyClient * This,
             /* [out] */ UINT *pctinfo);
         
-        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfo)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IGPropertyClient * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo **ppTInfo);
         
-        DECLSPEC_XFGVIRT(IDispatch, GetIDsOfNames)
         HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IGPropertyClient * This,
             /* [in] */ REFIID riid,
@@ -234,7 +220,6 @@ EXTERN_C const IID IID_IGPropertyClient;
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
-        DECLSPEC_XFGVIRT(IDispatch, Invoke)
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IGPropertyClient * This,
             /* [annotation][in] */ 
@@ -254,7 +239,6 @@ EXTERN_C const IID IID_IGPropertyClient;
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
         
-        DECLSPEC_XFGVIRT(IGPropertyClient, Changed)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Changed )( 
             IGPropertyClient * This,
             /* [in] */ IGProperty *__MIDL__IGPropertyClient0000);
@@ -344,38 +328,30 @@ EXTERN_C const IID IID_IGPropertiesClient;
     {
         BEGIN_INTERFACE
         
-        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IGPropertiesClient * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
-        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IGPropertiesClient * This);
         
-        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IGPropertiesClient * This);
         
-        DECLSPEC_XFGVIRT(IGPropertiesClient, SavePrep)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *SavePrep )( 
             IGPropertiesClient * This);
         
-        DECLSPEC_XFGVIRT(IGPropertiesClient, InitNew)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *InitNew )( 
             IGPropertiesClient * This);
         
-        DECLSPEC_XFGVIRT(IGPropertiesClient, Loaded)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Loaded )( 
             IGPropertiesClient * This);
         
-        DECLSPEC_XFGVIRT(IGPropertiesClient, IsDirty)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *IsDirty )( 
             IGPropertiesClient * This);
         
-        DECLSPEC_XFGVIRT(IGPropertiesClient, GetClassID)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *GetClassID )( 
             IGPropertiesClient * This,
             /* [out][in] */ BYTE *pCLSID);
@@ -496,26 +472,21 @@ EXTERN_C const IID IID_IGPropertyPageClient;
     {
         BEGIN_INTERFACE
         
-        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IGPropertyPageClient * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
-        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IGPropertyPageClient * This);
         
-        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IGPropertyPageClient * This);
         
-        DECLSPEC_XFGVIRT(IGPropertyPageClient, BeforeAllPropertyPages)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *BeforeAllPropertyPages )( 
             IGPropertyPageClient * This);
         
-        DECLSPEC_XFGVIRT(IGPropertyPageClient, GetPropertyPagesInfo)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *GetPropertyPagesInfo )( 
             IGPropertyPageClient * This,
             /* [in] */ long *countPages,
@@ -523,7 +494,6 @@ EXTERN_C const IID IID_IGPropertyPageClient;
             /* [out][in] */ SAFEARRAY * *stringHelpDirs,
             /* [out][in] */ SAFEARRAY * *pSize);
         
-        DECLSPEC_XFGVIRT(IGPropertyPageClient, CreatePropertyPage)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreatePropertyPage )( 
             IGPropertyPageClient * This,
             /* [in] */ long pageNumber,
@@ -532,48 +502,39 @@ EXTERN_C const IID IID_IGPropertyPageClient;
             /* [in] */ BOOL isModal,
             /* [retval][out] */ HWND *pHwndPropertyPage);
         
-        DECLSPEC_XFGVIRT(IGPropertyPageClient, IsPageDirty)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *IsPageDirty )( 
             IGPropertyPageClient * This,
             /* [in] */ long pageNumber,
             /* [retval][out] */ int *__MIDL__IGPropertyPageClient0000);
         
-        DECLSPEC_XFGVIRT(IGPropertyPageClient, Help)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Help )( 
             IGPropertyPageClient * This,
             BSTR bstrHelpFile);
         
-        DECLSPEC_XFGVIRT(IGPropertyPageClient, TranslateAccelerator)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *TranslateAccelerator )( 
             IGPropertyPageClient * This,
             /* [in] */ long pMsg,
             /* [retval][out] */ long *returnValue);
         
-        DECLSPEC_XFGVIRT(IGPropertyPageClient, Apply)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *Apply )( 
             IGPropertyPageClient * This);
         
-        DECLSPEC_XFGVIRT(IGPropertyPageClient, AfterAllPropertyPages)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *AfterAllPropertyPages )( 
             IGPropertyPageClient * This,
             int userCancelled);
         
-        DECLSPEC_XFGVIRT(IGPropertyPageClient, DestroyPropertyPage)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *DestroyPropertyPage )( 
             IGPropertyPageClient * This,
             /* [in] */ long pageNumberNumber);
         
-        DECLSPEC_XFGVIRT(IGPropertyPageClient, GetPropertySheetHeader)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *GetPropertySheetHeader )( 
             IGPropertyPageClient * This,
             void *pHeader);
         
-        DECLSPEC_XFGVIRT(IGPropertyPageClient, get_PropertyPageCount)
         /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_PropertyPageCount )( 
             IGPropertyPageClient * This,
             /* [retval][out] */ long *pCountPages);
         
-        DECLSPEC_XFGVIRT(IGPropertyPageClient, GetPropertySheets)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *GetPropertySheets )( 
             IGPropertyPageClient * This,
             void *pSheets);
@@ -942,34 +903,28 @@ EXTERN_C const IID IID_IGProperty;
     {
         BEGIN_INTERFACE
         
-        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IGProperty * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
-        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IGProperty * This);
         
-        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IGProperty * This);
         
-        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfoCount)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IGProperty * This,
             /* [out] */ UINT *pctinfo);
         
-        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfo)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IGProperty * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo **ppTInfo);
         
-        DECLSPEC_XFGVIRT(IDispatch, GetIDsOfNames)
         HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IGProperty * This,
             /* [in] */ REFIID riid,
@@ -978,7 +933,6 @@ EXTERN_C const IID IID_IGProperty;
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
-        DECLSPEC_XFGVIRT(IDispatch, Invoke)
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IGProperty * This,
             /* [annotation][in] */ 
@@ -998,441 +952,357 @@ EXTERN_C const IID IID_IGProperty;
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_value)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_value )( 
             IGProperty * This,
             /* [in] */ VARIANT newValue);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_value)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_value )( 
             IGProperty * This,
             /* [retval][out] */ VARIANT *theValue);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_name)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_name )( 
             IGProperty * This,
             /* [in] */ BSTR bstrName);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_name)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_name )( 
             IGProperty * This,
             /* [retval][out] */ BSTR *bstrName);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_type)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_type )( 
             IGProperty * This,
             /* [in] */ enum PropertyType type);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_type)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_type )( 
             IGProperty * This,
             /* [retval][out] */ enum PropertyType *pType);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_size)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_size )( 
             IGProperty * This,
             /* [in] */ long size);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_size)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_size )( 
             IGProperty * This,
             /* [retval][out] */ long *size);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_isDirty)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_isDirty )( 
             IGProperty * This,
             /* [in] */ short setDirtyState);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_isDirty)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_isDirty )( 
             IGProperty * This,
             /* [retval][out] */ short *getDirtyState);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_everAssigned)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_everAssigned )( 
             IGProperty * This,
             /* [retval][out] */ short *getEverAssigned);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_ignoreSetAction)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_ignoreSetAction )( 
             IGProperty * This,
             /* [in] */ VARIANT_BOOL ignoreSetAction);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_ignoreSetAction)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_ignoreSetAction )( 
             IGProperty * This,
             /* [retval][out] */ VARIANT_BOOL *getIgnoreSetAction);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_debuggingEnabled)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_debuggingEnabled )( 
             IGProperty * This,
             /* [in] */ VARIANT_BOOL __MIDL__IGProperty0000);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_debuggingEnabled)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_debuggingEnabled )( 
             IGProperty * This,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IGProperty0001);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_binaryData)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_binaryData )( 
             IGProperty * This,
             BYTE **getAddress);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_compressedName)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_compressedName )( 
             IGProperty * This,
             BSTR *getCompressedName);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_encodedText)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_encodedText )( 
             IGProperty * This,
             /* [in] */ BSTR putEncodedText);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_encodedText)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_encodedText )( 
             IGProperty * This,
             /* [retval][out] */ BSTR *getEncodedText);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_variantType)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_variantType )( 
             IGProperty * This,
             /* [retval][out] */ VARTYPE *__MIDL__IGProperty0002);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_longValue)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_longValue )( 
             IGProperty * This,
             /* [in] */ long __MIDL__IGProperty0003);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_longValue)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_longValue )( 
             IGProperty * This,
             /* [retval][out] */ long *__MIDL__IGProperty0004);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_doubleValue)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_doubleValue )( 
             IGProperty * This,
             /* [in] */ double __MIDL__IGProperty0005);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_doubleValue)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_doubleValue )( 
             IGProperty * This,
             /* [retval][out] */ double *__MIDL__IGProperty0006);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_binaryValue)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_binaryValue )( 
             IGProperty * This,
             /* [in] */ long cbSize,
             /* [in] */ BYTE *__MIDL__IGProperty0007);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_binaryValue)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_binaryValue )( 
             IGProperty * This,
             /* [in] */ long cbSize,
             /* [retval][out] */ BYTE **__MIDL__IGProperty0008);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_szValue)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_szValue )( 
             IGProperty * This,
             /* [in] */ char *pNewString);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_szValue)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_szValue )( 
             IGProperty * This,
             /* [retval][out] */ char *pOutput);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_stringValue)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_stringValue )( 
             IGProperty * This,
             /* [in] */ BSTR __MIDL__IGProperty0009);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_stringValue)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_stringValue )( 
             IGProperty * This,
             /* [retval][out] */ BSTR *__MIDL__IGProperty0010);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_arrayValue)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_arrayValue )( 
             IGProperty * This,
             /* [in] */ SAFEARRAY * variants);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_arrayValue)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_arrayValue )( 
             IGProperty * This,
             /* [retval][out] */ SAFEARRAY * *variants);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_boolValue)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_boolValue )( 
             IGProperty * This,
             /* [in] */ short __MIDL__IGProperty0011);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_boolValue)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_boolValue )( 
             IGProperty * This,
             /* [retval][out] */ short *__MIDL__IGProperty0012);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_variantValue)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_variantValue )( 
             IGProperty * This,
             /* [in] */ VARIANT __MIDL__IGProperty0013);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_variantValue)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_variantValue )( 
             IGProperty * This,
             /* [retval][out] */ VARIANT *__MIDL__IGProperty0014);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_arrayIndex)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_arrayIndex )( 
             IGProperty * This,
             /* [in] */ long index);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_arrayIndex)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_arrayIndex )( 
             IGProperty * This,
             /* [retval][out] */ long *__MIDL__IGProperty0015);
         
-        DECLSPEC_XFGVIRT(IGProperty, put_arrayElement)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_arrayElement )( 
             IGProperty * This,
             /* [in] */ long index,
             /* [in] */ VARIANT elementValue);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_arrayElement)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_arrayElement )( 
             IGProperty * This,
             /* [in] */ long index,
             /* [retval][out] */ VARIANT *elementValue);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_arrayElementCount)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_arrayElementCount )( 
             IGProperty * This,
             /* [retval][out] */ long *countElements);
         
-        DECLSPEC_XFGVIRT(IGProperty, clearArray)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *clearArray )( 
             IGProperty * This);
         
-        DECLSPEC_XFGVIRT(IGProperty, directAccess)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *directAccess )( 
             IGProperty * This,
             /* [in] */ enum PropertyType propertyType,
             /* [in] */ void *directAccess,
             /* [in] */ long directAccessSize);
         
-        DECLSPEC_XFGVIRT(IGProperty, copyTo)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *copyTo )( 
             IGProperty * This,
             /* [in] */ IGProperty *pTheDestination);
         
-        DECLSPEC_XFGVIRT(IGProperty, addStorageObject)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *addStorageObject )( 
             IGProperty * This,
             /* [in] */ IUnknown *pObjectSupportingIPersistStorage);
         
-        DECLSPEC_XFGVIRT(IGProperty, removeStorageObject)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *removeStorageObject )( 
             IGProperty * This,
             /* [in] */ IUnknown *pObjectSupportingIPersistStorage);
         
-        DECLSPEC_XFGVIRT(IGProperty, clearStorageObjects)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *clearStorageObjects )( 
             IGProperty * This);
         
-        DECLSPEC_XFGVIRT(IGProperty, get_storedObjectCount)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_storedObjectCount )( 
             IGProperty * This,
             /* [retval][out] */ long *cntObjects);
         
-        DECLSPEC_XFGVIRT(IGProperty, writeStorageObjects)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *writeStorageObjects )( 
             IGProperty * This);
         
-        DECLSPEC_XFGVIRT(IGProperty, readStorageObjects)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *readStorageObjects )( 
             IGProperty * This);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowValue)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowValue )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowItemValue)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowItemValue )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowText)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowText )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowItemText)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowItemText )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowText)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowText )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowItemText)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowItemText )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowComboBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowComboBoxSelection )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowItemComboBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowItemComboBoxSelection )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowComboBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowComboBoxSelection )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowItemComboBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowItemComboBoxSelection )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowComboBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowComboBoxList )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowItemComboBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowItemComboBoxList )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowComboBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowComboBoxList )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowItemComboBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowItemComboBoxList )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowListBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowListBoxSelection )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowItemListBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowItemListBoxSelection )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowListBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowListBoxSelection )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowItemListBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowItemListBoxSelection )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowListBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowListBoxList )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowItemListBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowItemListBoxList )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowListBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowListBoxList )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowItemListBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowItemListBoxList )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowArrayValues)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowArrayValues )( 
             IGProperty * This,
             /* [in] */ SAFEARRAY * *hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowItemArrayValues)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowItemArrayValues )( 
             IGProperty * This,
             /* [in] */ SAFEARRAY * *hwndDialog,
             /* [in] */ SAFEARRAY * *idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowArrayValues)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowArrayValues )( 
             IGProperty * This,
             /* [in] */ SAFEARRAY * *hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowItemArrayValues)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowItemArrayValues )( 
             IGProperty * This,
             /* [in] */ SAFEARRAY * *hwndDialog,
             /* [in] */ SAFEARRAY * *idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowChecked)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowChecked )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowItemChecked)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowItemChecked )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowChecked)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowChecked )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, getWindowItemChecked)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *getWindowItemChecked )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowEnabled)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowEnabled )( 
             IGProperty * This,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, setWindowItemEnabled)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *setWindowItemEnabled )( 
             IGProperty * This,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperty, assign)
         /* [hidden][id] */ HRESULT ( STDMETHODCALLTYPE *assign )( 
             IGProperty * This,
             void *anyData,
             long length);
         
-        DECLSPEC_XFGVIRT(IGProperty, pointer)
         /* [id] */ void *( STDMETHODCALLTYPE *pointer )( 
             IGProperty * This);
         
@@ -2075,34 +1945,28 @@ EXTERN_C const IID IID_IGProperties;
     {
         BEGIN_INTERFACE
         
-        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IGProperties * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
-        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IGProperties * This);
         
-        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IGProperties * This);
         
-        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfoCount)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IGProperties * This,
             /* [out] */ UINT *pctinfo);
         
-        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfo)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IGProperties * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo **ppTInfo);
         
-        DECLSPEC_XFGVIRT(IDispatch, GetIDsOfNames)
         HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IGProperties * This,
             /* [in] */ REFIID riid,
@@ -2111,7 +1975,6 @@ EXTERN_C const IID IID_IGProperties;
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
-        DECLSPEC_XFGVIRT(IDispatch, Invoke)
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IGProperties * This,
             /* [annotation][in] */ 
@@ -2131,137 +1994,110 @@ EXTERN_C const IID IID_IGProperties;
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
         
-        DECLSPEC_XFGVIRT(IGProperties, put_DebuggingEnabled)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_DebuggingEnabled )( 
             IGProperties * This,
             /* [in] */ VARIANT_BOOL setEnabled);
         
-        DECLSPEC_XFGVIRT(IGProperties, get_DebuggingEnabled)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_DebuggingEnabled )( 
             IGProperties * This,
             /* [retval][out] */ VARIANT_BOOL *pGetEnabled);
         
-        DECLSPEC_XFGVIRT(IGProperties, put_FileName)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_FileName )( 
             IGProperties * This,
             /* [in] */ BSTR fileName);
         
-        DECLSPEC_XFGVIRT(IGProperties, get_FileName)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_FileName )( 
             IGProperties * This,
             /* [retval][out] */ BSTR *pfileName);
         
-        DECLSPEC_XFGVIRT(IGProperties, put_FileAllowedExtensions)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_FileAllowedExtensions )( 
             IGProperties * This,
             /* [in] */ BSTR fileExtensions);
         
-        DECLSPEC_XFGVIRT(IGProperties, get_FileAllowedExtensions)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_FileAllowedExtensions )( 
             IGProperties * This,
             /* [retval][out] */ BSTR *pfileExtensions);
         
-        DECLSPEC_XFGVIRT(IGProperties, put_FileType)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_FileType )( 
             IGProperties * This,
             /* [in] */ BSTR fileType);
         
-        DECLSPEC_XFGVIRT(IGProperties, get_FileType)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_FileType )( 
             IGProperties * This,
             /* [retval][out] */ BSTR *pfileType);
         
-        DECLSPEC_XFGVIRT(IGProperties, put_FileSaveOpenText)
         /* [helpstring][propput][id] */ HRESULT ( STDMETHODCALLTYPE *put_FileSaveOpenText )( 
             IGProperties * This,
             /* [in] */ BSTR fileSaveOpenText);
         
-        DECLSPEC_XFGVIRT(IGProperties, get_FileSaveOpenText)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_FileSaveOpenText )( 
             IGProperties * This,
             /* [retval][out] */ BSTR *pfileSaveOpenText);
         
-        DECLSPEC_XFGVIRT(IGProperties, New)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *New )( 
             IGProperties * This);
         
-        DECLSPEC_XFGVIRT(IGProperties, Open)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Open )( 
             IGProperties * This,
             /* [retval][out] */ BSTR *pTheFileName);
         
-        DECLSPEC_XFGVIRT(IGProperties, LoadFile)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *LoadFile )( 
             IGProperties * This,
             /* [retval][out] */ VARIANT_BOOL *wasSuccessful);
         
-        DECLSPEC_XFGVIRT(IGProperties, OpenFile)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *OpenFile )( 
             IGProperties * This,
             /* [in] */ BSTR fileName);
         
-        DECLSPEC_XFGVIRT(IGProperties, Save)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Save )( 
             IGProperties * This);
         
-        DECLSPEC_XFGVIRT(IGProperties, SaveTo)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SaveTo )( 
             IGProperties * This,
             BSTR bstrFileName);
         
-        DECLSPEC_XFGVIRT(IGProperties, SaveAs)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SaveAs )( 
             IGProperties * This,
             /* [retval][out] */ BSTR *pTheFileName);
         
-        DECLSPEC_XFGVIRT(IGProperties, Add)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Add )( 
             IGProperties * This,
             /* [in] */ BSTR name,
             /* [defaultvalue][retval][out] */ IGProperty **ppIGProperty);
         
-        DECLSPEC_XFGVIRT(IGProperties, Include)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Include )( 
             IGProperties * This,
             /* [in] */ IGProperty *pIGProperty);
         
-        DECLSPEC_XFGVIRT(IGProperties, Remove)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Remove )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName);
         
-        DECLSPEC_XFGVIRT(IGProperties, get_Property)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_Property )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [retval][out] */ IGProperty **pIGProperty);
         
-        DECLSPEC_XFGVIRT(IGProperties, get_Count)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_Count )( 
             IGProperties * This,
             /* [retval][out] */ long *theCount);
         
-        DECLSPEC_XFGVIRT(IGProperties, get_Size)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_Size )( 
             IGProperties * This,
             /* [retval][out] */ long *getSize);
         
-        DECLSPEC_XFGVIRT(IGProperties, get_IStorage)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_IStorage )( 
             IGProperties * This,
             /* [retval][out] */ IStorage **__MIDL__IGProperties0000);
         
-        DECLSPEC_XFGVIRT(IGProperties, get_IStream)
         /* [helpstring][propget][id] */ HRESULT ( STDMETHODCALLTYPE *get_IStream )( 
             IGProperties * This,
             /* [retval][out] */ IStream **__MIDL__IGProperties0001);
         
-        DECLSPEC_XFGVIRT(IGProperties, Advise)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Advise )( 
             IGProperties * This,
             IGPropertiesClient *pIGPropertiesClient);
         
-        DECLSPEC_XFGVIRT(IGProperties, DirectAccess)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *DirectAccess )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
@@ -2269,33 +2105,27 @@ EXTERN_C const IID IID_IGProperties;
             /* [in] */ void *directAccess,
             /* [in] */ long directAccessSize);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetClassID)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetClassID )( 
             IGProperties * This,
             /* [in] */ BYTE *ptrTo128BYTES);
         
-        DECLSPEC_XFGVIRT(IGProperties, CopyTo)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *CopyTo )( 
             IGProperties * This,
             /* [in] */ IGProperties *pTheDestination);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetPropertyInterfaces)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetPropertyInterfaces )( 
             IGProperties * This,
             /* [in] */ long *pCntInterfaces,
             /* [in] */ IGProperty ***pTheArray);
         
-        DECLSPEC_XFGVIRT(IGProperties, AddObject)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *AddObject )( 
             IGProperties * This,
             /* [in] */ IUnknown *pObject);
         
-        DECLSPEC_XFGVIRT(IGProperties, RemoveObject)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *RemoveObject )( 
             IGProperties * This,
             /* [in] */ IUnknown *pObject);
         
-        DECLSPEC_XFGVIRT(IGProperties, PutHWNDPersistence)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *PutHWNDPersistence )( 
             IGProperties * This,
             /* [in] */ HWND hwndPersistence,
@@ -2303,46 +2133,38 @@ EXTERN_C const IID IID_IGProperties;
             /* [in] */ HWND hwndLoad,
             /* [in] */ HWND hwndSavePrep);
         
-        DECLSPEC_XFGVIRT(IGProperties, RemoveHWNDPersistence)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *RemoveHWNDPersistence )( 
             IGProperties * This,
             /* [in] */ HWND hwndPersistence);
         
-        DECLSPEC_XFGVIRT(IGProperties, IsDirty)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *IsDirty )( 
             IGProperties * This);
         
-        DECLSPEC_XFGVIRT(IGProperties, SaveObjectToFile)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SaveObjectToFile )( 
             IGProperties * This,
             IUnknown *pObject,
             BSTR fileName);
         
-        DECLSPEC_XFGVIRT(IGProperties, LoadObjectFromFile)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *LoadObjectFromFile )( 
             IGProperties * This,
             IUnknown *pObject,
             BSTR fileName);
         
-        DECLSPEC_XFGVIRT(IGProperties, AdvisePropertyPageClient)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *AdvisePropertyPageClient )( 
             IGProperties * This,
             IGPropertyPageClient *pIGPropertyPageClient,
             /* [defaultvalue] */ boolean usePropertySheets);
         
-        DECLSPEC_XFGVIRT(IGProperties, AddPropertyPage)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *AddPropertyPage )( 
             IGProperties * This,
             IUnknown *pIUnknown_anotherObject,
             /* [defaultvalue] */ boolean usePropertySheets);
         
-        DECLSPEC_XFGVIRT(IGProperties, RemovePropertyPage)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *RemovePropertyPage )( 
             IGProperties * This,
             IUnknown *pIUnknown_anotherObject,
             /* [defaultvalue] */ boolean usePropertySheets);
         
-        DECLSPEC_XFGVIRT(IGProperties, PutHWNDPropertyPage)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *PutHWNDPropertyPage )( 
             IGProperties * This,
             /* [in] */ BSTR displayName,
@@ -2352,262 +2174,220 @@ EXTERN_C const IID IID_IGProperties;
             /* [in] */ HWND hwndApply,
             /* [in] */ HWND hwndCancel);
         
-        DECLSPEC_XFGVIRT(IGProperties, RemoveHWNDPropertyPage)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *RemoveHWNDPropertyPage )( 
             IGProperties * This,
             /* [in] */ HWND hwndPropertyPage);
         
-        DECLSPEC_XFGVIRT(IGProperties, ShowProperties)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *ShowProperties )( 
             IGProperties * This,
             HWND windowHandleOwner,
             IUnknown *ObjectWithProperties);
         
-        DECLSPEC_XFGVIRT(IGProperties, EditProperties)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *EditProperties )( 
             IGProperties * This,
             HWND windowHandleOwner,
             BSTR Text,
             /* [defaultvalue][in] */ IUnknown *ObjectWithProperties);
         
-        DECLSPEC_XFGVIRT(IGProperties, Push)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Push )( 
             IGProperties * This);
         
-        DECLSPEC_XFGVIRT(IGProperties, Pop)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Pop )( 
             IGProperties * This);
         
-        DECLSPEC_XFGVIRT(IGProperties, Discard)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Discard )( 
             IGProperties * This);
         
-        DECLSPEC_XFGVIRT(IGProperties, Compare)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Compare )( 
             IGProperties * This,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IGProperties0002);
         
-        DECLSPEC_XFGVIRT(IGProperties, ConnectPropertyNotifySink)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *ConnectPropertyNotifySink )( 
             IGProperties * This,
             IPropertyNotifySink *pContainerPropertyNotifySink,
             DWORD *pdwCookie);
         
-        DECLSPEC_XFGVIRT(IGProperties, FindConnectionPoint)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *FindConnectionPoint )( 
             IGProperties * This,
             REFIID riid,
             IConnectionPoint **__MIDL__IGProperties0003);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowValue)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowValue )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowItemValue)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowItemValue )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowText)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowText )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowItemText)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowItemText )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowText)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowText )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowItemText)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowItemText )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowComboBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowComboBoxSelection )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowItemComboBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowItemComboBoxSelection )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowComboBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowComboBoxSelection )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowItemComboBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowItemComboBoxSelection )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowComboBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowComboBoxList )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowItemComboBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowItemComboBoxList )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowComboBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowComboBoxList )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowItemComboBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowItemComboBoxList )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowListBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowListBoxSelection )( 
             IGProperties * This,
             /* [in] */ BSTR propertyname,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowItemListBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowItemListBoxSelection )( 
             IGProperties * This,
             /* [in] */ BSTR propertyname,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowListBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowListBoxSelection )( 
             IGProperties * This,
             /* [in] */ BSTR propertyname,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowItemListBoxSelection)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowItemListBoxSelection )( 
             IGProperties * This,
             /* [in] */ BSTR propertyname,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowListBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowListBoxList )( 
             IGProperties * This,
             /* [in] */ BSTR propertyname,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowItemListBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowItemListBoxList )( 
             IGProperties * This,
             /* [in] */ BSTR propertyname,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowListBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowListBoxList )( 
             IGProperties * This,
             /* [in] */ BSTR propertyname,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowItemListBoxList)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowItemListBoxList )( 
             IGProperties * This,
             /* [in] */ BSTR propertyname,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowArrayValues)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowArrayValues )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ SAFEARRAY * *hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowItemArrayValues)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowItemArrayValues )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ SAFEARRAY * *hwndControl,
             /* [in] */ SAFEARRAY * *idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowArrayValues)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowArrayValues )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ SAFEARRAY * *hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowItemArrayValues)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowItemArrayValues )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ SAFEARRAY * *hwndControl,
             /* [in] */ SAFEARRAY * *idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowChecked)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowChecked )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowItemChecked)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowItemChecked )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowChecked)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowChecked )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowItemChecked)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowItemChecked )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowEnabled)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowEnabled )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, SetWindowItemEnabled)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetWindowItemEnabled )( 
             IGProperties * This,
             /* [in] */ BSTR propertyName,
             /* [in] */ HWND hwndDialog,
             /* [in] */ long idControl);
         
-        DECLSPEC_XFGVIRT(IGProperties, GetWindowID)
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetWindowID )( 
             IGProperties * This,
             /* [in] */ HWND hwnd,
