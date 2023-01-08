@@ -17,6 +17,34 @@
 
     templateDocument::tdUI::~tdUI() {
 
+    for ( std::pair<long,HDC> p : pdfPageHDCs ) {
+        HBITMAP hbm = CreateCompatibleBitmap(p.second,1,1);
+        DeleteObject(SelectObject(p.second,hbm));
+        pdfPageHBITMAPs.erase(p.first);
+        DeleteDC(p.second);
+        DeleteObject(hbm);
+    }
+
+    pdfPageHDCs.clear();
+    pdfPageHBITMAPs.clear();
+
+    std::list<pageArea *> toDelete;
+
+    for ( pageArea *pArea : pdfPageAreaBitmaps ) {
+        HBITMAP hbm = CreateCompatibleBitmap(pArea -> hdc,1,1);
+        DeleteObject(SelectObject(pArea -> hdc,hbm));
+        toDelete.push_back(pArea);
+        DeleteObject(hbm);
+        DeleteDC(pArea -> hdc);
+        delete pArea;
+    }
+
+    for ( pageArea *pArea : toDelete )
+        pdfPageAreaBitmaps.remove(pArea);
+
+    toDelete.clear();
+    pdfPageAreaBitmaps.clear();
+
     HiliteTextAreas(false);
 
     if ( pIPDFiumControl ) 
@@ -39,6 +67,9 @@
     pDocumentRects = NULL;
     pDocumentText = NULL;
     pDocumentPages = NULL;
+
+    if ( prcPDFSpecificPagePixels )
+        delete [] prcPDFSpecificPagePixels;
 
     return;
     }
@@ -90,6 +121,8 @@
     setupPDFiumControl();
 
     setURL(pParent -> pszDocumentName);
+
+    prcPDFSpecificPagePixels = new RECT[PDFPageCount()];
 
     return;
     }
@@ -208,65 +241,94 @@
 
 
     HDC templateDocument::tdUI::pdfDC(long atY) {
-
-    long pageNumber = currentPageNumber(atY);
-
-    if ( hdcPDF && pageNumber == oldPageNumber ) 
-        return hdcPDF;
-
-    if ( hdcPDF ) 
-        DeleteDC(hdcPDF);
-
-    hdcPDF = CreateCompatibleDC(NULL);
-
-    HBITMAP hbmPage;
-
-    pIPDFiumControl -> get_PDFPageHBITMAP(pageNumber,&hbmPage);
-
-    SelectObject(hdcPDF,hbmPage);
-
-    return hdcPDF; 
+    return pdfPageDC(currentPageNumber(atY));
     }
 
 
     HDC templateDocument::tdUI::pdfPageDC(long pageNumber) {
 
-    if ( hdcPDF ) 
-        DeleteDC(hdcPDF);
+    HDC hdcTest = pdfPageHDCs[pageNumber];
 
-    hdcPDF = CreateCompatibleDC(NULL);
+    if ( hdcTest )
+        return hdcTest;
+
+    hdcTest = CreateCompatibleDC(NULL);
 
     HBITMAP hbmPage;
 
     pIPDFiumControl -> get_PDFPageHBITMAP(pageNumber,&hbmPage);
 
-    SelectObject(hdcPDF,hbmPage);
+    SelectObject(hdcTest,hbmPage);
 
-    return hdcPDF; 
+    pdfPageHBITMAPs[pageNumber] = hbmPage;
+    pdfPageHDCs[pageNumber] = hdcTest;
+
+    return pdfPageHDCs[pageNumber];
+    }
+
+
+    void templateDocument::tdUI::pdfDCRelease(HDC hdc) {
+
+    for ( std::pair<long,HDC> p : pdfPageHDCs ) {
+        if ( p.second == hdc ) {
+            HBITMAP hbm = CreateCompatibleBitmap(hdc,1,1);
+            DeleteObject(SelectObject(hdc,hbm));
+            pdfPageHBITMAPs.erase(p.first);
+            DeleteObject(hbm);
+            DeleteDC(hdc);
+            return;
+        }
+    }
+
+    for ( pageArea *pArea : pdfPageAreaBitmaps ) {
+        if ( pArea -> hdc == hdc ) {
+            HBITMAP hbm = CreateCompatibleBitmap(hdc,1,1);
+            DeleteObject(SelectObject(hdc,hbm));
+            pdfPageAreaBitmaps.remove(pArea);
+            delete pArea;
+            DeleteObject(hbm);
+            DeleteDC(hdc);
+            return;
+        }
+    }
+
+    return;
     }
 
 
     HDC templateDocument::tdUI::pdfDCArea(long pageNumber,RECT *prcPixels) {
 
-    if ( hdcPDF ) 
-        DeleteDC(hdcPDF);
+    for ( pageArea *pa : pdfPageAreaBitmaps ) {
+        if ( memcmp(&pa -> rcArea,prcPixels,sizeof(RECT)) )
+            continue;
+        if ( ! ( pa -> pageNumber == pageNumber ) )
+            continue;
+        return pa -> hdc;
+    }
 
-    hdcPDF = CreateCompatibleDC(NULL);
+    HDC hdc = CreateCompatibleDC(NULL);
 
     HBITMAP hbmPage;
 
     RECT rc = *prcPixels;
 
-    rc.left -= rcPDFPagePixels.left;
-    rc.right -= rcPDFPagePixels.left;
-    rc.top -= rcPDFPagePixels.top;
-    rc.bottom -= rcPDFPagePixels.top;
+    rc.left -= prcPDFSpecificPagePixels[pageNumber - 1].left;
+    rc.right -= prcPDFSpecificPagePixels[pageNumber - 1].left;
+    rc.top -= prcPDFSpecificPagePixels[pageNumber - 1].top;
+    rc.bottom -= prcPDFSpecificPagePixels[pageNumber - 1].top;
 
     pIPDFiumControl -> get_PDFPageHBITMAPFromAreaPixels(pageNumber,&rc,&hbmPage);
 
-    SelectObject(hdcPDF,hbmPage);
+    SelectObject(hdc,hbmPage);
 
-    return hdcPDF;
+    pageArea *pa = new pageArea();
+    pa -> hdc = hdc;
+    pa -> hBitmap = hbmPage;
+    pa -> rcArea = *prcPixels;
+    pa -> pageNumber = pageNumber;
+    pdfPageAreaBitmaps.push_back(pa);
+
+    return pa -> hdc;
     }
 
 
@@ -381,6 +443,23 @@
     rcPDFPagePixelsInHost.bottom = rcPDFPagePixelsInHost.top + cy;
 
     scaleToPixels = (double)cy / (double)(pParent -> PDFPageHeight());
+
+    if ( 1 < pageNumber ) {
+
+        POINTL ptlPriorPageUpperLeft{0L,0L};
+
+        pIPDFiumControl -> get_PDFPageXPixelsInView(pageNumber - 1,&ptlPriorPageUpperLeft.x);
+        long reportedYPriorPage = 0L;
+        pIPDFiumControl -> get_PDFPageYPixelsInView(pageNumber - 1,&reportedYPriorPage);
+
+        prcPDFSpecificPagePixels[pageNumber - 2].left = ptlPriorPageUpperLeft.x + 2;
+        prcPDFSpecificPagePixels[pageNumber - 2].top = reportedYPriorPage + 2;
+        prcPDFSpecificPagePixels[pageNumber - 2].right = ptlPriorPageUpperLeft.x + cx;
+        prcPDFSpecificPagePixels[pageNumber - 2].bottom = reportedYPriorPage + 2 + cy;
+
+    }
+
+    prcPDFSpecificPagePixels[pageNumber - 1] = rcPDFPagePixels;
 
     if ( ! pParent -> pIPdfDocument && ! pParent -> pszProfileFileName )
         return;

@@ -16,6 +16,7 @@
 
     }
 
+
     static void drawSigningAreas(HDC hdc,templateDocument::tdUI *pDocument) {
 
     if ( ! pDocument -> isDocumentRendered() )
@@ -51,20 +52,20 @@
 
         pDocument -> convertToPixels(pLocation -> pdfPageNumber,&r);
 
-        if ( r.bottom < pDocument -> rcPDFPagePixels.top )
+        if ( r.bottom < pDocument -> prcPDFSpecificPagePixels[pLocation -> pdfPageNumber - 1].top )
             continue;
 
-        if ( r.top > pDocument -> rcPDFPagePixels.bottom )
+        if ( r.top > pDocument -> prcPDFSpecificPagePixels[pLocation -> pdfPageNumber - 1].bottom )
             continue;
 
         RECT rcText = r;
 
-        rcText.left = max(pDocument -> rcPDFPagePixels.left,r.left);
-        rcText.right = min(pDocument -> rcPDFPagePixels.right,r.right);
-        rcText.top = max(pDocument -> rcPDFPagePixels.top,r.top);
-        rcText.bottom = min(pDocument -> rcPDFPagePixels.bottom,r.bottom);
+        rcText.left = max(pDocument -> prcPDFSpecificPagePixels[pLocation -> pdfPageNumber - 1].left,r.left);
+        rcText.right = min(pDocument -> prcPDFSpecificPagePixels[pLocation -> pdfPageNumber - 1].right,r.right);
+        rcText.top = max(pDocument -> prcPDFSpecificPagePixels[pLocation -> pdfPageNumber - 1].top,r.top);
+        rcText.bottom = min(pDocument -> prcPDFSpecificPagePixels[pLocation -> pdfPageNumber - 1].bottom,r.bottom);
 
-        if ( ! ( -1L == candidateRectIndex ) && candidateRectIndex == allRectIndex ) 
+        if ( /*! ( -1L == candidateRectIndex ) && */candidateRectIndex == allRectIndex ) 
             DRAW_COLORED_BOX_IN_PIXELS_HDC_NOCLIP_NOHIDEABLE(hdc,PS_SOLID,DB_GREEN,(&rcText),BORDER_WEIGHT)
         else
             DRAW_COLORED_BOX_IN_PIXELS_HDC_NOCLIP_NOHIDEABLE(hdc,PS_SOLID,DB_BLACK,(&rcText),BORDER_WEIGHT)

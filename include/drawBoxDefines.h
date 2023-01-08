@@ -18,6 +18,7 @@
 #define DB_BLACK    RGB(0,0,0)
 #define DB_MAGENTA  RGB(255,0,255)
 #define DB_CYAN     RGB(0,255,255)
+#define DB_GRAY     RGB(128,128,128)
 
 #define DRAW_COLORED_BOX_IN_POINTS(ptdui,type,color,pr,w) \
 {                                                   \

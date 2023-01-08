@@ -23,6 +23,13 @@
 #define TIMER_ID_PAINT  1
 #define TIMER_PAINT_DURATION  200
 
+    struct pageArea {
+        long pageNumber{0L};
+        RECT rcArea{0L,0L,0L,0L};
+        HDC hdc{NULL};
+        HBITMAP hBitmap{NULL};
+    };
+
     class templateDocument {
     public:
    
@@ -148,6 +155,12 @@
 
             void convertToPoints(long pageNumber,RECT *pRect) { pIPDFiumControl -> ConvertVisiblePanePixelsToPoints(pageNumber,pRect); }
             void convertToPixels(long pageNumber,RECT *pRect) { pIPDFiumControl -> ConvertPointsToVisiblePanePixels(pageNumber,pRect); }
+            void convertToPixels(long pageNumber,POINTL *pPoint) {
+                RECT rc{pPoint -> x,pPoint -> y,pPoint -> x,pPoint -> y};
+                convertToPixels(pageNumber,&rc);
+                pPoint -> x = rc.left;
+                pPoint -> y = rc.top;
+            }
             void scaleToPoints(long pageNumber,RECT *pRect) { pIPDFiumControl -> ScalePixelsToPoints(pageNumber,pRect); }
 
             long currentPageNumber(long atY = -1L);
@@ -160,6 +173,7 @@
             HDC pdfDC(long atY = -1L);
             HDC pdfDCArea(long pageNumber,RECT *prcPixels);
             HDC pdfPageDC(long pageNumber);
+            void pdfDCRelease(HDC hdc);
 
             HBITMAP pdfHBitmap(long pdfPageNumber);
 
@@ -177,6 +191,7 @@
             RECT rcPageParentCoordinates{0,0,0,0};
             RECT rcHTML{0,0,0,0};
             RECT rcPDFPagePixels{0,0,0,0};
+            RECT *prcPDFSpecificPagePixels{NULL};
             RECT rcPDFPagePixelsInView{0,0,0,0};
             RECT rcPDFPagePixelsInHost{0,0,0,0};
             RECT rcVellumPixels{0,0,0,0};
@@ -314,9 +329,6 @@
 
             long refCount{0L};
 
-            HDC hdcPDF{NULL};
-            HBITMAP hbmPDF{NULL};
-
             POINTL ptlPDFUpperLeft{0,0};
 
             IOleInPlaceObject *pIOleInPlaceObject_HTML{NULL};
@@ -330,6 +342,11 @@
             DWORD connectionCookie_PDFiumControlEvents{0};
 
             IPDFiumControl *pIPDFiumControl{0};
+
+            std::unordered_map<long,HDC> pdfPageHDCs;
+            std::unordered_map<long,HBITMAP> pdfPageHBITMAPs;
+
+            std::list<pageArea *> pdfPageAreaBitmaps;
 
             std::unordered_map<GUID,hilitedArea *,guidHash> hilitedAreas;
 
