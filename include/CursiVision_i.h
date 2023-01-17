@@ -727,9 +727,6 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
         virtual void STDMETHODCALLTYPE SetAllowPrintProfileChanges( 
             BOOL doAllow) = 0;
         
-        virtual void STDMETHODCALLTYPE SetIsAdministrator( 
-            BOOL __MIDL__ICursiVisionServices0003) = 0;
-        
         virtual char *STDMETHODCALLTYPE GlobalTemplateDocument( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE GetImageFields( 
@@ -916,11 +913,6 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
             ICursiVisionServices * This,
             BOOL doAllow);
         
-        DECLSPEC_XFGVIRT(ICursiVisionServices, SetIsAdministrator)
-        void ( STDMETHODCALLTYPE *SetIsAdministrator )( 
-            ICursiVisionServices * This,
-            BOOL __MIDL__ICursiVisionServices0003);
-        
         DECLSPEC_XFGVIRT(ICursiVisionServices, GlobalTemplateDocument)
         char *( STDMETHODCALLTYPE *GlobalTemplateDocument )( 
             ICursiVisionServices * This);
@@ -1066,9 +1058,6 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
 
 #define ICursiVisionServices_SetAllowPrintProfileChanges(This,doAllow)	\
     ( (This)->lpVtbl -> SetAllowPrintProfileChanges(This,doAllow) ) 
-
-#define ICursiVisionServices_SetIsAdministrator(This,__MIDL__ICursiVisionServices0003)	\
-    ( (This)->lpVtbl -> SetIsAdministrator(This,__MIDL__ICursiVisionServices0003) ) 
 
 #define ICursiVisionServices_GlobalTemplateDocument(This)	\
     ( (This)->lpVtbl -> GlobalTemplateDocument(This) ) 

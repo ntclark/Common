@@ -317,7 +317,7 @@
     rc.top -= prcPDFSpecificPagePixels[pageNumber - 1].top;
     rc.bottom -= prcPDFSpecificPagePixels[pageNumber - 1].top;
 
-    pIPDFiumControl -> get_PDFPageHBITMAPFromAreaPixels(pageNumber,&rc,&hbmPage);
+    pIPDFiumControl -> get_PDFPageHBITMAPFromAreaPixels(pageNumber,&rc,NULL,&hbmPage);
 
     SelectObject(hdc,hbmPage);
 

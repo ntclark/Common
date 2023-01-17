@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0628 */
+ /* File created by MIDL compiler version 8.01.0622 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for EnhancedNamingBackEnd.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -36,14 +36,6 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
-#endif
-
-#ifndef DECLSPEC_XFGVIRT
-#if defined(_CONTROL_FLOW_GUARD_XFG)
-#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
-#else
-#define DECLSPEC_XFGVIRT(base, func)
-#endif
 #endif
 
 /* Forward Declarations */ 
@@ -76,9 +68,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionNamingBackEnd;
+DEFINE_GUID(LIBID_CursiVisionNamingBackEnd,0x2BEFEC20,0xB6F7,0x4ccb,0x93,0xB7,0xD8,0xED,0xDF,0x31,0x53,0xB5);
 
-EXTERN_C const CLSID CLSID_CursiVisionNamingBackEnd;
+DEFINE_GUID(CLSID_CursiVisionNamingBackEnd,0x2BEFEC20,0xB6F7,0x4ccb,0x93,0xB7,0xD8,0xED,0xDF,0x31,0x53,0xB6);
 
 #ifdef __cplusplus
 

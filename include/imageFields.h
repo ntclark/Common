@@ -23,6 +23,11 @@
             else 
                 ID = id;
 
+            searchQuadrants[0] = true;
+            searchQuadrants[1] = true;
+            searchQuadrants[2] = true;
+            searchQuadrants[3] = true;
+
             imageFieldList.push_back(this);
 
         }
@@ -46,6 +51,7 @@
         POINTL companionDateOffset{0,0};
         SIZEL companionDateSize{0,0};
         imageFieldType type{imageFieldType::imageFieldLocator};
+        boolean searchQuadrants[4];
         char szCompanionDescription[128]{""};
         long page{-1L};
         char label[32]{0};

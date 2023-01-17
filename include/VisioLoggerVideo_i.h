@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0628 */
+ /* File created by MIDL compiler version 8.01.0622 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for VisioLogger\VisioLoggerVideo.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -36,14 +36,6 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
-#endif
-
-#ifndef DECLSPEC_XFGVIRT
-#if defined(_CONTROL_FLOW_GUARD_XFG)
-#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
-#else
-#define DECLSPEC_XFGVIRT(base, func)
-#endif
 #endif
 
 /* Forward Declarations */ 
@@ -100,9 +92,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_VisioLoggerVideo;
+DEFINE_GUID(LIBID_VisioLoggerVideo,0xD75D77EE,0x3370,0x4A39,0xAF,0xB9,0x42,0x02,0xD9,0x85,0x2F,0x64);
 
-EXTERN_C const CLSID CLSID_VisioLoggerVideoNewRow;
+DEFINE_GUID(CLSID_VisioLoggerVideoNewRow,0xD75D77EE,0x3370,0x4A39,0xAF,0xB9,0x42,0x02,0xD9,0x85,0x2F,0x65);
 
 #ifdef __cplusplus
 
@@ -110,7 +102,7 @@ class DECLSPEC_UUID("D75D77EE-3370-4A39-AFB9-4202D9852F65")
 VisioLoggerVideoNewRow;
 #endif
 
-EXTERN_C const CLSID CLSID_VisioLoggerVideoAction;
+DEFINE_GUID(CLSID_VisioLoggerVideoAction,0xD75D77EE,0x3370,0x4A39,0xAF,0xB9,0x42,0x02,0xD9,0x85,0x2F,0x66);
 
 #ifdef __cplusplus
 
@@ -118,7 +110,7 @@ class DECLSPEC_UUID("D75D77EE-3370-4A39-AFB9-4202D9852F66")
 VisioLoggerVideoAction;
 #endif
 
-EXTERN_C const CLSID CLSID_VisioLoggerVideoPreSignature;
+DEFINE_GUID(CLSID_VisioLoggerVideoPreSignature,0xD75D77EE,0x3370,0x4A39,0xAF,0xB9,0x42,0x02,0xD9,0x85,0x2F,0x67);
 
 #ifdef __cplusplus
 

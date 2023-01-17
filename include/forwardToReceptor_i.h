@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0628 */
+ /* File created by MIDL compiler version 8.01.0622 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for forwardToReceptor.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -36,14 +36,6 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
-#endif
-
-#ifndef DECLSPEC_XFGVIRT
-#if defined(_CONTROL_FLOW_GUARD_XFG)
-#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
-#else
-#define DECLSPEC_XFGVIRT(base, func)
-#endif
 #endif
 
 /* Forward Declarations */ 
@@ -83,7 +75,7 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionForwardToReceptorBackEnd;
+DEFINE_GUID(LIBID_CursiVisionForwardToReceptorBackEnd,0xC78A8C5E,0x89DC,0x4957,0xA2,0x63,0x83,0x1B,0xFA,0xC3,0x00,0xE1);
 
 #ifndef __ICursiVisionForwardToReceptorBackEnd_INTERFACE_DEFINED__
 #define __ICursiVisionForwardToReceptorBackEnd_INTERFACE_DEFINED__
@@ -92,7 +84,7 @@ EXTERN_C const IID LIBID_CursiVisionForwardToReceptorBackEnd;
 /* [object][uuid] */ 
 
 
-EXTERN_C const IID IID_ICursiVisionForwardToReceptorBackEnd;
+DEFINE_GUID(IID_ICursiVisionForwardToReceptorBackEnd,0xC78A8C5E,0x89DC,0x4957,0xA2,0x63,0x83,0x1B,0xFA,0xC3,0x00,0xE3);
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -115,27 +107,22 @@ EXTERN_C const IID IID_ICursiVisionForwardToReceptorBackEnd;
     {
         BEGIN_INTERFACE
         
-        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             ICursiVisionForwardToReceptorBackEnd * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
-        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             ICursiVisionForwardToReceptorBackEnd * This);
         
-        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             ICursiVisionForwardToReceptorBackEnd * This);
         
-        DECLSPEC_XFGVIRT(ICursiVisionForwardToReceptorBackEnd, SetServer)
         HRESULT ( STDMETHODCALLTYPE *SetServer )( 
             ICursiVisionForwardToReceptorBackEnd * This,
             char *pszServerName);
         
-        DECLSPEC_XFGVIRT(ICursiVisionForwardToReceptorBackEnd, SetPort)
         HRESULT ( STDMETHODCALLTYPE *SetPort )( 
             ICursiVisionForwardToReceptorBackEnd * This,
             long portNumber);
@@ -180,7 +167,7 @@ EXTERN_C const IID IID_ICursiVisionForwardToReceptorBackEnd;
 #endif 	/* __ICursiVisionForwardToReceptorBackEnd_INTERFACE_DEFINED__ */
 
 
-EXTERN_C const CLSID CLSID_CursiVisionForwardToReceptorBackEnd;
+DEFINE_GUID(CLSID_CursiVisionForwardToReceptorBackEnd,0xC78A8C5E,0x89DC,0x4957,0xA2,0x63,0x83,0x1B,0xFA,0xC3,0x00,0xE2);
 
 #ifdef __cplusplus
 

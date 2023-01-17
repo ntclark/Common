@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0628 */
+ /* File created by MIDL compiler version 8.01.0622 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for VideoBackEnd.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -36,14 +36,6 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
-#endif
-
-#ifndef DECLSPEC_XFGVIRT
-#if defined(_CONTROL_FLOW_GUARD_XFG)
-#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
-#else
-#define DECLSPEC_XFGVIRT(base, func)
-#endif
 #endif
 
 /* Forward Declarations */ 
@@ -76,9 +68,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionVideoBackEnd;
+DEFINE_GUID(LIBID_CursiVisionVideoBackEnd,0xA8DF7F28,0x4775,0x48ac,0xA3,0xFD,0xF6,0x93,0xC0,0xE9,0x6F,0x22);
 
-EXTERN_C const CLSID CLSID_CursiVisionVideoBackEnd;
+DEFINE_GUID(CLSID_CursiVisionVideoBackEnd,0xA8DF7F28,0x4775,0x48ac,0xA3,0xFD,0xF6,0x93,0xC0,0xE9,0x6F,0x23);
 
 #ifdef __cplusplus
 

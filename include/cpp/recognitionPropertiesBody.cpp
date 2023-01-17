@@ -493,7 +493,7 @@
             PSHNOTIFY *pNotify = (PSHNOTIFY *)lParam;
 
             if ( pNotify -> lParam )
-            commitChanges = true;
+                commitChanges = true;
 
             SetWindowLongPtr(hwnd,DWLP_MSGRESULT,PSNRET_NOERROR);
             }

@@ -3,11 +3,11 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0628 */
+ /* File created by MIDL compiler version 8.01.0622 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for GenericBackEnd.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
     protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -36,14 +36,6 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
-#endif
-
-#ifndef DECLSPEC_XFGVIRT
-#if defined(_CONTROL_FLOW_GUARD_XFG)
-#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
-#else
-#define DECLSPEC_XFGVIRT(base, func)
-#endif
 #endif
 
 /* Forward Declarations */ 
@@ -76,9 +68,9 @@ extern "C"{
 /* [version][lcid][helpstring][uuid] */ 
 
 
-EXTERN_C const IID LIBID_CursiVisionGenericBackEnd;
+DEFINE_GUID(LIBID_CursiVisionGenericBackEnd,0x52A9EE3A,0x5C46,0x48b4,0xA1,0xA4,0x56,0x92,0x9E,0xD0,0x5E,0x55);
 
-EXTERN_C const CLSID CLSID_CursiVisionGenericBackEnd;
+DEFINE_GUID(CLSID_CursiVisionGenericBackEnd,0x52A9EE3A,0x5C46,0x48b4,0xA1,0xA4,0x56,0x92,0x9E,0xD0,0x5E,0x56);
 
 #ifdef __cplusplus
 
