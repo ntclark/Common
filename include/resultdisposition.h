@@ -37,8 +37,11 @@ struct resultDisposition {
     bool doContinuousDoodle;
 
     bool doCloseDocument;
+    bool doCloseDocumentAndAwaitJob;
+    bool doMinimizeWhileWaiting;
+    bool doCloseWhileWaiting;
 
-    BYTE boolBuffer[31 - sizeof(bool)];
+    BYTE boolBuffer[31 - sizeof(bool) - sizeof(bool) - sizeof(bool) - sizeof(bool)];
 
     BYTE longBuffer[16];
 

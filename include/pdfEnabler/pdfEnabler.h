@@ -1,52 +1,54 @@
 
 #pragma once
 
+#include <list>
+
 #include "PdfEnabler_i.h"
-//#include "Properties_i.h"
 
 #define ALLOC_CONNECTIONS     16
 
-   class DLLEXPORT PdfEnabler : public IPdfEnabler {
+    class DLLEXPORT PdfEnabler : public IPdfEnabler {
 
-   public:
+    public:
 
-      PdfEnabler(IUnknown *pUnkOuter);
+        PdfEnabler(IUnknown *pUnkOuter);
 
-      ~PdfEnabler();
+        ~PdfEnabler();
 
-      STDMETHOD(QueryInterface)(REFIID riid,void **ppv);
+        STDMETHOD(QueryInterface)(REFIID riid,void **ppv);
 
-      STDMETHOD_ (ULONG, AddRef)();
-      STDMETHOD_ (ULONG, Release)();
+        STDMETHOD_ (ULONG, AddRef)();
+        STDMETHOD_ (ULONG, Release)();
 
-   private:
+    private:
 
-      STDMETHOD(GetTypeInfoCount)(UINT *pctinfo);
-      STDMETHOD(GetTypeInfo)(UINT itinfo, LCID lcid, ITypeInfo **pptinfo);
-      STDMETHOD(GetIDsOfNames)(REFIID riid, LPOLESTR *rgszNames, UINT cNames, LCID lcid, DISPID *rgdispid);
-      STDMETHOD(Invoke)(DISPID dispidMember, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS *pdispparams, VARIANT *pvarResult, EXCEPINFO *pexcepinfo, UINT *puArgErr);
+        STDMETHOD(GetTypeInfoCount)(UINT *pctinfo);
+        STDMETHOD(GetTypeInfo)(UINT itinfo, LCID lcid, ITypeInfo **pptinfo);
+        STDMETHOD(GetIDsOfNames)(REFIID riid, LPOLESTR *rgszNames, UINT cNames, LCID lcid, DISPID *rgdispid);
+        STDMETHOD(Invoke)(DISPID dispidMember, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS *pdispparams, VARIANT *pvarResult, EXCEPINFO *pexcepinfo, UINT *puArgErr);
 
-   // IPdfEnabler
+    // IPdfEnabler
 
-      STDMETHOD(Document)(IPdfDocument **);
+        STDMETHOD(Document)(IPdfDocument **);
 
-   private:
+    private:
 
-      long refCount;
+        long refCount{0};
+        std::list<IPdfDocument *> documentsIssued;
 
-   };
+    };
 
 
 #ifdef DEFINE_DATA
 
-   HMODULE hModule;
-   char szModuleName[MAX_PATH];
-   ITypeInfo *pITypeInfo;
+    HMODULE hModule;
+    char szModuleName[MAX_PATH];
+    ITypeInfo *pITypeInfo;
 
 #else
 
-   extern HMODULE hModule;
-   extern char szModuleName[];
-   extern ITypeInfo *pITypeInfo;
+    extern HMODULE hModule;
+    extern char szModuleName[];
+    extern ITypeInfo *pITypeInfo;
 
 #endif

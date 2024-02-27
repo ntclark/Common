@@ -207,7 +207,7 @@
            break;
 
         currentMouseX -= pTemplateDocumentUI -> rcPageParentCoordinates.left;
-         currentMouseY -= pTemplateDocumentUI -> rcPageParentCoordinates.top;
+        currentMouseY -= pTemplateDocumentUI -> rcPageParentCoordinates.top;
 
         // The mouse is in MSHTML Visible View coordinates
 
@@ -448,7 +448,7 @@
 
         pTemplateDocumentUI -> PDFiumControl() -> get_PDFPageUnderMouse(&pageNumber);
 
-        prcPotentialFields = pTemplateDocumentUI -> pTextRects(&countPotentialFields,&pPotentialPageNumbers,NULL,pageNumber);
+        prcPotentialFields = pTemplateDocumentUI -> pTextRects(&countPotentialFields,pageNumber);
 
         if ( ! prcPotentialFields )
             break;

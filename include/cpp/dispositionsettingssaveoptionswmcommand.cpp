@@ -74,3 +74,36 @@
 
          }
          break;
+
+#ifdef DEFAULT_RESULT_DISPOSITION_PTR
+
+      case IDDI_DISPOSITION_RESET: {
+
+         void *ppKeep = (void *)p -> pParent;
+
+#ifdef CURSIVISION_SERVICES_INTERFACE
+        bool keepOptions[] = {p -> doRetain,p -> doCloseDocument,p -> doReopenOriginal,p -> doExit};
+#endif
+
+         memcpy(p,reinterpret_cast<void *>(DEFAULT_RESULT_DISPOSITION_PTR),sizeof(resultDisposition));
+
+         p -> isGlobalDisposition = false;
+         p -> doCloseDocumentAndAwaitJob = false;
+         p -> doCloseWhileWaiting = false;
+         p -> doMinimizeWhileWaiting = false;
+         p -> pParent = ppKeep;
+
+#ifdef CURSIVISION_SERVICES_INTERFACE
+        if ( FALSE == CURSIVISION_SERVICES_INTERFACE -> MayShowDispositionSettings() ) {
+            p -> doRetain = keepOptions[0];
+            p -> doCloseDocument = keepOptions[1];
+            p -> doReopenOriginal = keepOptions[2];
+            p -> doExit = keepOptions[3];
+        }
+#endif
+
+         LOAD_CONTROLS
+
+         }
+         break;
+#endif

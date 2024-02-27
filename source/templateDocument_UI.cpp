@@ -64,9 +64,13 @@
     if ( pDocumentPages )
         HeapFree(GetProcessHeap(),0L,pDocumentPages);
 
+    if ( pDocumentTextStart )
+        HeapFree(GetProcessHeap(),0L,pDocumentTextStart);
+
     pDocumentRects = NULL;
     pDocumentText = NULL;
     pDocumentPages = NULL;
+    pDocumentTextStart = NULL;
 
     if ( prcPDFSpecificPagePixels )
         delete [] prcPDFSpecificPagePixels;
@@ -122,7 +126,11 @@
 
     setURL(pParent -> pszDocumentName);
 
-    prcPDFSpecificPagePixels = new RECT[PDFPageCount()];
+    long n = PDFPageCount();
+    if ( 0 < n ) {
+        prcPDFSpecificPagePixels = new RECT[n];
+        memset(prcPDFSpecificPagePixels,0,n * sizeof(RECT));
+    }
 
     return;
     }
@@ -459,7 +467,11 @@
 
     }
 
-    prcPDFSpecificPagePixels[pageNumber - 1] = rcPDFPagePixels;
+    // WHY out of the fucking blue - are pdf printed by chrome (and only 1 file of the document)
+    // coming up with 0 pageCount causing prcPDFSpecificPagePixels to be NULL ?????
+    //
+    if ( ! ( NULL == prcPDFSpecificPagePixels ) )
+        prcPDFSpecificPagePixels[pageNumber - 1] = rcPDFPagePixels;
 
     if ( ! pParent -> pIPdfDocument && ! pParent -> pszProfileFileName )
         return;
@@ -511,20 +523,82 @@
     }
 
 
+    long templateDocument::tdUI::countFields() {
+    return countDocumentRects;
+    }
+
+
     char *templateDocument::tdUI::pTextText(long index) {
-    return &pDocumentText[index * 33];
+
+    if ( index >= countDocumentRects )
+        return NULL;
+
+    static char szWheel[32][2048];
+    static long wheelIndex = -1L;
+
+    wheelIndex++;
+    if ( 32L == wheelIndex )
+        wheelIndex = 0L;
+
+    char *pKeep = pDocumentText + pDocumentTextStart[index] + 4;
+
+    char c = *pKeep;
+
+    *pKeep = '\0';
+
+    long n = atol(pKeep - 4);
+
+    *pKeep = c;
+
+    strncpy(szWheel[wheelIndex],pKeep,n);
+
+    szWheel[wheelIndex][n] = '\0';
+
+    return szWheel[wheelIndex];
+    }
+
+
+    char *templateDocument::tdUI::pTextDecoded(long index) {
+    if ( index >= countDocumentRects )
+        return NULL;
+    char *pszEncoded = pTextText(index);
+    ASCIIHexDecodeInPlace(pszEncoded);
+    return pszEncoded;
     }
 
 
     long templateDocument::tdUI::textPage(long index) {
+    if ( index >= countDocumentRects )
+        return 0L;
     return pDocumentPages[index];
     }
 
 
-    RECT *templateDocument::tdUI::pTextRects(long *pCount,long **ppPageNumbers,char **ppszFieldText,long pnPassed) {
+    RECT *templateDocument::tdUI::pTextRect(long index) {
+    if ( index >= countDocumentRects )
+        return NULL;
+    return &pDocumentRects[index];
+    }
 
-    if ( pCount )
-        *pCount = countDocumentRects;
+
+    RECT *templateDocument::tdUI::pTextRects(long *pCount,char *pszIfGeneratedFileName,long pnPassed,boolean forceBuild) {
+
+    struct _stat fileInfo{0};
+
+    if ( forceBuild || ( -1L == _stat(pszIfGeneratedFileName,&fileInfo) ) )
+        pParent -> pICursiVisionServices -> GenerateOutlines(pParent -> pszDocumentName,pszIfGeneratedFileName,1L,-1L,NULL);
+
+    pParent-> pszProfileFileName = new char[strlen(pszIfGeneratedFileName) + 1];
+
+    strcpy(pParent -> pszProfileFileName,pszIfGeneratedFileName);
+
+    pParent -> selfAllocatedProfileName = true;
+
+    return pTextRects(pCount,pnPassed);
+    }
+
+
+    RECT *templateDocument::tdUI::pTextRects(long *pCount,long pnPassed) {
 
     long pageNumber = pnPassed;
 
@@ -540,10 +614,6 @@
     if ( strstr(szDocumentRectsPageNumbers,szTest) ) {
         if ( pCount )
             *pCount = countDocumentRects;
-        if ( ppPageNumbers )
-            *ppPageNumbers = pDocumentPages;
-        if ( ppszFieldText )
-            *ppszFieldText = pDocumentText;
         return pDocumentRects;
     }
 
@@ -558,7 +628,7 @@
     long countEntries = 0L;
     boolean doGenerate = false;
 
-    if ( pParent-> pszProfileFileName ) {
+    if ( pParent-> pszProfileFileName && ! ( '\0' == pParent -> pszProfileFileName[0] ) ) {
         strcpy(szTempFile,pParent-> pszProfileFileName);
         FILE *fProfile = fopen(szTempFile,"rb");
         if ( ! fProfile ) 
@@ -615,6 +685,8 @@
     long entryCounts[256];
     long entryPageNumbers[256];
 
+    long totalTextSize = 0L;
+
     memset(dataOffsets,0,sizeof(dataOffsets));
     memset(entryCounts,0,sizeof(entryCounts));
     memset(entryPageNumbers,0,sizeof(entryPageNumbers));
@@ -622,6 +694,17 @@
     entryCounts[0] = countEntries;
     entryPageNumbers[0] = pn;
     dataOffsets[0] = ftell(fProfile);
+
+    for ( long k = 0; k < countEntries; k++ ) {
+        RECT rcDummy;
+        long countBytes;
+        memset(szProfileData,0,sizeof(szProfileData));
+        fread(szProfileData,1,OUTLINES_ENTRY_RECORD_PREAMBLE_SIZE,fProfile);
+        sscanf(szProfileData,OUTLINES_ENTRY_RECORD_PREAMBLE_FORMAT,&rcDummy.left,&rcDummy.bottom,&rcDummy.right,&rcDummy.top,&countBytes);
+        long fPos = ftell(fProfile);
+        fseek(fProfile,fPos + countBytes + 1,SEEK_SET);
+        totalTextSize += countBytes + 5;
+    }
 
     while ( ! ( pn == pageNumber ) ) {
 
@@ -654,6 +737,7 @@
         }
 
         long n = (DWORD)strlen(szDocumentRectsPageNumbers);
+
         sprintf_s(szDocumentRectsPageNumbers + n,512 - n,",%ld",pn + 1);
 
         rc = sscanf(szProfileData,OUTLINES_PAGE_RECORD_FORMAT,bIgnore,&pn,&cxPage,&cyPage,&countEntries,&nextPageOffset);
@@ -671,6 +755,17 @@
 
         totalCount += countEntries;
 
+        for ( long k = 0; k < countEntries; k++ ) {
+            RECT rcDummy;
+            long countBytes;
+            memset(szProfileData,0,sizeof(szProfileData));
+            fread(szProfileData,1,OUTLINES_ENTRY_RECORD_PREAMBLE_SIZE,fProfile);
+            sscanf(szProfileData,OUTLINES_ENTRY_RECORD_PREAMBLE_FORMAT,&rcDummy.left,&rcDummy.bottom,&rcDummy.right,&rcDummy.top,&countBytes);
+            long fPos = ftell(fProfile);
+            fseek(fProfile,fPos + countBytes + 1,SEEK_SET);
+            totalTextSize += countBytes + 5;
+        }
+
     }
 
     countDocumentRects = totalCount;
@@ -679,19 +774,24 @@
         *pCount = countDocumentRects;
 
     if ( NULL == pDocumentRects ) {
+
         pDocumentRects = (RECT *)HeapAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,(totalCount + 1) * sizeof(RECT));
-        pDocumentText = (char *)HeapAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,(totalCount + 1) * 33 * sizeof(char));
+        pDocumentText = (char *)HeapAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,totalTextSize * sizeof(char));
         pDocumentPages = (long *)HeapAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,(totalCount + 1) * sizeof(long));
+        pDocumentTextStart = (long *)HeapAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,(totalCount + 1) * sizeof(long));
+
     } else {
+
         void *pWTF = pDocumentRects;
         pDocumentRects = (RECT *)HeapReAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,(void *)pWTF,(totalCount + 1) * sizeof(RECT));
         pWTF = pDocumentText;
-        pDocumentText = (char *)HeapReAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,(void *)pWTF,(totalCount + 1) * 33 * sizeof(char));
+        pDocumentText = (char *)HeapReAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,(void *)pWTF,totalTextSize * sizeof(char));
         pWTF = pDocumentPages;
         pDocumentPages = (long *)HeapReAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,(void *)pWTF,(totalCount + 1) * sizeof(long));
-    }
+        pWTF = pDocumentTextStart;
+        pDocumentTextStart = (long *)HeapReAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,(void *)pWTF,(totalCount + 1) * sizeof(long));
 
-    countDocumentRects = totalCount;
+    }
 
     long n = (DWORD)strlen(szEntryDocumentRectsPageNumbers);
 
@@ -727,9 +827,11 @@
     }
 
     RECT *pRC = pDocumentRects + existingEntries;
-    char *pText = pDocumentText + existingEntries * 33 * sizeof(char);
+
+    char *pText = pDocumentText + documentTextSize;
+    long tsIndex = existingEntries;
+
     long *pPage = pDocumentPages + existingEntries;
-    long countBytes = 0L;
 
     for ( long k = 0; 1; k++ ) {
 
@@ -742,32 +844,29 @@
 
         fseek(fProfile,dataOffsets[pageIndex],SEEK_SET);
 
-        for ( long j = 0; j < entryCounts[pageIndex]; j++, pRC++, pText += 33, pPage++ ) {
-
+        for ( long j = 0; j < entryCounts[pageIndex]; j++, pRC++,pPage++ ) {
+            long countBytes;
+            pDocumentTextStart[tsIndex++] = (long)(pText - pDocumentText);
             memset(szProfileData,0,sizeof(szProfileData));
             fread(szProfileData,1,OUTLINES_ENTRY_RECORD_PREAMBLE_SIZE,fProfile);
             sscanf(szProfileData,OUTLINES_ENTRY_RECORD_PREAMBLE_FORMAT,&pRC -> left,&pRC -> bottom,&pRC -> right,&pRC -> top,&countBytes);
-            fread(szTemp,1,countBytes + 1,fProfile);
-            memcpy(pText,szTemp,min(countBytes,32));
+            sprintf(pText,"%04ld",countBytes);
+            long cbText = (long)fread(pText + 4,1,countBytes + 1,fProfile);
             *pPage = pn;
-
+            pText += cbText + 4;
         }
 
     }
 
     fclose(fProfile);
 
+    documentTextSize = (long)(pText - pDocumentText);
+
     if ( ! pParent-> pszProfileFileName )
         DeleteFile(szTempFile);
 
     if ( pCount )
         *pCount = countDocumentRects;
-
-    if ( ppPageNumbers )
-        *ppPageNumbers = pDocumentPages;
-
-    if ( ppszFieldText )
-        *ppszFieldText = pDocumentText;
 
     return pDocumentRects;
     }

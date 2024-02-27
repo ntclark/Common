@@ -116,6 +116,7 @@
             void releasePDFiumControl();
 
             GUID HiliteArea(COLORREF color,long pageNumber_MinusOneForUnderMouse,RECT *pPDFRect);
+            GUID HiliteArea(COLORREF color,long pageNumber_MinusOneForUnderMouse,long index);
             void UnHiliteArea(GUID *pCookie);
             GUID findHilitedArea(RECT *pRect,long pageNumber = -1L,COLORREF color = RGB(0xFF,0xFF,0xFF));
 
@@ -128,7 +129,9 @@
 
             long PDFPageWidth() { return pParent -> pdfPageWidth; };
             long PDFPageHeight() { return pParent -> pdfPageHeight; };
-            long PDFPageCount() { return pParent -> pageCount; };
+            long PDFPageCount() { 
+                return pParent -> pageCount; 
+            };
 
             void GetPDFLocation(RECT *pPoint,POINTFLOAT *pLocation,POINTFLOAT *pSize) {
 
@@ -155,6 +158,12 @@
 
             void convertToPoints(long pageNumber,RECT *pRect) { pIPDFiumControl -> ConvertVisiblePanePixelsToPoints(pageNumber,pRect); }
             void convertToPixels(long pageNumber,RECT *pRect) { pIPDFiumControl -> ConvertPointsToVisiblePanePixels(pageNumber,pRect); }
+            void convertToPoints(long pageNumber,POINTL *pPoint) {
+                RECT rc{pPoint -> x,pPoint -> y,0,0};
+                convertToPoints(pageNumber,&rc);
+                pPoint -> x = rc.left;
+                pPoint -> y = rc.top;
+            }
             void convertToPixels(long pageNumber,POINTL *pPoint) {
                 RECT rc{pPoint -> x,pPoint -> y,pPoint -> x,pPoint -> y};
                 convertToPixels(pageNumber,&rc);
@@ -164,7 +173,7 @@
             void scaleToPoints(long pageNumber,RECT *pRect) { pIPDFiumControl -> ScalePixelsToPoints(pageNumber,pRect); }
 
             long currentPageNumber(long atY = -1L);
-            long PageUnderMouse() {
+            long pageUnderMouse() {
                 long pn;
                 pIPDFiumControl -> get_PDFPageUnderMouse(&pn);
                 return pn;
@@ -179,9 +188,14 @@
 
             bool isDocumentRendered();
 
-            RECT *pTextRects(long *pCount,long **ppPageNumbers,char **ppszFieldText,long pageNumber = -1L);
+            RECT *pTextRects(long *pCount,char *pszIfGeneratedFileName,long pageNumber = -1L,boolean forceBuild = false);
+            RECT *pTextRects(long *pCount,long pageNumber = -1L);
+
+            long countFields();
             char *pTextText(long index);
+            char *pTextDecoded(long index);
             long textPage(long index);
+            RECT *pTextRect(long index);
 
             std::function<void(void)> postRenderAction{NULL};
 
@@ -319,6 +333,8 @@
             char *pDocumentText{NULL};
             long *pDocumentPages{NULL};
             char szDocumentRectsPageNumbers[512];
+            long *pDocumentTextStart{NULL};
+            long documentTextSize{0L};
 
             bool generateTextFields{false};
 
@@ -386,10 +402,11 @@
         long pdfPageWidth{0};
         long pdfPageHeight{0};
 
-        IPdfEnabler *pIPdfEnabler;
-        IPdfDocument *pIPdfDocument;
+        IPdfEnabler *pIPdfEnabler{NULL};
+        IPdfDocument *pIPdfDocument{NULL};
 
-        bool selfAllocatedDocumentName;
+        bool selfAllocatedDocumentName{false};
+        bool selfAllocatedProfileName{false};
 
         void openPDFDocument(char *pszFileName,char *pszOutlinesFile);
 

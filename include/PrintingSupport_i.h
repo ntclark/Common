@@ -7,8 +7,8 @@
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for PrintingSupport.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
-    protocol : all , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
+    protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -121,14 +121,18 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
     {
     public:
         virtual HRESULT STDMETHODCALLTYPE Initialize( 
+            char *pszProfileFolder,
             char *pszOriginalDocument,
             char *pszProfileName,
             void *pDefaultResultDisposition,
-            void *pvPrintingSupport,
             boolean resetSignatureLocations,
             boolean isImageDrivenProfile) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Start( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Stop( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Finalize( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE ClearTargets( void) = 0;
         
@@ -144,8 +148,6 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
             long targetIndex,
             void *pLocation) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE Begin( void) = 0;
-        
         virtual HRESULT STDMETHODCALLTYPE SaveProperties( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE GetResultDisposition( 
@@ -160,16 +162,12 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         
         virtual long STDMETHODCALLTYPE Match( 
             char *pszPDFDocument,
-            char *pszProfileFile) = 0;
-        
-        virtual long STDMETHODCALLTYPE ImageRecognitionMatch( 
-            UINT_PTR *ptrPDFIumControl,
-            UINT_PTR *ptrOpenCVControl,
-            SAFEARRAY *psaImageFields,
-            char *pszOriginalDocument,
-            char *pszOutlinesFile) = 0;
+            char *pszProfileFile,
+            BOOL isEncoded) = 0;
         
         virtual char *STDMETHODCALLTYPE Name( void) = 0;
+        
+        virtual GUID *STDMETHODCALLTYPE ID( void) = 0;
         
         virtual BOOL STDMETHODCALLTYPE IsDefined( void) = 0;
         
@@ -180,9 +178,17 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         
         virtual long STDMETHODCALLTYPE SigningRectangleCount( void) = 0;
         
-        virtual long STDMETHODCALLTYPE ClearSigningRects( void) = 0;
+        virtual long STDMETHODCALLTYPE ClearSigningRects( 
+            /* [defaultvalue] */ UINT_PTR exceptForPackageCookieNullForAll = 0) = 0;
         
-        virtual long STDMETHODCALLTYPE ClearDateRects( void) = 0;
+        virtual long STDMETHODCALLTYPE ClearDateRects( 
+            /* [defaultvalue] */ UINT_PTR exceptForPackageCookieNullForAll = 0) = 0;
+        
+        virtual long STDMETHODCALLTYPE AddSigningRects( 
+            UINT_PTR pFromOtherProfile) = 0;
+        
+        virtual long STDMETHODCALLTYPE AddDateRects( 
+            UINT_PTR pFromOtherProfile) = 0;
         
         virtual long STDMETHODCALLTYPE Save( 
             /* [defaultvalue] */ char *pszNewName = 0) = 0;
@@ -222,8 +228,6 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         
         virtual BOOL STDMETHODCALLTYPE IsImageRecognitionProfile( void) = 0;
         
-        virtual BOOL STDMETHODCALLTYPE IsRootImageRecognitionProfile( void) = 0;
-        
         virtual HRESULT STDMETHODCALLTYPE OverrideAllowSaveProperties( 
             boolean doAllow) = 0;
         
@@ -231,11 +235,14 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         
         virtual void STDMETHODCALLTYPE EndSpecialPermissions( void) = 0;
         
-        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_SearchOrder( 
-            /* [in] */ long searchOrder) = 0;
+        virtual void STDMETHODCALLTYPE SetNotifyWritingLocationFound( 
+            void ( STDMETHODCALLTYPE *notifyMe )( 
+                long __MIDL__IPrintingSupportProfile0001)) = 0;
         
-        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_SearchOrder( 
-            /* [retval][out] */ long *pSearchOrder) = 0;
+        virtual char *STDMETHODCALLTYPE PackageName( void) = 0;
+        
+        virtual boolean STDMETHODCALLTYPE EnablePostSaveOptions( 
+            boolean doEnable) = 0;
         
     };
     
@@ -264,15 +271,23 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         DECLSPEC_XFGVIRT(IPrintingSupportProfile, Initialize)
         HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IPrintingSupportProfile * This,
+            char *pszProfileFolder,
             char *pszOriginalDocument,
             char *pszProfileName,
             void *pDefaultResultDisposition,
-            void *pvPrintingSupport,
             boolean resetSignatureLocations,
             boolean isImageDrivenProfile);
         
         DECLSPEC_XFGVIRT(IPrintingSupportProfile, Start)
         HRESULT ( STDMETHODCALLTYPE *Start )( 
+            IPrintingSupportProfile * This);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupportProfile, Stop)
+        HRESULT ( STDMETHODCALLTYPE *Stop )( 
+            IPrintingSupportProfile * This);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupportProfile, Finalize)
+        HRESULT ( STDMETHODCALLTYPE *Finalize )( 
             IPrintingSupportProfile * This);
         
         DECLSPEC_XFGVIRT(IPrintingSupportProfile, ClearTargets)
@@ -296,10 +311,6 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
             IPrintingSupportProfile * This,
             long targetIndex,
             void *pLocation);
-        
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, Begin)
-        HRESULT ( STDMETHODCALLTYPE *Begin )( 
-            IPrintingSupportProfile * This);
         
         DECLSPEC_XFGVIRT(IPrintingSupportProfile, SaveProperties)
         HRESULT ( STDMETHODCALLTYPE *SaveProperties )( 
@@ -325,19 +336,15 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         long ( STDMETHODCALLTYPE *Match )( 
             IPrintingSupportProfile * This,
             char *pszPDFDocument,
-            char *pszProfileFile);
-        
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, ImageRecognitionMatch)
-        long ( STDMETHODCALLTYPE *ImageRecognitionMatch )( 
-            IPrintingSupportProfile * This,
-            UINT_PTR *ptrPDFIumControl,
-            UINT_PTR *ptrOpenCVControl,
-            SAFEARRAY *psaImageFields,
-            char *pszOriginalDocument,
-            char *pszOutlinesFile);
+            char *pszProfileFile,
+            BOOL isEncoded);
         
         DECLSPEC_XFGVIRT(IPrintingSupportProfile, Name)
         char *( STDMETHODCALLTYPE *Name )( 
+            IPrintingSupportProfile * This);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupportProfile, ID)
+        GUID *( STDMETHODCALLTYPE *ID )( 
             IPrintingSupportProfile * This);
         
         DECLSPEC_XFGVIRT(IPrintingSupportProfile, IsDefined)
@@ -359,11 +366,23 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         
         DECLSPEC_XFGVIRT(IPrintingSupportProfile, ClearSigningRects)
         long ( STDMETHODCALLTYPE *ClearSigningRects )( 
-            IPrintingSupportProfile * This);
+            IPrintingSupportProfile * This,
+            /* [defaultvalue] */ UINT_PTR exceptForPackageCookieNullForAll);
         
         DECLSPEC_XFGVIRT(IPrintingSupportProfile, ClearDateRects)
         long ( STDMETHODCALLTYPE *ClearDateRects )( 
-            IPrintingSupportProfile * This);
+            IPrintingSupportProfile * This,
+            /* [defaultvalue] */ UINT_PTR exceptForPackageCookieNullForAll);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupportProfile, AddSigningRects)
+        long ( STDMETHODCALLTYPE *AddSigningRects )( 
+            IPrintingSupportProfile * This,
+            UINT_PTR pFromOtherProfile);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupportProfile, AddDateRects)
+        long ( STDMETHODCALLTYPE *AddDateRects )( 
+            IPrintingSupportProfile * This,
+            UINT_PTR pFromOtherProfile);
         
         DECLSPEC_XFGVIRT(IPrintingSupportProfile, Save)
         long ( STDMETHODCALLTYPE *Save )( 
@@ -431,10 +450,6 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         BOOL ( STDMETHODCALLTYPE *IsImageRecognitionProfile )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, IsRootImageRecognitionProfile)
-        BOOL ( STDMETHODCALLTYPE *IsRootImageRecognitionProfile )( 
-            IPrintingSupportProfile * This);
-        
         DECLSPEC_XFGVIRT(IPrintingSupportProfile, OverrideAllowSaveProperties)
         HRESULT ( STDMETHODCALLTYPE *OverrideAllowSaveProperties )( 
             IPrintingSupportProfile * This,
@@ -448,15 +463,20 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         void ( STDMETHODCALLTYPE *EndSpecialPermissions )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, put_SearchOrder)
-        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_SearchOrder )( 
+        DECLSPEC_XFGVIRT(IPrintingSupportProfile, SetNotifyWritingLocationFound)
+        void ( STDMETHODCALLTYPE *SetNotifyWritingLocationFound )( 
             IPrintingSupportProfile * This,
-            /* [in] */ long searchOrder);
+            void ( STDMETHODCALLTYPE *notifyMe )( 
+                long __MIDL__IPrintingSupportProfile0001));
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, get_SearchOrder)
-        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_SearchOrder )( 
+        DECLSPEC_XFGVIRT(IPrintingSupportProfile, PackageName)
+        char *( STDMETHODCALLTYPE *PackageName )( 
+            IPrintingSupportProfile * This);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupportProfile, EnablePostSaveOptions)
+        boolean ( STDMETHODCALLTYPE *EnablePostSaveOptions )( 
             IPrintingSupportProfile * This,
-            /* [retval][out] */ long *pSearchOrder);
+            boolean doEnable);
         
         END_INTERFACE
     } IPrintingSupportProfileVtbl;
@@ -481,11 +501,17 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
     ( (This)->lpVtbl -> Release(This) ) 
 
 
-#define IPrintingSupportProfile_Initialize(This,pszOriginalDocument,pszProfileName,pDefaultResultDisposition,pvPrintingSupport,resetSignatureLocations,isImageDrivenProfile)	\
-    ( (This)->lpVtbl -> Initialize(This,pszOriginalDocument,pszProfileName,pDefaultResultDisposition,pvPrintingSupport,resetSignatureLocations,isImageDrivenProfile) ) 
+#define IPrintingSupportProfile_Initialize(This,pszProfileFolder,pszOriginalDocument,pszProfileName,pDefaultResultDisposition,resetSignatureLocations,isImageDrivenProfile)	\
+    ( (This)->lpVtbl -> Initialize(This,pszProfileFolder,pszOriginalDocument,pszProfileName,pDefaultResultDisposition,resetSignatureLocations,isImageDrivenProfile) ) 
 
 #define IPrintingSupportProfile_Start(This)	\
     ( (This)->lpVtbl -> Start(This) ) 
+
+#define IPrintingSupportProfile_Stop(This)	\
+    ( (This)->lpVtbl -> Stop(This) ) 
+
+#define IPrintingSupportProfile_Finalize(This)	\
+    ( (This)->lpVtbl -> Finalize(This) ) 
 
 #define IPrintingSupportProfile_ClearTargets(This)	\
     ( (This)->lpVtbl -> ClearTargets(This) ) 
@@ -499,9 +525,6 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
 #define IPrintingSupportProfile_GetTarget(This,targetIndex,pLocation)	\
     ( (This)->lpVtbl -> GetTarget(This,targetIndex,pLocation) ) 
 
-#define IPrintingSupportProfile_Begin(This)	\
-    ( (This)->lpVtbl -> Begin(This) ) 
-
 #define IPrintingSupportProfile_SaveProperties(This)	\
     ( (This)->lpVtbl -> SaveProperties(This) ) 
 
@@ -514,14 +537,14 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
 #define IPrintingSupportProfile_ShowProperties(This,hwndOwner,__MIDL__IPrintingSupportProfile0000)	\
     ( (This)->lpVtbl -> ShowProperties(This,hwndOwner,__MIDL__IPrintingSupportProfile0000) ) 
 
-#define IPrintingSupportProfile_Match(This,pszPDFDocument,pszProfileFile)	\
-    ( (This)->lpVtbl -> Match(This,pszPDFDocument,pszProfileFile) ) 
-
-#define IPrintingSupportProfile_ImageRecognitionMatch(This,ptrPDFIumControl,ptrOpenCVControl,psaImageFields,pszOriginalDocument,pszOutlinesFile)	\
-    ( (This)->lpVtbl -> ImageRecognitionMatch(This,ptrPDFIumControl,ptrOpenCVControl,psaImageFields,pszOriginalDocument,pszOutlinesFile) ) 
+#define IPrintingSupportProfile_Match(This,pszPDFDocument,pszProfileFile,isEncoded)	\
+    ( (This)->lpVtbl -> Match(This,pszPDFDocument,pszProfileFile,isEncoded) ) 
 
 #define IPrintingSupportProfile_Name(This)	\
     ( (This)->lpVtbl -> Name(This) ) 
+
+#define IPrintingSupportProfile_ID(This)	\
+    ( (This)->lpVtbl -> ID(This) ) 
 
 #define IPrintingSupportProfile_IsDefined(This)	\
     ( (This)->lpVtbl -> IsDefined(This) ) 
@@ -535,11 +558,17 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
 #define IPrintingSupportProfile_SigningRectangleCount(This)	\
     ( (This)->lpVtbl -> SigningRectangleCount(This) ) 
 
-#define IPrintingSupportProfile_ClearSigningRects(This)	\
-    ( (This)->lpVtbl -> ClearSigningRects(This) ) 
+#define IPrintingSupportProfile_ClearSigningRects(This,exceptForPackageCookieNullForAll)	\
+    ( (This)->lpVtbl -> ClearSigningRects(This,exceptForPackageCookieNullForAll) ) 
 
-#define IPrintingSupportProfile_ClearDateRects(This)	\
-    ( (This)->lpVtbl -> ClearDateRects(This) ) 
+#define IPrintingSupportProfile_ClearDateRects(This,exceptForPackageCookieNullForAll)	\
+    ( (This)->lpVtbl -> ClearDateRects(This,exceptForPackageCookieNullForAll) ) 
+
+#define IPrintingSupportProfile_AddSigningRects(This,pFromOtherProfile)	\
+    ( (This)->lpVtbl -> AddSigningRects(This,pFromOtherProfile) ) 
+
+#define IPrintingSupportProfile_AddDateRects(This,pFromOtherProfile)	\
+    ( (This)->lpVtbl -> AddDateRects(This,pFromOtherProfile) ) 
 
 #define IPrintingSupportProfile_Save(This,pszNewName)	\
     ( (This)->lpVtbl -> Save(This,pszNewName) ) 
@@ -583,9 +612,6 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
 #define IPrintingSupportProfile_IsImageRecognitionProfile(This)	\
     ( (This)->lpVtbl -> IsImageRecognitionProfile(This) ) 
 
-#define IPrintingSupportProfile_IsRootImageRecognitionProfile(This)	\
-    ( (This)->lpVtbl -> IsRootImageRecognitionProfile(This) ) 
-
 #define IPrintingSupportProfile_OverrideAllowSaveProperties(This,doAllow)	\
     ( (This)->lpVtbl -> OverrideAllowSaveProperties(This,doAllow) ) 
 
@@ -595,11 +621,14 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
 #define IPrintingSupportProfile_EndSpecialPermissions(This)	\
     ( (This)->lpVtbl -> EndSpecialPermissions(This) ) 
 
-#define IPrintingSupportProfile_put_SearchOrder(This,searchOrder)	\
-    ( (This)->lpVtbl -> put_SearchOrder(This,searchOrder) ) 
+#define IPrintingSupportProfile_SetNotifyWritingLocationFound(This,notifyMe)	\
+    ( (This)->lpVtbl -> SetNotifyWritingLocationFound(This,notifyMe) ) 
 
-#define IPrintingSupportProfile_get_SearchOrder(This,pSearchOrder)	\
-    ( (This)->lpVtbl -> get_SearchOrder(This,pSearchOrder) ) 
+#define IPrintingSupportProfile_PackageName(This)	\
+    ( (This)->lpVtbl -> PackageName(This) ) 
+
+#define IPrintingSupportProfile_EnablePostSaveOptions(This,doEnable)	\
+    ( (This)->lpVtbl -> EnablePostSaveOptions(This,doEnable) ) 
 
 #endif /* COBJMACROS */
 
@@ -634,7 +663,9 @@ EXTERN_C const IID IID_IPrintingSupport;
             char *pszPDFFileName,
             void *pDefaultDispositionSettings,
             void *pvIPdfDocument,
-            boolean createGlobalPrintingProfile) = 0;
+            boolean createGlobalPrintingProfile,
+            boolean *pWasCancelled,
+            boolean ignoreGlobalTemplate) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE GetPropertiesWindow( 
             HWND *__MIDL__IPrintingSupport0000) = 0;
@@ -652,17 +683,10 @@ EXTERN_C const IID IID_IPrintingSupport;
             IPrintingSupportProfile **ppIPrintingSupportProfile,
             boolean isRootProfile) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE CreateImageDrivenPrintProfile( 
-            char *pszPDFFileName,
-            char *pszProfileName,
-            char *pszOriginalFileName,
-            IPrintingSupportProfile **ppIPrintingSupportProfile,
-            boolean isRootProfile,
-            boolean allowNameChange,
-            boolean allowDocumentRecognitionSettings,
-            boolean allowSigningLocationSettings) = 0;
-        
         virtual HRESULT STDMETHODCALLTYPE GetAllImageDrivenProfiles( 
+            SAFEARRAY **ppProfilesSafeArray) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetAllProfiles( 
             SAFEARRAY **ppProfilesSafeArray) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE DeleteAllImageDrivenProfiles( void) = 0;
@@ -674,6 +698,37 @@ EXTERN_C const IID IID_IPrintingSupport;
             boolean doAllow) = 0;
         
         virtual BOOL STDMETHODCALLTYPE AllowPrintProfileChanges( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE CancelProfileSeeking( void) = 0;
+        
+        virtual BOOL STDMETHODCALLTYPE IsDefaultRecognitionTypeGlobalTemplate( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE LoadPrintProfiles( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE LoadImageDrivenPrintProfiles( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE StartProfile( 
+            IPrintingSupportProfile *pProfile) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetImageDrivenProfilesInPackageFolder( 
+            char *pszPackageFolder,
+            SAFEARRAY **ppProfilesSafeArray) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetSelectedProfileIDs( 
+            SAFEARRAY **ppSelectedProfileIDs) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetProfileByID( 
+            GUID *pID,
+            IPrintingSupportProfile **ppIPrintingSupportProfile) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE CreateNewLegacyProfile( 
+            char *pszDocumentName) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ResetProfileDispositionSettings( 
+            void *pDefaultDispositionSettings) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE SetNoSaveProfiles( 
+            boolean setNoSave) = 0;
         
     };
     
@@ -710,7 +765,9 @@ EXTERN_C const IID IID_IPrintingSupport;
             char *pszPDFFileName,
             void *pDefaultDispositionSettings,
             void *pvIPdfDocument,
-            boolean createGlobalPrintingProfile);
+            boolean createGlobalPrintingProfile,
+            boolean *pWasCancelled,
+            boolean ignoreGlobalTemplate);
         
         DECLSPEC_XFGVIRT(IPrintingSupport, GetPropertiesWindow)
         HRESULT ( STDMETHODCALLTYPE *GetPropertiesWindow )( 
@@ -736,20 +793,13 @@ EXTERN_C const IID IID_IPrintingSupport;
             IPrintingSupportProfile **ppIPrintingSupportProfile,
             boolean isRootProfile);
         
-        DECLSPEC_XFGVIRT(IPrintingSupport, CreateImageDrivenPrintProfile)
-        HRESULT ( STDMETHODCALLTYPE *CreateImageDrivenPrintProfile )( 
-            IPrintingSupport * This,
-            char *pszPDFFileName,
-            char *pszProfileName,
-            char *pszOriginalFileName,
-            IPrintingSupportProfile **ppIPrintingSupportProfile,
-            boolean isRootProfile,
-            boolean allowNameChange,
-            boolean allowDocumentRecognitionSettings,
-            boolean allowSigningLocationSettings);
-        
         DECLSPEC_XFGVIRT(IPrintingSupport, GetAllImageDrivenProfiles)
         HRESULT ( STDMETHODCALLTYPE *GetAllImageDrivenProfiles )( 
+            IPrintingSupport * This,
+            SAFEARRAY **ppProfilesSafeArray);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupport, GetAllProfiles)
+        HRESULT ( STDMETHODCALLTYPE *GetAllProfiles )( 
             IPrintingSupport * This,
             SAFEARRAY **ppProfilesSafeArray);
         
@@ -770,6 +820,59 @@ EXTERN_C const IID IID_IPrintingSupport;
         DECLSPEC_XFGVIRT(IPrintingSupport, AllowPrintProfileChanges)
         BOOL ( STDMETHODCALLTYPE *AllowPrintProfileChanges )( 
             IPrintingSupport * This);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupport, CancelProfileSeeking)
+        HRESULT ( STDMETHODCALLTYPE *CancelProfileSeeking )( 
+            IPrintingSupport * This);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupport, IsDefaultRecognitionTypeGlobalTemplate)
+        BOOL ( STDMETHODCALLTYPE *IsDefaultRecognitionTypeGlobalTemplate )( 
+            IPrintingSupport * This);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupport, LoadPrintProfiles)
+        HRESULT ( STDMETHODCALLTYPE *LoadPrintProfiles )( 
+            IPrintingSupport * This);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupport, LoadImageDrivenPrintProfiles)
+        HRESULT ( STDMETHODCALLTYPE *LoadImageDrivenPrintProfiles )( 
+            IPrintingSupport * This);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupport, StartProfile)
+        HRESULT ( STDMETHODCALLTYPE *StartProfile )( 
+            IPrintingSupport * This,
+            IPrintingSupportProfile *pProfile);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupport, GetImageDrivenProfilesInPackageFolder)
+        HRESULT ( STDMETHODCALLTYPE *GetImageDrivenProfilesInPackageFolder )( 
+            IPrintingSupport * This,
+            char *pszPackageFolder,
+            SAFEARRAY **ppProfilesSafeArray);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupport, GetSelectedProfileIDs)
+        HRESULT ( STDMETHODCALLTYPE *GetSelectedProfileIDs )( 
+            IPrintingSupport * This,
+            SAFEARRAY **ppSelectedProfileIDs);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupport, GetProfileByID)
+        HRESULT ( STDMETHODCALLTYPE *GetProfileByID )( 
+            IPrintingSupport * This,
+            GUID *pID,
+            IPrintingSupportProfile **ppIPrintingSupportProfile);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupport, CreateNewLegacyProfile)
+        HRESULT ( STDMETHODCALLTYPE *CreateNewLegacyProfile )( 
+            IPrintingSupport * This,
+            char *pszDocumentName);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupport, ResetProfileDispositionSettings)
+        HRESULT ( STDMETHODCALLTYPE *ResetProfileDispositionSettings )( 
+            IPrintingSupport * This,
+            void *pDefaultDispositionSettings);
+        
+        DECLSPEC_XFGVIRT(IPrintingSupport, SetNoSaveProfiles)
+        HRESULT ( STDMETHODCALLTYPE *SetNoSaveProfiles )( 
+            IPrintingSupport * This,
+            boolean setNoSave);
         
         END_INTERFACE
     } IPrintingSupportVtbl;
@@ -797,8 +900,8 @@ EXTERN_C const IID IID_IPrintingSupport;
 #define IPrintingSupport_TakeMainWindow(This,hwndMainWindow)	\
     ( (This)->lpVtbl -> TakeMainWindow(This,hwndMainWindow) ) 
 
-#define IPrintingSupport_TakeDocumentInfo(This,pszPDFFileName,pDefaultDispositionSettings,pvIPdfDocument,createGlobalPrintingProfile)	\
-    ( (This)->lpVtbl -> TakeDocumentInfo(This,pszPDFFileName,pDefaultDispositionSettings,pvIPdfDocument,createGlobalPrintingProfile) ) 
+#define IPrintingSupport_TakeDocumentInfo(This,pszPDFFileName,pDefaultDispositionSettings,pvIPdfDocument,createGlobalPrintingProfile,pWasCancelled,ignoreGlobalTemplate)	\
+    ( (This)->lpVtbl -> TakeDocumentInfo(This,pszPDFFileName,pDefaultDispositionSettings,pvIPdfDocument,createGlobalPrintingProfile,pWasCancelled,ignoreGlobalTemplate) ) 
 
 #define IPrintingSupport_GetPropertiesWindow(This,__MIDL__IPrintingSupport0000)	\
     ( (This)->lpVtbl -> GetPropertiesWindow(This,__MIDL__IPrintingSupport0000) ) 
@@ -812,11 +915,11 @@ EXTERN_C const IID IID_IPrintingSupport;
 #define IPrintingSupport_NewImageDrivenProfileDialog(This,hwndParent,ppIPrintingSupportProfile,isRootProfile)	\
     ( (This)->lpVtbl -> NewImageDrivenProfileDialog(This,hwndParent,ppIPrintingSupportProfile,isRootProfile) ) 
 
-#define IPrintingSupport_CreateImageDrivenPrintProfile(This,pszPDFFileName,pszProfileName,pszOriginalFileName,ppIPrintingSupportProfile,isRootProfile,allowNameChange,allowDocumentRecognitionSettings,allowSigningLocationSettings)	\
-    ( (This)->lpVtbl -> CreateImageDrivenPrintProfile(This,pszPDFFileName,pszProfileName,pszOriginalFileName,ppIPrintingSupportProfile,isRootProfile,allowNameChange,allowDocumentRecognitionSettings,allowSigningLocationSettings) ) 
-
 #define IPrintingSupport_GetAllImageDrivenProfiles(This,ppProfilesSafeArray)	\
     ( (This)->lpVtbl -> GetAllImageDrivenProfiles(This,ppProfilesSafeArray) ) 
+
+#define IPrintingSupport_GetAllProfiles(This,ppProfilesSafeArray)	\
+    ( (This)->lpVtbl -> GetAllProfiles(This,ppProfilesSafeArray) ) 
 
 #define IPrintingSupport_DeleteAllImageDrivenProfiles(This)	\
     ( (This)->lpVtbl -> DeleteAllImageDrivenProfiles(This) ) 
@@ -829,6 +932,39 @@ EXTERN_C const IID IID_IPrintingSupport;
 
 #define IPrintingSupport_AllowPrintProfileChanges(This)	\
     ( (This)->lpVtbl -> AllowPrintProfileChanges(This) ) 
+
+#define IPrintingSupport_CancelProfileSeeking(This)	\
+    ( (This)->lpVtbl -> CancelProfileSeeking(This) ) 
+
+#define IPrintingSupport_IsDefaultRecognitionTypeGlobalTemplate(This)	\
+    ( (This)->lpVtbl -> IsDefaultRecognitionTypeGlobalTemplate(This) ) 
+
+#define IPrintingSupport_LoadPrintProfiles(This)	\
+    ( (This)->lpVtbl -> LoadPrintProfiles(This) ) 
+
+#define IPrintingSupport_LoadImageDrivenPrintProfiles(This)	\
+    ( (This)->lpVtbl -> LoadImageDrivenPrintProfiles(This) ) 
+
+#define IPrintingSupport_StartProfile(This,pProfile)	\
+    ( (This)->lpVtbl -> StartProfile(This,pProfile) ) 
+
+#define IPrintingSupport_GetImageDrivenProfilesInPackageFolder(This,pszPackageFolder,ppProfilesSafeArray)	\
+    ( (This)->lpVtbl -> GetImageDrivenProfilesInPackageFolder(This,pszPackageFolder,ppProfilesSafeArray) ) 
+
+#define IPrintingSupport_GetSelectedProfileIDs(This,ppSelectedProfileIDs)	\
+    ( (This)->lpVtbl -> GetSelectedProfileIDs(This,ppSelectedProfileIDs) ) 
+
+#define IPrintingSupport_GetProfileByID(This,pID,ppIPrintingSupportProfile)	\
+    ( (This)->lpVtbl -> GetProfileByID(This,pID,ppIPrintingSupportProfile) ) 
+
+#define IPrintingSupport_CreateNewLegacyProfile(This,pszDocumentName)	\
+    ( (This)->lpVtbl -> CreateNewLegacyProfile(This,pszDocumentName) ) 
+
+#define IPrintingSupport_ResetProfileDispositionSettings(This,pDefaultDispositionSettings)	\
+    ( (This)->lpVtbl -> ResetProfileDispositionSettings(This,pDefaultDispositionSettings) ) 
+
+#define IPrintingSupport_SetNoSaveProfiles(This,setNoSave)	\
+    ( (This)->lpVtbl -> SetNoSaveProfiles(This,setNoSave) ) 
 
 #endif /* COBJMACROS */
 

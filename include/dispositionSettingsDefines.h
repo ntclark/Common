@@ -22,17 +22,20 @@ extern "C" int GetDocumentsLocation(HWND hwnd,char *);
    PUT_BOOL(p -> doReopenOriginal,IDDI_DISPOSITION_REOPEN_ORIGINAL) \
    PUT_BOOL(p -> doExit,IDDI_DISPOSITION_EXIT)                      \
    PUT_BOOL(p -> doShowPadImage,IDDI_DISPOSITION_WHILE_SIGNING_SHOW_PAD)  \
-                                                                    \
+\
    PUT_BOOL(p -> doRemember,IDDI_DISPOSITION_REMEMBER)              \
    PUT_BOOL(! p -> doContinuousDoodle,IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF)   \
    PUT_BOOL(p -> doContinuousDoodle,IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON)      \
-                                                                          \
+   PUT_BOOL(p -> doCloseDocumentAndAwaitJob,IDDI_DISPOSITION_KEEP_RUNNING_AND_AWAIT_JOB)   \
+   PUT_BOOL(p -> doCloseWhileWaiting,IDDI_DISPOSITION_AWAIT_JOB_CLOSE)          \
+   PUT_BOOL(p -> doMinimizeWhileWaiting,IDDI_DISPOSITION_AWAIT_JOB_MINIMIZE)    \
+\
    PUT_STRING(p -> szFileSuffix,IDDI_DISPOSITION_SUFFIX)                  \
    PUT_STRING(p -> szFileStorageDirectory,IDDI_DISPOSITION_SAVE_LOCATION) \
    PUT_STRING(p -> szDestinationPrintName,IDDI_DISPOSITION_PRINTER)       \
-                                                                                                  \
+\
    DEFAULT_LONG(p -> maximumSignatures,1L)                                                        \
-                                                                                                  \
+\
    EnableWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_APPEND),p -> doSave ? TRUE : FALSE);             \
    EnableWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_SUFFIX),p -> doAppend && p -> doSave ? TRUE : FALSE);           \
    EnableWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_SUFFIX_LABEL),p -> doAppend && p -> doSave ? TRUE : FALSE);     \
@@ -79,6 +82,9 @@ extern "C" int GetDocumentsLocation(HWND hwnd,char *);
    if ( p -> isGlobalDisposition ) {                                                \
       GET_BOOL(p -> doRemember,IDDI_DISPOSITION_REMEMBER)                           \
       GET_BOOL(p -> doContinuousDoodle,IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON)       \
+      GET_BOOL(p -> doCloseDocumentAndAwaitJob,IDDI_DISPOSITION_KEEP_RUNNING_AND_AWAIT_JOB)   \
+      GET_BOOL(p -> doCloseWhileWaiting,IDDI_DISPOSITION_AWAIT_JOB_CLOSE)           \
+      GET_BOOL(p -> doMinimizeWhileWaiting,IDDI_DISPOSITION_AWAIT_JOB_MINIMIZE)     \
    }                                                                                \
    GET_STRING(p -> szFileSuffix,IDDI_DISPOSITION_SUFFIX)                            \
    GET_STRING(p -> szFileStorageDirectory,IDDI_DISPOSITION_SAVE_LOCATION)           \
@@ -104,6 +110,7 @@ extern "C" int GetDocumentsLocation(HWND hwnd,char *);
    REGISTER_TOOLTIP(hInst,IDDI_DISPOSITION_RETAIN_SIGNED)           \
    REGISTER_TOOLTIP(hInst,IDDI_DISPOSITION_REOPEN_ORIGINAL)         \
    REGISTER_TOOLTIP(hInst,IDDI_DISPOSITION_CLOSE_DOCUMENT)          \
+   REGISTER_TOOLTIP(hInst,IDDI_DISPOSITION_KEEP_RUNNING_AND_AWAIT_JOB)\
    REGISTER_TOOLTIP(hInst,IDDI_DISPOSITION_EXIT)                    \
    REGISTER_TOOLTIP(hInst,IDDI_DISPOSITION_WHILE_SIGNING_SHOW_PAD)  \
    REGISTER_TOOLTIP(hInst,IDDI_DISPOSITION_SUFFIX)                  \

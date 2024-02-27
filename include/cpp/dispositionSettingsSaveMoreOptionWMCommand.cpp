@@ -1,8 +1,6 @@
 
       case IDDI_DISPOSITION_MORE: {
 
-         static char szCaption[512] = {""};
-
          PROPSHEETPAGE pPropSheetPage = {0};
 
          pPropSheetPage.dwFlags = PSP_USETITLE;
@@ -16,26 +14,19 @@
 
          PROPSHEETHEADER propSheetHeader = {0};
 
-#ifdef CURSIVISION_BUILD
-         sprintf(szCaption,"Settings for: %s",pCursiVision -> szActiveDocument);
-#endif
-
          propSheetHeader.dwSize = sizeof(PROPSHEETHEADER);
-         propSheetHeader.pszCaption = szCaption;
+         propSheetHeader.pszCaption = "Store in Sub-directories";
          propSheetHeader.dwFlags = PSH_PROPSHEETPAGE | PSH_NOCONTEXTHELP | PSH_NOAPPLYNOW;
          propSheetHeader.hwndParent = (HWND)hwnd;
          propSheetHeader.ppsp = &pPropSheetPage;
          propSheetHeader.nPages = 1;
          propSheetHeader.nStartPage = 0;
 
-#ifndef CURSIVISION_CONTROL_BUILD
          UNLOAD_CONTROLS
-#endif
+
          PropertySheet(&propSheetHeader);
 
-#ifndef CURSIVISION_CONTROL_BUILD
          LOAD_CONTROLS
-#endif
 
          }
          break;

@@ -106,7 +106,12 @@ EXTERN_C const IID IID_ICVOpenCV;
             HBITMAP needle,
             HBITMAP haystack,
             RECT *pFoundLocation,
-            HBITMAP *phBitmapResult) = 0;
+            HBITMAP *phBitmapResult,
+            /* [defaultvalue] */ long strategyIndex = -1,
+            /* [defaultvalue] */ double *pScore = 0) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetBestStrategy( 
+            long *pBest) = 0;
         
     };
     
@@ -139,7 +144,14 @@ EXTERN_C const IID IID_ICVOpenCV;
             HBITMAP needle,
             HBITMAP haystack,
             RECT *pFoundLocation,
-            HBITMAP *phBitmapResult);
+            HBITMAP *phBitmapResult,
+            /* [defaultvalue] */ long strategyIndex,
+            /* [defaultvalue] */ double *pScore);
+        
+        DECLSPEC_XFGVIRT(ICVOpenCV, GetBestStrategy)
+        HRESULT ( STDMETHODCALLTYPE *GetBestStrategy )( 
+            ICVOpenCV * This,
+            long *pBest);
         
         END_INTERFACE
     } ICVOpenCVVtbl;
@@ -164,8 +176,11 @@ EXTERN_C const IID IID_ICVOpenCV;
     ( (This)->lpVtbl -> Release(This) ) 
 
 
-#define ICVOpenCV_MatchTemplate(This,matchExpected,needle,haystack,pFoundLocation,phBitmapResult)	\
-    ( (This)->lpVtbl -> MatchTemplate(This,matchExpected,needle,haystack,pFoundLocation,phBitmapResult) ) 
+#define ICVOpenCV_MatchTemplate(This,matchExpected,needle,haystack,pFoundLocation,phBitmapResult,strategyIndex,pScore)	\
+    ( (This)->lpVtbl -> MatchTemplate(This,matchExpected,needle,haystack,pFoundLocation,phBitmapResult,strategyIndex,pScore) ) 
+
+#define ICVOpenCV_GetBestStrategy(This,pBest)	\
+    ( (This)->lpVtbl -> GetBestStrategy(This,pBest) ) 
 
 #endif /* COBJMACROS */
 

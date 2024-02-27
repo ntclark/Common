@@ -1,8 +1,13 @@
 
+#include <Windows.h>
+#include <stdio.h>
+#include <Userenv.h>
+#include <time.h>
+
+#include "CursiVisionReceptorMessages.h"
+
 #define SERVICE_NAME_W L"CursiVisionReceptor"
 #define SERVICE_NAME_A "CursiVisionReceptor"
-#define SERVICE_PORT_W L"17638"
-#define SERVICE_PORT_A "17638"
 
 // Define the facility codes
 //
@@ -32,3 +37,55 @@
 
 void logEvent(char *pszMessage,char *pszAdditionalInfo,DWORD eventType,DWORD eventNumber);
 void logEvent(LPTSTR szFunction,LPTSTR additionalInfo,DWORD eventType,DWORD eventNumber);
+
+void reportStatus(DWORD dwCurrentState,DWORD dwWin32ExitCode,DWORD dwWaitHint);
+void processFile(char *pszInputFile,char *pszTargetDirectory,char *pszPreferredName,char *pszProfileFile);
+
+void launchProcess(char *pszArguments);
+BOOL LaunchProcess(char *pszCommandLine);
+
+unsigned int __stdcall serviceLoopNamedPipes(void *);
+unsigned int __stdcall serviceLoop(void *);
+
+void resetCommands();
+
+enum commandResponse {
+    sendResponse = 1,
+    sendOk = 2,
+    doContinue = 3,
+    sendResponseAndQuit = 4,
+    quit = 5,
+    quitError = 6
+};
+
+enum commandResponse processCommand(char *pszInput,char *pszResponse);
+
+#ifdef DEFINE_DATA
+
+    HANDLE hPipeCommands = INVALID_HANDLE_VALUE;
+    char szProgramDataDirectory[MAX_PATH];
+    char szExecutableName[1024] = {0};
+
+    TCHAR message[1024];
+
+    SERVICE_STATUS serviceStatus = {0};
+
+    BOOL continueService = TRUE;
+
+    HANDLE hNamedPipesServiceThread = INVALID_HANDLE_VALUE;
+
+#else
+    extern HANDLE hPipeCommands;
+    extern char szProgramDataDirectory[];
+    extern char szExecutableName[];
+
+    extern TCHAR message[];
+
+    extern SERVICE_STATUS serviceStatus;
+
+    extern BOOL continueService;
+
+    extern HANDLE hNamedPipesServiceThread;
+
+
+#endif

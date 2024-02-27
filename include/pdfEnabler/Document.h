@@ -61,6 +61,7 @@ public:
    STDMETHOD(FirstPage)(IPdfPage **ppPage);
    STDMETHOD(LastPage)(IPdfPage **ppPage);
    STDMETHOD(AddPage)(long *pPageNumber,IPdfPage **pPage);
+   STDMETHOD(RemovePage)(long pageNumber);
    STDMETHOD(ReplicateStream)(long streamNumber,long newPage,POINT *pSource,POINT *pOffset,double scaleX,double scaleY);
    STDMETHOD(ParseText)(long pageNumber,HDC hdc,RECT *prcWindowsClip,void *pvIPostScriptTakeText);
    STDMETHOD(GetLastError)(char **ppszError);

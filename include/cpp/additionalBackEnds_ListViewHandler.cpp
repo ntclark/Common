@@ -37,9 +37,13 @@
          }
 
          if ( pPair -> hwndProperties )
-            SetWindowPos(pPair -> hwndProperties,HWND_TOP,(rectItem.left + rectItem.right)/2 - 16,(rectItem.top + rectItem.bottom)/2 - 10,0,0,SWP_NOSIZE | SWP_SHOWWINDOW);         
+            SetWindowPos(pPair -> hwndProperties,HWND_TOP,(rectItem.left + rectItem.right)/2 - 16,(rectItem.top + rectItem.bottom)/2 - 10,0,0,SWP_NOSIZE | SWP_SHOWWINDOW);
 
          rectItem.top = 2;
+#ifdef HIDE_BOTTOM_PROPS
+         if ( hwnd == hwndBottomList )
+            rectItem.top = 1;
+#endif
          rectItem.left = LVIR_BOUNDS;
 
          SendMessage(hwnd,LVM_GETSUBITEMRECT,(WPARAM)k,(LPARAM)&rectItem);
@@ -93,13 +97,23 @@
       rectItem[0].left = LVIR_BOUNDS;
       SendMessage(hwnd,LVM_GETSUBITEMRECT,(WPARAM)lvItem.iItem,(LPARAM)&rectItem[0]);
 
-      rectItem[1].top = 1;
-      rectItem[1].left = LVIR_BOUNDS;
-      SendMessage(hwnd,LVM_GETSUBITEMRECT,(WPARAM)lvItem.iItem,(LPARAM)&rectItem[1]);
+      long propsIndex = 1;
+      long useIndex = 2;
 
-      rectItem[2].top = 2;
-      rectItem[2].left = LVIR_BOUNDS;
-      SendMessage(hwnd,LVM_GETSUBITEMRECT,(WPARAM)lvItem.iItem,(LPARAM)&rectItem[2]);
+#ifdef HIDE_BOTTOM_PROPS
+      if ( hwndBottomList == hwnd ) {
+         propsIndex = 1;
+         useIndex = 1;
+      }
+#endif
+
+      rectItem[propsIndex].top = propsIndex;
+      rectItem[propsIndex].left = LVIR_BOUNDS;
+      SendMessage(hwnd,LVM_GETSUBITEMRECT,(WPARAM)lvItem.iItem,(LPARAM)&rectItem[propsIndex]);
+
+      rectItem[useIndex].top = useIndex;
+      rectItem[useIndex].left = LVIR_BOUNDS;
+      SendMessage(hwnd,LVM_GETSUBITEMRECT,(WPARAM)lvItem.iItem,(LPARAM)&rectItem[useIndex]);
       
       if ( hwndTopList == hwnd ) {
          rectItem[3].top = 3;
@@ -133,7 +147,7 @@
       break;
    }
 
-   if ( nativeListViewHandler)                      
+   if ( nativeListViewHandler)
       return CallWindowProc(nativeListViewHandler,hwnd,msg,wParam,lParam);
 
    return DefWindowProc(hwnd,msg,wParam,lParam);

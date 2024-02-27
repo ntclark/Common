@@ -6,17 +6,41 @@
 
 #include <unordered_map>
 
-    struct dateArea;
-    struct signatureArea;
+class globalTemplateDoodleOptions;
 
     enum imageFieldType {
-        imageFieldLocator = 0, // for non-default profiles, uses "when field found - then a particular signature field activate"
-        imageFieldCompanionLocator = 1 // for the default profile. Any time the field is found, a signature field is created a given distance away
+        imageFieldFinder = 0,               // Simple finder, used to help select the appropriate profile.
+        imageFieldCompanionSelector = 1,    // for non-default profiles. When all fields of this and imageFieldSelector are found, the profile is selected
+                                            // Contains 1 signature field offset from the image and 1 optional date field also offset
+        imageFieldCompanionOptional = 2,    // for the default profile, OR, optional for non-default profiles. Any time the field is found, a signature field is created at an offset 
+        imageFieldPageFinder = 3,           // After a profile is selected, then each page in the document is searched for all of these fields defined. For each "found" page, all "root" fields are then searched and applied
+        imageFieldAny = 99                  // Any type
+    };
+
+    struct imageFieldCore {
+        imageFieldCore() {
+            memset(this,0,sizeof(imageFieldCore));
+            page = -1L;
+        }
+        RECT pdfRect{0,0,0,0};
+        RECT foundPdfRect{0,0,0,0};
+        long page{-1L};
+        long foundPage;
+        char fileName[MAX_PATH]{0};
+        SIZEL sourceDocumentPixels{0,0};
+        char sourceDocumentFileName[MAX_PATH]{0};
+        RECT rcText{0,0,0,0};
+
+        char szText[256 - 2 * sizeof(POINT) - sizeof(BOOL)];
+
+        POINT sigOffset{0,0};
+        POINT dateOffset{0,0};
+        BOOL forceImageMatch{FALSE};
     };
 
     struct imageField {
 
-        imageField(GUID id = GUID_NULL) {
+        imageField(globalTemplateDoodleOptions *p,GUID id = GUID_NULL) : pParent(p) {
 
             if ( GUID_NULL == id )
                 CoCreateGuid(&ID);
@@ -28,140 +52,143 @@
             searchQuadrants[2] = true;
             searchQuadrants[3] = true;
 
-            imageFieldList.push_back(this);
+            memset(foundPages,0,64 * sizeof(long));
+            memset(szFailedSearchPages,0,128 * sizeof(char));
 
+            memset(siblingImageIdOrderString,0,(MAX_TEXT_RECT_COUNT * 40) * sizeof(char));
+            memset(siblingImageIDs,0,MAX_TEXT_RECT_COUNT * sizeof(GUID));
+            memset(ignoreProfileIDs,0,MAX_TEXT_RECT_COUNT * sizeof(GUID));
+
+            imageFieldList[pParent].push_back(this);
         }
 
         ~imageField();
 
-        void addSignatureArea(signatureArea *psa);
-        void addDateArea(dateArea *pda);
+        inline boolean IsFinder() { return type == imageFieldFinder || type == imageFieldCompanionSelector; }
+        inline boolean IsCompanion() { return type == imageFieldCompanionSelector || type == imageFieldCompanionOptional; }
+        inline boolean IsForRootProfile() { return type = imageFieldCompanionOptional; }
+        inline long FrameSizePixels() { if ( ! isPositional ) return 0; return IMAGE_FRAME_SIZE_PIXELS; }
 
-        signatureArea *SignatureArea(GUID id) {
-            return signatureAreas[id];
+        static imageField *GetImageField(globalTemplateDoodleOptions *pGTDO,GUID *pId) {
+            for ( imageField *pField : imageFieldList[pGTDO] ) {
+                if ( pField -> ID == *pId) {
+                    return pField;
+                }
+            }
+            return NULL;
         }
 
-        dateArea *DateArea(GUID id) {
-            return dateAreas[id];
+        void initializeFind(boolean wipeLastPage = true) {
+            wasFound = false;
+            foundCount = 0;
+            if ( wipeLastPage ) {
+                pageLastFound = 0;
+                score = 0.0;
+            }
+            selectedAlternateIndex = -1L;
+            memset(foundPages,0,64 * sizeof(long));
+            memset(szFailedSearchPages,0,128 * sizeof(char));
         }
 
-        RECT pdfRect{0,0,0,0};
-        POINTL companionSignatureOffset{0,0};
+        POINTL companionSignatureOffset{0,0};                       // <- Start of file based storage (inclusive)
         SIZEL companionSignatureSize{0,0};
         POINTL companionDateOffset{0,0};
         SIZEL companionDateSize{0,0};
-        imageFieldType type{imageFieldType::imageFieldLocator};
+        imageFieldType type{imageFieldType::imageFieldFinder};
         boolean searchQuadrants[4];
-        char szCompanionDescription[128]{""};
-        long page{-1L};
+        boolean widenSearchOnFindFailure{false};
+        char szCompanionDescription[127]{""};
         char label[32]{0};
-        char fileName[MAX_PATH]{0};
-        SIZEL sourceDocumentPixels{0,0};
-        char sourceDocumentFileName[MAX_PATH]{0};
-        char signatureAreaDataFile[MAX_PATH]{0};
+
+        imageFieldCore mainCore;
+        imageFieldCore alternateCores[MAX_IMAGE_FIELD_ALTERNATES];
+
+        char imageDataFile[MAX_PATH]{0};
+
+        long pageLastFound{0};
+
+        double score{0.0};
+        boolean isPositional{false};
+        char szTextIndexes[256];
+
+        GUID siblingImageIDs[MAX_TEXT_RECT_COUNT]{GUID_NULL};
+        char siblingImageIdOrderString[MAX_TEXT_RECT_COUNT * 40]{'\0'};
+        GUID ignoreProfileIDs[MAX_PROFILES_IN_PACKAGE]{GUID_NULL};
+
+#define INNER_EXPANSION_SPACE   10240
+
+        GUID signerTypeId{GUID_NULL};
+        boolean useDefaultSignatureAreaSize{true};
+
+#define EXPANSION_SPACE 32768 - INNER_EXPANSION_SPACE
+
+        BYTE spaceForExpansion[EXPANSION_SPACE];                      // <- End of file based storage (inclusive)
 
         GUID ID{GUID_NULL};
-        bool wasFound{false};
+        globalTemplateDoodleOptions *pParent{NULL};
+
+        boolean wasFound{false};
         long foundCount{0};
-        long foundPage[64]{-1L};
-        RECT rcFound[64]{0,0,0,0};
-        HBITMAP hBitmapFound{NULL};
+        long foundPages[64];
+        long selectedAlternateIndex{-1L};
+        char szFailedSearchPages[128];
 
-        std::unordered_map<GUID,dateArea *,guidHash> dateAreas;
-        std::unordered_map<GUID,signatureArea *,guidHash> signatureAreas;
-
-        static void clearData() {
-
-            while ( 0 < imageFieldList.size() )
-                delete *imageFieldList.begin();
-
-            imageFieldList.clear();
+        static void clearFields(globalTemplateDoodleOptions *pp) {
+            while ( 0 < imageFieldList[pp].size() )
+                delete *imageFieldList[pp].begin();
+            imageFieldList[pp].clear();
         }
 
         void saveToFile(FILE *fData) {
-            fwrite((BYTE *)&ID,sizeof(GUID),1,fData);
-            fwrite((BYTE *)&pdfRect,1,(offsetof(imageField,signatureAreaDataFile) - offsetof(imageField,pdfRect)) + sizeof(signatureAreaDataFile),fData);
+            fwrite((BYTE *)&ID,1,sizeof(GUID),fData);
+            memset((BYTE *)spaceForExpansion,0,EXPANSION_SPACE);
+            long bytesWritten = (long)fwrite((BYTE *)&companionSignatureOffset,1,(offsetof(imageField,spaceForExpansion) - offsetof(imageField,companionSignatureOffset)) + EXPANSION_SPACE,fData);
             return;
         }
 
-        static imageField *restoreFromFile(FILE *fData) {
+        static imageField *restoreFromFile(globalTemplateDoodleOptions *pp,FILE *fData) {
             GUID theGuid{GUID_NULL};
-            fread((BYTE *)&theGuid,sizeof(GUID),1,fData);
-            imageField *pImageField = new imageField(theGuid);
-            fread((BYTE *)&pImageField -> pdfRect,1,(offsetof(imageField,signatureAreaDataFile) - offsetof(imageField,pdfRect)) + sizeof(signatureAreaDataFile),fData);
+            long bytesRead = (long)fread((BYTE *)&theGuid,1,sizeof(GUID),fData);
+            imageField *pImageField = new imageField(pp,theGuid);
+            bytesRead = (long)fread((BYTE *)&pImageField -> companionSignatureOffset,1,(offsetof(imageField,spaceForExpansion) - offsetof(imageField,companionSignatureOffset)) + EXPANSION_SPACE,fData);
+            if ( 0 == bytesRead ) {
+                delete pImageField;
+                return NULL;
+            }
             return pImageField;
         }
 
-        static std::list<imageField *> imageFieldList;
+        static std::map<globalTemplateDoodleOptions *,std::list<imageField *>> imageFieldList;
+
+        struct listRowControls {
+            listRowControls() { memset(szText,0,sizeof(szText)); }
+            HWND hwndCheck{NULL};
+            HWND hwndOrder{NULL};
+            HWND hwndProps{NULL};
+            GUID *pID{NULL};
+            char szText[64];
+            boolean isUsed{false};
+            long rowIndex{-1L};
+            long useColumn{-1L};
+            long nameColumn{-1L};
+            long propsColumn{-1L};
+            long orderColumn{-1L};
+            long pageColumn{-1L};
+            long scoreColumn{-1L};
+            void *pObject{NULL};
+        } buttonPairs[64];
+
+        static std::list<HWND> propertyWindows;
+
+        static HWND hwndProperties() { if ( 0 == propertyWindows.size() ) return NULL; return propertyWindows.back(); }
+
+        HWND hwndSelectorFieldList{NULL};
+        HWND hwndProfileFilterList{NULL};
+    
+        void replaceImage(HWND);
+
+        static LRESULT CALLBACK propertiesHandler(HWND,UINT,WPARAM,LPARAM);
+        static LRESULT CALLBACK alternativesHandler(HWND,UINT,WPARAM,LPARAM);
+        static LRESULT CALLBACK inspectionHandler(HWND,UINT,WPARAM,LPARAM);
 
     };
-
-    struct gtRegion {
-        gtRegion(imageField *pif,GUID id = GUID_NULL) : pImageField(pif) {
-            if ( GUID_NULL == id )
-                CoCreateGuid(&ID);
-            else
-                ID = id;
-        }
-        RECT rect{0,0,0,0};
-        RECT pdfRect{0,0,0,0};
-        char label[32]{0};
-        virtual void saveToFile(FILE *fData) {
-            fwrite((BYTE *)&ID,sizeof(GUID),1,fData);
-            fwrite((BYTE *)&rect,sizeof(RECT),1,fData);
-            fwrite((BYTE *)&pdfRect,sizeof(RECT),1,fData);
-            fwrite((BYTE *)label,sizeof(label),1,fData);
-        }
-        virtual void loadFromFile(FILE *fData) {
-            fread((BYTE *)&rect,sizeof(RECT),1,fData);
-            fread((BYTE *)&pdfRect,sizeof(RECT),1,fData);
-            fread((BYTE *)label,sizeof(label),1,fData);
-        }
-        GUID ID{GUID_NULL};
-        imageField *pImageField{NULL};
-    };
-
-    struct signatureArea : gtRegion {
-        signatureArea(imageField *pImageField,GUID id = GUID_NULL) : gtRegion(pImageField,id) {
-            pImageField -> addSignatureArea(this);
-        }
-        void saveToFile(FILE *fData) {
-            gtRegion::saveToFile(fData);
-            fwrite((BYTE *)szDescription,sizeof(szDescription),1,fData);
-        }
-        static signatureArea *restoreFromFile(imageField *pImageField,FILE *fData) {
-            GUID theID{GUID_NULL};
-            fread((BYTE *)&theID,sizeof(GUID),1,fData);
-            signatureArea *pArea = new signatureArea(pImageField,theID);
-            pArea -> loadFromFile(fData);
-            return pArea;
-        }
-        void loadFromFile(FILE *fData) {
-            gtRegion::loadFromFile(fData);
-            fread((BYTE *)szDescription,sizeof(szDescription),1,fData);
-        }
-        char szDescription[128]{""};
-    };
-
-    struct dateArea : gtRegion {
-        dateArea(imageField *pImageField,GUID id = GUID_NULL) :gtRegion(pImageField,id) {
-            pImageField -> addDateArea(this);
-        }
-        void saveToFile(FILE *fData) {
-            gtRegion::saveToFile(fData);
-            fwrite((BYTE *)&requiredSignatureAreaID,sizeof(GUID),1,fData);
-        }
-        static dateArea *restoreFromFile(imageField *pImageField,FILE *fData) {
-            GUID theID{GUID_NULL};
-            fread((BYTE *)&theID,sizeof(GUID),1,fData);
-            dateArea *pArea = new dateArea(pImageField,theID);
-            pArea -> loadFromFile(fData);
-            return pArea;
-        }
-        void loadFromFile(FILE *fData) {
-            gtRegion::loadFromFile(fData);
-            fread((BYTE *)&requiredSignatureAreaID,sizeof(GUID),1,fData);
-        }
-        GUID requiredSignatureAreaID{GUID_NULL};
-    };
-

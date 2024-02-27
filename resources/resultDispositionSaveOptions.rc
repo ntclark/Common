@@ -19,4 +19,3 @@
 
    EDITTEXT IDDI_DISPOSITION_SAVE_LOCATION,                                                 80, 92 + ADDITIONAL_TOP_SPACE, 130, 12, ES_AUTOHSCROLL
    PUSHBUTTON "...", IDDI_DISPOSITION_CHOOSE_SAVE_LOCATION,                                214, 92 + ADDITIONAL_TOP_SPACE,  16, 12
-

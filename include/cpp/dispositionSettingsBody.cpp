@@ -45,18 +45,74 @@
       }
 
       if ( ! p -> isGlobalDisposition ) {
-         SetDlgItemText(hwnd,IDDI_HEADER_TEXT,"When CursiVision saves this document it should:");
-         DestroyWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_LABEL));
-         DestroyWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF));
-         DestroyWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON));
-         DestroyWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_REMEMBER));
-         DestroyWindow(GetDlgItem(hwnd,IDDI_DISPLAY_WAITING_SHOW));
-         DestroyWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL));
-         DestroyWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES));
-         DestroyWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_OPEN_LAST_DOCUMENT));
-         DestroyWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_USE_LARGEST_VERTICAL_RES));
-      } else
-         SetDlgItemText(hwnd,IDDI_HEADER_TEXT,"When CursiVision processes a document it should:");
+
+         LoadString(hModule,IDDI_HEADER_TEXT_A,szTemp,128);
+         SetDlgItemText(hwnd,IDDI_HEADER_TEXT,szTemp);
+
+#ifdef CURSIVISION_SERVICES_INTERFACE
+         RECT rcText,rcDialog,rcLast;
+         GetWindowRect(hwnd,&rcDialog);
+         LoadString(hModule,IDDI_DISPOSITION_RESET_LABEL,szTemp,1024);
+         SetWindowText(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET_LABEL),szTemp);
+         if ( FALSE == CURSIVISION_SERVICES_INTERFACE -> MayShowDispositionSettings() ) {
+            LoadString(hModule,IDDI_DISPOSITION_POST_PROCESSING_LABEL,szTemp,1024);
+            SetWindowText(GetDlgItem(hwnd,IDDI_DISPOSITION_POST_PROCESSING_LABEL),szTemp);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET),&rcText);
+            SetWindowPos(GetDlgItem(hwnd,IDDI_DISPOSITION_POST_PROCESSING_LABEL),HWND_TOP,rcText.left - rcDialog.left,rcText.bottom - rcDialog.top + 20,rcDialog.right - rcDialog.left - 64,48,0L);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_POST_PROCESSING_LABEL),&rcText);
+         } else {
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_AWAIT_JOB_MINIMIZE),&rcText);
+            SetWindowPos(GetDlgItem(hwnd,IDDI_DISPOSITION_EXIT),HWND_TOP,rcText.left - rcDialog.left,rcText.top - rcDialog.top,0,0,SWP_NOSIZE);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET),&rcText);
+            SetWindowPos(GetDlgItem(hwnd,IDDI_DISPOSITION_POST_PROCESSING_LABEL),HWND_TOP,rcText.left - rcDialog.left,rcText.top - rcDialog.top + 4,0L,0L,SWP_NOSIZE);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_POST_PROCESSING_LABEL),&rcLast);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_RETAIN_SIGNED),&rcText);
+            SetWindowPos(GetDlgItem(hwnd,IDDI_DISPOSITION_RETAIN_SIGNED),HWND_TOP,rcText.left - rcDialog.left,rcLast.bottom - rcDialog.top + 2,0,0,SWP_NOSIZE);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_RETAIN_SIGNED),&rcLast);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_REOPEN_ORIGINAL),&rcText);
+            SetWindowPos(GetDlgItem(hwnd,IDDI_DISPOSITION_REOPEN_ORIGINAL),HWND_TOP,rcText.left - rcDialog.left,rcLast.bottom - rcDialog.top + 2,0,0,SWP_NOSIZE);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_REOPEN_ORIGINAL),&rcLast);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_CLOSE_DOCUMENT),&rcText);
+            SetWindowPos(GetDlgItem(hwnd,IDDI_DISPOSITION_CLOSE_DOCUMENT),HWND_TOP,rcText.left - rcDialog.left,rcLast.bottom - rcDialog.top + 2,0,0,SWP_NOSIZE);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_CLOSE_DOCUMENT),&rcLast);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_EXIT),&rcText);
+            SetWindowPos(GetDlgItem(hwnd,IDDI_DISPOSITION_EXIT),HWND_TOP,rcText.left - rcDialog.left,rcLast.bottom - rcDialog.top + 2,0,0,SWP_NOSIZE);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_EXIT),&rcLast);
+            GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET),&rcText);
+            SetWindowPos(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET),HWND_TOP,rcText.left - rcDialog.left,rcLast.bottom - rcDialog.top + 8,0,0,SWP_NOSIZE);
+         }
+#endif
+
+         long otherIDs[] = {IDDI_DISPOSITION_RETAIN_SIGNED,IDDI_DISPOSITION_REOPEN_ORIGINAL,
+                             IDDI_DISPOSITION_CLOSE_DOCUMENT,IDDI_DISPOSITION_KEEP_RUNNING_AND_AWAIT_JOB,IDDI_DISPOSITION_AWAIT_JOB_CLOSE,IDDI_DISPOSITION_AWAIT_JOB_MINIMIZE,IDDI_DISPOSITION_EXIT};
+
+         for ( long k = 0; k < sizeof(otherIDs) / sizeof(long); k++ ) 
+            if ( ! ( NULL == GetDlgItem(hwnd,otherIDs[k]) ) )
+                DestroyWindow(GetDlgItem(hwnd,otherIDs[k]));
+
+         long moreOtherIDs[] = {IDDI_DISPOSITION_CONTINUOUS_DOODLE_LABEL,IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF,IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON,
+                                    IDDI_DISPOSITION_REMEMBER,IDDI_DISPLAY_WAITING_SHOW,IDDI_SIGNATURE_REPLICATION_LABEL,IDDI_SIGNATURE_REPLICATION_ALLOW,
+                                    IDDI_SIGNATURE_REPLICATION_DISALLOW,IDDI_SIGNATURE_REPLICATION_DEFAULT_YES,IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL,
+                                    IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES,IDDI_DISPOSITION_OPEN_LAST_DOCUMENT,IDDI_DISPOSITION_USE_LARGEST_VERTICAL_RES};
+
+         for ( long k = 0; k < sizeof(moreOtherIDs) / sizeof(long); k++ ) 
+            if ( ! ( NULL == GetDlgItem(hwnd,moreOtherIDs[k]) ) )
+                DestroyWindow(GetDlgItem(hwnd,moreOtherIDs[k]));
+
+
+#ifndef DEFAULT_RESULT_DISPOSITION_PTR
+         DestroyWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET));
+#endif
+
+      } else {
+         LoadString(hModule,IDDI_HEADER_TEXT_B,szTemp,128);
+         SetDlgItemText(hwnd,IDDI_HEADER_TEXT,szTemp);
+         LoadString(hModule,IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL,szTemp,256);
+         SetDlgItemText(hwnd,IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL,szTemp);
+         DestroyWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET));
+         LoadString(hModule,IDDI_DISPLAY_WAITING_SHOW_LABEL,szTemp,256);
+         SetDlgItemText(hwnd,IDDI_DISPLAY_WAITING_SHOW,szTemp);
+      }
 
       LOAD_CONTROLS
 
@@ -80,19 +136,13 @@
 #ifdef OBJECT_WITH_PROPERTIES
 
    case WM_DESTROY: {
-
-#ifdef IS_CURSIVISION_CONTROL_HANDLER
-
-      if ( pKeep ) {
-         memcpy(pObject -> pOleObjectProperties,pKeep,pObject -> oleObjectPropertiesSize);
-         delete [] pKeep;
-      }
-
+#ifdef ADDITIONAL_DESTROY  
+       ADDITIONAL_DESTROY
 #endif
-
       }
       break;
 #endif
+
 
    case WM_COMMAND: {
 
@@ -139,12 +189,6 @@
          PSHNOTIFY *pNotify = (PSHNOTIFY *)lParam;
 
          if ( pNotify -> lParam && ! needsAdmin ) {
-
-#ifdef IS_CURSIVISION_CONTROL_HANDLER
-            if ( pKeep )
-               delete [] pKeep;
-            pKeep = NULL;
-#endif
 
             UNLOAD_CONTROLS
 

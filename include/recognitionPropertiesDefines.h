@@ -20,8 +20,6 @@
    static long countSelections = 0L;
 
    static RECT *prcSelectedFields = NULL;
-   static long *pPageNumbers = NULL;
-   static char *pPageFieldText = NULL;
    static long pageNumberOfRects{0L};
 
    static char szMaxSelectionsReached[128];

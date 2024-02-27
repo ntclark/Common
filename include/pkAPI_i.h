@@ -3,12 +3,12 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0622 */
+ /* File created by MIDL compiler version 8.01.0628 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for pkAPI.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
-    protocol : all , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
+    protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -36,6 +36,14 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
+#endif
+
+#ifndef DECLSPEC_XFGVIRT
+#if defined(_CONTROL_FLOW_GUARD_XFG)
+#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
+#else
+#define DECLSPEC_XFGVIRT(base, func)
+#endif
 #endif
 
 /* Forward Declarations */ 
@@ -430,28 +438,34 @@ EXTERN_C const IID IID_IBasicSignaturePad;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IBasicSignaturePad * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfoCount)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IBasicSignaturePad * This,
             /* [out] */ UINT *pctinfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfo)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IBasicSignaturePad * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo **ppTInfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetIDsOfNames)
         HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IBasicSignaturePad * This,
             /* [in] */ REFIID riid,
@@ -460,6 +474,7 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
+        DECLSPEC_XFGVIRT(IDispatch, Invoke)
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IBasicSignaturePad * This,
             /* [annotation][in] */ 
@@ -479,163 +494,204 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, Connect)
         HRESULT ( STDMETHODCALLTYPE *Connect )( 
             IBasicSignaturePad * This,
             BSTR serverIPorNetworkName);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, Disconnect)
         HRESULT ( STDMETHODCALLTYPE *Disconnect )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_IsConnected)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_IsConnected )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IBasicSignaturePad0000);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, Start)
         HRESULT ( STDMETHODCALLTYPE *Start )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, Stop)
         HRESULT ( STDMETHODCALLTYPE *Stop )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_IPOrNetworkName)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_IPOrNetworkName )( 
             IBasicSignaturePad * This,
             BSTR bstrAddress);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_IPOrNetworkName)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_IPOrNetworkName )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ BSTR *pBstrAddress);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_Width)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Width )( 
             IBasicSignaturePad * This,
             long value);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_Width)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Width )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ long *pValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_DeviceWidth)
         /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_DeviceWidth )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ long *pValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_WidthInches)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_WidthInches )( 
             IBasicSignaturePad * This,
             float value);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_WidthInches)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_WidthInches )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ float *pValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_Height)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Height )( 
             IBasicSignaturePad * This,
             long value);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_Height)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Height )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ long *pValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_DeviceHeight)
         /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_DeviceHeight )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ long *pValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_HeightInches)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_HeightInches )( 
             IBasicSignaturePad * This,
             float value);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_HeightInches)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_HeightInches )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ float *pValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_Bounds)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Bounds )( 
             IBasicSignaturePad * This,
             /* [in] */ RECT *pBounds);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_Bounds)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Bounds )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ RECT *pResult);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_BoundsInches)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_BoundsInches )( 
             IBasicSignaturePad * This,
             /* [in] */ RECTF *pBounds);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_BoundsInches)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_BoundsInches )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ RECTF *pResult);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_InkColor)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_InkColor )( 
             IBasicSignaturePad * This,
             /* [in] */ long __MIDL__IBasicSignaturePad0001);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_InkColor)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_InkColor )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ long *__MIDL__IBasicSignaturePad0002);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_InkWeight)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_InkWeight )( 
             IBasicSignaturePad * This,
             /* [in] */ long __MIDL__IBasicSignaturePad0003);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_InkWeight)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_InkWeight )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ long *__MIDL__IBasicSignaturePad0004);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_FontSize)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_FontSize )( 
             IBasicSignaturePad * This,
             /* [in] */ float __MIDL__IBasicSignaturePad0005);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_FontSize)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_FontSize )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ float *__MIDL__IBasicSignaturePad0006);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_FontFamily)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_FontFamily )( 
             IBasicSignaturePad * This,
             /* [in] */ BSTR fontFamily);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_FontFamily)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_FontFamily )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ BSTR *pFontFamily);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_Image)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Image )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ UINT_PTR *pImageInControlWindowDimensions);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_NativeSizeImage)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_NativeSizeImage )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ UINT_PTR *pImageInPadDimensions);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ImageFile)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ImageFile )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ BSTR *pBSTRImageFileInControlDimensions);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_NativeSizeImageFile)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_NativeSizeImageFile )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ BSTR *pBSTRImageFileInPadDimensions);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_BackgroundBitmapFile)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_BackgroundBitmapFile )( 
             IBasicSignaturePad * This,
             /* [in] */ BSTR imageFile);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_BackgroundBitmapHandle)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_BackgroundBitmapHandle )( 
             IBasicSignaturePad * This,
             /* [in] */ UINT_PTR hBitmap);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_PDFFile)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_PDFFile )( 
             IBasicSignaturePad * This,
             /* [in] */ BSTR pdfFile);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_PDFFile)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFFile )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ BSTR *pPdfFile);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_ShowUpdates)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ShowUpdates )( 
             IBasicSignaturePad * This,
             /* [in] */ VARIANT_BOOL showUpdates);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ShowUpdates)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ShowUpdates )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ VARIANT_BOOL *pShowUpdates);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ConnectionProblemTroubleshooter)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ConnectionProblemTroubleshooter )( 
             IBasicSignaturePad * This,
             /* [retval][out] */ BSTR *pAdvice);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, AreaBitmapHandle)
         HRESULT ( STDMETHODCALLTYPE *AreaBitmapHandle )( 
             IBasicSignaturePad * This,
             UINT_PTR hBitmap,
@@ -644,12 +700,14 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             long cx,
             long cy);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreatePage)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreatePage )( 
             IBasicSignaturePad * This,
             BSTR title,
             long pageNumber,
             BOOL isVisible);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateButton)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateButton )( 
             IBasicSignaturePad * This,
             BSTR buttonText,
@@ -658,6 +716,7 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             long y,
             BOOL isVisible);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateDropDownBox)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateDropDownBox )( 
             IBasicSignaturePad * This,
             BSTR commaDelimitedItems,
@@ -667,6 +726,7 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             BOOL isVisible,
             /* [optional][in] */ VARIANT selectedItem);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateLabel)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateLabel )( 
             IBasicSignaturePad * This,
             BSTR labelText,
@@ -677,6 +737,7 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             /* [optional][in] */ VARIANT fontFace,
             /* [optional][in] */ VARIANT fontSizeInPoints);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateLabelInches)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateLabelInches )( 
             IBasicSignaturePad * This,
             BSTR labelText,
@@ -687,6 +748,7 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             /* [optional][in] */ VARIANT fontFace,
             /* [optional][in] */ VARIANT fontSizeInPoints);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateCheckBox)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateCheckBox )( 
             IBasicSignaturePad * This,
             BSTR labelText,
@@ -696,6 +758,7 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             BOOL isVisible,
             BOOL isChecked);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateRadioButton)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateRadioButton )( 
             IBasicSignaturePad * This,
             BSTR labelText,
@@ -706,6 +769,7 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             long groupNumber,
             BOOL isChecked);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateTextBox)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateTextBox )( 
             IBasicSignaturePad * This,
             BSTR theText,
@@ -718,6 +782,7 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             /* [optional][in] */ VARIANT fontFace,
             /* [optional][in] */ VARIANT fontSizeInPoints);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateEntryField)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateEntryField )( 
             IBasicSignaturePad * This,
             BSTR theText,
@@ -729,80 +794,98 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             /* [optional][in] */ VARIANT fontFace,
             /* [optional][in] */ VARIANT fontSizeInPoints);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, RemoveControl)
         HRESULT ( STDMETHODCALLTYPE *RemoveControl )( 
             IBasicSignaturePad * This,
             long eventID);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ControlBounds)
         /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_ControlBounds )( 
             IBasicSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ RECT *__MIDL__IBasicSignaturePad0007);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_ControlPosition)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ControlPosition )( 
             IBasicSignaturePad * This,
             /* [in] */ long controlId,
             /* [in] */ POINT position);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ControlPosition)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ControlPosition )( 
             IBasicSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ POINT *pPositionResult);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_ControlText)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ControlText )( 
             IBasicSignaturePad * This,
             /* [in] */ long controlId,
             /* [in] */ BSTR stringValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ControlText)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ControlText )( 
             IBasicSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ BSTR *__MIDL__IBasicSignaturePad0008);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ControlTextBounds)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ControlTextBounds )( 
             IBasicSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ RECT *__MIDL__IBasicSignaturePad0009);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ControlFontHeightPixels)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ControlFontHeightPixels )( 
             IBasicSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ float *__MIDL__IBasicSignaturePad0010);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_ControlIsChecked)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ControlIsChecked )( 
             IBasicSignaturePad * This,
             /* [in] */ long controlId,
             /* [in] */ BOOL __MIDL__IBasicSignaturePad0011);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ControlIsChecked)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ControlIsChecked )( 
             IBasicSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IBasicSignaturePad0012);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_DrawingWindowHandle)
         /* [propput][helpstring] */ HRESULT ( STDMETHODCALLTYPE *put_DrawingWindowHandle )( 
             IBasicSignaturePad * This,
             /* [in] */ HWND hwndDrawingWindow);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ShowPage)
         HRESULT ( STDMETHODCALLTYPE *ShowPage )( 
             IBasicSignaturePad * This,
             /* [in] */ long pageNumber,
             BOOL doShow);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ShowMessage)
         HRESULT ( STDMETHODCALLTYPE *ShowMessage )( 
             IBasicSignaturePad * This,
             /* [in] */ BSTR bstrMessage);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ClearInk)
         HRESULT ( STDMETHODCALLTYPE *ClearInk )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ClearEverything)
         HRESULT ( STDMETHODCALLTYPE *ClearEverything )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ClearSettings)
         HRESULT ( STDMETHODCALLTYPE *ClearSettings )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ClearBackground)
         HRESULT ( STDMETHODCALLTYPE *ClearBackground )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ClearArea)
         HRESULT ( STDMETHODCALLTYPE *ClearArea )( 
             IBasicSignaturePad * This,
             long x,
@@ -810,44 +893,55 @@ EXTERN_C const IID IID_IBasicSignaturePad;
             long width,
             long height);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, FireOption)
         HRESULT ( STDMETHODCALLTYPE *FireOption )( 
             IBasicSignaturePad * This,
             long optionNumber);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, FireSelection)
         HRESULT ( STDMETHODCALLTYPE *FireSelection )( 
             IBasicSignaturePad * This,
             long controlId,
             BSTR selectedItem);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, FireKeyStroke)
         HRESULT ( STDMETHODCALLTYPE *FireKeyStroke )( 
             IBasicSignaturePad * This,
             long controlId,
             WPARAM keyStroke);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, FireShuttingDown)
         HRESULT ( STDMETHODCALLTYPE *FireShuttingDown )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, Hide)
         HRESULT ( STDMETHODCALLTYPE *Hide )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, Show)
         HRESULT ( STDMETHODCALLTYPE *Show )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ShowProperties)
         HRESULT ( STDMETHODCALLTYPE *ShowProperties )( 
             IBasicSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, HideControl)
         HRESULT ( STDMETHODCALLTYPE *HideControl )( 
             IBasicSignaturePad * This,
             long controlID);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ShowControl)
         HRESULT ( STDMETHODCALLTYPE *ShowControl )( 
             IBasicSignaturePad * This,
             long controlID);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, HideControlList)
         HRESULT ( STDMETHODCALLTYPE *HideControlList )( 
             IBasicSignaturePad * This,
             BSTR commaDelimitedIds);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ShowControlList)
         HRESULT ( STDMETHODCALLTYPE *ShowControlList )( 
             IBasicSignaturePad * This,
             BSTR commaDelimitedIds);
@@ -1166,28 +1260,34 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IPhabletSignaturePad * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfoCount)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IPhabletSignaturePad * This,
             /* [out] */ UINT *pctinfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfo)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IPhabletSignaturePad * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo **ppTInfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetIDsOfNames)
         HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IPhabletSignaturePad * This,
             /* [in] */ REFIID riid,
@@ -1196,6 +1296,7 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
+        DECLSPEC_XFGVIRT(IDispatch, Invoke)
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IPhabletSignaturePad * This,
             /* [annotation][in] */ 
@@ -1215,163 +1316,204 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, Connect)
         HRESULT ( STDMETHODCALLTYPE *Connect )( 
             IPhabletSignaturePad * This,
             BSTR serverIPorNetworkName);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, Disconnect)
         HRESULT ( STDMETHODCALLTYPE *Disconnect )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_IsConnected)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_IsConnected )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IBasicSignaturePad0000);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, Start)
         HRESULT ( STDMETHODCALLTYPE *Start )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, Stop)
         HRESULT ( STDMETHODCALLTYPE *Stop )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_IPOrNetworkName)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_IPOrNetworkName )( 
             IPhabletSignaturePad * This,
             BSTR bstrAddress);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_IPOrNetworkName)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_IPOrNetworkName )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ BSTR *pBstrAddress);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_Width)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Width )( 
             IPhabletSignaturePad * This,
             long value);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_Width)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Width )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ long *pValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_DeviceWidth)
         /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_DeviceWidth )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ long *pValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_WidthInches)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_WidthInches )( 
             IPhabletSignaturePad * This,
             float value);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_WidthInches)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_WidthInches )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ float *pValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_Height)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Height )( 
             IPhabletSignaturePad * This,
             long value);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_Height)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Height )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ long *pValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_DeviceHeight)
         /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_DeviceHeight )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ long *pValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_HeightInches)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_HeightInches )( 
             IPhabletSignaturePad * This,
             float value);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_HeightInches)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_HeightInches )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ float *pValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_Bounds)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Bounds )( 
             IPhabletSignaturePad * This,
             /* [in] */ RECT *pBounds);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_Bounds)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Bounds )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ RECT *pResult);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_BoundsInches)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_BoundsInches )( 
             IPhabletSignaturePad * This,
             /* [in] */ RECTF *pBounds);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_BoundsInches)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_BoundsInches )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ RECTF *pResult);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_InkColor)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_InkColor )( 
             IPhabletSignaturePad * This,
             /* [in] */ long __MIDL__IBasicSignaturePad0001);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_InkColor)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_InkColor )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ long *__MIDL__IBasicSignaturePad0002);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_InkWeight)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_InkWeight )( 
             IPhabletSignaturePad * This,
             /* [in] */ long __MIDL__IBasicSignaturePad0003);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_InkWeight)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_InkWeight )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ long *__MIDL__IBasicSignaturePad0004);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_FontSize)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_FontSize )( 
             IPhabletSignaturePad * This,
             /* [in] */ float __MIDL__IBasicSignaturePad0005);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_FontSize)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_FontSize )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ float *__MIDL__IBasicSignaturePad0006);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_FontFamily)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_FontFamily )( 
             IPhabletSignaturePad * This,
             /* [in] */ BSTR fontFamily);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_FontFamily)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_FontFamily )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ BSTR *pFontFamily);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_Image)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Image )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ UINT_PTR *pImageInControlWindowDimensions);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_NativeSizeImage)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_NativeSizeImage )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ UINT_PTR *pImageInPadDimensions);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ImageFile)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ImageFile )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ BSTR *pBSTRImageFileInControlDimensions);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_NativeSizeImageFile)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_NativeSizeImageFile )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ BSTR *pBSTRImageFileInPadDimensions);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_BackgroundBitmapFile)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_BackgroundBitmapFile )( 
             IPhabletSignaturePad * This,
             /* [in] */ BSTR imageFile);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_BackgroundBitmapHandle)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_BackgroundBitmapHandle )( 
             IPhabletSignaturePad * This,
             /* [in] */ UINT_PTR hBitmap);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_PDFFile)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_PDFFile )( 
             IPhabletSignaturePad * This,
             /* [in] */ BSTR pdfFile);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_PDFFile)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PDFFile )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ BSTR *pPdfFile);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_ShowUpdates)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ShowUpdates )( 
             IPhabletSignaturePad * This,
             /* [in] */ VARIANT_BOOL showUpdates);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ShowUpdates)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ShowUpdates )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ VARIANT_BOOL *pShowUpdates);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ConnectionProblemTroubleshooter)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ConnectionProblemTroubleshooter )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ BSTR *pAdvice);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, AreaBitmapHandle)
         HRESULT ( STDMETHODCALLTYPE *AreaBitmapHandle )( 
             IPhabletSignaturePad * This,
             UINT_PTR hBitmap,
@@ -1380,12 +1522,14 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             long cx,
             long cy);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreatePage)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreatePage )( 
             IPhabletSignaturePad * This,
             BSTR title,
             long pageNumber,
             BOOL isVisible);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateButton)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateButton )( 
             IPhabletSignaturePad * This,
             BSTR buttonText,
@@ -1394,6 +1538,7 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             long y,
             BOOL isVisible);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateDropDownBox)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateDropDownBox )( 
             IPhabletSignaturePad * This,
             BSTR commaDelimitedItems,
@@ -1403,6 +1548,7 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             BOOL isVisible,
             /* [optional][in] */ VARIANT selectedItem);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateLabel)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateLabel )( 
             IPhabletSignaturePad * This,
             BSTR labelText,
@@ -1413,6 +1559,7 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             /* [optional][in] */ VARIANT fontFace,
             /* [optional][in] */ VARIANT fontSizeInPoints);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateLabelInches)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateLabelInches )( 
             IPhabletSignaturePad * This,
             BSTR labelText,
@@ -1423,6 +1570,7 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             /* [optional][in] */ VARIANT fontFace,
             /* [optional][in] */ VARIANT fontSizeInPoints);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateCheckBox)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateCheckBox )( 
             IPhabletSignaturePad * This,
             BSTR labelText,
@@ -1432,6 +1580,7 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             BOOL isVisible,
             BOOL isChecked);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateRadioButton)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateRadioButton )( 
             IPhabletSignaturePad * This,
             BSTR labelText,
@@ -1442,6 +1591,7 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             long groupNumber,
             BOOL isChecked);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateTextBox)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateTextBox )( 
             IPhabletSignaturePad * This,
             BSTR theText,
@@ -1454,6 +1604,7 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             /* [optional][in] */ VARIANT fontFace,
             /* [optional][in] */ VARIANT fontSizeInPoints);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, CreateEntryField)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *CreateEntryField )( 
             IPhabletSignaturePad * This,
             BSTR theText,
@@ -1465,80 +1616,98 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             /* [optional][in] */ VARIANT fontFace,
             /* [optional][in] */ VARIANT fontSizeInPoints);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, RemoveControl)
         HRESULT ( STDMETHODCALLTYPE *RemoveControl )( 
             IPhabletSignaturePad * This,
             long eventID);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ControlBounds)
         /* [propget][helpstring] */ HRESULT ( STDMETHODCALLTYPE *get_ControlBounds )( 
             IPhabletSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ RECT *__MIDL__IBasicSignaturePad0007);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_ControlPosition)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ControlPosition )( 
             IPhabletSignaturePad * This,
             /* [in] */ long controlId,
             /* [in] */ POINT position);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ControlPosition)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ControlPosition )( 
             IPhabletSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ POINT *pPositionResult);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_ControlText)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ControlText )( 
             IPhabletSignaturePad * This,
             /* [in] */ long controlId,
             /* [in] */ BSTR stringValue);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ControlText)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ControlText )( 
             IPhabletSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ BSTR *__MIDL__IBasicSignaturePad0008);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ControlTextBounds)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ControlTextBounds )( 
             IPhabletSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ RECT *__MIDL__IBasicSignaturePad0009);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ControlFontHeightPixels)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ControlFontHeightPixels )( 
             IPhabletSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ float *__MIDL__IBasicSignaturePad0010);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_ControlIsChecked)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ControlIsChecked )( 
             IPhabletSignaturePad * This,
             /* [in] */ long controlId,
             /* [in] */ BOOL __MIDL__IBasicSignaturePad0011);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, get_ControlIsChecked)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_ControlIsChecked )( 
             IPhabletSignaturePad * This,
             /* [in] */ long controlId,
             /* [retval][out] */ VARIANT_BOOL *__MIDL__IBasicSignaturePad0012);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, put_DrawingWindowHandle)
         /* [propput][helpstring] */ HRESULT ( STDMETHODCALLTYPE *put_DrawingWindowHandle )( 
             IPhabletSignaturePad * This,
             /* [in] */ HWND hwndDrawingWindow);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ShowPage)
         HRESULT ( STDMETHODCALLTYPE *ShowPage )( 
             IPhabletSignaturePad * This,
             /* [in] */ long pageNumber,
             BOOL doShow);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ShowMessage)
         HRESULT ( STDMETHODCALLTYPE *ShowMessage )( 
             IPhabletSignaturePad * This,
             /* [in] */ BSTR bstrMessage);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ClearInk)
         HRESULT ( STDMETHODCALLTYPE *ClearInk )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ClearEverything)
         HRESULT ( STDMETHODCALLTYPE *ClearEverything )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ClearSettings)
         HRESULT ( STDMETHODCALLTYPE *ClearSettings )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ClearBackground)
         HRESULT ( STDMETHODCALLTYPE *ClearBackground )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ClearArea)
         HRESULT ( STDMETHODCALLTYPE *ClearArea )( 
             IPhabletSignaturePad * This,
             long x,
@@ -1546,52 +1715,65 @@ EXTERN_C const IID IID_IPhabletSignaturePad;
             long width,
             long height);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, FireOption)
         HRESULT ( STDMETHODCALLTYPE *FireOption )( 
             IPhabletSignaturePad * This,
             long optionNumber);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, FireSelection)
         HRESULT ( STDMETHODCALLTYPE *FireSelection )( 
             IPhabletSignaturePad * This,
             long controlId,
             BSTR selectedItem);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, FireKeyStroke)
         HRESULT ( STDMETHODCALLTYPE *FireKeyStroke )( 
             IPhabletSignaturePad * This,
             long controlId,
             WPARAM keyStroke);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, FireShuttingDown)
         HRESULT ( STDMETHODCALLTYPE *FireShuttingDown )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, Hide)
         HRESULT ( STDMETHODCALLTYPE *Hide )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, Show)
         HRESULT ( STDMETHODCALLTYPE *Show )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ShowProperties)
         HRESULT ( STDMETHODCALLTYPE *ShowProperties )( 
             IPhabletSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, HideControl)
         HRESULT ( STDMETHODCALLTYPE *HideControl )( 
             IPhabletSignaturePad * This,
             long controlID);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ShowControl)
         HRESULT ( STDMETHODCALLTYPE *ShowControl )( 
             IPhabletSignaturePad * This,
             long controlID);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, HideControlList)
         HRESULT ( STDMETHODCALLTYPE *HideControlList )( 
             IPhabletSignaturePad * This,
             BSTR commaDelimitedIds);
         
+        DECLSPEC_XFGVIRT(IBasicSignaturePad, ShowControlList)
         HRESULT ( STDMETHODCALLTYPE *ShowControlList )( 
             IPhabletSignaturePad * This,
             BSTR commaDelimitedIds);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePad, put_WidthInInches)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_WidthInInches )( 
             IPhabletSignaturePad * This,
             /* [in] */ double value);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePad, get_WidthInInches)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_WidthInInches )( 
             IPhabletSignaturePad * This,
             /* [retval][out] */ double *pValue);
@@ -1949,64 +2131,78 @@ EXTERN_C const IID IID_IPhabletSignaturePadEvents;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IPhabletSignaturePadEvents * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IPhabletSignaturePadEvents * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IPhabletSignaturePadEvents * This);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePadEvents, PenDown)
         HRESULT ( STDMETHODCALLTYPE *PenDown )( 
             IPhabletSignaturePadEvents * This,
             long x,
             long y);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePadEvents, PenUp)
         HRESULT ( STDMETHODCALLTYPE *PenUp )( 
             IPhabletSignaturePadEvents * This,
             long x,
             long y);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePadEvents, PenPoint)
         HRESULT ( STDMETHODCALLTYPE *PenPoint )( 
             IPhabletSignaturePadEvents * This,
             long x,
             long y,
             float inkWeight);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePadEvents, OptionSelected)
         HRESULT ( STDMETHODCALLTYPE *OptionSelected )( 
             IPhabletSignaturePadEvents * This,
             long optionNumber);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePadEvents, OptionUnSelected)
         HRESULT ( STDMETHODCALLTYPE *OptionUnSelected )( 
             IPhabletSignaturePadEvents * This,
             long optionNumber);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePadEvents, DeviceReady)
         HRESULT ( STDMETHODCALLTYPE *DeviceReady )( 
             IPhabletSignaturePadEvents * This);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePadEvents, ConfigurationChanged)
         HRESULT ( STDMETHODCALLTYPE *ConfigurationChanged )( 
             IPhabletSignaturePadEvents * This);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePadEvents, ItemSelected)
         HRESULT ( STDMETHODCALLTYPE *ItemSelected )( 
             IPhabletSignaturePadEvents * This,
             long controlId,
             BSTR theItem);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePadEvents, TextChanged)
         HRESULT ( STDMETHODCALLTYPE *TextChanged )( 
             IPhabletSignaturePadEvents * This,
             long controlId,
             BSTR oldText,
             BSTR newText);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePadEvents, KeyStroke)
         HRESULT ( STDMETHODCALLTYPE *KeyStroke )( 
             IPhabletSignaturePadEvents * This,
             long controlId,
             WPARAM keyStroke);
         
+        DECLSPEC_XFGVIRT(IPhabletSignaturePadEvents, ShuttingDown)
         HRESULT ( STDMETHODCALLTYPE *ShuttingDown )( 
             IPhabletSignaturePadEvents * This);
         

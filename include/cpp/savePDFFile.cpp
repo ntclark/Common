@@ -1,6 +1,3 @@
-// Copyright 2017, 2018, 2019 InnoVisioNate Inc. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
 
    {
 
@@ -171,6 +168,22 @@
    }
 #endif
 
+   char *pTilda = NULL;
+
+   while ( ( pTilda = strchr(szResultFile,'`') ) ) {
+
+      *pTilda = '\0';
+      CreateDirectory(szResultFile,NULL);
+      strcpy(szUltimateDirectory,szResultFile);
+      *pTilda = '\\';
+      char szNewResultFile[MAX_PATH];
+      sprintf_s<MAX_PATH>(szNewResultFile,"%s%s",szUltimateDirectory,pTilda);
+      strcpy(szResultFile,szNewResultFile);
+      pTilda = strchr(szBaseName,'`');
+      strcpy(szNewResultFile,pTilda + 1);
+      strcpy(szBaseName,szNewResultFile);
+   }
+
    FILE *fTemp = fopen(szResultFile,"rb");
 
    if ( fTemp && ! pDisposition -> doReplace && ! pDisposition -> doSequence ) {
@@ -247,18 +260,20 @@
 
             char *p = strrchr(szResultFile,'.');
 
+            bool endsInDigit = false;
+
             if ( p ) {
                *p = '\0';
-               char *pPeriod = p;
                p--;
-               while ( p > szResultFile && isdigit(*p) ) p--;
-               p++;
-               if ( pPeriod != p && *(p - 1) != '_' )
-                  maxId = max(maxId,atol(p));
+               endsInDigit = isdigit(*p);
             }
 
             char szSequencedFile[MAX_PATH];
-            sprintf(szSequencedFile,"%s*",szResultFile);
+
+            if ( endsInDigit ) 
+                sprintf(szSequencedFile,"%s-Seq-*",szResultFile);
+            else 
+                sprintf(szSequencedFile,"%s*",szResultFile);
 
             WIN32_FIND_DATAA findFile;
 
@@ -270,33 +285,35 @@
 
             long countExisting = 1;
 
-            do {
+            if ( ! ( INVALID_HANDLE_VALUE == hFile ) ) do {
 
-               p = strchr(findFile.cFileName,'.');
+                p = strchr(findFile.cFileName,'.');
 
-               if ( p ) {
+                if ( p ) {
+                    char *pPeriod = p;
+                    p--;
+                    while ( p > findFile.cFileName && isdigit(*p) ) p--;
+                    p++;
+                    if ( pPeriod != p && *(p - 1) != '_' )
+                        maxId = max(maxId,atol(p));
+                } 
 
-                  char *pPeriod = p;
-                  p--;
-                  while ( p > findFile.cFileName && isdigit(*p) ) p--;
-                  p++;
-                  if ( pPeriod != p && *(p - 1) != '_' )
-                     maxId = max(maxId,atol(p));
-
-               } 
-
-               countExisting++;
+                countExisting++;
 
             } while ( FindNextFileA(hFile,&findFile) );
 
             FindClose(hFile);
 
             if ( -1L == maxId )
-               maxId = 0;
+                maxId = 0;
 
-            sprintf(szSequencedFile,"%s-%ld.pdf",szResultFile,maxId + 1);
+            if ( endsInDigit ) 
+                sprintf(szSequencedFile,"%s-Seq-%ld.pdf",szResultFile,maxId + 1);
+            else
+                sprintf(szSequencedFile,"%s-%ld.pdf",szResultFile,maxId + 1);
 
             strcpy(szResultFile,szSequencedFile);
+
          }
 
       }
@@ -354,7 +371,9 @@
       if ( ! fTemp ) {
 #ifndef RECEPTOR_BUILD
          char szCommand[2 * MAX_PATH];
-         sprintf(szCommand,"CursiVision is unable to create the file: %s",szResultFile);
+         char szTemp[256];
+         LoadString(NULL,IDS_CANT_CREATE_FILE,szTemp,256);
+         sprintf(szCommand,szTemp,szResultFile);
          memset(szResultFile,0,sizeof(szResultFile));
          MessageBox(hwndMainFrame,szCommand,"Error!",MB_OK | MB_ICONEXCLAMATION);
 #endif

@@ -3,12 +3,12 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0622 */
+ /* File created by MIDL compiler version 8.01.0628 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for COM Implementation\PostScript.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
-    protocol : all , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
+    protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -36,6 +36,14 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
+#endif
+
+#ifndef DECLSPEC_XFGVIRT
+#if defined(_CONTROL_FLOW_GUARD_XFG)
+#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
+#else
+#define DECLSPEC_XFGVIRT(base, func)
+#endif
 #endif
 
 /* Forward Declarations */ 
@@ -122,26 +130,32 @@ EXTERN_C const IID IID_IPostScript;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IPostScript * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IPostScript * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IPostScript * This);
         
+        DECLSPEC_XFGVIRT(IPostScript, Parse)
         HRESULT ( STDMETHODCALLTYPE *Parse )( 
             IPostScript * This,
             wchar_t *pszFileName);
         
+        DECLSPEC_XFGVIRT(IPostScript, Convert)
         HRESULT ( STDMETHODCALLTYPE *Convert )( 
             IPostScript * This,
             wchar_t *pszFileName);
         
+        DECLSPEC_XFGVIRT(IPostScript, ParseText)
         HRESULT ( STDMETHODCALLTYPE *ParseText )( 
             IPostScript * This,
             char *pszText,
@@ -151,6 +165,7 @@ EXTERN_C const IID IID_IPostScript;
             HDC hdc,
             RECT *prcWindowsClip);
         
+        DECLSPEC_XFGVIRT(IPostScript, GetLastError)
         HRESULT ( STDMETHODCALLTYPE *GetLastError )( 
             IPostScript * This,
             char **ppszError);
@@ -231,6 +246,7 @@ EXTERN_C const IID IID_IPostScriptTakeText;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IPostScriptTakeText, TakeText)
         HRESULT ( STDMETHODCALLTYPE *TakeText )( 
             IPostScriptTakeText * This,
             RECT *pLocationPDF,

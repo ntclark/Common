@@ -28,12 +28,8 @@
 
       OBJECT_WITH_PROPERTIES *pObject = (OBJECT_WITH_PROPERTIES *)(p -> pParent);
 
-#ifndef IS_CURSIVISION_CONTROL_HANDLER
-#ifndef CURSIVISION_CONTROL_BUILD
       pObject -> PushProperties();
       pObject -> PushProperties();
-#endif
-#endif
 
       LOAD_CONTROLS
 

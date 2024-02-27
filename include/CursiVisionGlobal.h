@@ -4,29 +4,75 @@
 #include "directories.h"
 #include "utilities.h"
 
-#define MAX_TEXT_RECT_COUNT   128
+#include "registrationServer.h"
+
+#ifndef REGISTRATION_SERVER
+#define REGISTRATION_SERVER "localhost"
+#define REGISTRATION_SERVERW L"localhost"
+#endif
+
+#ifndef REGISTRATION_PORT
+#define REGISTRATION_PORT 8080
+#endif
+
+#define UNREG_GRACE_PERIOD 14
+
+//#define USE_GLOBAL_TEMPLATE_FOLDER
+
+#define MAX_TEXT_RECT_COUNT   256
 #define MAX_TEXT_TEXT_SPACE   8192
 #define MAX_SIGS_IN_GLOBAL_TEMPLATE_IMAGE 8
+#define MAX_GT_IMAGES         512
+
+#define MAX_TOTAL_PROFILES      1024
+#define MAX_PROFILES_IN_PACKAGE   32
+
+#define MAX_IMAGE_FIELD_ALTERNATES  8
 
 #define MAX_BACK_END_PROCESSORS   32
+
+#define MAX_GLOBAL_TEMPLATE_PACKAGES        128
+#define MAX_GLOBAL_TEMPLATE_DOCUMENTS       64
+
+#define ROOT_GT_PACKAGE 0
 
 #define GLOBAL_TEMPLATE_DOCUMENT_PRINT_PROFILE_NAME "Global Template Default"
 #define GLOBAL_TEMPLATE_DOCUMENT_PRINT_NEW_PROFILE_NAME "<image recognition profile>"
 
 #define MAX_DOODLE_RECT_COUNT  32
 
-//#define OPENCV_MATCH_THRESHOLD 0.99999
-//#define OPENCV_MATCH_THRESHOLD 0.9999
-#define OPENCV_MATCH_THRESHOLD 0.999
-//#define OPENCV_MATCH_THRESHOLD 0.99
+#define PROFILE_FIELD_STRINGS_SIZE 20480
+
+#define OPENCV_MATCH_THRESH     0.9995
+#define OPENCV_MATCH_MINIMUM    0.99
 
 #define CORNER_PROXIMITY 12
+
+//#define SAVE_SIGNATURE_GRAPHICS 1
 
 #define OUTLINES_PAGE_RECORD_SIZE 34
 #define OUTLINES_PAGE_RECORD_FORMAT  "%05s%04ld:%04ld-%04ld%06ld-%08ld"
 
 #define OUTLINES_ENTRY_RECORD_PREAMBLE_SIZE  24
 #define OUTLINES_ENTRY_RECORD_PREAMBLE_FORMAT "%04ld,%04ld,%04ld,%04ld:%04ld"
+
+#ifndef JENKINS_BUILD
+#define MAKE_IMAGE_COMPARISONS
+#endif
+
+#define IMAGE_FRAME_SIZE_PIXELS 128
+
+#define USE_DIB_BITMAPS TRUE
+//#define USE_DIB_BITMAPS FALSE
+
+//#define DELETE_PDFIUM_BITMAPS(hbm) DeleteObject(hbm)
+#define DELETE_PDFIUM_BITMAPS(hbm) 
+
+//#define MATCH_STRATEGY_INDEX -1
+#define MATCH_STRATEGY_INDEX 0
+
+#define ENCODED_STRING_VERSION  "V_1.0.0"
+
 
     struct guidHash {
         bool operator()(const GUID &lhs) const {

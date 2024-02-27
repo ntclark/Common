@@ -83,32 +83,42 @@ BEGIN
 
 #define ROLLUP 14
 
-   LTEXT "Then ...",-1,10,124 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 12
+   PUSHBUTTON "Reset", IDDI_DISPOSITION_RESET,                                      10,126 + ADDITIONAL_TOP_SPACE - ROLLUP, 32, 14
+   LTEXT "",IDDI_DISPOSITION_RESET_LABEL,                                           10 + 32 + 8,126 + ADDITIONAL_TOP_SPACE - ROLLUP, 260, 24
 
-   AUTORADIOBUTTON "Keep the signed document open",IDDI_DISPOSITION_RETAIN_SIGNED,   32,136 + ADDITIONAL_TOP_SPACE - ROLLUP, 180, 14, WS_GROUP
-   AUTORADIOBUTTON "Re-open the original document",IDDI_DISPOSITION_REOPEN_ORIGINAL, 32,148 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 14
-   AUTORADIOBUTTON "Close the document",IDDI_DISPOSITION_CLOSE_DOCUMENT,             32,160 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 14
-   AUTORADIOBUTTON "Exit",IDDI_DISPOSITION_EXIT,                                     32,172 + ADDITIONAL_TOP_SPACE - ROLLUP, 24, 14
+   LTEXT "Then ...",IDDI_DISPOSITION_POST_PROCESSING_LABEL,                         10,124 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 12
 
-   LTEXT "(CursiVision always exits after signing when started by dropping a file on it's icon)",IDDI_DISPOSITION_EXIT_POST_LABEL, 64,176 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 20
+   AUTORADIOBUTTON "Keep the signed document open",IDDI_DISPOSITION_RETAIN_SIGNED,   32,136 + ADDITIONAL_TOP_SPACE - ROLLUP, 180, 12, WS_GROUP
+   AUTORADIOBUTTON "Re-open the original document",IDDI_DISPOSITION_REOPEN_ORIGINAL, 32,148 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 12
+   AUTORADIOBUTTON "Close the document",IDDI_DISPOSITION_CLOSE_DOCUMENT,             32,160 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 12
+   AUTORADIOBUTTON "Remain running and wait for a printing job", IDDI_DISPOSITION_KEEP_RUNNING_AND_AWAIT_JOB,   32,172 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 12
+   AUTOCHECKBOX "Close the document while waiting?",IDDI_DISPOSITION_AWAIT_JOB_CLOSE,                           48,184 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 12
+   AUTOCHECKBOX "Minimize to the task bar while waiting?",IDDI_DISPOSITION_AWAIT_JOB_MINIMIZE,                  48,196 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 12
+   AUTORADIOBUTTON "Exit",IDDI_DISPOSITION_EXIT,                                                                32,208 + ADDITIONAL_TOP_SPACE - ROLLUP,  24, 12
 
-   LTEXT "When defining signing locations:",IDDI_DISPOSITION_CONTINUOUS_DOODLE_LABEL,     10, 204 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 14
-   AUTORADIOBUTTON "Sign once and save",IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF,           26, 214 + ADDITIONAL_TOP_SPACE - ROLLUP, 90, 12, WS_GROUP
-   AUTORADIOBUTTON "Sign until [ESC] is pressed",IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON,  136, 214 + ADDITIONAL_TOP_SPACE - ROLLUP, 128, 12
+   LTEXT "When defining signing locations:",IDDI_DISPOSITION_CONTINUOUS_DOODLE_LABEL,     10, 232 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 14
+   AUTORADIOBUTTON "Sign once and save",IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF,           26, 246 + ADDITIONAL_TOP_SPACE - ROLLUP,  90, 12, WS_GROUP
+   AUTORADIOBUTTON "Sign until [ESC] is pressed",IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON,  136, 246 + ADDITIONAL_TOP_SPACE - ROLLUP, 128, 12
 
-   AUTOCHECKBOX "Remember the signed location(s)",IDDI_DISPOSITION_REMEMBER,              26, 228 + ADDITIONAL_TOP_SPACE - ROLLUP, 128, 12
+   AUTOCHECKBOX "Remember the signed location(s)",IDDI_DISPOSITION_REMEMBER,              26, 256 + ADDITIONAL_TOP_SPACE - ROLLUP, 128, 12
    AUTOCHECKBOX "Notify me when CursiVision is waiting for the signing location",IDDI_DISPLAY_WAITING_SHOW,
-                                                                                          26, 242 + ADDITIONAL_TOP_SPACE - ROLLUP, 256, 12
+                                                                                          26, 268 + ADDITIONAL_TOP_SPACE - ROLLUP, 256, 12
 
-   LTEXT "When CursiVision starts it should:",IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL,   10, 264 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 14
-   AUTOCHECKBOX "Show these properties",IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES,               26, 274 + ADDITIONAL_TOP_SPACE - ROLLUP,96,12, WS_GROUP
-   AUTOCHECKBOX "Open the last opened document",IDDI_DISPOSITION_OPEN_LAST_DOCUMENT,            26, 286 + ADDITIONAL_TOP_SPACE - ROLLUP,128,12
+   LTEXT "Should the system allow signature replication",IDDI_SIGNATURE_REPLICATION_LABEL,  10, 288 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 14
+   AUTORADIOBUTTON "Yes",IDDI_SIGNATURE_REPLICATION_ALLOW,                                  26, 300 + ADDITIONAL_TOP_SPACE - ROLLUP, 24, 12, WS_GROUP
+   AUTORADIOBUTTON "No",IDDI_SIGNATURE_REPLICATION_DISALLOW,                                52, 300 + ADDITIONAL_TOP_SPACE - ROLLUP, 24, 12
+   AUTOCHECKBOX "Should the option for replication default to Yes",IDDI_SIGNATURE_REPLICATION_DEFAULT_YES,
+                                                                                            26, 312 + ADDITIONAL_TOP_SPACE - ROLLUP, 256, 12
+
+   LTEXT "",IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL,                                     10, 332 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 14
+   AUTOCHECKBOX "Show these properties",IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES,               26, 346 + ADDITIONAL_TOP_SPACE - ROLLUP,96,12, WS_GROUP
+   AUTOCHECKBOX "Open the last opened document",IDDI_DISPOSITION_OPEN_LAST_DOCUMENT,            26, 356 + ADDITIONAL_TOP_SPACE - ROLLUP,128,12
    AUTOCHECKBOX "Use the entire vertical resolution available",IDDI_DISPOSITION_USE_LARGEST_VERTICAL_RES,
-                                                                                                26, 298 + ADDITIONAL_TOP_SPACE - ROLLUP,150,12
+                                                                                                26, 368 + ADDITIONAL_TOP_SPACE - ROLLUP,150,12
 
 #endif
 
-   LTEXT "",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,8,8,380, 24 
+   LTEXT "",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,8,8,392, 24 
 
 #ifndef DONT_TERMINATE_DIALOG_TEMPLATE
 END

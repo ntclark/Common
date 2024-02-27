@@ -7,8 +7,8 @@
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for CursiVision.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
-    protocol : all , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
+    protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -112,6 +112,9 @@ typedef struct oleWritingLocation
     BOOL isWrittenTo;
     BOOL isRequestedViewSet;
     char szDescription[ 128 ];
+    char szOtherInformation[ 32 ];
+    UINT_PTR packageCookie;
+    UINT_PTR pImageField;
     } 	oleWritingLocation;
 
 
@@ -714,8 +717,6 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
         
         virtual char *STDMETHODCALLTYPE GlobalDataStore( void) = 0;
         
-        virtual char *STDMETHODCALLTYPE GlobalTemplateDocumentSettingsFolder( void) = 0;
-        
         virtual BOOL STDMETHODCALLTYPE EnforceNonAdministrativeRestrictions( void) = 0;
         
         virtual BOOL STDMETHODCALLTYPE AllowToolboxPropertyChanges( void) = 0;
@@ -724,30 +725,151 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
         
         virtual BOOL STDMETHODCALLTYPE AllowPrintProfileChangesSetting( void) = 0;
         
+        virtual BOOL STDMETHODCALLTYPE AllowDiagnosticImages( void) = 0;
+        
         virtual void STDMETHODCALLTYPE SetAllowPrintProfileChanges( 
             BOOL doAllow) = 0;
         
-        virtual char *STDMETHODCALLTYPE GlobalTemplateDocument( void) = 0;
+        virtual HRESULT STDMETHODCALLTYPE GetActiveFieldGroupCookie( 
+            UINT_PTR *fieldGroupCookie) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetActiveFieldGroupName( 
+            BSTR *pbstrName) = 0;
+        
+        virtual ULONG_PTR STDMETHODCALLTYPE GetImageField( 
+            GUID *pID) = 0;
+        
+        virtual ULONG_PTR STDMETHODCALLTYPE GetGroupImageField( 
+            UINT_PTR fieldGroupCookie,
+            GUID *pID) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE GetImageFields( 
+            UINT_PTR fieldGroupCookieZeroForAll,
+            GUID *profileID,
             SAFEARRAY **ppSAImageFields) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE ReleaseImageFields( 
-            BOOL saveData) = 0;
+        virtual HRESULT STDMETHODCALLTYPE GetSelectedImageFields( 
+            UINT_PTR fieldGroupCookieZeroForAll,
+            GUID *profileID,
+            SAFEARRAY **ppSAImageFields) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE GetSignatureFields( 
-            SAFEARRAY **ppSASignatureFields) = 0;
+        virtual HRESULT STDMETHODCALLTYPE GetOptionalImageFields( 
+            UINT_PTR fieldGroupCookieZeroForAll,
+            GUID *profileID,
+            SAFEARRAY **ppSAImageFields) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE GetDateFields( 
-            SAFEARRAY **ppSADateFields) = 0;
+        virtual HRESULT STDMETHODCALLTYPE GetSelectedOptionalImageFields( 
+            UINT_PTR fieldGroupCookieZeroForAll,
+            GUID *profileID,
+            SAFEARRAY **ppSAImageFields) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE GetSortedSignatureFields( 
-            char *pszSortingString,
-            SAFEARRAY **ppSASignatureFields) = 0;
+        virtual HRESULT STDMETHODCALLTYPE GetPageFinderImageFields( 
+            UINT_PTR fieldGroupCookieZeroForAll,
+            GUID *profileID,
+            SAFEARRAY **ppSAImageFields) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE SetImageFieldOrder( 
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID,
+            char *pszFieldOrderString) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE SetImageFieldSelected( 
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID,
+            char *pszFieldRequiredString) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE SetOptionalImageFieldOrder( 
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID,
+            char *pszFieldOrderString) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE SetOptionalImageFieldSelected( 
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID,
+            char *pszFieldOptionalString) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE SetPageFinderImageFieldOrder( 
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID,
+            char *pszFieldPageFinderString) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE GetSortedImageFields( 
+            UINT_PTR fieldGroupCookie,
             char *pszSortingString,
             SAFEARRAY **ppSAImageFields) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetSortedOptionalImageFields( 
+            UINT_PTR fieldGroupCookie,
+            char *pszSortingString,
+            SAFEARRAY **ppSAImageFields) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetAllPackagesFirstImageFields( 
+            GUID *pProfileID,
+            SAFEARRAY **ppSAImageFields) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetAllPackagesProfilesFolders( 
+            SAFEARRAY **ppSAProfileFolders) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetActivePackageProfilesFolder( 
+            char *pszActivePackageProfileFolder,
+            DWORD cbString) = 0;
+        
+        virtual UINT_PTR STDMETHODCALLTYPE GetImageFieldPackageCookie( 
+            UINT_PTR pImageField) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetIsImageFieldSelected( 
+            UINT_PTR pImageField,
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetIsOptionalImageFieldSelected( 
+            UINT_PTR pImageField,
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ReleaseImageFields( 
+            BOOL saveFields) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ReleaseGroupImageFields( 
+            UINT_PTR fieldGroupCookie,
+            BOOL saveFields) = 0;
+        
+        virtual void STDMETHODCALLTYPE DestroyImageField( 
+            UINT_PTR *pImageField) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE ShowImageFieldProperties( 
+            HWND hwndParent,
+            GUID *pID) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE SetStatusText( 
+            char *pszStatusText,
+            /* [defaultvalue] */ long timeOutDuration = 0xffffffff) = 0;
+        
+        virtual double STDMETHODCALLTYPE OpenCVMatchThreshold( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE UploadFile( 
+            char *pszBucketName,
+            char *pszFileName,
+            char *pszTargetName,
+            BOOL deleteAfterUpload) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE NotifyCanCancel( 
+            BOOL canCancel) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetEnabledPackages( 
+            SAFEARRAY **ppSAEnabledPackages) = 0;
+        
+        virtual char *STDMETHODCALLTYPE SignerPrompt( 
+            GUID *pSignerTypeID) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetDefaultSignatureAreaSize( 
+            SIZEL *pSizeSignatureArea) = 0;
+        
+        virtual BOOL STDMETHODCALLTYPE MayShowDispositionSettings( void) = 0;
+        
+        virtual ULONG_PTR STDMETHODCALLTYPE GetDefaultResultDisposition( void) = 0;
+        
+        virtual ULONG_PTR STDMETHODCALLTYPE GetDefaultPackagesResultDisposition( void) = 0;
         
     };
     
@@ -888,10 +1010,6 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
         char *( STDMETHODCALLTYPE *GlobalDataStore )( 
             ICursiVisionServices * This);
         
-        DECLSPEC_XFGVIRT(ICursiVisionServices, GlobalTemplateDocumentSettingsFolder)
-        char *( STDMETHODCALLTYPE *GlobalTemplateDocumentSettingsFolder )( 
-            ICursiVisionServices * This);
-        
         DECLSPEC_XFGVIRT(ICursiVisionServices, EnforceNonAdministrativeRestrictions)
         BOOL ( STDMETHODCALLTYPE *EnforceNonAdministrativeRestrictions )( 
             ICursiVisionServices * This);
@@ -908,46 +1026,227 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
         BOOL ( STDMETHODCALLTYPE *AllowPrintProfileChangesSetting )( 
             ICursiVisionServices * This);
         
+        DECLSPEC_XFGVIRT(ICursiVisionServices, AllowDiagnosticImages)
+        BOOL ( STDMETHODCALLTYPE *AllowDiagnosticImages )( 
+            ICursiVisionServices * This);
+        
         DECLSPEC_XFGVIRT(ICursiVisionServices, SetAllowPrintProfileChanges)
         void ( STDMETHODCALLTYPE *SetAllowPrintProfileChanges )( 
             ICursiVisionServices * This,
             BOOL doAllow);
         
-        DECLSPEC_XFGVIRT(ICursiVisionServices, GlobalTemplateDocument)
-        char *( STDMETHODCALLTYPE *GlobalTemplateDocument )( 
-            ICursiVisionServices * This);
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetActiveFieldGroupCookie)
+        HRESULT ( STDMETHODCALLTYPE *GetActiveFieldGroupCookie )( 
+            ICursiVisionServices * This,
+            UINT_PTR *fieldGroupCookie);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetActiveFieldGroupName)
+        HRESULT ( STDMETHODCALLTYPE *GetActiveFieldGroupName )( 
+            ICursiVisionServices * This,
+            BSTR *pbstrName);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetImageField)
+        ULONG_PTR ( STDMETHODCALLTYPE *GetImageField )( 
+            ICursiVisionServices * This,
+            GUID *pID);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetGroupImageField)
+        ULONG_PTR ( STDMETHODCALLTYPE *GetGroupImageField )( 
+            ICursiVisionServices * This,
+            UINT_PTR fieldGroupCookie,
+            GUID *pID);
         
         DECLSPEC_XFGVIRT(ICursiVisionServices, GetImageFields)
         HRESULT ( STDMETHODCALLTYPE *GetImageFields )( 
             ICursiVisionServices * This,
+            UINT_PTR fieldGroupCookieZeroForAll,
+            GUID *profileID,
             SAFEARRAY **ppSAImageFields);
         
-        DECLSPEC_XFGVIRT(ICursiVisionServices, ReleaseImageFields)
-        HRESULT ( STDMETHODCALLTYPE *ReleaseImageFields )( 
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetSelectedImageFields)
+        HRESULT ( STDMETHODCALLTYPE *GetSelectedImageFields )( 
             ICursiVisionServices * This,
-            BOOL saveData);
+            UINT_PTR fieldGroupCookieZeroForAll,
+            GUID *profileID,
+            SAFEARRAY **ppSAImageFields);
         
-        DECLSPEC_XFGVIRT(ICursiVisionServices, GetSignatureFields)
-        HRESULT ( STDMETHODCALLTYPE *GetSignatureFields )( 
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetOptionalImageFields)
+        HRESULT ( STDMETHODCALLTYPE *GetOptionalImageFields )( 
             ICursiVisionServices * This,
-            SAFEARRAY **ppSASignatureFields);
+            UINT_PTR fieldGroupCookieZeroForAll,
+            GUID *profileID,
+            SAFEARRAY **ppSAImageFields);
         
-        DECLSPEC_XFGVIRT(ICursiVisionServices, GetDateFields)
-        HRESULT ( STDMETHODCALLTYPE *GetDateFields )( 
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetSelectedOptionalImageFields)
+        HRESULT ( STDMETHODCALLTYPE *GetSelectedOptionalImageFields )( 
             ICursiVisionServices * This,
-            SAFEARRAY **ppSADateFields);
+            UINT_PTR fieldGroupCookieZeroForAll,
+            GUID *profileID,
+            SAFEARRAY **ppSAImageFields);
         
-        DECLSPEC_XFGVIRT(ICursiVisionServices, GetSortedSignatureFields)
-        HRESULT ( STDMETHODCALLTYPE *GetSortedSignatureFields )( 
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetPageFinderImageFields)
+        HRESULT ( STDMETHODCALLTYPE *GetPageFinderImageFields )( 
             ICursiVisionServices * This,
-            char *pszSortingString,
-            SAFEARRAY **ppSASignatureFields);
+            UINT_PTR fieldGroupCookieZeroForAll,
+            GUID *profileID,
+            SAFEARRAY **ppSAImageFields);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, SetImageFieldOrder)
+        HRESULT ( STDMETHODCALLTYPE *SetImageFieldOrder )( 
+            ICursiVisionServices * This,
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID,
+            char *pszFieldOrderString);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, SetImageFieldSelected)
+        HRESULT ( STDMETHODCALLTYPE *SetImageFieldSelected )( 
+            ICursiVisionServices * This,
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID,
+            char *pszFieldRequiredString);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, SetOptionalImageFieldOrder)
+        HRESULT ( STDMETHODCALLTYPE *SetOptionalImageFieldOrder )( 
+            ICursiVisionServices * This,
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID,
+            char *pszFieldOrderString);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, SetOptionalImageFieldSelected)
+        HRESULT ( STDMETHODCALLTYPE *SetOptionalImageFieldSelected )( 
+            ICursiVisionServices * This,
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID,
+            char *pszFieldOptionalString);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, SetPageFinderImageFieldOrder)
+        HRESULT ( STDMETHODCALLTYPE *SetPageFinderImageFieldOrder )( 
+            ICursiVisionServices * This,
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID,
+            char *pszFieldPageFinderString);
         
         DECLSPEC_XFGVIRT(ICursiVisionServices, GetSortedImageFields)
         HRESULT ( STDMETHODCALLTYPE *GetSortedImageFields )( 
             ICursiVisionServices * This,
+            UINT_PTR fieldGroupCookie,
             char *pszSortingString,
             SAFEARRAY **ppSAImageFields);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetSortedOptionalImageFields)
+        HRESULT ( STDMETHODCALLTYPE *GetSortedOptionalImageFields )( 
+            ICursiVisionServices * This,
+            UINT_PTR fieldGroupCookie,
+            char *pszSortingString,
+            SAFEARRAY **ppSAImageFields);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetAllPackagesFirstImageFields)
+        HRESULT ( STDMETHODCALLTYPE *GetAllPackagesFirstImageFields )( 
+            ICursiVisionServices * This,
+            GUID *pProfileID,
+            SAFEARRAY **ppSAImageFields);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetAllPackagesProfilesFolders)
+        HRESULT ( STDMETHODCALLTYPE *GetAllPackagesProfilesFolders )( 
+            ICursiVisionServices * This,
+            SAFEARRAY **ppSAProfileFolders);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetActivePackageProfilesFolder)
+        HRESULT ( STDMETHODCALLTYPE *GetActivePackageProfilesFolder )( 
+            ICursiVisionServices * This,
+            char *pszActivePackageProfileFolder,
+            DWORD cbString);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetImageFieldPackageCookie)
+        UINT_PTR ( STDMETHODCALLTYPE *GetImageFieldPackageCookie )( 
+            ICursiVisionServices * This,
+            UINT_PTR pImageField);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetIsImageFieldSelected)
+        HRESULT ( STDMETHODCALLTYPE *GetIsImageFieldSelected )( 
+            ICursiVisionServices * This,
+            UINT_PTR pImageField,
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetIsOptionalImageFieldSelected)
+        HRESULT ( STDMETHODCALLTYPE *GetIsOptionalImageFieldSelected )( 
+            ICursiVisionServices * This,
+            UINT_PTR pImageField,
+            UINT_PTR fieldGroupCookie,
+            GUID *pProfileID);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, ReleaseImageFields)
+        HRESULT ( STDMETHODCALLTYPE *ReleaseImageFields )( 
+            ICursiVisionServices * This,
+            BOOL saveFields);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, ReleaseGroupImageFields)
+        HRESULT ( STDMETHODCALLTYPE *ReleaseGroupImageFields )( 
+            ICursiVisionServices * This,
+            UINT_PTR fieldGroupCookie,
+            BOOL saveFields);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, DestroyImageField)
+        void ( STDMETHODCALLTYPE *DestroyImageField )( 
+            ICursiVisionServices * This,
+            UINT_PTR *pImageField);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, ShowImageFieldProperties)
+        HRESULT ( STDMETHODCALLTYPE *ShowImageFieldProperties )( 
+            ICursiVisionServices * This,
+            HWND hwndParent,
+            GUID *pID);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, SetStatusText)
+        HRESULT ( STDMETHODCALLTYPE *SetStatusText )( 
+            ICursiVisionServices * This,
+            char *pszStatusText,
+            /* [defaultvalue] */ long timeOutDuration);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, OpenCVMatchThreshold)
+        double ( STDMETHODCALLTYPE *OpenCVMatchThreshold )( 
+            ICursiVisionServices * This);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, UploadFile)
+        HRESULT ( STDMETHODCALLTYPE *UploadFile )( 
+            ICursiVisionServices * This,
+            char *pszBucketName,
+            char *pszFileName,
+            char *pszTargetName,
+            BOOL deleteAfterUpload);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, NotifyCanCancel)
+        HRESULT ( STDMETHODCALLTYPE *NotifyCanCancel )( 
+            ICursiVisionServices * This,
+            BOOL canCancel);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetEnabledPackages)
+        HRESULT ( STDMETHODCALLTYPE *GetEnabledPackages )( 
+            ICursiVisionServices * This,
+            SAFEARRAY **ppSAEnabledPackages);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, SignerPrompt)
+        char *( STDMETHODCALLTYPE *SignerPrompt )( 
+            ICursiVisionServices * This,
+            GUID *pSignerTypeID);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetDefaultSignatureAreaSize)
+        HRESULT ( STDMETHODCALLTYPE *GetDefaultSignatureAreaSize )( 
+            ICursiVisionServices * This,
+            SIZEL *pSizeSignatureArea);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, MayShowDispositionSettings)
+        BOOL ( STDMETHODCALLTYPE *MayShowDispositionSettings )( 
+            ICursiVisionServices * This);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetDefaultResultDisposition)
+        ULONG_PTR ( STDMETHODCALLTYPE *GetDefaultResultDisposition )( 
+            ICursiVisionServices * This);
+        
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetDefaultPackagesResultDisposition)
+        ULONG_PTR ( STDMETHODCALLTYPE *GetDefaultPackagesResultDisposition )( 
+            ICursiVisionServices * This);
         
         END_INTERFACE
     } ICursiVisionServicesVtbl;
@@ -1041,9 +1340,6 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
 #define ICursiVisionServices_GlobalDataStore(This)	\
     ( (This)->lpVtbl -> GlobalDataStore(This) ) 
 
-#define ICursiVisionServices_GlobalTemplateDocumentSettingsFolder(This)	\
-    ( (This)->lpVtbl -> GlobalTemplateDocumentSettingsFolder(This) ) 
-
 #define ICursiVisionServices_EnforceNonAdministrativeRestrictions(This)	\
     ( (This)->lpVtbl -> EnforceNonAdministrativeRestrictions(This) ) 
 
@@ -1056,29 +1352,119 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
 #define ICursiVisionServices_AllowPrintProfileChangesSetting(This)	\
     ( (This)->lpVtbl -> AllowPrintProfileChangesSetting(This) ) 
 
+#define ICursiVisionServices_AllowDiagnosticImages(This)	\
+    ( (This)->lpVtbl -> AllowDiagnosticImages(This) ) 
+
 #define ICursiVisionServices_SetAllowPrintProfileChanges(This,doAllow)	\
     ( (This)->lpVtbl -> SetAllowPrintProfileChanges(This,doAllow) ) 
 
-#define ICursiVisionServices_GlobalTemplateDocument(This)	\
-    ( (This)->lpVtbl -> GlobalTemplateDocument(This) ) 
+#define ICursiVisionServices_GetActiveFieldGroupCookie(This,fieldGroupCookie)	\
+    ( (This)->lpVtbl -> GetActiveFieldGroupCookie(This,fieldGroupCookie) ) 
 
-#define ICursiVisionServices_GetImageFields(This,ppSAImageFields)	\
-    ( (This)->lpVtbl -> GetImageFields(This,ppSAImageFields) ) 
+#define ICursiVisionServices_GetActiveFieldGroupName(This,pbstrName)	\
+    ( (This)->lpVtbl -> GetActiveFieldGroupName(This,pbstrName) ) 
 
-#define ICursiVisionServices_ReleaseImageFields(This,saveData)	\
-    ( (This)->lpVtbl -> ReleaseImageFields(This,saveData) ) 
+#define ICursiVisionServices_GetImageField(This,pID)	\
+    ( (This)->lpVtbl -> GetImageField(This,pID) ) 
 
-#define ICursiVisionServices_GetSignatureFields(This,ppSASignatureFields)	\
-    ( (This)->lpVtbl -> GetSignatureFields(This,ppSASignatureFields) ) 
+#define ICursiVisionServices_GetGroupImageField(This,fieldGroupCookie,pID)	\
+    ( (This)->lpVtbl -> GetGroupImageField(This,fieldGroupCookie,pID) ) 
 
-#define ICursiVisionServices_GetDateFields(This,ppSADateFields)	\
-    ( (This)->lpVtbl -> GetDateFields(This,ppSADateFields) ) 
+#define ICursiVisionServices_GetImageFields(This,fieldGroupCookieZeroForAll,profileID,ppSAImageFields)	\
+    ( (This)->lpVtbl -> GetImageFields(This,fieldGroupCookieZeroForAll,profileID,ppSAImageFields) ) 
 
-#define ICursiVisionServices_GetSortedSignatureFields(This,pszSortingString,ppSASignatureFields)	\
-    ( (This)->lpVtbl -> GetSortedSignatureFields(This,pszSortingString,ppSASignatureFields) ) 
+#define ICursiVisionServices_GetSelectedImageFields(This,fieldGroupCookieZeroForAll,profileID,ppSAImageFields)	\
+    ( (This)->lpVtbl -> GetSelectedImageFields(This,fieldGroupCookieZeroForAll,profileID,ppSAImageFields) ) 
 
-#define ICursiVisionServices_GetSortedImageFields(This,pszSortingString,ppSAImageFields)	\
-    ( (This)->lpVtbl -> GetSortedImageFields(This,pszSortingString,ppSAImageFields) ) 
+#define ICursiVisionServices_GetOptionalImageFields(This,fieldGroupCookieZeroForAll,profileID,ppSAImageFields)	\
+    ( (This)->lpVtbl -> GetOptionalImageFields(This,fieldGroupCookieZeroForAll,profileID,ppSAImageFields) ) 
+
+#define ICursiVisionServices_GetSelectedOptionalImageFields(This,fieldGroupCookieZeroForAll,profileID,ppSAImageFields)	\
+    ( (This)->lpVtbl -> GetSelectedOptionalImageFields(This,fieldGroupCookieZeroForAll,profileID,ppSAImageFields) ) 
+
+#define ICursiVisionServices_GetPageFinderImageFields(This,fieldGroupCookieZeroForAll,profileID,ppSAImageFields)	\
+    ( (This)->lpVtbl -> GetPageFinderImageFields(This,fieldGroupCookieZeroForAll,profileID,ppSAImageFields) ) 
+
+#define ICursiVisionServices_SetImageFieldOrder(This,fieldGroupCookie,pProfileID,pszFieldOrderString)	\
+    ( (This)->lpVtbl -> SetImageFieldOrder(This,fieldGroupCookie,pProfileID,pszFieldOrderString) ) 
+
+#define ICursiVisionServices_SetImageFieldSelected(This,fieldGroupCookie,pProfileID,pszFieldRequiredString)	\
+    ( (This)->lpVtbl -> SetImageFieldSelected(This,fieldGroupCookie,pProfileID,pszFieldRequiredString) ) 
+
+#define ICursiVisionServices_SetOptionalImageFieldOrder(This,fieldGroupCookie,pProfileID,pszFieldOrderString)	\
+    ( (This)->lpVtbl -> SetOptionalImageFieldOrder(This,fieldGroupCookie,pProfileID,pszFieldOrderString) ) 
+
+#define ICursiVisionServices_SetOptionalImageFieldSelected(This,fieldGroupCookie,pProfileID,pszFieldOptionalString)	\
+    ( (This)->lpVtbl -> SetOptionalImageFieldSelected(This,fieldGroupCookie,pProfileID,pszFieldOptionalString) ) 
+
+#define ICursiVisionServices_SetPageFinderImageFieldOrder(This,fieldGroupCookie,pProfileID,pszFieldPageFinderString)	\
+    ( (This)->lpVtbl -> SetPageFinderImageFieldOrder(This,fieldGroupCookie,pProfileID,pszFieldPageFinderString) ) 
+
+#define ICursiVisionServices_GetSortedImageFields(This,fieldGroupCookie,pszSortingString,ppSAImageFields)	\
+    ( (This)->lpVtbl -> GetSortedImageFields(This,fieldGroupCookie,pszSortingString,ppSAImageFields) ) 
+
+#define ICursiVisionServices_GetSortedOptionalImageFields(This,fieldGroupCookie,pszSortingString,ppSAImageFields)	\
+    ( (This)->lpVtbl -> GetSortedOptionalImageFields(This,fieldGroupCookie,pszSortingString,ppSAImageFields) ) 
+
+#define ICursiVisionServices_GetAllPackagesFirstImageFields(This,pProfileID,ppSAImageFields)	\
+    ( (This)->lpVtbl -> GetAllPackagesFirstImageFields(This,pProfileID,ppSAImageFields) ) 
+
+#define ICursiVisionServices_GetAllPackagesProfilesFolders(This,ppSAProfileFolders)	\
+    ( (This)->lpVtbl -> GetAllPackagesProfilesFolders(This,ppSAProfileFolders) ) 
+
+#define ICursiVisionServices_GetActivePackageProfilesFolder(This,pszActivePackageProfileFolder,cbString)	\
+    ( (This)->lpVtbl -> GetActivePackageProfilesFolder(This,pszActivePackageProfileFolder,cbString) ) 
+
+#define ICursiVisionServices_GetImageFieldPackageCookie(This,pImageField)	\
+    ( (This)->lpVtbl -> GetImageFieldPackageCookie(This,pImageField) ) 
+
+#define ICursiVisionServices_GetIsImageFieldSelected(This,pImageField,fieldGroupCookie,pProfileID)	\
+    ( (This)->lpVtbl -> GetIsImageFieldSelected(This,pImageField,fieldGroupCookie,pProfileID) ) 
+
+#define ICursiVisionServices_GetIsOptionalImageFieldSelected(This,pImageField,fieldGroupCookie,pProfileID)	\
+    ( (This)->lpVtbl -> GetIsOptionalImageFieldSelected(This,pImageField,fieldGroupCookie,pProfileID) ) 
+
+#define ICursiVisionServices_ReleaseImageFields(This,saveFields)	\
+    ( (This)->lpVtbl -> ReleaseImageFields(This,saveFields) ) 
+
+#define ICursiVisionServices_ReleaseGroupImageFields(This,fieldGroupCookie,saveFields)	\
+    ( (This)->lpVtbl -> ReleaseGroupImageFields(This,fieldGroupCookie,saveFields) ) 
+
+#define ICursiVisionServices_DestroyImageField(This,pImageField)	\
+    ( (This)->lpVtbl -> DestroyImageField(This,pImageField) ) 
+
+#define ICursiVisionServices_ShowImageFieldProperties(This,hwndParent,pID)	\
+    ( (This)->lpVtbl -> ShowImageFieldProperties(This,hwndParent,pID) ) 
+
+#define ICursiVisionServices_SetStatusText(This,pszStatusText,timeOutDuration)	\
+    ( (This)->lpVtbl -> SetStatusText(This,pszStatusText,timeOutDuration) ) 
+
+#define ICursiVisionServices_OpenCVMatchThreshold(This)	\
+    ( (This)->lpVtbl -> OpenCVMatchThreshold(This) ) 
+
+#define ICursiVisionServices_UploadFile(This,pszBucketName,pszFileName,pszTargetName,deleteAfterUpload)	\
+    ( (This)->lpVtbl -> UploadFile(This,pszBucketName,pszFileName,pszTargetName,deleteAfterUpload) ) 
+
+#define ICursiVisionServices_NotifyCanCancel(This,canCancel)	\
+    ( (This)->lpVtbl -> NotifyCanCancel(This,canCancel) ) 
+
+#define ICursiVisionServices_GetEnabledPackages(This,ppSAEnabledPackages)	\
+    ( (This)->lpVtbl -> GetEnabledPackages(This,ppSAEnabledPackages) ) 
+
+#define ICursiVisionServices_SignerPrompt(This,pSignerTypeID)	\
+    ( (This)->lpVtbl -> SignerPrompt(This,pSignerTypeID) ) 
+
+#define ICursiVisionServices_GetDefaultSignatureAreaSize(This,pSizeSignatureArea)	\
+    ( (This)->lpVtbl -> GetDefaultSignatureAreaSize(This,pSizeSignatureArea) ) 
+
+#define ICursiVisionServices_MayShowDispositionSettings(This)	\
+    ( (This)->lpVtbl -> MayShowDispositionSettings(This) ) 
+
+#define ICursiVisionServices_GetDefaultResultDisposition(This)	\
+    ( (This)->lpVtbl -> GetDefaultResultDisposition(This) ) 
+
+#define ICursiVisionServices_GetDefaultPackagesResultDisposition(This)	\
+    ( (This)->lpVtbl -> GetDefaultPackagesResultDisposition(This) ) 
 
 #endif /* COBJMACROS */
 

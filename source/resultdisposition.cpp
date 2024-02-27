@@ -52,6 +52,10 @@
 
     doRemember = true;
 
+    doCloseDocumentAndAwaitJob = false;
+    doCloseWhileWaiting = false;
+    doMinimizeWhileWaiting = false;
+
     return;
     }
 

@@ -76,7 +76,7 @@
 
             pageNumberOfRects = 1L;
 
-            prcPotentialFields = pTemplateDocumentUI -> pTextRects(&countPotentialFields,&pPageNumbers,&pPageFieldText,pageNumberOfRects);
+            prcPotentialFields = pTemplateDocumentUI -> pTextRects(&countPotentialFields,pageNumberOfRects);
 
             pTemplateDocumentUI -> HiliteTextAreas(true,RGB(0,0,255),selections,pageSelections,countSelections);
 
@@ -138,7 +138,7 @@
 
         mouseButtonDown = false;
 
-        long pageNumber = pTemplateDocumentUI -> PageUnderMouse();
+        long pageNumber = pTemplateDocumentUI -> pageUnderMouse();
 
         if ( didDrag ) {
 
@@ -151,7 +151,7 @@
             for ( long k = 0; k < countPotentialFields; k++ ) {
                 if ( -1L == pEncounteredInDrag[k] ) 
                     continue;
-                strcpy(textSelections + strlen(textSelections),pTemplateDocumentUI -> pTextText(k));
+                strcat(textSelections,pTemplateDocumentUI -> pTextText(k));
             }
 
             RECT r;
@@ -219,7 +219,7 @@
                     SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,szMaxSelectionsReached);
                 } else {
                     selections[countSelections] = *pEntry;
-                    memcpy(&textSelections[countSelections * 33],pPageFieldText + activePotentialIndex * 33,32);
+                    strcat(textSelections,pTemplateDocumentUI -> pTextText(activePotentialIndex));
                     pageSelections[countSelections] = pageNumber;
                     countSelections++;
                 }
@@ -234,7 +234,7 @@
             SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
 
             selections[0] = *pEntry;
-            memcpy(textSelections,pPageFieldText + activePotentialIndex * 33,32);
+            strcpy(textSelections,pTemplateDocumentUI -> pTextText(activePotentialIndex));
             pageSelections[0] = pageNumber;
 
             POINTFLOAT ptfLocation;
@@ -291,7 +291,7 @@
             break;
         }
 
-        long pageNumber = pTemplateDocumentUI -> PageUnderMouse();
+        long pageNumber = pTemplateDocumentUI -> pageUnderMouse();
 
         if ( wParam & MK_LBUTTON ) {
 
@@ -379,7 +379,7 @@
 
         }
 
-        prcPotentialFields = pTemplateDocumentUI -> pTextRects(&countPotentialFields,&pPageNumbers,&pPageFieldText,pageNumber);
+        prcPotentialFields = pTemplateDocumentUI -> pTextRects(&countPotentialFields,pageNumber);
 
         if ( ! prcPotentialFields )
             break;
@@ -398,7 +398,7 @@
 
         for ( long k = 0; k < countPotentialFields; k++, pEntry++ ) {
 
-            if ( ! ( pPageNumbers[k] == pageNumber ) )
+            if ( ! ( pTemplateDocumentUI -> textPage(k) == pageNumber ) )
                 continue;
 
             if ( rc.left < pEntry -> left || rc.left > pEntry -> right ||
@@ -425,7 +425,7 @@
                 // Is it possible that selected fields can touch ?
                 pTemplateDocumentUI -> UnHiliteArea(&pTemplateDocumentUI -> hilitedSelectedField);
 
-            pTemplateDocumentUI -> hilitedSelectedField = pTemplateDocumentUI -> HiliteArea(RGB(0,255,0),pPageNumbers[activePotentialIndex],&prcPotentialFields[activePotentialIndex]);
+            pTemplateDocumentUI -> hilitedSelectedField = pTemplateDocumentUI -> HiliteArea(RGB(0,255,0),pTemplateDocumentUI -> textPage(activePotentialIndex),&prcPotentialFields[activePotentialIndex]);
 
             oldPotentialIndex = activePotentialIndex;
 
@@ -471,8 +471,10 @@
     }
 
     case WM_DESTROY: {
-        pTemplateDocumentUI -> releaseView();
-        pTemplateDocumentUI = NULL;
+        if ( ! ( NULL == pTemplateDocumentUI ) ) {
+            pTemplateDocumentUI -> releaseView();
+            pTemplateDocumentUI = NULL;
+        }
         if ( commitChanges ) {
             memcpy(pObject -> expectedRects,selections,sizeof(pObject -> expectedRects));
             memcpy(pObject -> expectedText,textSelections,sizeof(textSelections));

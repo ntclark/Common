@@ -74,6 +74,9 @@ extern "C" int GetDocumentsLocation(HWND hwnd,char *);
 extern "C" int GetDocumentsLocationW(HWND hwnd,WCHAR *);
 int GetLocation(HWND hwnd,long key,char *szFolderLocation);
 
+void SetFileReadOnly(char *szwFile,BOOL toReadOnly = TRUE);
+void SetDirectoryReadOnly(char *szwDirectory,BOOL toReadOnly = TRUE);
+
 HWND APIENTRY FindWindowWithClass(HWND hwndP,char* theClassName);
 HWND APIENTRY FindWindowWithStyle(HWND hwndP,LONG_PTR theStyle);
 HWND APIENTRY FindWindowWithExStyle(HWND hwndP,LONG_PTR theStyle);
@@ -92,6 +95,8 @@ void disableAll(HWND hwnd,long *pExceptions);
 void enableAll(HWND hwnd,long *pExceptions);
 void moveUpAll(HWND hwnd,long *pExceptions);
 void moveUpAllAmount(HWND hwnd,long amount,long *pExceptions);
+void shiftUpAllAmount(HWND hwnd,long amount,long *pInclusions,BOOL resizeParent);
+
 void hideAll(HWND hwnd,long *pExceptions);
 void showAll(HWND hwnd,long *pExceptions);
 void enableInside(HWND hwnd,RECT *pRect);
@@ -106,6 +111,8 @@ long HashCode(WCHAR *pszwInput);
 
 void ASCIIHexDecodeInPlace(char *pszInput);
 void ASCIIHexEncode(char *pszInput,long valueSize,char **ppszResult);
+void ASCIIHexEncodeSpecial(char *pszInput,long valueSize,char **ppszResult);
+void ASCIIHexEncodeToString(char *pszInput,long valueSize,char *pszString,long cbString);
 
 int pixelsToHiMetric(SIZEL *pPixels,SIZEL *phiMetric);
 int hiMetricToPixels(SIZEL *phiMetric,SIZEL *pPixels);
@@ -113,11 +120,15 @@ int hiMetricToPixels(SIZEL *phiMetric,SIZEL *pPixels);
 void adjustPropertiesDialogSize(SIZEL *pSizelDesired,DLGTEMPLATEEX *pDialog,long cyReservedHeader);
 
 char *strFromGUID(GUID &theGuid);
+WCHAR *wideStrFromGUID(GUID &theGuid);
+GUID *guidFromString(char *pGuid);
+GUID *guidFromStringW(WCHAR *pGuid);
 
 long getActiveMonitorWorkingHeight(HWND hwnd);
 long getActiveMonitorWorkingLeft(HWND hwnd);
 
 char *getVersionString(char *pszModuleName);
+long getVersionNumber(char *pszModuleName);
 char *getLongDateString();
 char *getShortDateString();
 
@@ -127,3 +138,5 @@ char *getShortTimeString();
 long countSafeArrayItems(SAFEARRAY* pSafeArray);
 
 BOOL archiveFolder(char *pszSource,char *pszTarget);
+
+long getActualTabsHeight(HWND hwndTabControl);

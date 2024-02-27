@@ -83,6 +83,59 @@
     return 0;
     }
 
+
+    void SetFileReadOnly(char *pszName,BOOL toReadOnly) {
+    struct _stat fileInfo{0};
+    if ( -1 == _stat(pszName,&fileInfo) )
+        return;
+    if ( _S_IFDIR & fileInfo.st_mode ) {
+        SetDirectoryReadOnly(pszName,toReadOnly);
+        return;
+    }
+    DWORD attributes = GetFileAttributes(pszName);
+    attributes = toReadOnly ? attributes | FILE_ATTRIBUTE_READONLY : attributes & ~FILE_ATTRIBUTE_READONLY;
+    SetFileAttributes(pszName,attributes);
+    return;
+    }
+
+
+    void SetDirectoryReadOnly(char *pszName,BOOL toReadOnly) {
+
+    struct _stat fileInfo{0};
+    if ( -1L == _stat(pszName,&fileInfo) )
+        return;
+
+    char szRoot[MAX_PATH];
+
+    WIN32_FIND_DATA findData{0};
+
+    sprintf_s<MAX_PATH>(szRoot,"%s\\*",pszName);
+
+    HANDLE hFiles = FindFirstFile(szRoot,&findData);
+
+    do {
+
+        if ( '.' == findData.cFileName[0] )
+            continue;
+
+        char szFile[MAX_PATH];
+        sprintf_s<MAX_PATH>(szFile,"%s\\%s",pszName,findData.cFileName);
+        _stat(szFile,&fileInfo);
+
+        if ( _S_IFDIR & fileInfo.st_mode ) 
+            SetDirectoryReadOnly(szFile,toReadOnly);
+        else {
+            DWORD attributes = GetFileAttributes(szFile);
+            attributes = toReadOnly ? attributes | FILE_ATTRIBUTE_READONLY : attributes & ~FILE_ATTRIBUTE_READONLY;
+            SetFileAttributes(szFile,attributes);
+        }
+
+    } while ( FindNextFile(hFiles,&findData) );
+
+    return;
+    }
+
+
     static HWND hwndFoundChild;
     static LONG_PTR findExStyle;
     static LONG_PTR findStyle;
@@ -386,6 +439,7 @@
     BOOL CALLBACK doHide(HWND hwndTest,LPARAM lParam);
     BOOL CALLBACK doShow(HWND hwndTest,LPARAM lParam);
     BOOL CALLBACK doMoveUp(HWND hwndTest,LPARAM lParam);
+    BOOL CALLBACK doShiftUp(HWND hwndTest,LPARAM lParam);
     BOOL CALLBACK doEnableInside(HWND hwndTest,LPARAM lParam);
     BOOL CALLBACK doDisableInside(HWND hwndTest,LPARAM lParam);
 
@@ -420,6 +474,20 @@
     moveUpAmount = amount;
     EnumChildWindows(hwnd,doMoveUp,(LPARAM)pExceptions);
     moveUpAmount = keepMoveUpAmount;
+    return;
+    }
+
+
+    void shiftUpAllAmount(HWND hwnd,long amount,long *pInclusions,BOOL resizeParent) {
+    long keepMoveUpAmount = moveUpAmount;
+    moveUpAmount = amount;
+    EnumChildWindows(hwnd,doShiftUp,(LPARAM)pInclusions);
+    moveUpAmount = keepMoveUpAmount;
+    if ( resizeParent ) {
+        RECT rcParent;
+        GetWindowRect(hwnd,&rcParent);
+        SetWindowPos(hwnd,HWND_TOP,0,0,rcParent.right - rcParent.left,rcParent.bottom - rcParent.top - amount,SWP_NOMOVE);
+    }
     return;
     }
 
@@ -498,6 +566,33 @@
                 return TRUE;
             }
         }
+    }
+    HWND hwndParent = GetParent(hwndTest);
+    RECT rcParent{0},rcCurrent{0},rcAdjust{0};
+    GetWindowRect(hwndParent,&rcParent);
+    GetWindowRect(hwndTest,&rcCurrent);
+    AdjustWindowRectEx(&rcAdjust,(DWORD)GetWindowLongPtr(hwndParent,GWL_STYLE),FALSE,(DWORD)GetWindowLongPtr(hwndParent,GWL_EXSTYLE));
+    SetWindowPos(hwndTest,HWND_TOP,rcCurrent.left - rcParent.left - rcAdjust.right,
+                                rcCurrent.top - rcParent.top + rcAdjust.top - moveUpAmount,0,0,SWP_NOSIZE);
+    return TRUE;
+    }
+
+
+    BOOL CALLBACK doShiftUp(HWND hwndTest,LPARAM lParam) {
+    long *pInclusions = (long *)lParam;
+    if ( pInclusions ) {
+        LONG_PTR id = (long)GetWindowLongPtr(hwndTest,GWL_ID);
+        BOOL found = FALSE;
+        for ( long k = 0; 1; k++ ) {
+            if ( ! pInclusions[k] )
+                break;
+            if ( id == pInclusions[k] ) {
+                found = TRUE;
+                break;
+            }
+        }
+        if ( ! found )
+            return TRUE;
     }
     HWND hwndParent = GetParent(hwndTest);
     RECT rcParent{0},rcCurrent{0},rcAdjust{0};
@@ -662,12 +757,20 @@
       char c1 = pszInput[k];
       char c2 = pszInput[k + 1];
 
+      if ( '~' == c1 || '`' == c1 && ! ( c2 == '0' ) ) {
+         pszInput[j] = c1;
+         pszInput[++j] = c2;
+         continue;
+      }
+
       BYTE v1 = 0x00;
 
       if ( '0' <= c1 && '9' >= c1 )
          v1 = c1 - '0';
+
       else if ( 'A' <= c1 && 'F' >= c1 )
          v1 = c1 - 'A' + 10;
+
       else if ( 'a' <= c1 && 'f' >= c1 )
          v1 = c1 - 'a' + 10;
 
@@ -675,8 +778,10 @@
 
       if ( '0' <= c2 && '9' >= c2 )
          v2 = c2 - '0';
+
       else if ( 'A' <= c2 && 'F' >= c2 )
          v2 = c2 - 'A' + 10;
+
       else if ( 'a' <= c2 && 'f' >= c2 )
          v2 = c2 - 'a' + 10;
 
@@ -690,33 +795,100 @@
    }
 
 
-   void ASCIIHexEncode(char *pszInput,long valueSize,char **ppszResult) {
+    void ASCIIHexEncode(char *pszInput,long valueSize,char **ppszResult) {
 
-   *ppszResult = new char[2 * valueSize + 1];
-   memset(*ppszResult,0,(2 * valueSize + 1) * sizeof(char));
+    *ppszResult = new char[2 * valueSize + 1];
+    memset(*ppszResult,0,(2 * valueSize + 1) * sizeof(char));
 
-   char *p = pszInput;
-   char *pEnd = p + valueSize;
-   char *pTarget = *ppszResult;
+    char *p = pszInput;
+    char *pEnd = p + valueSize;
+    char *pTarget = *ppszResult;
 
-   while ( p < pEnd ) {
+    while ( p < pEnd ) {
   
-      *pTarget = (*p & 0xF0) >> 4;
-      *pTarget += (*pTarget > 9 ? 'a' - 10 : '0');
+        *pTarget = (*p & 0xF0) >> 4;
+        *pTarget += (*pTarget > 9 ? 'a' - 10 : '0');
 
-      pTarget++;
+        pTarget++;
 
-      *pTarget = (*p & 0x0F);
-      *pTarget += (*pTarget > 9 ? 'a' - 10 : '0');
+        *pTarget = (*p & 0x0F);
+        *pTarget += (*pTarget > 9 ? 'a' - 10 : '0');
    
-      pTarget++;
+        pTarget++;
 
-      p++;
+        p++;
 
-   }
+    }
 
-   return;
-   }
+    return;
+    }
+
+
+    void ASCIIHexEncodeToString(char *pszInput,long valueSize,char *pszResult,long cbString) {
+
+    pszResult[min(cbString - 1,2 * valueSize - 1)] = '\0';
+
+    char *p = pszInput;
+    char *pEnd = p + valueSize;
+    char *pTarget = pszResult;
+
+    while ( p < pEnd && ( p - pszInput ) < cbString ) {
+
+        *pTarget = (*p & 0xF0) >> 4;
+        *pTarget += (*pTarget > 9 ? 'a' - 10 : '0');
+
+        pTarget++;
+
+        *pTarget = (*p & 0x0F);
+        *pTarget += (*pTarget > 9 ? 'a' - 10 : '0');
+
+        pTarget++;
+
+        p++;
+
+    }
+
+    return;
+    }
+
+
+    void ASCIIHexEncodeSpecial(char *pszInput,long valueSize,char **ppszResult) {
+
+    *ppszResult = new char[2 * valueSize + 1];
+    memset(*ppszResult,0,(2 * valueSize + 1) * sizeof(char));
+
+    char *p = pszInput;
+    char *pEnd = p + valueSize;
+    char *pTarget = *ppszResult;
+
+    while ( p < pEnd ) {
+  
+        if ( '~' == *p || '`' == *p ) {
+            *pTarget = *p;
+            pTarget++;
+            *pTarget = *(p + 1);
+            pTarget++;
+            p += 2;
+            continue;
+        }
+
+        *pTarget = (*p & 0xF0) >> 4;
+        *pTarget += (*pTarget > 9 ? 'a' - 10 : '0');
+
+        pTarget++;
+
+        *pTarget = (*p & 0x0F);
+        *pTarget += (*pTarget > 9 ? 'a' - 10 : '0');
+   
+        pTarget++;
+
+        p++;
+
+    }
+
+    return;
+    }
+
 
    int pixelsToHiMetric(SIZEL *pPixels,SIZEL *phiMetric) {
    HDC hdc = GetDC(0);
@@ -859,6 +1031,62 @@
     }
 
 
+    WCHAR *wideStrFromGUID(GUID &theGuid) {
+
+    static long wheel = -1L;
+    static long wheelMax = 31;
+    static WCHAR szwGuid[32][128];
+
+    wheel++;
+    if ( wheelMax == wheel )
+        wheel = 0L;
+
+    WCHAR szwTemp[128];
+
+    StringFromGUID2(theGuid,szwTemp,128);
+
+    wcscpy(szwGuid[wheel],szwTemp + 1);
+    szwGuid[wheel][wcslen(szwGuid[wheel]) - 1] = L'\0';
+
+    return szwGuid[wheel];
+    }
+
+
+    GUID *guidFromString(char *pGuid) {
+    static UUID theResult = GUID_NULL;
+#if 0
+    static HMODULE theImplementingDLL = NULL;
+    static RPC_STATUS (*pUuidFromString)(unsigned short *,UUID *pResult);
+    if ( NULL == theImplementingDLL ) {
+        theImplementingDLL = LoadLibrary("Rpcrt4.dll");
+        pUuidFromString = (RPC_STATUS (*)(unsigned short *,UUID *))GetProcAddress(theImplementingDLL,"UuidFromStringA");
+    }
+    pUuidFromString((unsigned short *)pGuid,&theResult);
+#else
+    UuidFromStringA((RPC_CSTR)pGuid,&theResult);
+#endif
+    return &theResult;
+    }
+
+#if 1
+    GUID *guidFromStringW(WCHAR *pGuid) {
+    char szFMS[64];
+    WideCharToMultiByte(CP_ACP,0,pGuid,-1,szFMS,64,0,0);
+    return guidFromString(szFMS);
+#else
+    GUID *guidFromStringW(WCHAR *pGuid) {
+    static UUID theResult = GUID_NULL;
+    static HMODULE theImplementingDLL = NULL;
+    static RPC_STATUS (*pUuidFromString)(unsigned short *,UUID *pResult);
+    if ( NULL == theImplementingDLL ) {
+        theImplementingDLL = LoadLibrary("Rpcrt4.dll");
+        pUuidFromString = (RPC_STATUS (*)(unsigned short *,UUID *))GetProcAddress(theImplementingDLL,"UuidFromStringW");
+    }
+    pUuidFromString((unsigned short *)pGuid,&theResult);
+    return &theResult;
+#endif
+    }
+
 #if UNICODE
 #else
     char *getVersionString(char *pszModuleName) {
@@ -894,6 +1122,20 @@
     delete [] pvInfo;
 
     return szResult;
+    }
+
+
+    long getVersionNumber(char *pszModuleName) {
+
+    static char szResult[64];
+    strcpy(szResult,getVersionString(pszModuleName));
+
+    long version = 100000 * atol(strtok(szResult,"."));
+    version += 10000 * atol(strtok(NULL,"."));
+    version += 1000 * atol(strtok(NULL,"."));
+    version += 10 * atol(strtok(NULL,"."));
+
+    return version;
     }
 #endif
 
@@ -1015,4 +1257,27 @@
     } while ( FindNextFileA(hFile,&findFile) );
 
     return TRUE;
+    }
+
+
+    long getActualTabsHeight(HWND hwndTabControl) {
+
+    RECT rcItem{0,0,0,0};
+    long count = (long)SendMessage(hwndTabControl,TCM_GETITEMCOUNT,0L,0L);
+
+    long minY = 1024;
+    for ( long k = 0; k < count; k++ ) {
+        RECT rc;
+        SendMessage(hwndTabControl,TCM_GETITEMRECT,k,(LPARAM)&rc);
+        minY = min(minY,rc.top);
+    }
+
+    long maxY = 0;
+    for ( long k = 0; k < count; k++ ) {
+        RECT rc;
+        SendMessage(hwndTabControl,TCM_GETITEMRECT,k,(LPARAM)&rc);
+        maxY = max(maxY,rc.bottom - minY);
+    }
+
+    return maxY;
     }

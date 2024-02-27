@@ -3,12 +3,12 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0622 */
+ /* File created by MIDL compiler version 8.01.0628 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for PdfEnabler.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
-    protocol : all , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
+    protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -36,6 +36,14 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
+#endif
+
+#ifndef DECLSPEC_XFGVIRT
+#if defined(_CONTROL_FLOW_GUARD_XFG)
+#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
+#else
+#define DECLSPEC_XFGVIRT(base, func)
+#endif
 #endif
 
 /* Forward Declarations */ 
@@ -172,6 +180,7 @@ DEFINE_GUID(IID_IPdfPage,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,
             char *pszText,
             double inchesFromLeft,
             double inchesFromTop,
+            /* [defaultvalue][optional] */ char *pszFont = 0,
             /* [defaultvalue][optional] */ double fontSize = 8) = 0;
         
     };
@@ -183,28 +192,34 @@ DEFINE_GUID(IID_IPdfPage,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IPdfPage * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IPdfPage * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IPdfPage * This);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfoCount)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IPdfPage * This,
             /* [out] */ UINT *pctinfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfo)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IPdfPage * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo **ppTInfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetIDsOfNames)
         HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IPdfPage * This,
             /* [in] */ REFIID riid,
@@ -213,6 +228,7 @@ DEFINE_GUID(IID_IPdfPage,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
+        DECLSPEC_XFGVIRT(IDispatch, Invoke)
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IPdfPage * This,
             /* [annotation][in] */ 
@@ -232,20 +248,24 @@ DEFINE_GUID(IID_IPdfPage,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
         
+        DECLSPEC_XFGVIRT(IPdfPage, AddStream)
         HRESULT ( STDMETHODCALLTYPE *AddStream )( 
             IPdfPage * This,
             BYTE *pData,
             long dataSize,
             long identifier);
         
+        DECLSPEC_XFGVIRT(IPdfPage, PageSize)
         HRESULT ( STDMETHODCALLTYPE *PageSize )( 
             IPdfPage * This,
             RECT *pRect);
         
+        DECLSPEC_XFGVIRT(IPdfPage, Rotation)
         HRESULT ( STDMETHODCALLTYPE *Rotation )( 
             IPdfPage * This,
             double *pRotation);
         
+        DECLSPEC_XFGVIRT(IPdfPage, AddImage)
         HRESULT ( STDMETHODCALLTYPE *AddImage )( 
             IPdfPage * This,
             double inchesFromLeft,
@@ -254,10 +274,12 @@ DEFINE_GUID(IID_IPdfPage,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,
             double scaleY,
             HBITMAP bitmapHandle);
         
+        DECLSPEC_XFGVIRT(IPdfPage, DisplayedPageSize)
         HRESULT ( STDMETHODCALLTYPE *DisplayedPageSize )( 
             IPdfPage * This,
             RECT *pRect);
         
+        DECLSPEC_XFGVIRT(IPdfPage, AddImageFromFile)
         HRESULT ( STDMETHODCALLTYPE *AddImageFromFile )( 
             IPdfPage * This,
             double inchesFromLeft,
@@ -266,12 +288,14 @@ DEFINE_GUID(IID_IPdfPage,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,
             double scaleY,
             BSTR bstrFileName);
         
+        DECLSPEC_XFGVIRT(IPdfPage, AddCenteredImageFromFile)
         HRESULT ( STDMETHODCALLTYPE *AddCenteredImageFromFile )( 
             IPdfPage * This,
             double inchesFromLeft,
             double inchesFromTop,
             BSTR bstrFileName);
         
+        DECLSPEC_XFGVIRT(IPdfPage, AddSizedImageFromFile)
         HRESULT ( STDMETHODCALLTYPE *AddSizedImageFromFile )( 
             IPdfPage * This,
             double inchesFromLeft,
@@ -280,39 +304,47 @@ DEFINE_GUID(IID_IPdfPage,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,
             double heightInInches,
             BSTR bstrFileName);
         
+        DECLSPEC_XFGVIRT(IPdfPage, get_PageNumber)
         /* [id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_PageNumber )( 
             IPdfPage * This,
             /* [retval][out] */ long *pPageNumber);
         
+        DECLSPEC_XFGVIRT(IPdfPage, ParseText)
         HRESULT ( STDMETHODCALLTYPE *ParseText )( 
             IPdfPage * This,
             HDC hdc,
             RECT *prcWindowsClip,
             void *pvIPostScriptTakeText);
         
+        DECLSPEC_XFGVIRT(IPdfPage, GetNativePdfPage)
         HRESULT ( STDMETHODCALLTYPE *GetNativePdfPage )( 
             IPdfPage * This,
             void **ppPdfPage);
         
+        DECLSPEC_XFGVIRT(IPdfPage, GetLastError)
         HRESULT ( STDMETHODCALLTYPE *GetLastError )( 
             IPdfPage * This,
             char **ppszError);
         
+        DECLSPEC_XFGVIRT(IPdfPage, AddBinaryObjectFromFile)
         HRESULT ( STDMETHODCALLTYPE *AddBinaryObjectFromFile )( 
             IPdfPage * This,
             BSTR objectName,
             BSTR fileName);
         
+        DECLSPEC_XFGVIRT(IPdfPage, GetBinaryObjectToFile)
         HRESULT ( STDMETHODCALLTYPE *GetBinaryObjectToFile )( 
             IPdfPage * This,
             BSTR objectName,
             BSTR fileName);
         
+        DECLSPEC_XFGVIRT(IPdfPage, AddText)
         HRESULT ( STDMETHODCALLTYPE *AddText )( 
             IPdfPage * This,
             char *pszText,
             double inchesFromLeft,
             double inchesFromTop,
+            /* [defaultvalue][optional] */ char *pszFont,
             /* [defaultvalue][optional] */ double fontSize);
         
         END_INTERFACE
@@ -393,8 +425,8 @@ DEFINE_GUID(IID_IPdfPage,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,
 #define IPdfPage_GetBinaryObjectToFile(This,objectName,fileName)	\
     ( (This)->lpVtbl -> GetBinaryObjectToFile(This,objectName,fileName) ) 
 
-#define IPdfPage_AddText(This,pszText,inchesFromLeft,inchesFromTop,fontSize)	\
-    ( (This)->lpVtbl -> AddText(This,pszText,inchesFromLeft,inchesFromTop,fontSize) ) 
+#define IPdfPage_AddText(This,pszText,inchesFromLeft,inchesFromTop,pszFont,fontSize)	\
+    ( (This)->lpVtbl -> AddText(This,pszText,inchesFromLeft,inchesFromTop,pszFont,fontSize) ) 
 
 #endif /* COBJMACROS */
 
@@ -493,6 +525,9 @@ DEFINE_GUID(IID_IPdfDocument,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0
             /* [out] */ long *pPageNumber,
             /* [out] */ IPdfPage **ppIPage) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE RemovePage( 
+            /* [in] */ long pageNumber) = 0;
+        
         virtual HRESULT STDMETHODCALLTYPE ReplicateStream( 
             long streamNumber,
             long newPage,
@@ -523,28 +558,34 @@ DEFINE_GUID(IID_IPdfDocument,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IPdfDocument * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IPdfDocument * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IPdfDocument * This);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfoCount)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IPdfDocument * This,
             /* [out] */ UINT *pctinfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfo)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IPdfDocument * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo **ppTInfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetIDsOfNames)
         HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IPdfDocument * This,
             /* [in] */ REFIID riid,
@@ -553,6 +594,7 @@ DEFINE_GUID(IID_IPdfDocument,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
+        DECLSPEC_XFGVIRT(IDispatch, Invoke)
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IPdfDocument * This,
             /* [annotation][in] */ 
@@ -572,98 +614,125 @@ DEFINE_GUID(IID_IPdfDocument,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, Open)
         HRESULT ( STDMETHODCALLTYPE *Open )( 
             IPdfDocument * This,
             BSTR bstrFileName,
             /* [in] */ BSTR bstrUserPassword,
             /* [in] */ BSTR bstrOwnerPassword);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, Page)
         HRESULT ( STDMETHODCALLTYPE *Page )( 
             IPdfDocument * This,
             long pageNumber,
             /* [defaultvalue][optional] */ char *pszPageLabel,
             /* [retval][out] */ IPdfPage **ppPage_DoNotAddRef_Or_Release);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, PageFromLabel)
         HRESULT ( STDMETHODCALLTYPE *PageFromLabel )( 
             IPdfDocument * This,
             char *pszPageLabel,
             /* [retval][out] */ long *pPageIndex);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, LabelFromPage)
         HRESULT ( STDMETHODCALLTYPE *LabelFromPage )( 
             IPdfDocument * This,
             long pageNumber,
             long stringSize,
             /* [retval][out] */ char *pszPageLabel);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, Write)
         HRESULT ( STDMETHODCALLTYPE *Write )( 
             IPdfDocument * This,
             BSTR bstrOutputName);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, QueryInfoSize)
         HRESULT ( STDMETHODCALLTYPE *QueryInfoSize )( 
             IPdfDocument * This,
             /* [retval][out] */ long *pInfoSize);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, QueryInfo)
         HRESULT ( STDMETHODCALLTYPE *QueryInfo )( 
             IPdfDocument * This,
             /* [retval][out] */ char *pszBuffer);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, WriteUncompressed)
         HRESULT ( STDMETHODCALLTYPE *WriteUncompressed )( 
             IPdfDocument * This,
             BSTR bstrOutputName);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, get_PageCount)
         HRESULT ( STDMETHODCALLTYPE *get_PageCount )( 
             IPdfDocument * This,
             /* [retval][out] */ long *pPageCount);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, UpdateNamedCount)
         HRESULT ( STDMETHODCALLTYPE *UpdateNamedCount )( 
             IPdfDocument * This,
             /* [in] */ BSTR name,
             /* [in] */ long currentCount,
             /* [in] */ long maxCount);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, get_NamedCount)
         HRESULT ( STDMETHODCALLTYPE *get_NamedCount )( 
             IPdfDocument * This,
             /* [in] */ BSTR name,
             /* [retval][out] */ long *pCount);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, RemoveLastAddedStream)
         HRESULT ( STDMETHODCALLTYPE *RemoveLastAddedStream )( 
             IPdfDocument * This);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, RemoveIndexedAddedStream)
         HRESULT ( STDMETHODCALLTYPE *RemoveIndexedAddedStream )( 
             IPdfDocument * This,
             long index);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, EraseLastAddedStream)
         HRESULT ( STDMETHODCALLTYPE *EraseLastAddedStream )( 
             IPdfDocument * This);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, EraseIndexedAddedStream)
         HRESULT ( STDMETHODCALLTYPE *EraseIndexedAddedStream )( 
             IPdfDocument * This,
             long index);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, RemoveStreamByID)
         HRESULT ( STDMETHODCALLTYPE *RemoveStreamByID )( 
             IPdfDocument * This,
             long identifier);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, get_RemovableStreams)
         HRESULT ( STDMETHODCALLTYPE *get_RemovableStreams )( 
             IPdfDocument * This,
             /* [retval][out] */ long *pCount);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, Seal)
         HRESULT ( STDMETHODCALLTYPE *Seal )( 
             IPdfDocument * This);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, FirstPage)
         HRESULT ( STDMETHODCALLTYPE *FirstPage )( 
             IPdfDocument * This,
             /* [out] */ IPdfPage **ppIPage);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, LastPage)
         HRESULT ( STDMETHODCALLTYPE *LastPage )( 
             IPdfDocument * This,
             /* [out] */ IPdfPage **ppIPage);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, AddPage)
         HRESULT ( STDMETHODCALLTYPE *AddPage )( 
             IPdfDocument * This,
             /* [out] */ long *pPageNumber,
             /* [out] */ IPdfPage **ppIPage);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, RemovePage)
+        HRESULT ( STDMETHODCALLTYPE *RemovePage )( 
+            IPdfDocument * This,
+            /* [in] */ long pageNumber);
+        
+        DECLSPEC_XFGVIRT(IPdfDocument, ReplicateStream)
         HRESULT ( STDMETHODCALLTYPE *ReplicateStream )( 
             IPdfDocument * This,
             long streamNumber,
@@ -673,6 +742,7 @@ DEFINE_GUID(IID_IPdfDocument,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0
             double scaleX,
             double scaleY);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, ParseText)
         HRESULT ( STDMETHODCALLTYPE *ParseText )( 
             IPdfDocument * This,
             long pageNumber,
@@ -680,10 +750,12 @@ DEFINE_GUID(IID_IPdfDocument,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0
             RECT *prcWindowsClip,
             void *pvIPostScriptTakeText);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, GetLastError)
         HRESULT ( STDMETHODCALLTYPE *GetLastError )( 
             IPdfDocument * This,
             char **ppszError);
         
+        DECLSPEC_XFGVIRT(IPdfDocument, ExtractFonts)
         HRESULT ( STDMETHODCALLTYPE *ExtractFonts )( 
             IPdfDocument * This,
             char *pszToDirectory,
@@ -788,6 +860,9 @@ DEFINE_GUID(IID_IPdfDocument,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0
 #define IPdfDocument_AddPage(This,pPageNumber,ppIPage)	\
     ( (This)->lpVtbl -> AddPage(This,pPageNumber,ppIPage) ) 
 
+#define IPdfDocument_RemovePage(This,pageNumber)	\
+    ( (This)->lpVtbl -> RemovePage(This,pageNumber) ) 
+
 #define IPdfDocument_ReplicateStream(This,streamNumber,newPage,pSource,pOffset,scaleX,scaleY)	\
     ( (This)->lpVtbl -> ReplicateStream(This,streamNumber,newPage,pSource,pOffset,scaleX,scaleY) ) 
 
@@ -838,28 +913,34 @@ DEFINE_GUID(IID_IPdfEnabler,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IPdfEnabler * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IPdfEnabler * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IPdfEnabler * This);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfoCount)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfoCount )( 
             IPdfEnabler * This,
             /* [out] */ UINT *pctinfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetTypeInfo)
         HRESULT ( STDMETHODCALLTYPE *GetTypeInfo )( 
             IPdfEnabler * This,
             /* [in] */ UINT iTInfo,
             /* [in] */ LCID lcid,
             /* [out] */ ITypeInfo **ppTInfo);
         
+        DECLSPEC_XFGVIRT(IDispatch, GetIDsOfNames)
         HRESULT ( STDMETHODCALLTYPE *GetIDsOfNames )( 
             IPdfEnabler * This,
             /* [in] */ REFIID riid,
@@ -868,6 +949,7 @@ DEFINE_GUID(IID_IPdfEnabler,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x
             /* [in] */ LCID lcid,
             /* [size_is][out] */ DISPID *rgDispId);
         
+        DECLSPEC_XFGVIRT(IDispatch, Invoke)
         /* [local] */ HRESULT ( STDMETHODCALLTYPE *Invoke )( 
             IPdfEnabler * This,
             /* [annotation][in] */ 
@@ -887,6 +969,7 @@ DEFINE_GUID(IID_IPdfEnabler,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x
             /* [annotation][out] */ 
             _Out_opt_  UINT *puArgErr);
         
+        DECLSPEC_XFGVIRT(IPdfEnabler, Document)
         HRESULT ( STDMETHODCALLTYPE *Document )( 
             IPdfEnabler * This,
             /* [retval][out] */ IPdfDocument **ppDocument);

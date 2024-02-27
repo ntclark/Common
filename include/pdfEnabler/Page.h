@@ -42,7 +42,7 @@ public:
    STDMETHOD(GetLastError)(char **ppszError);
    STDMETHOD(AddBinaryObjectFromFile)(BSTR objectName,BSTR fileName);
    STDMETHOD(GetBinaryObjectToFile)(BSTR objectName,BSTR fileName);
-   STDMETHOD(AddText)(char *pszText,double inchesFromLeft,double inchesFromRight,double fontSize = 8.0);
+   STDMETHOD(AddText)(char *pszText,double inchesFromLeft,double inchesFromRight,char *pszFont = NULL,double fontSize = 8.0);
 
 
    PdfObject *Object() { return pContentsObject; };

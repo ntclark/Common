@@ -3,12 +3,12 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0622 */
+ /* File created by MIDL compiler version 8.01.0628 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for D:\Development\Common\source\SignaturePad.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
-    protocol : all , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
+    protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -36,6 +36,14 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
+#endif
+
+#ifndef DECLSPEC_XFGVIRT
+#if defined(_CONTROL_FLOW_GUARD_XFG)
+#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
+#else
+#define DECLSPEC_XFGVIRT(base, func)
+#endif
 #endif
 
 /* Forward Declarations */ 
@@ -293,106 +301,136 @@ EXTERN_C const IID IID_ISignaturePad;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             ISignaturePad * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, TakeFrameWindow)
         long ( STDMETHODCALLTYPE *TakeFrameWindow )( 
             ISignaturePad * This,
             HWND hwndFrame);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, HostHandle)
         long ( STDMETHODCALLTYPE *HostHandle )( 
             ISignaturePad * This,
             HWND hwnd);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, Load)
         /* [helpstring] */ long ( STDMETHODCALLTYPE *Load )( 
             ISignaturePad * This,
             char *pszName,
             HWND hwndClientHost,
             void *pvICursiVisionServices);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, Start)
         long ( STDMETHODCALLTYPE *Start )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, Unload)
         long ( STDMETHODCALLTYPE *Unload )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, Stop)
         long ( STDMETHODCALLTYPE *Stop )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, IsActive)
         BOOL ( STDMETHODCALLTYPE *IsActive )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, Width)
         long ( STDMETHODCALLTYPE *Width )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, Height)
         long ( STDMETHODCALLTYPE *Height )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, LCDWidth)
         long ( STDMETHODCALLTYPE *LCDWidth )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, LCDHeight)
         long ( STDMETHODCALLTYPE *LCDHeight )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, WidthInInches)
         double ( STDMETHODCALLTYPE *WidthInInches )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, HeightInInches)
         double ( STDMETHODCALLTYPE *HeightInInches )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, PadToLCDScaleX)
         double ( STDMETHODCALLTYPE *PadToLCDScaleX )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, PadToLCDScaleY)
         double ( STDMETHODCALLTYPE *PadToLCDScaleY )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, PadTimeout)
         double ( STDMETHODCALLTYPE *PadTimeout )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, SetZoomFactor)
         double ( STDMETHODCALLTYPE *SetZoomFactor )( 
             ISignaturePad * This,
             double zoomFactor);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, DeviceName)
         char *( STDMETHODCALLTYPE *DeviceName )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, DeviceProductName)
         char *( STDMETHODCALLTYPE *DeviceProductName )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, DeviceModel)
         char *( STDMETHODCALLTYPE *DeviceModel )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, IsLCD)
         long ( STDMETHODCALLTYPE *IsLCD )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, IsFullPage)
         long ( STDMETHODCALLTYPE *IsFullPage )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, HasScaling)
         long ( STDMETHODCALLTYPE *HasScaling )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, IsTabletPC)
         long ( STDMETHODCALLTYPE *IsTabletPC )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, PrepareForPage)
         void ( STDMETHODCALLTYPE *PrepareForPage )( 
             ISignaturePad * This,
             RECT *pRect);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, DisplaySignatureBitmapFile)
         void ( STDMETHODCALLTYPE *DisplaySignatureBitmapFile )( 
             ISignaturePad * This,
             char *pszImageFile,
             /* [defaultvalue][optional] */ BOOL populatePad,
             /* [defaultvalue][optional] */ BOOL isLastPage);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, DisplaySignatureBitmapHandle)
         void ( STDMETHODCALLTYPE *DisplaySignatureBitmapHandle )( 
             ISignaturePad * This,
             UINT_PTR hBitmap,
@@ -402,6 +440,7 @@ EXTERN_C const IID IID_ISignaturePad;
             long cx,
             long cy);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, OverlaySignatureBitmapHandle)
         void ( STDMETHODCALLTYPE *OverlaySignatureBitmapHandle )( 
             ISignaturePad * This,
             UINT_PTR hBitmap,
@@ -411,6 +450,7 @@ EXTERN_C const IID IID_ISignaturePad;
             long cx,
             long cy);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, DisplayHotSpotFile)
         void ( STDMETHODCALLTYPE *DisplayHotSpotFile )( 
             ISignaturePad * This,
             char *pszFile,
@@ -420,6 +460,7 @@ EXTERN_C const IID IID_ISignaturePad;
             long cx,
             long cy);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, DisplayHotSpotHandle)
         void ( STDMETHODCALLTYPE *DisplayHotSpotHandle )( 
             ISignaturePad * This,
             UINT_PTR hBitmap,
@@ -430,74 +471,94 @@ EXTERN_C const IID IID_ISignaturePad;
             long cx,
             long cy);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, DisplayOk)
         void ( STDMETHODCALLTYPE *DisplayOk )( 
             ISignaturePad * This,
             long eventID);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, DisplayClear)
         void ( STDMETHODCALLTYPE *DisplayClear )( 
             ISignaturePad * This,
             long eventID);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, DisplayCancel)
         void ( STDMETHODCALLTYPE *DisplayCancel )( 
             ISignaturePad * This,
             long eventID);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, KeyPadQueryHotSpot)
         short ( STDMETHODCALLTYPE *KeyPadQueryHotSpot )( 
             ISignaturePad * This,
             short KeyCode);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, SetBackgroundFile)
         void ( STDMETHODCALLTYPE *SetBackgroundFile )( 
             ISignaturePad * This,
             BSTR bstrFileName);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, SetBackgroundHandle)
         void ( STDMETHODCALLTYPE *SetBackgroundHandle )( 
             ISignaturePad * This,
             OLE_HANDLE __MIDL__ISignaturePad0000);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, GetRect)
         void ( STDMETHODCALLTYPE *GetRect )( 
             ISignaturePad * This,
             RECT *__MIDL__ISignaturePad0001);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, GetHotSpot)
         void ( STDMETHODCALLTYPE *GetHotSpot )( 
             ISignaturePad * This,
             long hotSpotNumber,
             RECT *__MIDL__ISignaturePad0002);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, ClearInk)
         long ( STDMETHODCALLTYPE *ClearInk )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, SignatureData)
         long ( STDMETHODCALLTYPE *SignatureData )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, SignatureDataX)
         double *( STDMETHODCALLTYPE *SignatureDataX )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, SignatureDataY)
         double *( STDMETHODCALLTYPE *SignatureDataY )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, ClearSignatureData)
         void ( STDMETHODCALLTYPE *ClearSignatureData )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, DeleteSignatureData)
         void ( STDMETHODCALLTYPE *DeleteSignatureData )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, PutLCDCaptureMode)
         void ( STDMETHODCALLTYPE *PutLCDCaptureMode )( 
             ISignaturePad * This,
             long mode);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, TabletState)
         void ( STDMETHODCALLTYPE *TabletState )( 
             ISignaturePad * This,
             long __MIDL__ISignaturePad0003);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, EnableTablet)
         BOOL ( STDMETHODCALLTYPE *EnableTablet )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, ClearTablet)
         void ( STDMETHODCALLTYPE *ClearTablet )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, DisableTablet)
         BOOL ( STDMETHODCALLTYPE *DisableTablet )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, LCDRefresh)
         void ( STDMETHODCALLTYPE *LCDRefresh )( 
             ISignaturePad * This,
             long Mode,
@@ -506,53 +567,69 @@ EXTERN_C const IID IID_ISignaturePad;
             long XSize,
             long YSize);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, SetSigWindow)
         void ( STDMETHODCALLTYPE *SetSigWindow )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, SetInkArea)
         void ( STDMETHODCALLTYPE *SetInkArea )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, GetPixelBits)
         long ( STDMETHODCALLTYPE *GetPixelBits )( 
             ISignaturePad * This,
             HDC __MIDL__ISignaturePad0004);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, MaximumX)
         long ( STDMETHODCALLTYPE *MaximumX )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, MaximumY)
         long ( STDMETHODCALLTYPE *MaximumY )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, MinimumX)
         long ( STDMETHODCALLTYPE *MinimumX )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, MinimumY)
         long ( STDMETHODCALLTYPE *MinimumY )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, MaximumSignableY)
         long ( STDMETHODCALLTYPE *MaximumSignableY )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, FireOption)
         long ( STDMETHODCALLTYPE *FireOption )( 
             ISignaturePad * This,
             long optionNumber);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, OriginPointX)
         long ( STDMETHODCALLTYPE *OriginPointX )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, OriginPointY)
         long ( STDMETHODCALLTYPE *OriginPointY )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, BaselinePointX)
         long ( STDMETHODCALLTYPE *BaselinePointX )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, BaselinePointY)
         long ( STDMETHODCALLTYPE *BaselinePointY )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, InkColor)
         DWORD ( STDMETHODCALLTYPE *InkColor )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, InkWeight)
         long ( STDMETHODCALLTYPE *InkWeight )( 
             ISignaturePad * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePad, ShowProperties)
         HRESULT ( STDMETHODCALLTYPE *ShowProperties )( 
             ISignaturePad * This);
         
@@ -828,34 +905,42 @@ EXTERN_C const IID IID_ISignaturePadEvents;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             ISignaturePadEvents * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             ISignaturePadEvents * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             ISignaturePadEvents * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePadEvents, PenDown)
         HRESULT ( STDMETHODCALLTYPE *PenDown )( 
             ISignaturePadEvents * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePadEvents, PenUp)
         HRESULT ( STDMETHODCALLTYPE *PenUp )( 
             ISignaturePadEvents * This);
         
+        DECLSPEC_XFGVIRT(ISignaturePadEvents, PenPoint)
         HRESULT ( STDMETHODCALLTYPE *PenPoint )( 
             ISignaturePadEvents * This,
             long x,
             long y,
             float inkWeight);
         
+        DECLSPEC_XFGVIRT(ISignaturePadEvents, OptionSelected)
         HRESULT ( STDMETHODCALLTYPE *OptionSelected )( 
             ISignaturePadEvents * This,
             long optionNumber);
         
+        DECLSPEC_XFGVIRT(ISignaturePadEvents, ItemSelected)
         HRESULT ( STDMETHODCALLTYPE *ItemSelected )( 
             ISignaturePadEvents * This,
             long controlId,

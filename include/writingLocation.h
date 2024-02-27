@@ -12,4 +12,7 @@
         bool isWrittenTo;
         bool isRequestedViewSet;
         char szDescription[128];
+        char szOtherInformation[32];
+        UINT_PTR packageCookie;
+        UINT_PTR pImageField;
    };

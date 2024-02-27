@@ -49,7 +49,7 @@
       pParent -> pIPDFiumControl -> put_EnableExplorerContextMenu(FALSE);
 
       if ( pParent -> generateTextFields ) 
-         pParent -> pTextRects(NULL,NULL,NULL,1);
+         pParent -> pTextRects(NULL,NULL,1);
 
    }
 

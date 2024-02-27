@@ -4,7 +4,7 @@
 #endif
 
 #ifndef BORDER_WEIGHT
-#define BORDER_WEIGHT 2
+#define BORDER_WEIGHT 4
 #endif
 
 #ifndef DB_MINDRAG
@@ -19,6 +19,8 @@
 #define DB_MAGENTA  RGB(255,0,255)
 #define DB_CYAN     RGB(0,255,255)
 #define DB_GRAY     RGB(128,128,128)
+#define DB_ORANGE   RGB(255,165,0)
+#define DB_YELLOW   RGB(255,255,0)
 
 #define DRAW_COLORED_BOX_IN_POINTS(ptdui,type,color,pr,w) \
 {                                                   \

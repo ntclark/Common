@@ -3,12 +3,12 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0622 */
+ /* File created by MIDL compiler version 8.01.0628 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for forwardToReceptor.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
-    protocol : all , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
+    protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -36,6 +36,14 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
+#endif
+
+#ifndef DECLSPEC_XFGVIRT
+#if defined(_CONTROL_FLOW_GUARD_XFG)
+#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
+#else
+#define DECLSPEC_XFGVIRT(base, func)
+#endif
 #endif
 
 /* Forward Declarations */ 
@@ -95,9 +103,6 @@ DEFINE_GUID(IID_ICursiVisionForwardToReceptorBackEnd,0xC78A8C5E,0x89DC,0x4957,0x
         virtual HRESULT STDMETHODCALLTYPE SetServer( 
             char *pszServerName) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE SetPort( 
-            long portNumber) = 0;
-        
     };
     
     
@@ -107,25 +112,25 @@ DEFINE_GUID(IID_ICursiVisionForwardToReceptorBackEnd,0xC78A8C5E,0x89DC,0x4957,0x
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             ICursiVisionForwardToReceptorBackEnd * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             ICursiVisionForwardToReceptorBackEnd * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             ICursiVisionForwardToReceptorBackEnd * This);
         
+        DECLSPEC_XFGVIRT(ICursiVisionForwardToReceptorBackEnd, SetServer)
         HRESULT ( STDMETHODCALLTYPE *SetServer )( 
             ICursiVisionForwardToReceptorBackEnd * This,
             char *pszServerName);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetPort )( 
-            ICursiVisionForwardToReceptorBackEnd * This,
-            long portNumber);
         
         END_INTERFACE
     } ICursiVisionForwardToReceptorBackEndVtbl;
@@ -152,9 +157,6 @@ DEFINE_GUID(IID_ICursiVisionForwardToReceptorBackEnd,0xC78A8C5E,0x89DC,0x4957,0x
 
 #define ICursiVisionForwardToReceptorBackEnd_SetServer(This,pszServerName)	\
     ( (This)->lpVtbl -> SetServer(This,pszServerName) ) 
-
-#define ICursiVisionForwardToReceptorBackEnd_SetPort(This,portNumber)	\
-    ( (This)->lpVtbl -> SetPort(This,portNumber) ) 
 
 #endif /* COBJMACROS */
 

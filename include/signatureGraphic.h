@@ -1,7 +1,3 @@
-// Copyright 2017, 2018, 2019 InnoVisioNate Inc. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 #pragma once
 
 #define PREALLOCATED_SIGNATURE_GRAPHIC_SIZE  32768
@@ -27,6 +23,21 @@ struct signatureGraphic {
       padHeightPDFUnits = pPdfRect -> top - pPdfRect -> bottom;
    };
 
+   static signatureGraphic *duplicate(signatureGraphic *pRHS) {
+      signatureGraphic *pThis = new signatureGraphic();
+      memcpy(pThis,pRHS,sizeof(signatureGraphic));
+      pThis -> pSignatureDataX = new long[pThis -> totalPoints];
+      pThis -> pSignatureDataY = new long[pThis -> totalPoints];
+      pThis -> pSignatureDataPage = new long[pThis -> totalPoints];
+      pThis -> pInkWeight = new float[pThis -> totalPoints];
+      memcpy(pThis -> pSignatureDataX,pRHS -> pSignatureDataX,pThis -> totalPoints * sizeof(long));
+      memcpy(pThis -> pSignatureDataY,pRHS -> pSignatureDataY,pThis -> totalPoints * sizeof(long));
+      memcpy(pThis -> pSignatureDataPage,pRHS -> pSignatureDataPage,pThis -> totalPoints * sizeof(long));
+      memcpy(pThis -> pInkWeight,pRHS -> pInkWeight,pThis -> totalPoints * sizeof(float));
+      return pThis;
+   }
+
+
    ~signatureGraphic() { 
       if ( pSignatureDataX ) delete [] pSignatureDataX; 
       if ( pSignatureDataY ) delete [] pSignatureDataY; 
@@ -51,8 +62,9 @@ struct signatureGraphic {
    long pdfPageNumber;
    long pdfAdobePageNumber;
    bool isIndependentOfList;
-   double scaleX,scaleY,interWindowScaleX,interWindowScaleY;
+   double padScaleX,padScaleY,scaleX,scaleY,interWindowScaleX,interWindowScaleY;
    double scaleToPDFX,scaleToPDFY;
+   double lcdWidth,lcdHeight;
    POINTL windowsOrigin;
    long windowsWidth,windowsHeight;
    long *pSignatureDataX;

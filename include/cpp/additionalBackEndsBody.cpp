@@ -16,22 +16,16 @@
 
       pObject -> hwndAdditionalBackEnds = hwnd;
 
-      hwndTopList = GetDlgItem(hwnd,IDDI_BACKENDS_TOP_LIST);
-
       if ( 0 == strlen(PARENT_OBJECT_PREFERRED_SETTINGS_FILE_NAME) ) {
          SetWindowText(GetDlgItem(hwnd,IDDI_BACKENDS_TOP_LIST_LABEL),"Use these tools for documents not yet defined to the system.\rOperation is in top to bottom order.");
          SetWindowText(GetDlgItem(hwnd,IDDI_BACKENDS_BOTTOM_LIST_LABEL),"To change the default settings for each tool, click it's properties button.\rThis will not change settings for documents currently using the tool.");
       }
 
+      hwndTopList = GetDlgItem(hwnd,IDDI_BACKENDS_TOP_LIST);
       SetWindowLongPtr(hwndTopList,GWLP_USERDATA,(ULONG_PTR)p);
 
       hwndBottomList = GetDlgItem(hwnd,IDDI_BACKENDS_BOTTOM_LIST);
-
       SetWindowLongPtr(hwndBottomList,GWLP_USERDATA,(ULONG_PTR)p);
-
-      SetWindowPos(hwndTopList,HWND_BOTTOM,0,0,0,0,SWP_NOSIZE | SWP_NOMOVE);
-
-      SetWindowPos(hwndBottomList,HWND_BOTTOM,0,0,0,0,SWP_NOSIZE | SWP_NOMOVE);
 
       RECT rcThis;
 
@@ -79,13 +73,18 @@
       lvColumn.pszText = "Description";
       if ( hwndTopList )
          SendMessage(hwndTopList,LVM_INSERTCOLUMN,0,(LPARAM)&lvColumn);
+#ifdef HIDE_BOTTOM_PROPS
+      lvColumn.cx += 128;
+#endif
       SendMessage(hwndBottomList,LVM_INSERTCOLUMN,0,(LPARAM)&lvColumn);
 
       lvColumn.cx = 48;
       lvColumn.pszText = "Props.";
       if ( hwndTopList )
          SendMessage(hwndTopList,LVM_INSERTCOLUMN,++nextTopIndex,(LPARAM)&lvColumn);
+#ifndef HIDE_BOTTOM_PROPS
       SendMessage(hwndBottomList,LVM_INSERTCOLUMN,++nextBottomIndex,(LPARAM)&lvColumn);
+#endif
 
       lvColumn.cx = 48;
       lvColumn.pszText = "Use ?";
@@ -95,6 +94,8 @@
       lvColumn.cx = 48;
       lvColumn.pszText = "Order";
       SendMessage(hwndTopList,LVM_INSERTCOLUMN,++nextTopIndex,(LPARAM)&lvColumn);
+
+      SendMessage(hwndBottomList,LVM_SETCOLUMNWIDTH,(WPARAM)++nextBottomIndex,(LPARAM)LVSCW_AUTOSIZE_USEHEADER);
 
       long countRows = 0;
       countAvailableBackEnds = 0;
@@ -117,9 +118,13 @@
 
          buttonPairs[countRows].hwndList = hwndBottomList;
 
+#ifdef HIDE_BOTTOM_PROPS
+         buttonPairs[countRows].hwndProperties = NULL;
+#else
          buttonPairs[countRows].hwndProperties = CreateWindowEx(0L,"BUTTON","...", WS_CHILD | WS_VISIBLE,32,32,32,16,hwndBottomList,(HMENU)(UINT_PTR)(IDDI_BACKENDS_PROPERTIES + countRows),hModule,0L);
          SetWindowLongPtr(buttonPairs[countRows].hwndProperties,GWLP_USERDATA,(ULONG_PTR)&buttonPairs[countRows]);
          SendMessage(buttonPairs[countRows].hwndProperties,WM_SETFONT,(WPARAM)hGUIFont,(LPARAM)TRUE);
+#endif
 
          buttonPairs[countRows].hwndUse = CreateWindowEx(0L,"BUTTON","Yes",WS_CHILD | WS_VISIBLE,32,32,32,16,hwndBottomList,(HMENU)(UINT_PTR)(IDDI_BACKENDS_USE_BACKEND + countRows),hModule,0L);
          SetWindowLongPtr(buttonPairs[countRows].hwndUse,GWLP_USERDATA,(ULONG_PTR)&buttonPairs[countRows]);
@@ -481,10 +486,10 @@
       long bottomListYChanged = 0L;
 
       GetWindowRect(hwndTopList,&rcTopList);
-      
+
       DWORD dwRect = (DWORD)SendMessage(hwndTopList,LVM_APPROXIMATEVIEWRECT,(WPARAM)-1,MAKELPARAM(-1,-1));
 
-      long cyTopList = HIWORD(dwRect);
+      long cyTopList = max(128,HIWORD(dwRect));
 
       long xList = rcTopList.left - rcParent.left;
 
@@ -520,15 +525,9 @@
       SendMessage(hwndTopList,LVM_SETCOLUMNWIDTH,2,MAKELPARAM(48,0));
       SendMessage(hwndTopList,LVM_SETCOLUMNWIDTH,3,MAKELPARAM(48,0));
 
-#ifdef IS_CURSIVISION_CONTROL_HANDLER
-      SendMessage(hwndBottomList,LVM_SETCOLUMNWIDTH,0,MAKELPARAM(nativeTopListWidth - 48 - 24,0));
-#else
       SendMessage(hwndBottomList,LVM_SETCOLUMNWIDTH,0,MAKELPARAM(nativeTopListWidth - 2 * 48 - 24,0));
-#endif
       SendMessage(hwndBottomList,LVM_SETCOLUMNWIDTH,1,MAKELPARAM(48,0));
-#ifndef IS_CURSIVISION_CONTROL_HANDLER
       SendMessage(hwndBottomList,LVM_SETCOLUMNWIDTH,2,MAKELPARAM(48,0));
-#endif
 
       }
       break;
@@ -658,7 +657,7 @@
 
          OBJECT_WITH_PROPERTIES *pObject = (OBJECT_WITH_PROPERTIES *)(p -> pParent);
 
-         if ( pNotify -> lParam ) {
+         if ( pNotify -> lParam && ! needsAdmin ) {
 
             p -> countBackEnds = (long)SendMessage(hwndTopList,LVM_GETITEMCOUNT,0L,0L);
 
@@ -668,9 +667,6 @@
             memset(p -> backEndSettingsFiles,0,sizeof(p -> backEndSettingsFiles));
             memset(p -> backEndInstanceIds,0,sizeof(p -> backEndInstanceIds));
 
-#ifdef IS_CURSIVISION_CONTROL_HANDLER
-            memset(pCursiVision -> ppIOleObject[0] -> ppIUnknownBackEnds,0,sizeof(pCursiVision -> ppIOleObject[0] -> ppIUnknownBackEnds));
-#endif
             for ( long k = 0; k < p -> countBackEnds; k++ ) {
 
                LVITEM lvItem = {0};
@@ -691,29 +687,17 @@
                strcpy(p -> backEndSettingsFiles[k],pPair -> szSettingsFileName);
                memcpy(&p -> backEndInstanceIds[k],&pPair -> instanceId,sizeof(GUID));
 
-#ifdef IS_CURSIVISION_CONTROL_HANDLER
-               pObject -> ppIUnknownBackEnds[k] = pPair -> pIUnknown_Object;
-#endif
-
                p -> useBackEnds[k] = 1L;
 
             }
 
-#ifndef IS_CURSIVISION_CONTROL_HANDLER
-#ifndef CURSIVISION_CONTROL_BUILD
             pObject -> SaveProperties();
             pObject -> DiscardProperties();
             pObject -> DiscardProperties();
-#endif
-#endif
 
          } else {
-#ifndef IS_CURSIVISION_CONTROL_HANDLER
-#ifndef CURSIVISION_CONTROL_BUILD
             pObject -> DiscardProperties();
             pObject -> PushProperties();
-#endif
-#endif
          }
 
          SetWindowLongPtr(pNotifyHeader -> hwndFrom,DWLP_MSGRESULT,PSNRET_NOERROR);
@@ -721,17 +705,12 @@
          }
          return (LRESULT)TRUE;
 
-#ifndef IS_CURSIVISION_CONTROL_HANDLER
-#ifndef CURSIVISION_CONTROL_BUILD
       case PSN_RESET: {
          OBJECT_WITH_PROPERTIES *pObject = (OBJECT_WITH_PROPERTIES *)(p -> pParent);
          pObject -> PopProperties();
          pObject -> PopProperties();
          }
          break;
-#endif
-#endif
-
       }
 
       }

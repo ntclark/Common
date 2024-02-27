@@ -30,30 +30,37 @@
 #define WM_CLEAR_TEMPLATE_DOC_VIEW  (WM_USER + 135)
 
 #define WM_COMMAND_GLOBAL_TEMPLATE_CREATE_DOCS          WM_USER + 201
-#define WM_COMMAND_GLOBAL_TEMPLATE_CREATE_VIEWS         WM_USER + 202
 #define WM_COMMAND_SETUP_GLOBAL_TEMPLATE_PROPERTIES     WM_USER + 203
 #define WM_COMMAND_ADD_IMAGE                            WM_USER + 204
 #define WM_QUERY_GET_NEXT_ID                            WM_USER + 205
 #define WM_COMMAND_SELECT_IMAGE                         WM_USER + 206
 #define WM_COMMAND_SET_TAB_TEXT                         WM_USER + 207
-#define WM_COMMAND_CREATE_TEMPLATE                      WM_USER + 208
 #define WM_COMMAND_CREATE_TEMPLATE_UI                   WM_USER + 209
-#define WM_COMMAND_GET_TEMPLATE                         WM_USER + 210
-#define WM_COMMAND_GET_TEMPLATE_UI                      WM_USER + 211
-#define WM_COMMAND_GLOBAL_TEMPLATE_CLEAR_DOCS           WM_USER + 212
-#define WM_COMMAND_GLOBAL_TEMPLATE_SET_ROOT_HWND        WM_USER + 213
+#define WM_COMMAND_GET_WINDOW_INFO                      WM_USER + 210
+
 #define WM_COMMAND_GLOBAL_TEMPLATE_ACTIVATE_DOCS        WM_USER + 214
 #define WM_COMMAND_GLOBAL_TEMPLATE_CREATE_DOCS_PART2    WM_USER + 215
 #define WM_UPDATE_PDF_RECT                              WM_USER + 216
 #define WM_MOUSE_DOWN_YOUR_RECT                         WM_USER + 217
 #define WM_MOUSE_MOVE_YOUR_RECT                         WM_USER + 218
-#define WM_MOUSE_DRAG_YOUR_RECT                         WM_USER + 219
+#define WM_CREATE_PDF_RECT                              WM_USER + 219
 #define WM_QUERY_COLOR                                  WM_USER + 220
 #define WM_INITIALIZE_NEW_PDF_RECT                      WM_USER + 221
 #define WM_NEW_PDF_RECT                                 WM_USER + 222
 #define WM_COMMAND_REPLACE_IMAGE                        WM_USER + 223
 #define WM_COMMAND_CLEAR_FIELD_OUTLINES                 WM_USER + 224
 #define WM_COMMAND_REDRAW_FIELD_OUTLINES                WM_USER + 225
-#define WM_COMMAND_GLOBAL_TEMPLATE_SET_TAB_PAGE         WM_USER + 226
+#define WM_COMMAND_CLEAR_ONE_FIELD_OUTLINE              WM_USER + 226
+#define WM_COMMAND_GLOBAL_TEMPLATE_SET_TAB_PAGE         WM_USER + 227
+#define WM_COMMAND_GLOBAL_TEMPLATE_GET_TEMPLATE_UI          WM_USER + 228
+#define WM_COMMAND_GLOBAL_TEMPLATE_GET_TEMPLATE_UI_INDEX    WM_USER + 229
+#define WM_SET_TB_STATUS                                    WM_USER + 230
+#define WM_COMMAND_GLOBAL_TEMPLATE_SYNC_RECTS_AND_BITMAPS   WM_USER + 231
+#define WM_SET_TEXT_FINDER_RECT                             WM_USER + 232
+#define WM_SET_TEXT_FINDER_INDEXES                          WM_USER + 233
+#define WM_CLEAR_TEXT_FINDER_RECT                           WM_USER + 234
+#define WM_SEE_MOUSE_DOWN                                   WM_USER + 235
+#define WM_SIGNING_CONTROL_SETUP_REPLICATION                WM_USER + 236
+#define WM_SIGNING_CONTROL_SET_DESCRIPTION                  WM_USER + 237
 
-#define WM_USER_MAX WM_COMMAND_GLOBAL_TEMPLATE_SET_TAB_PAGE
+#define WM_USER_MAX                                     WM_USER + 237

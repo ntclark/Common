@@ -13,7 +13,6 @@
         pszDocumentName(pszDN),
         pExpectedRects(pszER),
         pszExpectedText(pszET),
-        selfAllocatedDocumentName(false),
         pageCount(0L),
         pdfPageWidth(0),
         pdfPageHeight(0),
@@ -54,6 +53,9 @@
 
     if ( pszDocumentName && selfAllocatedDocumentName )
         delete [] pszDocumentName;
+
+    if ( pszProfileFileName && selfAllocatedProfileName )
+        delete pszProfileFileName;
 
     return;
     }

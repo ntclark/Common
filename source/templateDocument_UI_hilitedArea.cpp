@@ -72,9 +72,7 @@
             return;
     }
 
-    HDC hdc = pParent -> pageDC;
-
-    DRAW_COLORED_BOX_IN_PIXELS_HDC_NOCLIP_NOHIDEABLE(hdc,PS_SOLID,hiliteColor,(&pixelsRect),BORDER_WEIGHT)
+    DRAW_COLORED_BOX_IN_PIXELS_HDC_NOCLIP_NOHIDEABLE(pParent -> pageDC,PS_SOLID,hiliteColor,(&pixelsRect),BORDER_WEIGHT / 2)
 
     return;
     }
@@ -88,6 +86,13 @@
 
     GUID templateDocument::tdUI::HiliteArea(COLORREF color,long pageNumber,RECT *pPDFRect) {
     hilitedArea *pArea = new hilitedArea(this,pageNumber,pPDFRect,color);
+    pArea -> paint(pageNumber);
+    return pArea -> cookie;
+    }
+
+
+    GUID templateDocument::tdUI::HiliteArea(COLORREF color,long pageNumber,long index) {
+    hilitedArea *pArea = new hilitedArea(this,pageNumber,pTextRect(index),color);
     pArea -> paint(pageNumber);
     return pArea -> cookie;
     }
@@ -121,6 +126,8 @@
     GUID templateDocument::tdUI::findHilitedArea(RECT *pRect,long pageNumber,COLORREF theColor) {
     for ( std::pair<GUID,hilitedArea *> pair : hilitedAreas ) {
         hilitedArea *pArea = pair.second;
+        if ( NULL == pArea )
+            continue;
         if ( ! ( pArea -> pdfRect.left == pRect -> left ) || ! ( pArea -> pdfRect.top == pRect -> top ) || 
                 ! ( pArea -> pdfRect.right == pRect -> right ) || ! ( pArea -> pdfRect.bottom == pRect -> bottom ) )
             continue;

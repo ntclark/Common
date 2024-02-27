@@ -3,12 +3,12 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 8.01.0622 */
+ /* File created by MIDL compiler version 8.01.0628 */
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for pkAPI_VisioLogger.odl:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0622 
-    protocol : all , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
+    protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -36,6 +36,14 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
+#endif
+
+#ifndef DECLSPEC_XFGVIRT
+#if defined(_CONTROL_FLOW_GUARD_XFG)
+#define DECLSPEC_XFGVIRT(base, func) __declspec(xfg_virtual(base, func))
+#else
+#define DECLSPEC_XFGVIRT(base, func)
+#endif
 #endif
 
 /* Forward Declarations */ 
@@ -223,29 +231,36 @@ EXTERN_C const IID IID_IVisioLoggerSignaturePad;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IVisioLoggerSignaturePad * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IVisioLoggerSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IVisioLoggerSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, Initialize)
         HRESULT ( STDMETHODCALLTYPE *Initialize )( 
             IVisioLoggerSignaturePad * This,
             BSTR padName,
             UINT_PTR hwndHost);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, Clear)
         HRESULT ( STDMETHODCALLTYPE *Clear )( 
             IVisioLoggerSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, ClearDisplay)
         HRESULT ( STDMETHODCALLTYPE *ClearDisplay )( 
             IVisioLoggerSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, ShowBitmap)
         HRESULT ( STDMETHODCALLTYPE *ShowBitmap )( 
             IVisioLoggerSignaturePad * This,
             long x,
@@ -255,6 +270,7 @@ EXTERN_C const IID IID_IVisioLoggerSignaturePad;
             UINT_PTR hBitmap,
             long durationInMilliseconds);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, AddBitmap)
         HRESULT ( STDMETHODCALLTYPE *AddBitmap )( 
             IVisioLoggerSignaturePad * This,
             long x,
@@ -264,89 +280,112 @@ EXTERN_C const IID IID_IVisioLoggerSignaturePad;
             UINT_PTR hBitmap,
             long durationInMilliseconds);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, FlushBitmap)
         HRESULT ( STDMETHODCALLTYPE *FlushBitmap )( 
             IVisioLoggerSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, Start)
         HRESULT ( STDMETHODCALLTYPE *Start )( 
             IVisioLoggerSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, Stop)
         HRESULT ( STDMETHODCALLTYPE *Stop )( 
             IVisioLoggerSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, Kill)
         HRESULT ( STDMETHODCALLTYPE *Kill )( 
             IVisioLoggerSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_IsConnected)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_IsConnected )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ long *__MIDL__IVisioLoggerSignaturePad0000);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_HasLCD)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_HasLCD )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ long *__MIDL__IVisioLoggerSignaturePad0001);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_Width)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Width )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ long *pWidth);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, put_Width)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Width )( 
             IVisioLoggerSignaturePad * This,
             /* [in] */ long xSize);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_Height)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Height )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ long *pLCDYSize);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, put_Height)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Height )( 
             IVisioLoggerSignaturePad * This,
             /* [in] */ long ySize);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_PadScaleX)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PadScaleX )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ double *pPadScaleX);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_PadScaleY)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_PadScaleY )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ double *pPadScaleY);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_MenuMode)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_MenuMode )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ long *pResult);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, put_MenuMode)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_MenuMode )( 
             IVisioLoggerSignaturePad * This,
             /* [in] */ long menuMode);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_SmallFontSize)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_SmallFontSize )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ long *pResult);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_MediumFontSize)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_MediumFontSize )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ long *pResult);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_LargeFontSize)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_LargeFontSize )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ long *pResult);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_SmallFontPixels)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_SmallFontPixels )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ long *pResult);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_MediumFontPixels)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_MediumFontPixels )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ long *pResult);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_LargeFontPixels)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_LargeFontPixels )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ long *pResult);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, put_BitDepth)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_BitDepth )( 
             IVisioLoggerSignaturePad * This,
             /* [in] */ long bitDepth);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, ShowProperties)
         HRESULT ( STDMETHODCALLTYPE *ShowProperties )( 
             IVisioLoggerSignaturePad * This);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePad, get_NativeSizeImage)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_NativeSizeImage )( 
             IVisioLoggerSignaturePad * This,
             /* [retval][out] */ UINT_PTR *pImageInPadDimensions);
@@ -513,40 +552,49 @@ EXTERN_C const IID IID_IVisioLoggerSignaturePadEvents;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IVisioLoggerSignaturePadEvents * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IVisioLoggerSignaturePadEvents * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IVisioLoggerSignaturePadEvents * This);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePadEvents, TabletTimerEvent)
         HRESULT ( STDMETHODCALLTYPE *TabletTimerEvent )( 
             IVisioLoggerSignaturePadEvents * This);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePadEvents, PenDown)
         HRESULT ( STDMETHODCALLTYPE *PenDown )( 
             IVisioLoggerSignaturePadEvents * This,
             long x,
             long y);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePadEvents, PenUp)
         HRESULT ( STDMETHODCALLTYPE *PenUp )( 
             IVisioLoggerSignaturePadEvents * This,
             long x,
             long y);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePadEvents, Clicked)
         HRESULT ( STDMETHODCALLTYPE *Clicked )( 
             IVisioLoggerSignaturePadEvents * This);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePadEvents, PenPoint)
         HRESULT ( STDMETHODCALLTYPE *PenPoint )( 
             IVisioLoggerSignaturePadEvents * This,
             long x,
             long y,
             float inkWeight);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerSignaturePadEvents, OptionSelected)
         HRESULT ( STDMETHODCALLTYPE *OptionSelected )( 
             IVisioLoggerSignaturePadEvents * This,
             long optionNumber);
@@ -639,30 +687,37 @@ EXTERN_C const IID IID_IVisioLoggerKioskPad;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IVisioLoggerKioskPad * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IVisioLoggerKioskPad * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IVisioLoggerKioskPad * This);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerKioskPad, Connect)
         HRESULT ( STDMETHODCALLTYPE *Connect )( 
             IVisioLoggerKioskPad * This,
             /* [in] */ BSTR networkNameOrIPAddress);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerKioskPad, HostWidth)
         HRESULT ( STDMETHODCALLTYPE *HostWidth )( 
             IVisioLoggerKioskPad * This,
             /* [in] */ long __MIDL__IVisioLoggerKioskPad0000);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerKioskPad, HostHeight)
         HRESULT ( STDMETHODCALLTYPE *HostHeight )( 
             IVisioLoggerKioskPad * This,
             /* [in] */ long __MIDL__IVisioLoggerKioskPad0001);
         
+        DECLSPEC_XFGVIRT(IVisioLoggerKioskPad, put_Background)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Background )( 
             IVisioLoggerKioskPad * This,
             /* [in] */ UINT_PTR hBitmap);
@@ -737,15 +792,18 @@ EXTERN_C const IID IID_IVisioLoggerKioskPadEvents;
     {
         BEGIN_INTERFACE
         
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
             IVisioLoggerKioskPadEvents * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             IVisioLoggerKioskPadEvents * This);
         
+        DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IVisioLoggerKioskPadEvents * This);
         

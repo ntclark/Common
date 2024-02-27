@@ -9,15 +9,18 @@
     WCHAR szwBitmapDirectory[MAX_PATH];
     WCHAR szwGlobalDataStore[MAX_PATH];
     WCHAR szwDefaultPrinter[MAX_PATH];
+    WCHAR szwDebugDirectory[MAX_PATH];
 
     WCHAR szwModuleName[MAX_PATH];
 #else
     char szProgramDirectory[MAX_PATH];
     char szApplicationDataDirectory[MAX_PATH];
+    char szApplicationSettingsDirectory[MAX_PATH];
     char szUserDirectory[MAX_PATH];
     char szBitmapDirectory[MAX_PATH];
     char szGlobalDataStore[MAX_PATH];
     char szDefaultPrinter[MAX_PATH];
+    char szDebugDirectory[];
 
     char szModuleName[MAX_PATH];
 #endif
@@ -31,15 +34,18 @@
     extern WCHAR szwBitmapDirectory[];
     extern WCHAR szwGlobalDataStore[];
     extern WCHAR szwDefaultPrinter[];
+    extern WCHAR szwDebugDirectory[];
 
     extern WCHAR szwModuleName[];
 #else
     extern char szProgramDirectory[];
     extern char szApplicationDataDirectory[];
+    extern char szApplicationSettingsDirectory[];
     extern char szUserDirectory[];
     extern char szBitmapDirectory[];
     extern char szGlobalDataStore[];
     extern char szDefaultPrinter[];
+    extern char szDebugDirectory[];
 
     extern char szModuleName[];
 #endif

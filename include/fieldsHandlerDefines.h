@@ -17,6 +17,7 @@
    static RECT *prcPotentialFields = NULL;
    static long *pPotentialPageNumbers = NULL;
    static long countPotentialFields = 0L;
+   static long *pPotentialTextStart = NULL;
 
    static RECT keepFields[MAX_TEXT_RECT_COUNT];
    static long keepPageNumbers[MAX_TEXT_RECT_COUNT];
