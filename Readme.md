@@ -2,9 +2,9 @@
 
 I have developed a software building process that I believe minimizes crossups that happen
 when different projects are in different places and there may be a number of "locations" 
-where artifacts may be selected and used by the building tools. In this case, Visual Studio
+where artifacts might be found and used by the building tools. In this case, Visual Studio.
 
-I DO NOT use multiple building tools and frankly, multiple platforms. I target only windows
+I DO NOT use multiple building tools or, frankly, multiple platforms. I target only windows
 and I use MS Visual Studio to build evertyhing that I do.
 
 I have nothing specifically against other tools or platforms, I just don't really have the desire
@@ -13,15 +13,15 @@ that I can produce.
 
 As Spock says, "The needs of the many outweigh the needs of the fiew"
 
-If you want to take my stuff and port it to CMAKE or to Linux, have at it, I hope it works for you
+If you want to take my stuff and port it to CMAKE or to Linux, have at it, I hope it works for you.
 
 ## One and only one place
 
 I've found that the vast majority of confusion and cross artifact utilization occurs because
 people don't decide UP FRONT how to keep it from happening.
 
-Some feel a solution might to be designate a place for common files [^1], but I'm not going to 
-do that. For one thing, those "places" must be referenced *inside* the build tools configuration
+Some feel a solution is to specify a dedicated place for common files [^1], but I'm not going to 
+do that. For one thing, those "places" must be referenced *inside* the build tools' configuration
 files, and that doesn't bode well with me. I won't be telling you (directly) where to put common 
 files and then have to build some sort of installation tool to be sure you actually follow 
 those guidelines.
@@ -30,8 +30,15 @@ But I will tell you indirectly:
 
 ### You must use a specific environment variable to build my projects
 
-I expect you to define, as a permanent environment variable, the GSYSTEM_HOME environment variable that points to that one
-and only one location where all of the common files shall be placed.
+This is, of course, not uncommon. However, in my case, it's the one and only thing you should have to do to build
+my project(s). I try to make it as simple as possible thru and thru. My hope is that, if you clone this repository, and another that
+you are interested in, then you should be able to build out of the box. No "configure", no make, no make install. Granted, I have the 
+luxury of only one platform, and maybe if other's did, their build process would be easy too, I don't know.
+
+I expect you to define, as a permanent environment variable, the GSYSTEM_HOME variable that points to that one
+and only one location where all of the common files shall be placed. Note that "common files" ALSO includes
+built artifacts, that is, the exes and '.dlls. Typically, you should be able to run from that location pretty 
+much for every project.
 
 Once you have done that and have cloned my [common repository](https://github.com/ntclark/common) (this one) into it, 
 *then* any and all my projects *should* build.
@@ -70,6 +77,27 @@ have to tweak any settings in any project. I try to, as much as possible, keep e
 When I find I should have been using a different compile switch, I'll probably change that in the common compiler options 
 file and every project immediately sees the change (though I have to rebuild them all)
 
+## Run as administrator
+
+There, I said it. Many of my projects are COM (Component Object Model) objects that should automatically register on 
+successful build. If you don't want to have dll hell, register your objects every time you build them.
+
+If, for example, your corporate environment won't allow you to run as administrator, you'll need to keep in mind that registration 
+makes it easier to ensure you're working with the latest.
+
+On the other hand, it is much easier than most people may be aware to skip actual OS supplied COM altogether and simply dynamically
+load the apprpriate '.dlls with LoadLibrary. With COM you are by no means required to follow the CoInitialize and CoCreateInstance
+model of accessing your software.
+
+Keep in mind that all built artifacts will be emitted into:
+
+`$(GSYSTE_HOME)\Common\Artifacts\<Platform>\<Configuration`
+
+For example:
+
+"C:\Development\Common\Artifacts\Win32\Release`
+
+asdsuming, for example, GSYSTEM_HOME=C:\Development
 
 [^1]: Common files are the header files important to more than one project, the lib files, the Type Library Files, if any, 
 the generated files, and yes, even the built binary artifacts, that is '.dlls and '.exes
