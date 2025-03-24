@@ -36,9 +36,9 @@ my project(s). I try to make it as simple as possible thru and thru. My hope is 
 you are interested in, then you should be able to build that other one out of the box. No "configure", no make, no make install. Granted, I have the 
 luxury of only one platform, and maybe if other's did, their build process would be easy too, I don't know.
 
-I expect you to define, as a permanent environment variable, the GSYSTEM_HOME variable that points to that one
+I would like you to define, as a permanent environment variable, the GSYSTEM_HOME variable that points to that one
 and only one location where all of the common files shall be placed. Note that "common files" ALSO includes
-built artifacts, that is, the exes and '.dlls. Typically, you should be able to run from that location pretty 
+built artifacts, that is, the '.exes and '.dlls. Typically, you should be able to run from that location pretty 
 much for every project.
 
 As for "that other" repository that you are trying to build - it never ever cares where on your machine you've cloned it 
@@ -64,14 +64,15 @@ on your machine. In other words do your github cloning (at least for this reposi
 I do not specify Visual Studio Version. In 30 years working with Visual Studio, I have never seen definitive proof that VS version
 actually matters. At least to the extent that it's the "latest" or pretty near so. 
 
-A consistent and rock solid software development environment is a very difficult thing to achieve, and is not that commonly 
+A consistent and rock solid software development environment is a difficult thing to achieve, and is not that commonly 
 reached. I believe that this one technique, creating a location and pointing to it with the GSYSTEM_HOME_ environment variable
 is the easiest way to have you get configured as quickly as possible.
 
-**Note**: Visual Studio has what I consider to be  bug. If you navigate properties which involve a disc location, VS
-may include relative paths to that location in the project file. You will need to "unload" the project, manually edit
-the project file, and change those relative locations to your location (hopefully using the $(GSYSTEM_HOME) environment variable
-expansion where appropriate). I assume it's the same moron VS developer who limited the File MRU list to a whopping 10 entries.
+**Note**: Visual Studio has what I consider to be  bug. If you navigate properties which involve a disc location in your 
+GSYSTEM_HOME folder tree, VS may include relative (to the project file) paths to that location in the project file. 
+You will need to "unload" the project, manually edit the project file, and change those relative paths to your location 
+(hopefully using the $(GSYSTEM_HOME) environment variable expansion where appropriate). 
+I assume it's the same moron VS developer who limited the File MRU list to a whopping 10 entries who caused this bug.
 
 If you look at any of my projects in the "Property Manager" pane of Visual Studio, you will see that the very first thing I do
 when creating a new project is to go there, right click on the project name, and add the "Common Options.props" file.
@@ -86,13 +87,13 @@ to
 etc.
 
 Note these common options keep the 4 typical configurations separated from each other. These are Win32, X64 platforms, each with a
-Debug and Release build. You will even find that built artifacts should end up in your common location in the appropriate 
+Debug and Release build. You will even find that built artifacts will end up in your common location in the appropriate 
 sub-folders per these configurations.
 
-I cannot stress enough the power of having an absolutely consistent set of build propertie for every project in or on or of
+I cannot stress enough the power of having an absolutely consistent set of build properties for every project in or on or of
 a system.This is the technique all of my projects use, a consistent set of properties. It is a rare occurrance that I actually
-have to tweak any settings in any project. I try to, as much as possible, keep every project building exactly the same way
-When I find I should have been using a different compile switch, I'll probably change that in the common compiler options 
+have to tweak any settings in any project. I try to, as much as possible, keep every project building exactly the same way.
+When I find I should have been using a different compiler switch, I'll probably change that in the common compiler options 
 file and every project immediately sees the change (though I have to rebuild them all)
 
 ## Run as administrator
@@ -104,16 +105,16 @@ If, for example, your corporate environment won't allow you to run as administra
 makes it easier to ensure you're working with the latest.
 
 On the other hand, it is much easier than most people may be aware to skip actual OS supplied COM altogether and simply dynamically
-load the apprpriate '.dlls with LoadLibrary. With COM you are by no means required to follow the CoInitialize and CoCreateInstance
-model of accessing your software.
+load the appropriate '.dlls with LoadLibrary. With COM you are by no means required to follow the CoInitialize and CoCreateInstance
+model of accessing your software artifacts.
 
 Keep in mind that all built artifacts will be emitted into:
 
-`$(GSYSTE_HOME)\Common\Artifacts\<Platform>\<Configuration`
+&nbsp;&nbsp;&nbsp;&nbsp;`$(GSYSTE_HOME)\Common\Artifacts\<Platform>\<Configuration`
 
 For example:
 
-"C:\Development\Common\Artifacts\Win32\Release`
+&nbsp;&nbsp;&nbsp;&nbsp;"C:\Development\Common\Artifacts\Win32\Release`
 
 asdsuming, for example, GSYSTEM_HOME=C:\Development
 
