@@ -37,6 +37,13 @@
       ADDITIONAL_INITIALIZATION
 #endif
 
+      char szTemp[256];
+      LoadString(hModuleResources,IDDI_DISPOSITION_SAVE_MONTHYEAR,szTemp,256);
+      SetDlgItemText(hwnd,IDDI_DISPOSITION_SAVE_MONTHYEAR,szTemp);
+
+      LoadString(hModuleResources,IDDI_DISPOSITION_SAVE_DAYMONTH,szTemp,256);
+      SetDlgItemText(hwnd,IDDI_DISPOSITION_SAVE_DAYMONTH,szTemp);
+
       }
       return LRESULT(FALSE);
 

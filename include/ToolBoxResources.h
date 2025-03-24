@@ -3,6 +3,7 @@
 
 #define IDD_PRINTER_DEVICE_PAGE     400
 #define IDD_DISPOSITION_MULTI_SIGN_PROPERTIES   1100
+#define IDD_DISPOSITION_EMAIL       1000
 
 #define IDC_PROCESS_NAME         800
 #define IDC_NEXT                 801
@@ -73,7 +74,7 @@
 
 #define IDDI_EVALUATION_MESSAGE                 974
 
-#define IDDI_ABOUT_OK                          1001
+//#define IDDI_ABOUT_OK                          1001
 #define IDDI_ABOUT_TEXT_0                      1002
 #define IDDI_ABOUT_TEXT_1                      1003
 #define IDDI_ABOUT_TEXT_2                      1004
@@ -111,7 +112,7 @@
 #define IDS_WELCOME              25
 #define IDS_BAD_READER           26
 #define IDS_CURSIVISION_CONTROL  27
-#define IDS_PAD_NOT_CONNECTED    28
+//#define IDS_PAD_NOT_CONNECTED    28
 
 #define WM_USER_MIN                 (WM_USER + 101)
 #define WM_FINISH_SIGNATURE_PLAY    (WM_USER + 101)

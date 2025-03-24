@@ -112,7 +112,29 @@
    return TRUE;
    }
  
+
    int MxM(double *a,double *b,double *c) {
+   double d[3][3];
+   int i,j,k;
+   for ( i = 0; i < 3; i++ ) {
+      for ( j = 0; j < 3; j++ ) {
+         d[i][j] = 0.0;
+         for ( k = 0; k < 3; k++ ) {
+            d[i][j] = d[i][j] + a[i * 3 + k] * b[k * 3 + j];
+         }
+      }
+   }
+   for ( i = 0; i < 3; i++ ) {
+      for ( j = 0; j < 3; j++ ) {
+         c[i * 3 + j] = d[i][j];
+      }
+   }
+   return TRUE;
+   }
+ 
+
+   // This should be same as above
+   int MxM_old(double *a,double *b,double *c) {
    double d[9];
    int i,j,k;
    for ( i = 0; i < 3; i++ ) {
@@ -702,6 +724,44 @@
    }
 
 
+    double spvDet2x2(double a1, double a2, double b1, double b2) {
+    return a1 * b2 - b1 * a2;
+    }
+
+
+    int Mx3Inverse(double *pSource,double *pTarget) {
+
+    double adj[][3]{ {0.0,0.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0}};
+    double a[3][3];
+
+    memcpy(a,pSource,sizeof(a));
+
+    adj[0][0] =  spvDet2x2(a[1][1], a[1][2], a[2][1], a[2][2]);
+    adj[0][1] = -spvDet2x2(a[0][1], a[0][2], a[2][1], a[2][2]);
+    adj[0][2] =  spvDet2x2(a[0][1], a[0][2], a[1][1], a[1][2]);
+
+    adj[1][0] = -spvDet2x2(a[1][0], a[1][2], a[2][0], a[2][2]);
+    adj[1][1] =  spvDet2x2(a[0][0], a[0][2], a[2][0], a[2][2]);
+    adj[1][2] = -spvDet2x2(a[0][0], a[0][2], a[1][0], a[1][2]);
+
+    adj[2][0] =  spvDet2x2(a[1][0], a[1][1], a[2][0], a[2][1]);
+    adj[2][1] = -spvDet2x2(a[0][0], a[0][1], a[2][0], a[2][1]);
+    adj[2][2] =  spvDet2x2(a[0][0], a[0][1], a[1][0], a[1][1]);
+
+    double det = (adj[0][0] * a[0][0]) + (adj[0][1] * a[1][0]) + (adj[0][2] * a[2][0]);
+
+    for ( long k = 0; k < 3; k++ )
+        for ( long j = 0; j < 3; j++ )
+            a[k][j] = (0.0 == det) ? 0.0 : adj[k][j] / det;
+
+    memcpy(pTarget,a,sizeof(a));
+
+    return 0;
+    }
+
+
+    // This may not be working, the Mx3 version was not working and
+    // was replaced by the above
    int Mx4Inverse(double *sourceMatrix,double *targetMatrix) {
 
    double a[4][4];

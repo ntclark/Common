@@ -109,7 +109,7 @@ void setSiblingsSize(HWND hwndParent,HWND hwndChild,SIZEL *pSize);
 long HashCode(char *pszInput);
 long HashCode(WCHAR *pszwInput);
 
-void ASCIIHexDecodeInPlace(char *pszInput);
+long ASCIIHexDecodeInPlace(char *pszInput);
 void ASCIIHexEncode(char *pszInput,long valueSize,char **ppszResult);
 void ASCIIHexEncodeSpecial(char *pszInput,long valueSize,char **ppszResult);
 void ASCIIHexEncodeToString(char *pszInput,long valueSize,char *pszString,long cbString);

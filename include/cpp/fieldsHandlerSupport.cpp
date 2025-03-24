@@ -38,6 +38,21 @@
    case WM_INITDIALOG: {
       SetWindowLongPtr(hwnd,GWLP_USERDATA,(long)lParam);
       fieldIndex = (long)lParam;
+
+      char szTranslation[64];
+
+      LoadString(hModuleResources,IDD_DATA_FIELDS_LABEL + 16384,szTranslation,64);
+      SetDlgItemText(hwnd,IDD_DATA_FIELDS_LABEL + 16384,szTranslation);
+
+      LoadString(hModuleResources,IDDI_FIELDS_VALUE_REQUIRED,szTranslation,64);
+      SetDlgItemText(hwnd,IDDI_FIELDS_VALUE_REQUIRED,szTranslation);
+
+      LoadString(hModuleResources,IDDI_FIELDS_LABEL_OK,szTranslation,64);
+      SetDlgItemText(hwnd,IDDI_FIELDS_LABEL_OK,szTranslation);
+
+      LoadString(hModuleResources,IDDI_FIELDS_LABEL_CANCEL,szTranslation,64);
+      SetDlgItemText(hwnd,IDDI_FIELDS_LABEL_CANCEL,szTranslation);
+
       POINT ptlMouse;
       GetCursorPos(&ptlMouse);
       SetWindowPos(hwnd,HWND_TOP,ptlMouse.x - 64,ptlMouse.y - 32,0,0,SWP_NOSIZE);

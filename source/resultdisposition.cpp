@@ -4,7 +4,7 @@
 #include "resultDisposition.h"
 
     resultDisposition::resultDisposition() { 
-   
+
     memset(this,0,sizeof(resultDisposition)); 
 
 #ifdef SHOW_PROPERTIES_ON_STARTUP
@@ -35,7 +35,7 @@
     strcpy(szFileStorageDirectory,szUserDirectory);
 #endif
 
-    strcpy(szFileSuffix,"-signed"); 
+    sprintf_s<MAX_PATH>(szFileSuffix,"-signed");
 
     maximumSignatures = 1L;
 

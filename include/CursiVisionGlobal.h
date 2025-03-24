@@ -60,6 +60,14 @@
 #define MAKE_IMAGE_COMPARISONS
 #endif
 
+#ifdef BUILD_SPONSOR
+#define ENGLISH_DLL "enTU.dll"
+#define SPANISH_DLL "spTU.dll"
+#else
+#define ENGLISH_DLL "en.dll"
+#define SPANISH_DLL "sp.dll"
+#endif
+
 #define IMAGE_FRAME_SIZE_PIXELS 128
 
 #define USE_DIB_BITMAPS TRUE

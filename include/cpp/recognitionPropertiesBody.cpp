@@ -23,10 +23,10 @@
         EnableWindow(GetDlgItem(hwnd,IDDI_CV_RECOGNITION_INSTRUCTIONS),pObject -> recognizeByName ? FALSE : TRUE);
         EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_RESET),pObject -> recognizeByName ? FALSE : TRUE);
 
-        LoadString(hModule,IDDI_CV_RECOGNITION_INSTRUCTIONS,szTemp,256);
+        LoadString(hModuleResources,IDDI_CV_RECOGNITION_INSTRUCTIONS,szTemp,256);
         SetDlgItemText(hwnd,IDDI_CV_RECOGNITION_INSTRUCTIONS,szTemp);
 
-        LoadString(hModule,IDDI_CV_LIMIT_REACHED,szMaxSelectionsReached,128);
+        LoadString(hModuleResources,IDDI_CV_LIMIT_REACHED,szMaxSelectionsReached,128);
 
         memcpy(selections,pObject -> expectedRects,sizeof(pObject -> expectedRects));
         memcpy(textSelections,pObject -> expectedText,sizeof(pObject -> expectedText));
@@ -510,7 +510,7 @@
             LOGFONT fontInfo;
             GetObject(hFont,sizeof(LOGFONT),&fontInfo);
 
-            LoadString(hModule,(UINT)pToolTipDispInfo -> lParam,szCurrentToolTipText,1024);
+            LoadString(hModuleResources,(UINT)pToolTipDispInfo -> lParam,szCurrentToolTipText,1024);
 
             if ( fontInfo.lfHeight )
                 SendMessage(pNotifyHeader -> hwndFrom,TTM_SETMAXTIPWIDTH,0,strlen(szCurrentToolTipText) * abs(fontInfo.lfHeight) / 4);

@@ -4,6 +4,7 @@
 #include <list>
 
 #include "PdfEnabler_i.h"
+#include "parsing.h"
 
 #define ALLOC_CONNECTIONS     16
 

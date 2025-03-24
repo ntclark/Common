@@ -18,8 +18,8 @@
 
         hwndInstructions = GetDlgItem(hwnd,IDDI_CV_LOCATIONS_INSTRUCTIONS);
 
-        char szInstructions[MAX_PATH];
-        LoadString(hModule,IDDI_CV_LOCATIONS_INSTRUCTIONS,szInstructions,MAX_PATH);
+        char szInstructions[1024];
+        LoadString(hModuleResources,IDDI_CV_LOCATIONS_INSTRUCTIONS,szInstructions,1024);
         SetWindowText(hwndInstructions,szInstructions);
 
         DOODLE_PROPERTIES_PTR
@@ -30,23 +30,24 @@
         countLocations = pDoodleOptionProps -> countRects;
         entryDoRemember = pDoodleOptionProps -> processingDisposition.doRemember;
 
-        SendDlgItemMessage(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_LEARN,BM_SETCHECK,0 == countLocations ? BST_CHECKED : BST_UNCHECKED,0L);
+        SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_SETCHECK,0 == countLocations ? BST_CHECKED : BST_UNCHECKED,0L);
 
         if ( 0 == countLocations ) 
             doLearn = true;
 
-        SendDlgItemMessage(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON,BM_SETCHECK,pDoodleOptionProps -> processingDisposition.doContinuousDoodle ? BST_CHECKED : BST_UNCHECKED,0L);
-        SendDlgItemMessage(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF,BM_SETCHECK,pDoodleOptionProps -> processingDisposition.doContinuousDoodle ? BST_UNCHECKED : BST_CHECKED,0L);
-        SendDlgItemMessage(hwnd,IDDI_DISPOSITION_REMEMBER,BM_SETCHECK,pDoodleOptionProps -> processingDisposition.doRemember ? BST_CHECKED : BST_UNCHECKED,0L);
+        SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,BM_SETCHECK,pDoodleOptionProps -> processingDisposition.doContinuousDoodle ? BST_CHECKED : BST_UNCHECKED,0L);
+        SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,BM_SETCHECK,pDoodleOptionProps -> processingDisposition.doContinuousDoodle ? BST_UNCHECKED : BST_CHECKED,0L);
+        SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER,BM_SETCHECK,pDoodleOptionProps -> processingDisposition.doRemember ? BST_CHECKED : BST_UNCHECKED,0L);
 
         commitChanges = false;
 
         HRESULT rc = CoCreateInstance(CLSID_CursiVisionSignaturePad,NULL,CLSCTX_ALL,IID_ISignaturePad,reinterpret_cast<void **>(&pSignaturePad));
 
-        if ( ! pSignaturePad ) 
-            MessageBox(hwnd,"There is no signature pad selected for CursiVision to use.\n\nTherefore, CursiVision does not know the size of the signature pad "
-                                "and is not able to assist in defining signature locations.","Note",MB_ICONEXCLAMATION);
-        else
+        if ( ! pSignaturePad ) {
+            char szMessage[1024];
+            LoadString(hModuleResources, IDD_SIGNING_LOCATIONS + 16384,szMessage,1024);
+            MessageBox(hwnd,szMessage,"Note",MB_ICONEXCLAMATION);
+        } else
             pSignaturePad -> Load(NULL,NULL,NULL);
 
 #ifdef ADDITIONAL_INITIALIZATION
@@ -54,6 +55,14 @@
 #endif
 
         setLearnControls(pObject,hwnd);
+
+        long resourceIds[] = {IDDI_CV_LOCATIONS_RESET,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,
+                                IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,
+                                IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER};
+        for ( long k = 0; k < sizeof(resourceIds) / sizeof(long); k++ ) {
+            LoadString(hModuleResources,resourceIds[k],szInstructions,1024);
+            SetDlgItemText(hwnd,resourceIds[k],szInstructions);
+        }
 
         }
         return LRESULT(FALSE);
@@ -128,7 +137,7 @@
         if ( -1L == candidateRectIndex ) 
             break;
 
-        RECT rTemp= visibleRects[inverseVisibleRectIndexes[candidateRectIndex]];
+        RECT rTemp = visibleRects[inverseVisibleRectIndexes[candidateRectIndex]];
 
         pCurrentLocations[candidateRectIndex].documentRect = rTemp;
 
@@ -172,10 +181,14 @@
         menuItem.fType = MFT_STRING;
         menuItem.fState = MFS_ENABLED;
 
+        char szCommand[32];
+
         if ( -1L == candidateRectIndex ) {
 
+            LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16385,szCommand,32);
+
             menuItem.wID = IDDI_SIGNING_LOCATIONS_NEW;
-            menuItem.dwTypeData = "Add";
+            menuItem.dwTypeData = szCommand;
             menuItem.cch = (DWORD)strlen(menuItem.dwTypeData);
             menuItem.fState = MFS_ENABLED;
 
@@ -183,8 +196,10 @@
 
             if ( ! ( -1L == copySourceRectIndex ) ) {
 
+                LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16386,szCommand,32);
+
                 menuItem.wID = IDDI_SIGNING_LOCATIONS_PASTE;
-                menuItem.dwTypeData = "Paste";
+                menuItem.dwTypeData = szCommand;
                 menuItem.cch = (DWORD)strlen(menuItem.dwTypeData);
                 menuItem.fState = MFS_ENABLED;
 
@@ -201,8 +216,10 @@
 
         if ( countLocations > 1 ) {
 
+            LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16387,szCommand,32);
+
             menuItem.wID = IDDI_SIGNING_LOCATIONS_ORDER;
-            menuItem.dwTypeData = "Set order";
+            menuItem.dwTypeData = szCommand;
             menuItem.cch = (DWORD)strlen(menuItem.dwTypeData);
             menuItem.fState = MFS_ENABLED;
 
@@ -225,22 +242,28 @@
 
         }
 
+        LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16388,szCommand,32);
+
         menuItem.wID = IDDI_SIGNING_LOCATIONS_DELETE;
-        menuItem.dwTypeData = "Delete";
+        menuItem.dwTypeData = szCommand;
         menuItem.cch = (DWORD)strlen(menuItem.dwTypeData);
         menuItem.fState = MFS_ENABLED;
 
         InsertMenuItem(hOptionsMenu,nextIndex++,MF_BYPOSITION,&menuItem);
+
+        LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16389,szCommand,32);
 
         menuItem.wID = IDDI_SIGNING_LOCATIONS_CUT;
-        menuItem.dwTypeData = "Cut";
+        menuItem.dwTypeData = szCommand;
         menuItem.cch = (DWORD)strlen(menuItem.dwTypeData);
         menuItem.fState = MFS_ENABLED;
 
         InsertMenuItem(hOptionsMenu,nextIndex++,MF_BYPOSITION,&menuItem);
 
+        LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16390,szCommand,32);
+
         menuItem.wID = IDDI_SIGNING_LOCATIONS_COPY;
-        menuItem.dwTypeData = "Copy";
+        menuItem.dwTypeData = szCommand;
         menuItem.cch = (DWORD)strlen(menuItem.dwTypeData);
         menuItem.fState = MFS_ENABLED;
 
@@ -300,6 +323,8 @@
 
             didDrag = true;
 
+            char szFormat[1024];
+
             if (-1L < cornerGrabIndex ) {
 
                 // Dragging resize
@@ -343,7 +368,9 @@
                 POINTFLOAT sizeLocation;
                 pTemplateDocumentUI -> GetPDFLocation(&visibleRects[sourceIndex],NULL,&sizeLocation);
 
-                sprintf_s<256>(szMessage,"The signature is %4.2lf inches wide and %4.2lf inches high",sizeLocation.x,sizeLocation.y);
+                LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16391,szFormat,1024);
+
+                sprintf_s<256>(szMessage,szFormat,sizeLocation.x,sizeLocation.y);
 
             } else {
 
@@ -358,7 +385,9 @@
                 POINTFLOAT ptfLocation;
                 pTemplateDocumentUI -> GetPDFLocation(&visibleRects[sourceIndex],&ptfLocation,NULL);
 
-                sprintf_s<256>(szMessage,"The top left of the signature is at: %4.2lf inches across and %4.2lf inches down",ptfLocation.x,ptfLocation.y);
+                LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16392,szFormat,1024);
+
+                sprintf_s<256>(szMessage,szFormat,ptfLocation.x,ptfLocation.y);
 
             }
 
@@ -408,11 +437,17 @@
 
             POINTFLOAT ptlLocation;
             pTemplateDocumentUI -> GetPDFLocation(&visibleRects[visibleRectIndexes[candidateRectIndex]],&ptlLocation,NULL);
-            sprintf_s<256>(szMessage,"The top left of the signature is at: %4.2lf inches across and %4.2lf inches down",ptlLocation.x,ptlLocation.y);
+
+            char szFormat[256];
+            LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16392,szFormat,256);
+
+            sprintf_s<256>(szMessage,szFormat,ptlLocation.x,ptlLocation.y);
 
             SetDlgItemText(hwnd,IDDI_CV_LOCATIONS_ADDITIONAL_INFO,szMessage);
 
-            SetWindowText(hwndInstructions,"Right click for Options, Left click to move\rResize by dragging corners.");
+            LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16393,szFormat,256);
+
+            SetWindowText(hwndInstructions,szFormat);
 
             noteEmitted = true;
 
@@ -440,7 +475,9 @@
         if ( -1L == newCandidateRectIndex ) {
             if ( -1L < candidateRectIndex )
                 DRAW_COLORED_BOX_IN_PIXELS_NOCLIP_NOHIDEABLE(pTemplateDocumentUI,PS_SOLID,DB_BLACK,(&visibleRects[visibleRectIndexes[candidateRectIndex]]),BORDER_WEIGHT)
-            SetWindowText(hwndInstructions,"Right click for Options");
+            char szCommand[64];
+            LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16394,szCommand,64);
+            SetWindowText(hwndInstructions,szCommand);
             SetDlgItemText(hwnd,IDDI_CV_LOCATIONS_ADDITIONAL_INFO,"");
             candidateRectIndex = -1L;
         }
@@ -474,8 +511,9 @@
 
         switch ( LOWORD(wParam ) ) {
 
-        case IDDI_DISPOSITION_CONTINUOUS_DOODLE_LEARN: {
-            doLearn = (BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_LEARN,BM_GETCHECK,0L,0L));
+        case IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN: {
+// This autocheckbox is acting funny, it won't stay unchecked
+            doLearn = (BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_GETCHECK,0L,0L));
             }
             break;
 
@@ -595,14 +633,18 @@
             deleteSourceRectIndex = candidateRectIndex;
             candidateRectIndex = -1L;
             DRAW_COLORED_BOX_IN_POINTS(pTemplateDocumentUI,PS_SOLID,DB_WHITE,&visibleRects[copySourceRectIndex],BORDER_WEIGHT)
-            SetWindowText(hwndInstructions,"Move to the destination, right click and choose Paste");
+            char szCommand[128];
+            LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16395,szCommand,128);
+            SetWindowText(hwndInstructions,szCommand);
             }
             break;
 
         case IDDI_SIGNING_LOCATIONS_COPY: {
             copySourceRectIndex = candidateRectIndex;
             candidateRectIndex = -1L;
-            SetWindowText(hwndInstructions,"Move to the destination, right click and choose Paste");
+            char szCommand[128];
+            LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16395,szCommand,128);
+            SetWindowText(hwndInstructions,szCommand);
             }
             break;
 
@@ -687,7 +729,7 @@
         if ( doLearn ) {
 
             pDoodleOptionProps -> processingDisposition.doContinuousDoodle = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON,BM_GETCHECK,0L,0L);
-            pDoodleOptionProps -> processingDisposition.doRemember = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_DISPOSITION_REMEMBER,BM_GETCHECK,0L,0L);;
+            pDoodleOptionProps -> processingDisposition.doRemember = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER,BM_GETCHECK,0L,0L);
 
         } else {
 

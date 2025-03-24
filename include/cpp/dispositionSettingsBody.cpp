@@ -44,18 +44,36 @@
          p -> saveIn = false;
       }
 
+      if ( NULL == hwndToolTips )
+         hwndToolTips = CreateWindowEx(NULL, TOOLTIPS_CLASS, NULL,WS_POPUP | TTS_NOPREFIX | TTS_ALWAYSTIP | TTS_BALLOON,CW_USEDEFAULT, CW_USEDEFAULT,
+                                                   CW_USEDEFAULT,CW_USEDEFAULT,hwnd,NULL,hModule,NULL);
+
+      long idToolTips[] = {
+            IDDI_DISPOSITION_APPEND,IDDI_DISPOSITION_SAVE,IDDI_DISPOSITION_REPLACE,IDDI_DISPOSITION_SEQUENCE,
+            IDDI_DISPOSITION_SAVE_MY_DOCUMENTS,IDDI_DISPOSITION_SAVE_BY_ORIGINAL,IDDI_DISPOSITION_SAVE_IN,
+            IDDI_DISPOSITION_STAGE_DEFAULTS,IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES,IDDI_DISPOSITION_OPEN_LAST_DOCUMENT,
+            IDDI_DISPLAY_WAITING_SHOW,IDDI_DISPOSITION_RETAIN_SIGNED,IDDI_DISPOSITION_REOPEN_ORIGINAL,IDDI_DISPOSITION_CLOSE_DOCUMENT,
+            IDDI_DISPOSITION_KEEP_RUNNING_AND_AWAIT_JOB,IDDI_DISPOSITION_EXIT,IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF,
+            IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON,IDDI_DISPOSITION_REMEMBER,IDDI_DISPOSITION_MORE,IDDI_DISPOSITION_POST_PROCESSING_LABEL,
+            IDDI_DISPOSITION_RESET_LABEL,IDDI_DISPOSITION_RESET_LABEL_SPECIFIC_DOC,IDDI_DISPOSITION_SUFFIX,
+            IDDI_DISPOSITION_APPEND_DATE,IDDI_DISPOSITION_APPEND_TIME,IDDI_DISPOSITION_SHOW_PROPERTIES,
+            IDDI_DISPOSITION_AWAIT_JOB_MINIMIZE,IDDI_DISPOSITION_SAVE_LOCATION};
+
+      for ( long k = 0; k < sizeof(idToolTips) / sizeof(long); k++ ) 
+         REGISTER_TOOLTIP(hwnd,hModuleResources,GetDlgItem(hwnd,idToolTips[k]))
+
       if ( ! p -> isGlobalDisposition ) {
 
-         LoadString(hModule,IDDI_HEADER_TEXT_A,szTemp,128);
+         LoadString(hModuleResources,IDDI_HEADER_TEXT_A,szTemp,128);
          SetDlgItemText(hwnd,IDDI_HEADER_TEXT,szTemp);
 
 #ifdef CURSIVISION_SERVICES_INTERFACE
          RECT rcText,rcDialog,rcLast;
          GetWindowRect(hwnd,&rcDialog);
-         LoadString(hModule,IDDI_DISPOSITION_RESET_LABEL,szTemp,1024);
+         LoadString(hModuleResources,IDDI_DISPOSITION_RESET_LABEL,szTemp,1024);
          SetWindowText(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET_LABEL),szTemp);
          if ( FALSE == CURSIVISION_SERVICES_INTERFACE -> MayShowDispositionSettings() ) {
-            LoadString(hModule,IDDI_DISPOSITION_POST_PROCESSING_LABEL,szTemp,1024);
+            LoadString(hModuleResources,IDDI_DISPOSITION_POST_PROCESSING_LABEL,szTemp,1024);
             SetWindowText(GetDlgItem(hwnd,IDDI_DISPOSITION_POST_PROCESSING_LABEL),szTemp);
             GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET),&rcText);
             SetWindowPos(GetDlgItem(hwnd,IDDI_DISPOSITION_POST_PROCESSING_LABEL),HWND_TOP,rcText.left - rcDialog.left,rcText.bottom - rcDialog.top + 20,rcDialog.right - rcDialog.left - 64,48,0L);
@@ -81,9 +99,12 @@
             GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET),&rcText);
             SetWindowPos(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET),HWND_TOP,rcText.left - rcDialog.left,rcLast.bottom - rcDialog.top + 8,0,0,SWP_NOSIZE);
          }
+#else
+         LoadString(hModuleResources,IDDI_DISPOSITION_RESET_LABEL_SPECIFIC_DOC,szTemp,1024);
+         SetWindowText(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET_LABEL),szTemp);
 #endif
 
-         long otherIDs[] = {IDDI_DISPOSITION_RETAIN_SIGNED,IDDI_DISPOSITION_REOPEN_ORIGINAL,
+         long otherIDs[] = {IDDI_DISPOSITION_POST_PROCESSING_LABEL,IDDI_DISPOSITION_RETAIN_SIGNED,IDDI_DISPOSITION_REOPEN_ORIGINAL,
                              IDDI_DISPOSITION_CLOSE_DOCUMENT,IDDI_DISPOSITION_KEEP_RUNNING_AND_AWAIT_JOB,IDDI_DISPOSITION_AWAIT_JOB_CLOSE,IDDI_DISPOSITION_AWAIT_JOB_MINIMIZE,IDDI_DISPOSITION_EXIT};
 
          for ( long k = 0; k < sizeof(otherIDs) / sizeof(long); k++ ) 
@@ -105,12 +126,15 @@
 #endif
 
       } else {
-         LoadString(hModule,IDDI_HEADER_TEXT_B,szTemp,128);
+         LoadString(hModuleResources,IDDI_HEADER_TEXT_B,szTemp,128);
          SetDlgItemText(hwnd,IDDI_HEADER_TEXT,szTemp);
-         LoadString(hModule,IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL,szTemp,256);
+
+         LoadString(hModuleResources,IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL,szTemp,256);
          SetDlgItemText(hwnd,IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL,szTemp);
+
          DestroyWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_RESET));
-         LoadString(hModule,IDDI_DISPLAY_WAITING_SHOW_LABEL,szTemp,256);
+
+         LoadString(hModuleResources,IDDI_DISPLAY_WAITING_SHOW_LABEL,szTemp,256);
          SetDlgItemText(hwnd,IDDI_DISPLAY_WAITING_SHOW,szTemp);
       }
 
@@ -126,15 +150,61 @@
 
       GetWindowRect(GetDlgItem(hwnd,IDDI_DISPOSITION_SHOW_PROPERTIES),&rcBottom);
 
+      ShowWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_STAGE_DEFAULTS),SW_HIDE);
+
 #ifdef ADDITIONAL_INITIALIZATION
       ADDITIONAL_INITIALIZATION
 #endif
+
+      long resourceIds[] = {
+            IDDI_DISPOSITION_APPEND,
+            IDDI_DISPOSITION_SUFFIX_LABEL,
+            IDDI_DISPOSITION_APPEND_DATE,
+            IDDI_DISPOSITION_APPEND_TIME,
+            IDDI_DISPOSITION_SAVE,
+            IDDI_DISPOSITION_REPLACE,
+            IDDI_DISPOSITION_SEQUENCE,
+            IDDI_DISPOSITION_MORE,
+            IDDI_DISPOSITION_SAVE_IN_LABEL,
+            IDDI_DISPOSITION_SAVE_MY_DOCUMENTS,
+            IDDI_DISPOSITION_SAVE_BY_ORIGINAL,
+            IDDI_DISPOSITION_SAVE_IN,
+            IDDI_DISPOSITION_RESET ,
+            IDDI_DISPOSITION_RESET_LABEL,
+            IDDI_DISPOSITION_POST_PROCESSING_LABEL,
+            IDDI_DISPOSITION_RETAIN_SIGNED,
+            IDDI_DISPOSITION_REOPEN_ORIGINAL,
+            IDDI_DISPOSITION_CLOSE_DOCUMENT,
+            IDDI_DISPOSITION_KEEP_RUNNING_AND_AWAIT_JOB,
+            IDDI_DISPOSITION_AWAIT_JOB_CLOSE,
+            IDDI_DISPOSITION_AWAIT_JOB_MINIMIZE,
+            IDDI_DISPOSITION_EXIT,
+            IDDI_DISPOSITION_CONTINUOUS_DOODLE_LABEL,
+            IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF,
+            IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON,
+            IDDI_DISPOSITION_REMEMBER,
+            IDDI_DISPLAY_WAITING_SHOW,
+            IDDI_SIGNATURE_REPLICATION_LABEL,
+            IDDI_SIGNATURE_REPLICATION_ALLOW,
+            IDDI_SIGNATURE_REPLICATION_DISALLOW,
+            IDDI_SIGNATURE_REPLICATION_DEFAULT_YES,
+            IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL,
+            IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES,
+            IDDI_DISPOSITION_OPEN_LAST_DOCUMENT,
+            IDDI_DISPOSITION_USE_LARGEST_VERTICAL_RES,
+            IDDI_DISPOSITION_STAGE_DEFAULTS
+      };
+
+      char szString[256];
+      for ( long k = 0; k < sizeof(resourceIds) / sizeof(long); k++ ) {
+         LoadString(hModuleResources,resourceIds[k],szString,256);
+         SetDlgItemText(hwnd,resourceIds[k],szString);
+      }
 
       }
       return LRESULT(FALSE);
 
 #ifdef OBJECT_WITH_PROPERTIES
-
    case WM_DESTROY: {
 #ifdef ADDITIONAL_DESTROY  
        ADDITIONAL_DESTROY
@@ -142,7 +212,6 @@
       }
       break;
 #endif
-
 
    case WM_COMMAND: {
 
@@ -217,25 +286,24 @@
          }
          break;
 
-#ifdef REGISTER_TOOLTIP
       case TTN_GETDISPINFO: {
-         NMTTDISPINFO *pToolTipDispInfo;
-         pToolTipDispInfo = (LPNMTTDISPINFO)pNotifyHeader;
-         pToolTipDispInfo -> lpszText = szCurrentToolTipText;
-         HFONT hFont = (HFONT)SendMessage(hwndToolTips,WM_GETFONT,0L,0L);
-         LOGFONT fontInfo;
-         GetObject(hFont,sizeof(LOGFONT),&fontInfo);
-         LoadString(hModule,(UINT)pToolTipDispInfo -> lParam,szCurrentToolTipText,1024);
-         if ( fontInfo.lfHeight )
-            SendMessage(pNotifyHeader -> hwndFrom,TTM_SETMAXTIPWIDTH,0,strlen(szCurrentToolTipText) * abs(fontInfo.lfHeight) / 4);
-         else
-            SendMessage(pNotifyHeader -> hwndFrom,TTM_SETMAXTIPWIDTH,0,256);
+
+         NMTTDISPINFO *pInfo = (NMTTDISPINFO *)lParam;
+
+         if ( ( (HWND)pInfo -> lParam == hwnd ) ) 
+            return (LRESULT)FALSE;
+
+         long controlId = (long)GetWindowLongPtr((HWND)pInfo -> lParam,GWLP_ID);
+         LoadString(hModuleResources,controlId + 8192,szCurrentToolTipText,1024);
+         pInfo -> lpszText = szCurrentToolTipText;
+
          }
-         return 0;
-#endif
+         break;
+
+      default:
+         break;
 
       }
-
       }
       break;
 

@@ -1,0 +1,379 @@
+
+IDD_GLOBAL_TEMPLATE_MANAGER DIALOGEX 0,0,400,400
+STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+    AUTOCHECKBOX "Allow changes by Non-Administrative users?", IDDI_GT_MANAGER_ALLOW_NON_ADMIN_CHANGES, 8, 8, 256, 12
+
+    LTEXT "Changes are disabled because Admin privileges are required to change profile packages", IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES, 8, 8, 380, 12
+
+    LTEXT "Available Profile Bundles",IDDI_GT_MANAGER_BUNDLE_LIST_LABEL,                8, 20, 256, 12
+
+    COMBOBOX    IDDI_GT_MANAGER_BUNDLE_LIST,                                            8, 32, 96, 128, CBS_DROPDOWNLIST | WS_TABSTOP
+
+    LTEXT "Available Profile Recognition Packages from the selected bundle",IDDI_GT_MANAGER_PACKAGE_LIST_LABEL,  8, 54, 256, 12
+
+    PUSHBUTTON "All", IDDI_GT_MANAGER_ALL_PACKAGES,                                      8, 68, 32, 16
+    PUSHBUTTON "None", IDDI_GT_MANAGER_NO_PACKAGES,                                     44, 68, 32, 16
+    PUSHBUTTON "Stage Updates", IDDI_GT_MANAGER_STAGE_PACKAGES                          80, 68, 96, 16
+
+    CONTROL "", IDDI_GT_MANAGER_PACKAGE_LIST, WC_LISTVIEWA, LVS_REPORT | LVS_OWNERDRAWFIXED | LVS_NOSORTHEADER | WS_CHILD, 8, 88, 198, 256, WS_EX_CLIENTEDGE
+
+    LTEXT "Save location and toolbox settings", IDDI_GT_MANAGER_PROFILE_RESET_LABEL,     8,  8, 256, 12
+    PUSHBUTTON "Set", IDDI_GT_MANAGER_PROFILE_SETTINGS,                                  8,  8, 48, 16
+    PUSHBUTTON "Reset All", IDDI_GT_MANAGER_PROFILE_RESET,                              64,  8, 64, 16
+
+END
+
+
+IDD_GLOBAL_TEMPLATE_IMAGE_MANAGER DIALOGEX 0,0,400, 256
+STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+    LTEXT "", IDDI_GT_IMAGE_MANAGER_INST_SIGAREA,       8, 8, 256,36
+
+    RTEXT "", IDDI_GT_IMAGE_MANAGER_SIGAREA_LABELW,     8, 8, 32, 12
+    EDITTEXT    IDDI_GT_IMAGE_MANAGER_SIGAREA_WIDTH,    8, 8, 32, 14, WS_TABSTOP | ES_CENTER
+    CONTROL "", IDDI_GT_IMAGE_MANAGER_SIGAREA_SPINLR,  UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_HORZ | UDS_ARROWKEYS, 
+                                                        8, 8, 20, 10 
+
+    RTEXT "", IDDI_GT_IMAGE_MANAGER_SIGAREA_LABELH,     8, 8, 32, 12
+    EDITTEXT    IDDI_GT_IMAGE_MANAGER_SIGAREA_HEIGHT,   8, 8, 32, 14, ES_CENTER
+    CONTROL "", IDDI_GT_IMAGE_MANAGER_SIGAREA_SPINUP,  UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_ARROWKEYS, 
+                                                        8, 8, 20, 14
+
+    LTEXT "", IDDI_GT_IMAGE_MANAGER_INST_SIGAREA_APPLY, 8, 8, 300, 36
+
+    LTEXT "", IDDI_GT_IMAGE_MANAGER_INST_TYPES,             8, 90 300,36
+    CONTROL "", IDDI_GT_IMAGE_MANAGER_SIGNER_TYPES, WC_LISTVIEWA, LVS_REPORT | LVS_OWNERDRAWFIXED | LVS_NOSORTHEADER | WS_CHILD,
+                                                            8, 90 250, 128, WS_EX_CLIENTEDGE
+
+    PUSHBUTTON "Add",   IDDI_GT_IMAGE_MANAGER_SIGNER_ADD,   8, 90 32, 16
+
+END
+
+
+IDD_GLOBAL_TEMPLATE DIALOGEX  0, 0, 400, 128
+STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+    PUSHBUTTON "Test",IDDI_GLOBAL_TEMPLATE_TEST_PROFILE,              8, 4, 36, 14
+    PUSHBUTTON "Stage update", IDDI_GLOBAL_TEMPLATE_STAGE_FOR_UPDATE, 8, 4, 96, 14
+
+    LTEXT "",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,8,4,248, 12 
+
+    LTEXT "Image matching threshold:", IDDI_GLOBAL_TEMPLATE_OCV_THRESHOLD_LBL1,     8,12,90, 12
+
+    EDITTEXT IDDI_GLOBAL_TEMPLATE_OCV_THRESHOLD,                                  96,10,40, 14, WS_TABSTOP
+
+    LTEXT "Profiles:", IDDI_GLOBAL_TEMPLATE_PROFILES_LABEL,       8, 24, 96, 12
+    COMBOBOX IDDI_GLOBAL_TEMPLATE_PROFILES,                       8, 36, 96, 256,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON "Add",IDDI_GLOBAL_TEMPLATE_PROFILE_ADD,          108, 36, 36, 14, WS_TABSTOP
+    PUSHBUTTON "Remove",IDDI_GLOBAL_TEMPLATE_PROFILE_REMOVE,    148, 36, 36, 14, WS_TABSTOP
+
+    PUSHBUTTON "Settings",IDDI_GLOBAL_TEMPLATE_SETTINGS,          8, 52, 56, 14, WS_TABSTOP
+ 
+    CONTROL "Documents", IDDI_GLOBAL_TEMPLATE_MORE_DOCUMENTS,  WC_TABCONTROLA, WS_VISIBLE | TCS_MULTILINE | TCS_RAGGEDRIGHT, 8,74, 256,256
+
+    PUSHBUTTON "Add", IDDI_GLOBAL_TEMPLATE_MORE_ADD,                    16,94, 32, 16, WS_TABSTOP
+    PUSHBUTTON "Remove", IDDI_GLOBAL_TEMPLATE_MORE_REMOVE,              52,94, 32, 16, WS_TABSTOP
+
+    AUTOCHECKBOX "Show Image Fields", IDDI_GLOBAL_TEMPLATE_FIELDS_SHOW, 88,94, 128, 16, WS_TABSTOP
+    LTEXT "",IDDI_GLOBAL_TEMPLATE_MORE_INFO,                            88,94, 144,16
+
+    LTEXT "",IDDI_GLOBAL_TEMPLATE_EVEN_MORE_INFO,                       88,94, 256,16
+
+
+END
+
+IDD_GLOBAL_TEMPLATE_PROFILE_UTILIZATION DIALOGEX    0,0,228, 512
+STYLE DS_SETFONT | DS_3DLOOK | WS_POPUP | WS_CHILD 
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+    LTEXT "", IDDI_GT_MANAGER_PROF_UTIL_INST,        8, 8, 180, 36
+
+    LTEXT "", IDDI_GT_MANAGER_PROF_UTIL_INST2,       8, 8, 180, 36
+
+    LTEXT "Profiles found in this document:", IDDI_GT_MANAGER_PROF_UTIL_LABEL1,    8, 40, 180, 12
+    CONTROL "", IDDI_GT_MANAGER_PROF_UTIL_PROF_LIST, WC_LISTVIEWA, LVS_REPORT | LVS_OWNERDRAWFIXED | LVS_NOSORTHEADER | WS_CHILD, 8, 52, 150, 64, WS_EX_CLIENTEDGE
+
+    LTEXT "Other profiles:", IDDI_GT_MANAGER_PROF_UTIL_LABEL2,   8, 128, 180, 12
+    CONTROL "", IDDI_GT_MANAGER_PROF_UTIL_PROF_OTHER_LIST, WC_LISTVIEWA, LVS_REPORT | LVS_OWNERDRAWFIXED | LVS_NOSORTHEADER | WS_CHILD, 8, 64, 150, 370, WS_EX_CLIENTEDGE
+
+END
+
+IDD_GLOBAL_TEMPLATE_FIELDS DIALOGEX  0,0, 512, 64
+CAPTION "Image Fields"
+STYLE DS_SETFONT | DS_3DLOOK | WS_POPUP | WS_CHILD 
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+    LTEXT "",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,8,0,248, 12 
+
+    LTEXT "",IDDI_GLOBAL_TEMPLATE_CONTROL_IMAGES_LABEL,  8,8,256,16, WS_TABSTOP
+    LTEXT "",IDDI_GLOBAL_TEMPLATE_IMAGE_DESCRIPTION,     8,8,248,48, WS_VISIBLE
+
+    CONTROL "Images", IDDI_GLOBAL_TEMPLATE_CONTROL_IMAGES,  WC_TABCONTROLA, TCS_MULTILINE | TCS_RAGGEDRIGHT | WS_VISIBLE, 8,24, 32,32
+
+    LTEXT "Location:", IDDI_GLOBAL_TEMPLATE_IMAGE_LOCATION,         8,8,128,16
+    PUSHBUTTON "Properties", IDDI_GLOBAL_TEMPLATE_IMAGE_PROPERTIES, 8,8,48,16,WS_TABSTOP
+    PUSHBUTTON "Remove", IDDI_GLOBAL_TEMPLATE_IMAGE_REMOVE,         8,8,48,16,WS_TABSTOP
+
+    PUSHBUTTON "Ok", IDDI_IMAGE_FIELD_OK,  0,0,32,14
+
+END 
+
+#define DESC_WIDTH 380
+#define TAB_WIDTH 360
+
+IDD_GLOBAL_TEMPLATE_FIELD_PROPERTIES DIALOGEX  0, 0, DESC_WIDTH, 252
+CAPTION "Image Field properties"
+STYLE DS_SETFONT | DS_3DLOOK | WS_POPUP | WS_CHILD | WS_VISIBLE
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+    LTEXT "",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,8,0,TAB_WIDTH, 12 
+
+    LTEXT "Field name:", IDD_GLOBAL_TEMPLATE_FIELD_PROPERTIES + 16384,
+                                        8,  12, 64, 12
+    EDITTEXT IDDI_FIELDS_LABEL_LABEL,   8 + 64 + 4,  10, 80, 14, ES_AUTOHSCROLL
+
+    RTEXT "Field type:", IDD_GLOBAL_TEMPLATE_FIELD_PROPERTIES + 16385,
+                                        8 + 64 + 4 + 80 + 4,12,64,12
+    COMBOBOX IDDI_IMAGE_FIELDS_TYPE,    8 + 64 + 4 + 80 + 4 + 64 + 4, 10, 80, 128, CBS_DROPDOWNLIST
+
+    CONTROL "", IDDI_IMAGE_FIELD_TABS,  WC_TABCONTROLA, TCS_MULTISELECT | WS_VISIBLE, 4, 28, TAB_WIDTH, 190
+
+//----------------------------------------
+
+    CONTROL "", IDDI_IMAGE_FIELD_FIELD_GB, STATIC, WS_VISIBLE,   8, 20, 0,0
+
+    LTEXT "",IDDI_IMAGE_FIELD_DESCRIPTION,                      4, 0, TAB_WIDTH - 32, 24
+
+    LTEXT "Field location in points on page %ld:",   IDDI_IMAGE_FIELD_LABEL, 4, 28, 280, 12
+
+    RTEXT "Points Left:",   IDDI_IMAGE_FIELD_LABEL_LEFT,   4, 44, 64, 12
+    EDITTEXT                IDDI_IMAGE_FIELD_LEFT,         68,42, 32, 14, ES_CENTER | WS_TABSTOP
+    CONTROL "",             IDDI_IMAGE_FIELD_LEFT_SPIN, UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_HORZ | UDS_ARROWKEYS,
+                                                          100,44, 20, 10, WS_TABSTOP
+
+    RTEXT "Bottom:",        IDDI_IMAGE_FIELD_LABEL_BOTTOM,      4, 62, 64, 12
+    EDITTEXT                IDDI_IMAGE_FIELD_BOTTOM,            68,60, 32, 14, ES_CENTER | WS_TABSTOP
+    CONTROL "",             IDDI_IMAGE_FIELD_BOTTOM_SPIN, UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_ARROWKEYS,
+                                                               100,60, 20, 14, WS_TABSTOP
+
+    RTEXT "Width:",         IDDI_IMAGE_FIELD_LABEL_WIDTH,   4, 80, 64, 12
+    EDITTEXT                IDDI_IMAGE_FIELD_WIDTH,         68,78, 32, 14, ES_CENTER | WS_TABSTOP
+    CONTROL "",             IDDI_IMAGE_FIELD_WIDTH_SPIN, UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_HORZ | UDS_ARROWKEYS,
+                                                           100,80, 20, 10, WS_TABSTOP
+
+    RTEXT "Height:",        IDDI_IMAGE_FIELD_LABEL_HEIGHT,  4, 98, 64, 12
+    EDITTEXT                IDDI_IMAGE_FIELD_HEIGHT,        68,96, 32, 14, ES_CENTER | WS_TABSTOP
+    CONTROL "",             IDDI_IMAGE_FIELD_HEIGHT_SPIN, UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_ARROWKEYS,
+                                                           100,96, 20, 14, WS_TABSTOP
+
+//----------------------------------------
+
+    CONTROL "", IDDI_IMAGE_FIELD_COMP_SIG_FIELD_GB, STATIC, WS_VISIBLE,   8, 20, 0,0 
+
+    LTEXT "",IDDI_IMAGE_FIELD_SIG_DESCRIPTION,                      4, 0, TAB_WIDTH - 32, 24
+
+    LTEXT "From lower left:",   IDDI_IMAGE_FIELD_SIG_LABEL,         4, 28, 128, 12
+
+    RTEXT "Points Right:",      IDDI_IMAGE_FIELD_SIG_LABEL_RIGHT,   0, 44, 70, 12
+    EDITTEXT                    IDDI_IMAGE_FIELD_SIG_RIGHT,         72,42, 32, 14, ES_CENTER | WS_TABSTOP
+    CONTROL "",                 IDDI_IMAGE_FIELD_SIG_RIGHT_SPIN, UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_HORZ | UDS_ARROWKEYS,
+                                                                   104,44, 20, 10, WS_TABSTOP
+
+    RTEXT "Up:",                IDDI_IMAGE_FIELD_SIG_LABEL_UP,      0, 62, 70, 12
+    EDITTEXT                    IDDI_IMAGE_FIELD_SIG_UP,            72,60, 32, 14, ES_CENTER | WS_TABSTOP
+    CONTROL "",                 IDDI_IMAGE_FIELD_SIG_UP_SPIN, UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_ARROWKEYS,
+                                                                   104,60, 20, 14, WS_TABSTOP
+
+    RTEXT "Width:",             IDDI_IMAGE_FIELD_SIG_LABEL_WIDTH,   0, 80, 70, 12
+    EDITTEXT                    IDDI_IMAGE_FIELD_SIG_WIDTH,         72,78, 32, 14, ES_CENTER | WS_TABSTOP
+    CONTROL "",                 IDDI_IMAGE_FIELD_SIG_WIDTH_SPIN, UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_HORZ | UDS_ARROWKEYS,
+                                                                   104,80, 20, 10, WS_TABSTOP
+
+    RTEXT "Height:",            IDDI_IMAGE_FIELD_SIG_LABEL_HEIGHT,  0, 98, 70, 12
+    EDITTEXT                    IDDI_IMAGE_FIELD_SIG_HEIGHT,        72,96, 32, 14, ES_CENTER | WS_TABSTOP
+    CONTROL "",                 IDDI_IMAGE_FIELD_SIG_HEIGHT_SPIN, UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_ARROWKEYS,
+                                                                   104,96, 20, 14, WS_TABSTOP
+
+    AUTOCHECKBOX "Use the system default signature area size?", IDDI_IMAGE_FIELD_SIG_USE_DEFAULT_SIZE,
+                                                                    100 + 20 + 8,78, 212, 12
+    PUSHBUTTON "Apply", IDDI_IMAGE_FIELD_SIG_DEFAULT_SIZE_APPLY,    100 + 20 + 8,78 + 14, 36, 14
+
+    LTEXT "Notification:"       IDDI_IMAGE_FIELD_SIG_NOTIFY_LABEL,   8, 116, 40, 12
+    EDITTEXT                    IDDI_IMAGE_FIELD_SIG_NOTIFICATION   48, 114, 140, 14, ES_AUTOHSCROLL
+
+    LTEXT "Or, specify the defined signer type",IDDI_IMAGE_FIELD_SIG_SIGNER_LABEL,
+                                                                     8, 130, 260, 12
+
+    COMBOBOX                    IDDI_IMAGE_FIELD_SIG_SIGNER_TYPE,    8 ,142, 180, 128, CBS_DROPDOWNLIST | WS_VSCROLL
+
+    LTEXT  "The Notification value is still used if not cleared", IDDI_IMAGE_FIELD_SIG_SIGNER_NOTE,
+                                                                     8, 160, 260, 12
+
+//----------------------------------------
+
+    CONTROL "", IDDI_IMAGE_FIELD_COMP_DATE_FIELD_GB,STATIC, WS_VISIBLE,  8, 20, 0,0
+
+    LTEXT "",IDDI_IMAGE_FIELD_DATE_DESCRIPTION,                     4 , 0, TAB_WIDTH - 32, 24
+
+    LTEXT "From lower left:",   IDDI_IMAGE_FIELD_DATE_LABEL,        4, 28, 128, 12
+
+    RTEXT "Points Right:",      IDDI_IMAGE_FIELD_DATE_LABEL_RIGHT,  0, 44, 70, 12
+    EDITTEXT                    IDDI_IMAGE_FIELD_DATE_RIGHT,        72, 42, 32, 14, ES_CENTER | WS_TABSTOP
+    CONTROL "",                 IDDI_IMAGE_FIELD_DATE_RIGHT_SPIN, UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_HORZ | UDS_ARROWKEYS,
+                                                                   104, 44, 20, 10, WS_TABSTOP
+
+    RTEXT "Up:",                IDDI_IMAGE_FIELD_DATE_LABEL_UP,     0, 62, 70, 12
+    EDITTEXT                    IDDI_IMAGE_FIELD_DATE_UP,           72,60, 32, 14, ES_CENTER | WS_TABSTOP
+    CONTROL "",                 IDDI_IMAGE_FIELD_DATE_UP_SPIN, UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_ARROWKEYS,
+                                                                   104,60, 20, 14, WS_TABSTOP
+
+    RTEXT "Width:",             IDDI_IMAGE_FIELD_DATE_LABEL_WIDTH,  0, 80, 70, 12
+    EDITTEXT                    IDDI_IMAGE_FIELD_DATE_WIDTH,        72,78, 32, 14, ES_CENTER | WS_TABSTOP
+    CONTROL "",                 IDDI_IMAGE_FIELD_DATE_WIDTH_SPIN, UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_HORZ | UDS_ARROWKEYS,
+                                                                   104,80, 20, 10, WS_TABSTOP
+
+    RTEXT "Height:",            IDDI_IMAGE_FIELD_DATE_LABEL_HEIGHT, 0, 98, 70, 12
+    EDITTEXT                    IDDI_IMAGE_FIELD_DATE_HEIGHT,       72,96, 32, 14, ES_CENTER | WS_TABSTOP
+    CONTROL "",                 IDDI_IMAGE_FIELD_DATE_HEIGHT_SPIN, UPDOWN_CLASS, UDS_SETBUDDYINT | UDS_ARROWKEYS,  
+                                                                   104,96, 20, 14, WS_TABSTOP
+
+//----------------------------------------
+
+    CONTROL "", IDDI_IMAGE_FIELD_PAGE_FINDER_FIELD_GB, STATIC, WS_VISIBLE, 8, 20, 0,0
+
+    LTEXT "", IDDI_IMAGE_FIELD_PAGE_FINDER_DESC,                       4, 0, TAB_WIDTH - 32, 18
+
+    PUSHBUTTON "All", IDDI_IMAGE_FIELD_PAGE_FINDER_SELECT_ALL,         4, 22, 24, 14
+    PUSHBUTTON "None", IDDI_IMAGE_FIELD_PAGE_FINDER_SELECT_NONE,      32, 22, 24, 14
+
+//----------------------------------------
+
+    CONTROL "", IDDI_IMAGE_FIELD_COMP_QUADRANT_GB,STATIC, WS_VISIBLE,  8, 20, 0,0
+
+    LTEXT "",IDDI_IMAGE_FIELD_COMP_QUADRANT_DESC,                       4, 0, TAB_WIDTH - 32, 32
+
+    CONTROL "", IDDI_IMAGE_FIELD_COMP_QUADRANT, STATIC, WS_VISIBLE | SS_NOTIFY,    4, 0, 96 + 16, 64 + 12, WS_EX_CLIENTEDGE
+
+    LTEXT "",IDDI_IMAGE_FIELD_COMP_QUADRANT_WARN,                       4, 0, 240, 16
+
+    AUTOCHECKBOX "", IDDI_IMAGE_FIELD_COMP_ISPOSITIONAL,                4, 0, 192, 16
+    AUTOCHECKBOX "", IDDI_IMAGE_FIELD_COMP_QUADRANT_WIDEN,              4, 0, 192, 16
+
+//----------------------------------------
+
+    CONTROL "", IDDI_IMAGE_FIELD_PROFILE_FILTER_GB,STATIC, WS_VISIBLE,  8, 20, 0,0
+
+    LTEXT "",IDDI_IMAGE_FIELD_PROFILE_FILTER_DESC,                      4, 0, TAB_WIDTH - 32, 24
+
+    PUSHBUTTON "All", IDDI_IMAGE_FIELD_PROF_FILTER_SELECT_ALL,          4, 30, 36, 14
+    PUSHBUTTON "None", IDDI_IMAGE_FIELD_PROF_FILTER_SELECT_NONE,       44, 30, 36, 14
+
+    LTEXT "", IDDI_IMAGE_FIELD_PROFILE_FILTER_WARN,                    86, 24, 160, 32
+
+//----------------------------------------
+
+    CONTROL "", IDDI_IMAGE_FIELD_TEXT_FINDER_GB, STATIC, WS_VISIBLE,   8, 20, 0, 0
+
+    LTEXT "", IDDI_IMAGE_FIELD_TEXT_FINDER_DESC,                       4,  0, TAB_WIDTH - 32, 96
+    LTEXT "", IDDI_IMAGE_FIELD_TEXT_FINDER_RECT,                       4,100, TAB_WIDTH - 32, 12
+    LTEXT "", IDDI_IMAGE_FIELD_TEXT_FINDER_TEXT,                       4,113, TAB_WIDTH - 32, 24
+
+    PUSHBUTTON "Clear", IDDI_IMAGE_FIELD_TEXT_FINDER_CLEAR,            4,120, 36, 16
+
+    AUTOCHECKBOX "Use image matching as well", IDDI_IMAGE_FIELD_TEXT_FORCE_IMAGE_MATCH
+                                                                       4, 140, 120, 14
+
+//----------------------------------------
+
+    PUSHBUTTON "Alternates",IDDI_FIELDS_SHOW_ALTERNATES,   8, 8, 48, 14
+    PUSHBUTTON "Regenerate",IDDI_FIELDS_REGENERATE,        8, 8, 48, 14
+    PUSHBUTTON "Inspect",IDDI_FIELDS_INSPECT,              8, 8, 36, 14
+
+    DEFPUSHBUTTON "Ok", IDDI_IMAGE_FIELD_OK,       8, 8, 32, 14
+    PUSHBUTTON "Cancel", IDDI_IMAGE_FIELD_CANCEL,  8, 8, 32, 14
+
+END
+
+
+IDD_GLOBAL_TEMPLATE_FIELD_ALTERNATES DIALOGEX  0, 0, 256 + 128 + 128, 96
+CAPTION "Image Field Alternate Images"
+STYLE DS_SETFONT | DS_3DLOOK | WS_POPUP | WS_CHILD | WS_VISIBLE
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+    LTEXT "",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,8,0,248, 12 
+
+    LTEXT "",IDDI_IMAGE_FIELD_ALTERNATES_INST,      8, 0, 232, 32
+    LTEXT "",IDDI_IMAGE_FIELD_ALTERNATES_OS_INST,   8, 0, 128, 32
+    LTEXT "",IDDI_IMAGE_FIELD_ALTERNATES_TF_INST,   8, 0,  96, 32
+
+    CONTROL "",IDDI_IMAGE_FIELD_ALTERNATES_DISP_PANE, STATIC, WS_VISIBLE,         8, 40, 224, 64, WS_EX_CLIENTEDGE
+    CONTROL "",IDDI_IMAGE_FIELD_ALTERNATES_OS_DISP_PANE, STATIC, WS_VISIBLE,      8, 40, 148, 64, WS_EX_CLIENTEDGE
+    CONTROL "",IDDI_IMAGE_FIELD_ALTERNATES_TF_DISP_PANE, STATIC, WS_VISIBLE,      8, 40, 128, 64, WS_EX_CLIENTEDGE
+
+    CONTROL "",IDDI_IMAGE_FIELD_ALTERNATES_VSCROLL,"SCROLLBAR",WS_VISIBLE | SBS_VERT,232,28,32,64
+    CONTROL "",IDDI_IMAGE_FIELD_ALTERNATES_HSCROLL,"SCROLLBAR",WS_VISIBLE | SBS_HORZ,8,92,224,32
+
+    LTEXT "",IDDI_IMAGE_FIELD_ALTERNATES_INFO,      8, 8, 228, 8
+
+    DEFPUSHBUTTON "Ok", IDDI_IMAGE_FIELD_OK,       8, 8, 32, 14
+    PUSHBUTTON "Cancel", IDDI_IMAGE_FIELD_CANCEL,  8, 8, 32, 14
+END
+
+
+
+IDD_GLOBAL_TEMPLATE_FIELDS_INSPECT DIALOGEX  0, 0, 320, 108
+CAPTION "Image Field Inspection"
+STYLE DS_SETFONT | DS_3DLOOK | WS_POPUP | WS_CHILD | WS_VISIBLE
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+
+    LTEXT "",IDDI_IMAGE_FIELD_INSPECTION_OUTPUT,   8, 8, 200, 14
+
+    LTEXT "",IDDI_IMAGE_FIELD_INSPECTION_FILE1,    8, 24, 300, 14
+    LTEXT "",IDDI_IMAGE_FIELD_INSPECTION_FILE2,    8, 38, 300, 14
+    LTEXT "",IDDI_IMAGE_FIELD_INSPECTION_FILE3,    8, 54, 300, 14
+
+    LTEXT "PageNumber: ",-1L,                      8, 70, 44, 14
+    EDITTEXT IDDI_IMAGE_FIELD_INSPECTION_PAGENUMBER, 8 + 46,68, 16, 14
+
+    LTEXT "Alternative Index: ",-1L,               8, 86, 64, 14
+    EDITTEXT IDDI_IMAGE_FIELD_INSPECTION_ALTINDEX, 8 + 66,84, 16, 14
+
+    DEFPUSHBUTTON "Ok", IDOK, 8, 8 + 20 + 14 + 6, 32, 16
+
+END
+
+
+STRINGTABLE
+{
+    IDDI_GLOBAL_TEMPLATE_DOCUMENT_GET_WARN "\
+This action will delete all fields currently defined and will\r\
+require all image driven printing profiles to be reconfigured.\r\r\
+Are you sure you want to change the Global Template Document?"
+
+#if 0
+    IDDI_GLOBAL_TEMPLATE_IMAGE_DESCRIPTION_SELECTOR "This image is a Selector image.\r\r\
+It is used to find an instance of itself in a printed document. When ALL of these images, and ALL of the Companion Selector images, specified as required for a printing profile are found in a printed document, that profile is chosen and becomes active. \r\
+This type of image can contain one or more signature areas defined in the image itself. Each area can be individually selected as being active.\r\r\
+To define signature and/or date areas, use the mouse to drag out region(s) in the image below."
+#endif
+}

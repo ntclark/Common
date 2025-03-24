@@ -79,13 +79,15 @@
     }
 
 
-    void templateDocument::tdUI::createView(HWND hwndP,long x,long y,bool generateFields,void (*pcp)(HDC,templateDocument::tdUI *),void (*ppn)(long)) {
+    void templateDocument::tdUI::createView(HWND hwndP,long x,long y,bool generateFields,void (*pcp)(HDC,templateDocument::tdUI *),void (*ppn)(long),void (*pcl)(ULONG_PTR),ULONG_PTR pclArg) {
 
     parentOffsetX = x;
     parentOffsetY = y;
 
     pClientPaint = pcp;
     pClientPageChanged = ppn;
+    pClientLoaded = pcl;
+    clientLoadedArg = pclArg;
 
     generateTextFields = generateFields;
 

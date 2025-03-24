@@ -7,7 +7,7 @@ BEGIN
 
    LTEXT "",IDDI_PROFILE_SELECTION_INSTRUCTIONS,   8,16, 600,36
 
-   LTEXT "Best strategy = %ld",IDDI_GLOBAL_TEMPLATE_OCV_BEST_STRATEGY,  8,58, 64, 14
+   //LTEXT "Best strategy = %ld",IDDI_GLOBAL_TEMPLATE_OCV_BEST_STRATEGY,  8,58, 64, 14
 
    LTEXT "", IDDI_GLOBAL_TEMPLATE_SELECTOR_FIELD_IMAGES_LABEL,          8, 58, 240, 34
    LTEXT "", IDDI_GLOBAL_TEMPLATE_OPTIONAL_SELECTOR_FIELD_IMAGES_LABEL, 8, 58, 240, 34
@@ -34,44 +34,6 @@ END
 
 STRINGTABLE {
 
-    IDSTR_PRINTING_INSTRUCTIONS_GLOBAL_TEMPLATE, "\
-The Global Template Document recognition strategy uses image recognition to find locations in the document that match images \r\
-you define using the Global Template Document settings.\r\r\
-The default, or root, Template Document configuration consists of any combination of these images and wherever they are found in \r\
-the document, a signature area is presented from the document at a configured offset from that image.\r\r\
-Other Template Document configurations consist of a precise set of images all of which must be present to activate \
-the profile for that document.\r\r\
-The default is for generic document recognition, whereas other profiles allow for a more precise selection of options \r\
-for the resulting document management, using a unique combination of the toolbox components, for example."
-
-
-    IDDI_PROFILE_SELECTION_INSTRUCTIONS "\
-These settings control how the system selects this printing profile when a document is printed.\
-\r\r\
-Profiles use the image fields defined using the Global Template Document dialogs and which are shown below.\
-\r\
-There are 3 types of fields, these are:\
-\r\r\
-\t1. Finder fields: Simple images with no associated signature or date areas.\r\
-\t    Exist simply to be ""found"" in the document to help in selecting the correct profile.\
-\r\
-\t2. Companion Selector fields: These add a ""companion"" signature area, and optional date area\r\
-\t    at ""offsets"" from the found image. If this profile is selected, signature capture\r\
-\t    will occur there.\
-\r\
-\t3. Optional Companion Selector fields: These don't assist in profile selection. Instead, \r\
-\t    the system searches for them in the background while the user is signing the fields\r\
-\t    found in the profile. They are ""optional"" because they don't have to be found, signing \r\
-\t    is simply skipped if they are not found\
-\r\
-\t    These fields are also searched for in the ""default"" profile which activates when no specific\r\
-\t    profile is found.\
-\r\r\
-Types 1 and 2 are in the left list. Select those fields from there that must be present to activate this profile.\
-\r\r\
-When this profile is activated, the system will search in the background for the fields you select in the\r\
-right list while the user is signing."
-
     IDDI_GLOBAL_TEMPLATE_ROOT_INSTRUCTIONS "\
 These are the settings for the root (default) Global Template Document printing profile.\r\r\
 If a profile does not otherwise get selected by the system by finding all of the images defined \
@@ -79,27 +41,5 @@ for a profile, the root profile takes over.\r\r\
 In this case ALL of the ""Optional"" Companion Selector fields are searched for in the document\r\
 And signature capture will occur for each one found.\r\
 The following table contains all of the Optional Companion Locator fields that are currently defined."
-
-    IDDI_GLOBAL_TEMPLATE_SELECTOR_FIELD_IMAGES_LABEL "\
-All Selector Image fields: Choose those that must be located in the document for this profile to become active.\r\r\
-Please sort the fields so that the primary field for this profile is first.\r\
-All ""first"" fields are sought in the document. Of those with acceptable scores, the one with the highest score chooses the active profile."
-
-    IDDI_GLOBAL_TEMPLATE_OPTIONAL_SELECTOR_FIELD_IMAGES_LABEL "\
-All Optional Companion fields: Choose those that should be \r\
-searched for in the document when this profile becomes active\r\
-Note: if NO profile becomes active ALL of these fields\r\
-are searched using the Root profile."
-
-    IDDI_GLOBAL_TEMPLATE_PAGE_FINDER_FIELD_IMAGES_LABEL "\
-All Page Finder fields. These are not strictly\r\
-used in the profile. However, you can configure\r\
-their properties from here."
-
-    IDDI_GLOBAL_TEMPLATE_SIGNATURE_ROOT_FIELD_IMAGES_LABEL "\
-All Optional Companion Selector Image fields\r\
-If no other profile becomes active, these fields are searched.\r\
-You can change the order in which signatures are captured."
-
 
 }

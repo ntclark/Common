@@ -90,23 +90,6 @@ private:
 
    extern PdfUtility pdfUtility;
 
-#define ADVANCE_THRU_EOL(p)               \
-while ( *p != 0x0A && *p != 0x0D )        \
-   p++;                                   \
-if ( *p == 0x0A || *p == 0x0D )           \
-   p++;                                   \
-if ( *p == 0x0A || *p == 0x0D )           \
-   p++;
-
-
-#define RETREAT_TO_BOL(p,pLimit)                      \
-while ( p > (pLimit) && *p != 0x0A && *p != 0x0D )    \
-   p--;                                               \
-if ( p >= (pLimit) ) p++;                             \
-if ( p >= (pLimit) && ( *p == 0x0A || *p == 0x0D ) )  \
-   p++;
-
-
 #define ELEMENT_NAME_SIZE 64
 
 extern BYTE eol;

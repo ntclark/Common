@@ -41,13 +41,13 @@
 
     pParent -> size();
 
-    if ( pParent -> pClientPaint ) {
+    if ( ! ( NULL == pParent -> pClientPaint ) ) {
         HDC hdc = GetDC(pParent -> hwndPane);
         pParent -> pClientPaint(hdc,pParent);
         ReleaseDC(pParent -> hwndPane,hdc);
     }
 
-    if ( pParent -> postRenderAction )
+    if ( ! ( NULL == pParent -> postRenderAction ) )
         pParent -> postRenderAction();
 
     if ( pParent -> hiliteTextAreas ) {
@@ -73,7 +73,7 @@
     // and that should remain the way to indicate the page number for now.
     //pParent -> currentPageNumber = pageNumber;
 
-    if ( pParent -> pClientPageChanged )
+    if ( ! ( NULL == pParent -> pClientPageChanged ) )
         pParent -> pClientPageChanged(pageNumber);
 
     return S_OK;
@@ -82,6 +82,9 @@
 
     HRESULT __stdcall templateDocument::tdUI::_IPDFiumControlEvents::DocumentRendered() {
     pParent -> size();
+    if ( ! ( NULL == pParent -> pClientLoaded ) ) {
+        pParent -> pClientLoaded(pParent -> clientLoadedArg);
+    }
     return S_OK;
     }
 

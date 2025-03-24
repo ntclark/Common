@@ -61,7 +61,7 @@
     }
 
 
-    templateDocument::tdUI *templateDocument::createView(HWND hwndP,long x,long y,bool generateTextFields,void (*pcp)(HDC,templateDocument::tdUI *),void (*ppn)(long)) {
+    templateDocument::tdUI *templateDocument::createView(HWND hwndP,long x,long y,bool generateTextFields,void (*pcp)(HDC,templateDocument::tdUI *),void (*ppn)(long),void (*pcl)(ULONG_PTR),ULONG_PTR pclArg) {
 
     tdUI *pUI = new tdUI(this);
 
@@ -72,7 +72,7 @@
 
     uiInstances.insert(uiInstances.end(),pView);
 
-    pUI -> createView(hwndP,x,y,generateTextFields,pcp,ppn);
+    pUI -> createView(hwndP,x,y,generateTextFields,pcp,ppn,pcl,pclArg);
 
     if ( ! pIPdfDocument )
         return pUI;

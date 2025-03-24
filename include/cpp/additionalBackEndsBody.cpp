@@ -16,9 +16,18 @@
 
       pObject -> hwndAdditionalBackEnds = hwnd;
 
+      char szString[2048];
+      LoadString(hModuleResources,IDDI_BACKENDS_TOP_LIST_LABEL,szString,2048);
+      SetDlgItemText(hwnd,IDDI_BACKENDS_TOP_LIST_LABEL,szString);
+
+      LoadString(hModuleResources,IDDI_BACKENDS_BOTTOM_LIST_LABEL,szString,2048);
+      SetDlgItemText(hwnd,IDDI_BACKENDS_BOTTOM_LIST_LABEL,szString);
+
       if ( 0 == strlen(PARENT_OBJECT_PREFERRED_SETTINGS_FILE_NAME) ) {
-         SetWindowText(GetDlgItem(hwnd,IDDI_BACKENDS_TOP_LIST_LABEL),"Use these tools for documents not yet defined to the system.\rOperation is in top to bottom order.");
-         SetWindowText(GetDlgItem(hwnd,IDDI_BACKENDS_BOTTOM_LIST_LABEL),"To change the default settings for each tool, click it's properties button.\rThis will not change settings for documents currently using the tool.");
+         LoadString(hModuleResources,IDDI_BACKENDS_TOP_LIST_LABEL + 16384,szString,2048);
+         SetWindowText(GetDlgItem(hwnd,IDDI_BACKENDS_TOP_LIST_LABEL),szString);
+         LoadString(hModuleResources,IDDI_BACKENDS_BOTTOM_LIST_LABEL + 16384,szString,2048);
+         SetWindowText(GetDlgItem(hwnd,IDDI_BACKENDS_BOTTOM_LIST_LABEL),szString);
       }
 
       hwndTopList = GetDlgItem(hwnd,IDDI_BACKENDS_TOP_LIST);
@@ -33,11 +42,18 @@
 
       RECT rcTopList;
       GetWindowRect(hwndTopList,&rcTopList);
+
       nativeTopListHeight = rcTopList.bottom - rcTopList.top;
       nativeTopListWidth = rcTopList.right - rcTopList.left;
 
       nativeHeight = rcThis.bottom - rcThis.top;
       nativeWidth = rcThis.right - rcThis.left;
+
+      GetWindowRect(GetDlgItem(hwnd,IDDI_BACKENDS_TOP_LIST_LABEL),&rcTopList);
+
+      nativeTopLabelLeft = rcTopList.left - rcThis.left;
+      nativeTopLabelTop = rcTopList.top - rcThis.top;
+
 
       if ( NULL == nativeListViewHandler )
          nativeListViewHandler = (WNDPROC)SetWindowLongPtr(hwndBottomList,GWLP_WNDPROC,(ULONG_PTR)OBJECT_WITH_PROPERTIES::listViewHandler);
@@ -49,6 +65,12 @@
 
       HFONT hGUIFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 
+#if 1
+
+     LoadString(hModuleResources,IDS_BACKENDS_LIST_LABEL,szString,1024);
+     SetWindowText(GetDlgItem(hwnd,IDDI_BACKENDS_LIST_LABEL),szString);
+
+#else
       ICatInformation *pICatInformation = NULL;
       HRESULT rc = CoCreateInstance(CLSID_StdComponentCategoriesMgr,NULL,CLSCTX_ALL,IID_ICatInformation,reinterpret_cast<void **>(&pICatInformation));
 
@@ -61,41 +83,45 @@
       }
 
       pICatInformation -> Release();
+#endif 
 
       long nextTopIndex = 0L;
       long nextBottomIndex = 0L;
 
+      char szTranslation[64];
+      LoadString(hModuleResources,IDD_BACKENDS + 16384,szTranslation,64);
+
+      {
+
+      }
       LVCOLUMN lvColumn = {0};
-
       lvColumn.mask = LVCF_TEXT;
+      lvColumn.cx = 16;
 
-      lvColumn.cx = 128 + 64;
-      lvColumn.pszText = "Description";
+      lvColumn.pszText = szTranslation;
+
       if ( hwndTopList )
          SendMessage(hwndTopList,LVM_INSERTCOLUMN,0,(LPARAM)&lvColumn);
-#ifdef HIDE_BOTTOM_PROPS
-      lvColumn.cx += 128;
-#endif
       SendMessage(hwndBottomList,LVM_INSERTCOLUMN,0,(LPARAM)&lvColumn);
 
-      lvColumn.cx = 48;
-      lvColumn.pszText = "Props.";
+      LoadString(hModuleResources,IDD_BACKENDS + 16385,szTranslation,64);
+
       if ( hwndTopList )
          SendMessage(hwndTopList,LVM_INSERTCOLUMN,++nextTopIndex,(LPARAM)&lvColumn);
-#ifndef HIDE_BOTTOM_PROPS
+
+#ifdef HIDE_BOTTOM_PROPS
+#else
       SendMessage(hwndBottomList,LVM_INSERTCOLUMN,++nextBottomIndex,(LPARAM)&lvColumn);
 #endif
 
-      lvColumn.cx = 48;
-      lvColumn.pszText = "Use ?";
+      LoadString(hModuleResources,IDD_BACKENDS + 16386,szTranslation,64);
+
       SendMessage(hwndTopList,LVM_INSERTCOLUMN,++nextTopIndex,(LPARAM)&lvColumn);
       SendMessage(hwndBottomList,LVM_INSERTCOLUMN,++nextBottomIndex,(LPARAM)&lvColumn);
 
-      lvColumn.cx = 48;
-      lvColumn.pszText = "Order";
-      SendMessage(hwndTopList,LVM_INSERTCOLUMN,++nextTopIndex,(LPARAM)&lvColumn);
+      LoadString(hModuleResources,IDD_BACKENDS + 16387,szTranslation,64);
 
-      SendMessage(hwndBottomList,LVM_SETCOLUMNWIDTH,(WPARAM)++nextBottomIndex,(LPARAM)LVSCW_AUTOSIZE_USEHEADER);
+      SendMessage(hwndTopList,LVM_INSERTCOLUMN,++nextTopIndex,(LPARAM)&lvColumn);
 
       long countRows = 0;
       countAvailableBackEnds = 0;
@@ -126,7 +152,9 @@
          SendMessage(buttonPairs[countRows].hwndProperties,WM_SETFONT,(WPARAM)hGUIFont,(LPARAM)TRUE);
 #endif
 
-         buttonPairs[countRows].hwndUse = CreateWindowEx(0L,"BUTTON","Yes",WS_CHILD | WS_VISIBLE,32,32,32,16,hwndBottomList,(HMENU)(UINT_PTR)(IDDI_BACKENDS_USE_BACKEND + countRows),hModule,0L);
+         LoadString(hModuleResources,IDS_YES,szTranslation,32);
+
+         buttonPairs[countRows].hwndUse = CreateWindowEx(0L,"BUTTON",szTranslation,WS_CHILD | WS_VISIBLE,32,32,32,16,hwndBottomList,(HMENU)(UINT_PTR)(IDDI_BACKENDS_USE_BACKEND + countRows),hModule,0L);
          SetWindowLongPtr(buttonPairs[countRows].hwndUse,GWLP_USERDATA,(ULONG_PTR)&buttonPairs[countRows]);
          SendMessage(buttonPairs[countRows].hwndUse,WM_SETFONT,(WPARAM)hGUIFont,(LPARAM)TRUE);
 
@@ -198,8 +226,10 @@
 
          }
 
+         LoadString(hModuleResources,IDS_NO,szTranslation,64);
+
          pPair -> hwndList = hwndTopList;
-         pPair -> hwndUse = CreateWindowEx(0L,"BUTTON","No",WS_CHILD | WS_VISIBLE,32,32,32,16,hwndTopList,(HMENU)(UINT_PTR)(IDDI_BACKENDS_USE_BACKEND + k),hModule,0L);
+         pPair -> hwndUse = CreateWindowEx(0L,"BUTTON",szTranslation,WS_CHILD | WS_VISIBLE,32,32,32,16,hwndTopList,(HMENU)(UINT_PTR)(IDDI_BACKENDS_USE_BACKEND + k),hModule,0L);
          pPair -> hwndProperties = CreateWindowEx(0L,"BUTTON","...", WS_CHILD | WS_VISIBLE,32,32,32,16,hwndTopList,(HMENU)(UINT_PTR)(IDDI_BACKENDS_PROPERTIES + k),hModule,0L);
          pPair -> hwndOrder = CreateWindowEx(0,UPDOWN_CLASSA,"",WS_CHILD | WS_VISIBLE,32,32,24,18,hwndTopList,(HMENU)(UINT_PTR)(IDDI_BACKENDS_ORDER + k),hModule,0L);
 
@@ -241,6 +271,8 @@
             break;
 
          HWND hwndTheList = pSource -> hwndList;
+
+         char szTranslation[32];
 
          if ( hwndTheList == hwndBottomList ) {
 
@@ -286,8 +318,10 @@
 
             CopyFile(pSource -> szSettingsFileName,pPair -> szSettingsFileName,TRUE);
 
+            LoadString(hModuleResources,IDS_NO,szTranslation,32);
+
             pPair -> hwndList = hwndTopList;
-            pPair -> hwndUse = CreateWindowEx(0L,"BUTTON","No",WS_CHILD | WS_VISIBLE,32,32,32,16,hwndTopList,(HMENU)(UINT_PTR)(IDDI_BACKENDS_USE_BACKEND + useNoIndex),hModule,0L);
+            pPair -> hwndUse = CreateWindowEx(0L,"BUTTON",szTranslation,WS_CHILD | WS_VISIBLE,32,32,32,16,hwndTopList,(HMENU)(UINT_PTR)(IDDI_BACKENDS_USE_BACKEND + useNoIndex),hModule,0L);
             pPair -> hwndProperties = CreateWindowEx(0L,"BUTTON","...", WS_CHILD | WS_VISIBLE,32,32,32,16,hwndTopList,(HMENU)(UINT_PTR)(IDDI_BACKENDS_PROPERTIES + useNoIndex),hModule,0L);
             pPair -> hwndOrder = CreateWindowEx(0L,UPDOWN_CLASSA,"",WS_CHILD | WS_VISIBLE,32,32,24,18,hwndTopList,(HMENU)(UINT_PTR)(IDDI_BACKENDS_ORDER + useNoIndex),hModule,0L);
 
@@ -477,57 +511,91 @@
 
    case WM_SIZE: {
 
-      RECT rcParent,rcTopList,rcBottomList,rcText;
+      RECT rcParent,rcLabel;
 
       GetWindowRect(hwnd,&rcParent);
-      GetWindowRect(hwndBottomList,&rcBottomList);
-      GetWindowRect(GetDlgItem(hwnd,IDDI_BACKENDS_BOTTOM_LIST_LABEL),&rcText);
-
-      long bottomListYChanged = 0L;
-
-      GetWindowRect(hwndTopList,&rcTopList);
+      GetWindowRect(GetDlgItem(hwnd,IDDI_BACKENDS_TOP_LIST_LABEL),&rcLabel);
 
       DWORD dwRect = (DWORD)SendMessage(hwndTopList,LVM_APPROXIMATEVIEWRECT,(WPARAM)-1,MAKELPARAM(-1,-1));
 
       long cyTopList = max(128,HIWORD(dwRect));
 
-      long xList = rcTopList.left - rcParent.left;
-
       if ( cyTopList > nativeTopListHeight ) {
-         if ( cyTopList < nativeHeight / 3 )
-            SetWindowPos(hwndTopList,HWND_TOP,0,0,nativeTopListWidth,cyTopList,SWP_NOMOVE);
-         else
-            SetWindowPos(hwndTopList,HWND_TOP,0,0,nativeTopListWidth,nativeHeight / 3,SWP_NOMOVE);
-         GetWindowRect(hwndTopList,&rcTopList);
+         if ( cyTopList > (nativeHeight - 64) / 3 )
+            cyTopList = (nativeHeight - 64)/ 3;
       }
 
-      long yBottom = rcTopList.bottom - rcParent.top + 48;
-      long cyBottom = nativeHeight - yBottom - 8;
+      // cyTopList is as big as required or at least 128, but no higher than 1/3 of the available space
+
+      char szString[2048];
+      GetWindowText(GetDlgItem(hwnd,IDDI_BACKENDS_TOP_LIST_LABEL),szString,2048);
+      HFONT hGuiFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+      HDC hdc = GetDC(hwnd);
+      SelectFont(hdc,hGuiFont);
+
+      RECT rcText{0,0,nativeTopListWidth,0};
+
+      DrawTextEx(hdc,szString,(DWORD)strlen(szString),&rcText,DT_CALCRECT | DT_WORDBREAK,NULL);
+
+      long cyLabel = rcText.bottom - rcText.top;
+
+      SetWindowPos(GetDlgItem(hwnd,IDDI_BACKENDS_TOP_LIST_LABEL),HWND_TOP,nativeTopLabelLeft,nativeTopLabelTop,nativeTopListWidth,cyLabel,0L);
+
+      GetWindowRect(GetDlgItem(hwnd,IDDI_BACKENDS_TOP_LIST_LABEL),&rcText);
+
+      long yTopList = rcText.top - rcParent.top + cyLabel + 8;
+
+      // the top list is positioned just below the top label
+
+      SetWindowPos(hwndTopList,HWND_TOP,nativeTopLabelLeft,yTopList,nativeTopListWidth,cyTopList,0L);
+
+      long cyBottomList = nativeHeight - (yTopList + cyTopList + 32);
+
+      // The available space for the bottom list is all height minus the bottom of the top list 
+      // minus some space for the bottom label
 
       dwRect = (DWORD)SendMessage(hwndBottomList,LVM_APPROXIMATEVIEWRECT,(WPARAM)-1,MAKELPARAM(-1,-1));
 
-      cyBottom = min(cyBottom,HIWORD(dwRect));
+      cyBottomList = min(cyBottomList,HIWORD(dwRect));
 
-      if ( ( yBottom + cyBottom ) > ( nativeHeight - 16 ) )
-         cyBottom = nativeHeight - yBottom - 16;
+      long yBottom = yTopList + cyTopList + 32;
 
-      long keepBottomListY = rcBottomList.top;
+      if ( ( yBottom + cyBottomList ) > ( (nativeHeight - 64) - 16 ) )
+         cyBottomList = nativeHeight - 64 - yBottom - 16;
 
-      SetWindowPos(hwndBottomList,HWND_TOP,xList,yBottom,nativeTopListWidth,cyBottom,0L);
+      long yBottomList = yTopList + cyTopList + 8;
 
-      GetWindowRect(hwndBottomList,&rcBottomList);
+      GetWindowText(GetDlgItem(hwnd,IDDI_BACKENDS_BOTTOM_LIST_LABEL),szString,2048);
 
-      SetWindowPos(GetDlgItem(hwnd,IDDI_BACKENDS_TOP_LIST_LABEL),HWND_TOP,xList,rcTopList.top - rcParent.top - (rcText.bottom - rcText.top),0,0,SWP_NOSIZE);
-      SetWindowPos(GetDlgItem(hwnd,IDDI_BACKENDS_BOTTOM_LIST_LABEL),HWND_TOP,xList,rcBottomList.top - rcParent.top - (rcText.bottom - rcText.top),0,0,SWP_NOSIZE);
+      memset(&rcText,0,sizeof(RECT));
 
-      SendMessage(hwndTopList,LVM_SETCOLUMNWIDTH,0,MAKELPARAM(nativeTopListWidth - 3 * 48 - 4,0));
-      SendMessage(hwndTopList,LVM_SETCOLUMNWIDTH,1,MAKELPARAM(48,0));
+      rcText.right = nativeTopListWidth;
+
+      DrawTextEx(hdc,szString,(DWORD)strlen(szString),&rcText,DT_CALCRECT | DT_WORDBREAK,NULL);
+
+      cyLabel = rcText.bottom - rcText.top;
+
+      SetWindowPos(GetDlgItem(hwnd,IDDI_BACKENDS_BOTTOM_LIST_LABEL),HWND_TOP,nativeTopLabelLeft,yBottomList,nativeTopListWidth,cyLabel,0L);
+
+      yBottomList += cyLabel + 8;
+
+      SetWindowPos(hwndBottomList,HWND_TOP,nativeTopLabelLeft,yBottomList,nativeTopListWidth,cyBottomList,0L);
+
+      ReleaseDC(hwnd,hdc);
+
+      SendMessage(hwndTopList,LVM_SETCOLUMNWIDTH,0,MAKELPARAM(nativeTopListWidth - 3 * 48 - 24 - 32,0));
+      SendMessage(hwndTopList,LVM_SETCOLUMNWIDTH,1,MAKELPARAM(48 + 32,0));
       SendMessage(hwndTopList,LVM_SETCOLUMNWIDTH,2,MAKELPARAM(48,0));
       SendMessage(hwndTopList,LVM_SETCOLUMNWIDTH,3,MAKELPARAM(48,0));
 
-      SendMessage(hwndBottomList,LVM_SETCOLUMNWIDTH,0,MAKELPARAM(nativeTopListWidth - 2 * 48 - 24,0));
+#ifdef HIDE_BOTTOM_PROPS
+      SendMessage(hwndBottomList,LVM_SETCOLUMNWIDTH,0,MAKELPARAM(nativeTopListWidth - 48 - 24,0));
       SendMessage(hwndBottomList,LVM_SETCOLUMNWIDTH,1,MAKELPARAM(48,0));
+#else
+      SendMessage(hwndBottomList,LVM_SETCOLUMNWIDTH,0,MAKELPARAM(nativeTopListWidth - 2 * 48 - 24 - 32,0));
+      SendMessage(hwndBottomList,LVM_SETCOLUMNWIDTH,1,MAKELPARAM(48 + 32,0));
       SendMessage(hwndBottomList,LVM_SETCOLUMNWIDTH,2,MAKELPARAM(48,0));
+#endif
 
       }
       break;

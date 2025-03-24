@@ -28,8 +28,8 @@
     <ClCompile Include="$(GSYSTEM_HOME)\Common\Utils\VariantUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Common\include\imageUtilities.h" />
-    <ClInclude Include="..\..\Common\include\utilities.h" />
+    <ClInclude Include="$(GSYSTEM_HOME)\Common\include\imageUtilities.h" />
+    <ClInclude Include="$(GSYSTEM_HOME)\Common\include\utilities.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5B99C559-0496-4312-8C0F-68E21EA5C1C7}</ProjectGuid>

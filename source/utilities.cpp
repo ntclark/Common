@@ -709,7 +709,6 @@
    return;
    }
 
-
    long HashCode(char *pszInput) {
    long hashCode = 0L;
    long part = 0L;
@@ -746,7 +745,7 @@
    }
 
 
-   void ASCIIHexDecodeInPlace(char *pszInput) {
+   long ASCIIHexDecodeInPlace(char *pszInput) {
 
    long n = (long)strlen(pszInput);
 
@@ -791,7 +790,7 @@
 
    pszInput[j] = '\0';
 
-   return;
+   return j;
    }
 
 

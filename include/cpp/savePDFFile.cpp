@@ -372,7 +372,7 @@
 #ifndef RECEPTOR_BUILD
          char szCommand[2 * MAX_PATH];
          char szTemp[256];
-         LoadString(NULL,IDS_CANT_CREATE_FILE,szTemp,256);
+         LoadString(hModuleResources,IDS_CANT_CREATE_FILE,szTemp,256);
          sprintf(szCommand,szTemp,szResultFile);
          memset(szResultFile,0,sizeof(szResultFile));
          MessageBox(hwndMainFrame,szCommand,"Error!",MB_OK | MB_ICONEXCLAMATION);

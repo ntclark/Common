@@ -30,24 +30,27 @@
         countSelectedFields = pDoodleOptionProps -> countDataFields;
 
         char szTemp[1024];
-        LoadString(hModule,IDDI_DATA_FIELDS_INSTRUCTIONS,szTemp,1024);
+        LoadString(hModuleResources,IDDI_DATA_FIELDS_RESET,szTemp,1024);
+        SetDlgItemText(hwnd,IDDI_DATA_FIELDS_RESET,szTemp);
+
+        LoadString(hModuleResources,IDDI_DATA_FIELDS_INSTRUCTIONS,szTemp,1024);
         SetDlgItemText(hwnd,IDDI_DATA_FIELDS_INSTRUCTIONS,szTemp);
 
-        LoadString(hModule,IDDI_DATA_FIELDS_GENERATE_LABEL,szTemp,1024);
+        LoadString(hModuleResources,IDDI_DATA_FIELDS_GENERATE_LABEL,szTemp,1024);
         SetDlgItemText(hwnd,IDDI_DATA_FIELDS_GENERATE_LABEL,szTemp);
 
-        LoadString(hModule,IDDI_NO_TEMPLATE_LABEL,szTemp,1024);
+        LoadString(hModuleResources,IDDI_NO_TEMPLATE_LABEL,szTemp,1024);
         SetWindowText(GetDlgItem(hwnd,IDDI_NO_TEMPLATE_LABEL),szTemp);
 
-        LoadString(hModule,IDDI_NO_TEMPLATE_LABEL2,szTemp,1024);
+        LoadString(hModuleResources,IDDI_NO_TEMPLATE_LABEL2,szTemp,1024);
         SetWindowText(GetDlgItem(hwnd,IDDI_NO_TEMPLATE_LABEL2),szTemp);
 
         commitChanges = false;
 
-        if ( NULL == pObject -> pTemplateDocument )
+        if ( NULL == pObject -> pTemplateDocument || 
+                NULL == pObject -> pTemplateDocument -> pszDocumentName || 
+                '\0' == pObject -> pTemplateDocument -> pszDocumentName[0] )
             SendMessage(hwnd,WM_CLEAR_TEMPLATE_DOC_VIEW,0L,0L);
-        else
-            PostMessage(hwnd,WM_REFRESH_TEMPLATE_DOC,0L,0L);
 
 #ifdef ADDITIONAL_INITIALIZATION
       ADDITIONAL_INITIALIZATION
@@ -614,8 +617,8 @@
             return (LRESULT)TRUE;
 
 #if 0
-#ifdef REGISTER_TOOLTIP
       case TTN_GETDISPINFO: {
+
          NMTTDISPINFO *pToolTipDispInfo;
          pToolTipDispInfo = (LPNMTTDISPINFO)pNotifyHeader;
          pToolTipDispInfo -> lpszText = szCurrentToolTipText;
@@ -623,15 +626,15 @@
          LOGFONT fontInfo;
          GetObject(hFont,sizeof(LOGFONT),&fontInfo);
 
-         LoadString(hModule,pToolTipDispInfo -> lParam,szCurrentToolTipText,1024);
+         LoadString(hModuleResources,pToolTipDispInfo -> lParam,szCurrentToolTipText,1024);
 
          if ( fontInfo.lfHeight )
             SendMessage(pNotifyHeader -> hwndFrom,TTM_SETMAXTIPWIDTH,0,strlen(szCurrentToolTipText) * abs(fontInfo.lfHeight) / 4);
          else
             SendMessage(pNotifyHeader -> hwndFrom,TTM_SETMAXTIPWIDTH,0,256);
+
          }
          return 0;
-#endif
 #endif
 
         }

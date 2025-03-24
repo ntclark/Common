@@ -107,7 +107,8 @@
 
             void createView(HWND hwndParent,long offsetX,long offsetY,bool generateFields = true,
                                 void (*clientPaint)(HDC,templateDocument::tdUI *) = NULL,
-                                    void (*clientPageChange)(long pageNumber) = NULL);
+                                    void (*clientPageChange)(long pageNumber) = NULL,
+                                    void (*clientLoaded)(ULONG_PTR) = NULL,ULONG_PTR clientLoadedArg = NULL);
 
             void releaseView();
 
@@ -328,6 +329,8 @@
 
             void (*pClientPaint)(HDC,tdUI *){NULL};
             void (*pClientPageChanged)(long pageNumber){NULL};
+            void (*pClientLoaded)(ULONG_PTR){NULL};
+            ULONG_PTR clientLoadedArg{NULL};
 
             RECT *pDocumentRects{NULL};
             char *pDocumentText{NULL};
@@ -372,7 +375,10 @@
 
         };
 
-        tdUI *createView(HWND hwndInitialParent,long offsetX,long offsetY,bool generateTextFields = true,void (*clientPaint)(HDC,templateDocument::tdUI *) = NULL,void (*clientPageChange)(long pageNumber) = NULL);
+        tdUI *createView(HWND hwndInitialParent,long offsetX,long offsetY,bool generateTextFields = true,
+                            void (*clientPaint)(HDC,templateDocument::tdUI *) = NULL,
+                            void (*clientPageChange)(long pageNumber) = NULL,
+                            void (*clientLoaded)(ULONG_PTR) = NULL,ULONG_PTR clientLoadedArg = NULL);
 
         tdUI *getView(HWND);
 

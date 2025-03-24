@@ -5,13 +5,13 @@ EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
 
-   LTEXT "What Happened to my Settings !?",-1, 16, 24, 256, 12
-   LTEXT "Note that after you write to a particular document, depending on it's ""Save Location"" settings, it may be immediately saved and re-opened by Cursivision as a different document.", -1, 16, 48, 256, 30
-   LTEXT "The current document was saved as a copy of:", -1, 16, 78, 256, 12
-   LTEXT "",IDDI_INHERITED_DOCUMENT_TEXT, 16 + 12, 78 + 16, 256 - 12, 24
-   LTEXT "with the embedded writing placed within it.", -1, 16, 118, 256, 12
+   LTEXT "", IDD_INHERITED_DOCUMENT + 16384,    16, 24, 256, 12
+   LTEXT "", IDD_INHERITED_DOCUMENT + 16385,    16, 48, 256, 30
+   LTEXT "", IDD_INHERITED_DOCUMENT + 16386,    16, 78, 256, 12
+   LTEXT "", IDDI_INHERITED_DOCUMENT_TEXT,      28, 94, 256 - 12, 24
+   LTEXT "", IDD_INHERITED_DOCUMENT + 16387     16, 118, 256, 12
 
-   LTEXT "Choose File - ""Reopen the source"" from the main menu to open the parent document and change it's settings.",-1,16, 132, 256, 32
+   LTEXT "", IDD_INHERITED_DOCUMENT + 16388,    16, 132, 256, 32
 //
 //NTC: 04-25-2014: I attempted to launch properties from properties.
 // There are a while lot of issues - doing this, not the least of which is the templateDocument::tdUI object in all the
@@ -26,23 +26,25 @@ BEGIN
 END
 
 
-IDD_BACKENDS DIALOGEX 0,0, 256, 256 + 128
+IDD_BACKENDS DIALOGEX 0,0, 320, 256 + 128
 STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
 EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
 
-    AUTOCHECKBOX "Allow changes by Non-Administratrive users?", IDDI_BACKENDS_ALLOW_NON_ADMIN, 8, 4, 290, 12
+    AUTOCHECKBOX "Allow changes by Non-Administratrive users?", IDDI_BACKENDS_ALLOW_NON_ADMIN, 8, 4, 310, 12
 
-    LTEXT "",IDDI_BACKENDS_LIST_LABEL, 8, 10, 220, 14
+    LTEXT "",IDDI_BACKENDS_LIST_LABEL, 8, 10, 290, 12
 
-    LTEXT "Tools in use for the current document. Tools are applied in top to bottom order.\rProperties changed here apply to this document only:",IDDI_BACKENDS_TOP_LIST_LABEL, 8, 20, 240 + 16, 24
-    CONTROL "", IDDI_BACKENDS_TOP_LIST, WC_LISTVIEWA, LVS_REPORT | LVS_OWNERDRAWFIXED | LVS_NOSORTHEADER | WS_CHILD, 8, 46, 240 + 16, 64, WS_EX_CLIENTEDGE
+    LTEXT "",IDDI_BACKENDS_TOP_LIST_LABEL, 8, 32, 310, 24
 
-    LTEXT "Tools available for use. Properties changed below become the defaults for documents not yet defined (signed or printed) to the system.",IDDI_BACKENDS_BOTTOM_LIST_LABEL, 8, 20, 240 + 16, 24
-    CONTROL "", IDDI_BACKENDS_BOTTOM_LIST, WC_LISTVIEWA, LVS_REPORT | LVS_OWNERDRAWFIXED | LVS_NOSORTHEADER | WS_VISIBLE | WS_CHILD, 8, 76, 240 + 16, 64, WS_EX_CLIENTEDGE
+    CONTROL "", IDDI_BACKENDS_TOP_LIST, WC_LISTVIEWA, LVS_REPORT | LVS_OWNERDRAWFIXED | LVS_NOSORTHEADER | WS_CHILD, 8, 46, 256, 64, WS_EX_CLIENTEDGE
 
-    LTEXT "",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,8,8,380, 24 
+    LTEXT "",IDDI_BACKENDS_BOTTOM_LIST_LABEL, 8, 20, 310, 24
+
+    CONTROL "", IDDI_BACKENDS_BOTTOM_LIST, WC_LISTVIEWA, LVS_REPORT | LVS_OWNERDRAWFIXED | LVS_NOSORTHEADER | WS_VISIBLE | WS_CHILD, 8, 100, 256, 64, WS_EX_CLIENTEDGE
+
+    LTEXT "",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,8,8,300, 24 
 
 END
 
@@ -64,8 +66,21 @@ END
 
 #endif
 
-IDD_DISPOSITION_PROPERTIES DIALOGEX 0, 0, 288, 256
+#ifdef IDD_DISPOSITION_STAGE_DEFAULTS
+IDD_DISPOSITION_STAGE_DEFAULTS DIALOGEX 0,0, 156, 48
+CAPTION "Stage defaults"
+STYLE DS_SETFONT | WS_CAPTION | WS_BORDER
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
 
+   LTEXT "Please provide the password for staging defaults:",IDD_DISPOSITION_STAGE_DEFAULTS + 16385,    8,  8, 128, 16
+   EDITTEXT IDD_DISPOSITION_STAGE_DEFAULTS + 16386,                    8,28, 64, 12, ES_PASSWORD
+   PUSHBUTTON "Submit",IDD_DISPOSITION_STAGE_DEFAULTS + 16387,      76, 26,  36, 16
+
+END
+#endif
+
+IDD_DISPOSITION_PROPERTIES DIALOGEX 0, 0, 288, 256
 STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
 EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
@@ -83,8 +98,8 @@ BEGIN
 
 #define ROLLUP 14
 
-   PUSHBUTTON "Reset", IDDI_DISPOSITION_RESET,                                      10,126 + ADDITIONAL_TOP_SPACE - ROLLUP, 32, 14
-   LTEXT "",IDDI_DISPOSITION_RESET_LABEL,                                           10 + 32 + 8,126 + ADDITIONAL_TOP_SPACE - ROLLUP, 260, 24
+   PUSHBUTTON "Reset", IDDI_DISPOSITION_RESET,                                      10,126 + ADDITIONAL_TOP_SPACE - ROLLUP, 64, 16
+   LTEXT "",IDDI_DISPOSITION_RESET_LABEL,                                           78,126 + ADDITIONAL_TOP_SPACE - ROLLUP, 260, 24
 
    LTEXT "Then ...",IDDI_DISPOSITION_POST_PROCESSING_LABEL,                         10,124 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 12
 
@@ -93,7 +108,7 @@ BEGIN
    AUTORADIOBUTTON "Close the document",IDDI_DISPOSITION_CLOSE_DOCUMENT,             32,160 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 12
    AUTORADIOBUTTON "Remain running and wait for a printing job", IDDI_DISPOSITION_KEEP_RUNNING_AND_AWAIT_JOB,   32,172 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 12
    AUTOCHECKBOX "Close the document while waiting?",IDDI_DISPOSITION_AWAIT_JOB_CLOSE,                           48,184 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 12
-   AUTOCHECKBOX "Minimize to the task bar while waiting?",IDDI_DISPOSITION_AWAIT_JOB_MINIMIZE,                  48,196 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 12
+   AUTOCHECKBOX "Minimize to the task bar while waiting?",IDDI_DISPOSITION_AWAIT_JOB_MINIMIZE,                  48,196 + ADDITIONAL_TOP_SPACE - ROLLUP, 220, 12
    AUTORADIOBUTTON "Exit",IDDI_DISPOSITION_EXIT,                                                                32,208 + ADDITIONAL_TOP_SPACE - ROLLUP,  24, 12
 
    LTEXT "When defining signing locations:",IDDI_DISPOSITION_CONTINUOUS_DOODLE_LABEL,     10, 232 + ADDITIONAL_TOP_SPACE - ROLLUP, 160, 14
@@ -116,6 +131,8 @@ BEGIN
    AUTOCHECKBOX "Use the entire vertical resolution available",IDDI_DISPOSITION_USE_LARGEST_VERTICAL_RES,
                                                                                                 26, 368 + ADDITIONAL_TOP_SPACE - ROLLUP,150,12
 
+   PUSHBUTTON "Stage Defaults",IDDI_DISPOSITION_STAGE_DEFAULTS,                                 10, 390 + ADDITIONAL_TOP_SPACE - ROLLUP,96,16
+
 #endif
 
    LTEXT "",IDDI_DISPOSITION_NEED_ADMIN_PRIVILEGES,8,8,392, 24 
@@ -123,3 +140,4 @@ BEGIN
 #ifndef DONT_TERMINATE_DIALOG_TEMPLATE
 END
 #endif
+

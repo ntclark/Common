@@ -2,14 +2,14 @@
     static void setLearnControls(OBJECT_WITH_PROPERTIES *pObject,HWND hwnd) {
 
     doLearn = (0 == countLocations);
-    SendDlgItemMessage(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_LEARN,BM_SETCHECK,(WPARAM)(doLearn ? BST_CHECKED : BST_UNCHECKED),0L);
+    SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_SETCHECK,(WPARAM)(doLearn ? BST_CHECKED : BST_UNCHECKED),0L);
 #ifdef IDDI_SIGNING_LOCATIONS_SKIP_SIGNING
     if ( ! pObject -> SkipSignatureCapture() ) {
 #endif
-    EnableWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_LEARN),0 == countLocations);
-    EnableWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON),doLearn && 0 == countLocations);
-    EnableWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF),doLearn && 0 == countLocations);
-    EnableWindow(GetDlgItem(hwnd,IDDI_DISPOSITION_REMEMBER),0 == countLocations);
+    EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN),0 == countLocations);
+    EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON),doLearn && 0 == countLocations);
+    EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF),doLearn && 0 == countLocations);
+    EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER),0 == countLocations);
 #ifdef IDDI_SIGNING_LOCATIONS_SKIP_SIGNING
     }
 #endif
@@ -102,6 +102,7 @@
     case WM_INITDIALOG: {
 
         RECT rcEntry,rcParent;
+        char szString[256];
 
         GetWindowRect(hwnd,&rcParent);
 
@@ -113,7 +114,10 @@
         SendMessage(hwndSpinner,UDM_SETRANGE,0L,MAKELONG((short)countLocations,(short)1));
 
         char szTemp[MAX_PATH];
-        sprintf(szTemp,"The current order of this signature is: %ld",candidateRectIndex + 1);
+
+        LoadString(hModuleResources,IDD_SIGNING_LOCATIONS_ORDER + 16385,szString,256);
+
+        sprintf(szTemp,szString,candidateRectIndex + 1);
 
         SetDlgItemText(hwnd,IDDI_SIGNING_LOCATIONS_ORDER_LABEL,szTemp);
 
@@ -124,6 +128,13 @@
         GetCursorPos(&ptl);
    
         SetWindowPos(hwnd,HWND_TOP,ptl.x + 32,ptl.y - 32,0,0,SWP_NOSIZE);
+
+        long resourceIds[] = {IDDI_SIGNING_LOCATIONS_ORDER_LABEL,IDD_SIGNING_LOCATIONS_ORDER + 16384,IDDI_SIGNING_LOCATIONS_ORDER_OK,IDDI_SIGNING_LOCATIONS_ORDER_CANCEL};
+
+        for ( long k = 0; k < sizeof(resourceIds) / sizeof(long); k++ ) {
+            LoadString(hModuleResources,resourceIds[k],szString,256);
+            SetDlgItemText(hwnd,resourceIds[k],szString);
+        }
 
         return (LRESULT)0;
         }
