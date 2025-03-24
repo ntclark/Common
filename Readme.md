@@ -36,6 +36,9 @@ and only one location where all of the common files shall be placed.
 Once you have done that and have cloned my [common repository](https://github.com/ntclark/common) (this one) into it, 
 *then* any and all my projects *should* build.
 
+I do not specify Visual Studio Version. In 30 years working with Visual Studio, I have never seen definitive proof that VS version
+actually matters. At least to the extent that it's the "latest" or pretty near so. 
+
 A consistent and rock solid software development environment is a very difficult thing to achieve, and is not that commonly 
 reached. I believe that this one technique, creating a location and pointing to it with the GSYSTEM_HOME_ environment variable
 is the easiest way to have you get configured as quickly as possible.
