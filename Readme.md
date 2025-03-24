@@ -30,25 +30,36 @@ But I will tell you indirectly:
 
 ### You must use a specific environment variable to build my projects
 
-I expect you to define, as a permanent environment variable, the GSYSTEMS environment variable that points to that one
+I expect you to define, as a permanent environment variable, the GSYSTEM_HOME environment variable that points to that one
 and only one location where all of the common files shall be placed.
 
 Once you have done that and have cloned my [common repository](https://github.com/ntclark/common) (this one) into it, 
 *then* any and all my projects *should* build.
 
 A consistent and rock solid software development environment is a very difficult thing to achieve, and is not that commonly 
-reached.
-
-I believe that this one technique, creating a location and pointing to it with the GSYSTEMS environment variable
+reached. I believe that this one technique, creating a location and pointing to it with the GSYSTEM_HOME_ environment variable
 is the easiest way to have you get configured as quickly as possible.
 
 **Note**: Visual Studio has what I consider to be  bug. If you navigate properties which involve a disc location, VS
 may include relative paths to that location in the project file. You will need to "unload" the project, manually edit
-the project file, and change those relative locations to your location (hopefully using the %GSYSTEMS% environment variable
+the project file, and change those relative locations to your location (hopefully using the $(GSYSTEM_HOME) environment variable
 expansion where appropriate). I assume it's the same moron VS developer who limited the File MRU list to a whopping 10 entries.
 
-If you look at any of my projects in the "Propery Manager" pane of Visual Studio, you will see that the very first thing I do
-when creating a new project is to go there, right click on the project name, and add the "Common Properties.props" file.
+If you look at any of my projects in the "Property Manager" pane of Visual Studio, you will see that the very first thing I do
+when creating a new project is to go there, right click on the project name, and add the "Common Options.props" file.
+
+And then, as in the note above, I have to unload the project, edit the project file, and change entries like
+
+`..\..\Common\Common Options.prop`
+
+to 
+`$(GSYSTEM_HOME)\Common\Common Options.prop`
+
+etc.
+
+Note these common options keep the 4 typical configurations separated from each other. These are Win32, X64 platforms, each with a
+Debug and Release build. You will even find that built artifacts should end up in your common location in the appropriate 
+sub-folders per these configurations.
 
 I cannot stress enough the power of having an absolutely consistent set of build propertie for every project in or on or of
 a system.This is the technique all of my projects use, a consistent set of properties. It is a rare occurrance that I actually
