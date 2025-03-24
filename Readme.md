@@ -102,7 +102,9 @@ There, I said it. Many of my projects are COM (Component Object Model) objects t
 successful build. If you don't want to have dll hell, register your objects every time you build them.
 
 If, for example, your corporate environment won't allow you to run as administrator, you'll need to keep in mind that registration 
-makes it easier to ensure you're working with the latest.
+makes it easier to ensure you're working with the latest. True, it works to simply overwrite the file, *however* don't forget that 
+when you switch Platform or Configuration - you are dealing with a different file. In other words, registration may be pointing to the
+wrong file.
 
 On the other hand, it is much easier than most people may be aware to skip actual OS supplied COM altogether and simply dynamically
 load the appropriate '.dlls with LoadLibrary. With COM you are by no means required to follow the CoInitialize and CoCreateInstance
@@ -110,7 +112,7 @@ model of accessing your software artifacts.
 
 Keep in mind that all built artifacts will be emitted into:
 
-&nbsp;&nbsp;&nbsp;&nbsp;`$(GSYSTE_HOME)\Common\Artifacts\<Platform>\<Configuration`
+&nbsp;&nbsp;&nbsp;&nbsp;`$(GSYSTEM_HOME)\Common\Artifacts\<Platform>\<Configuration`
 
 For example:
 
