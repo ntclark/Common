@@ -12,14 +12,14 @@ I have nothing specifically against other tools or platforms, I just don't reall
 to complicate my life with them, I am, thank you very much, busy and happy with the volume of stuff
 that I can produce.
 
-As Spock says, "The needs of the many outweigh the needs of the fiew"
+As Spock says, "The needs of the many outweigh the needs of the few"
 
 If you want to take my stuff and port it to CMAKE or to Linux, have at it, I hope it works for you.
 
 ## One and only one place
 
 I've found that the vast majority of confusion and cross artifact utilization occurs because
-people don't decide UP FRONT how to keep it from happening.
+people don't plan UP FRONT how to keep it from happening.
 
 Some feel a solution is to specify a dedicated place for common files [^1], but I'm not going to 
 do that. For one thing, those "places" must be referenced *inside* the build tools' configuration
@@ -33,7 +33,7 @@ But I will tell you indirectly:
 
 This is, of course, not uncommon. However, in my case, it's the one and only thing you should have to do to build
 my project(s). I try to make it as simple as possible thru and thru. My hope is that, if you clone this repository, and another that
-you are interested in, then you should be able to build out of the box. No "configure", no make, no make install. Granted, I have the 
+you are interested in, then you should be able to build that other one out of the box. No "configure", no make, no make install. Granted, I have the 
 luxury of only one platform, and maybe if other's did, their build process would be easy too, I don't know.
 
 I expect you to define, as a permanent environment variable, the GSYSTEM_HOME variable that points to that one
@@ -41,8 +41,25 @@ and only one location where all of the common files shall be placed. Note that "
 built artifacts, that is, the exes and '.dlls. Typically, you should be able to run from that location pretty 
 much for every project.
 
-Once you have done that and have cloned my [common repository](https://github.com/ntclark/common) (this one) into it, 
+As for "that other" repository that you are trying to build - it never ever cares where on your machine you've cloned it 
+to. The *only* thing those other repositories need are the GSYSTEM_HOME variable pointing to your desired common location.
+
+Once you have done that and have cloned my [common repository](https://github.com/ntclark/common) (this one) into the specified location, 
 *then* any and all my projects *should* build.
+
+Note the example:
+```
+    mkdir C:\CoolStuff
+    cd C:\CoolStuff
+    github clone https://github.com/ntclark/Common
+    set GSYSTEM_HOME=C:\CoolStuff
+```
+
+So you will then have the directory:
+
+`C:\CoolStuff\Common`
+
+on your machine. In other words do your github cloning (at least for this repository) IN the directory pointed to by GSYSTEM_HOME
 
 I do not specify Visual Studio Version. In 30 years working with Visual Studio, I have never seen definitive proof that VS version
 actually matters. At least to the extent that it's the "latest" or pretty near so. 
