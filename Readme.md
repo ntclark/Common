@@ -4,8 +4,9 @@ I have developed a software building process that I believe minimizes crossups t
 when different projects are in different places and there may be a number of "locations" 
 where artifacts might be found and used by the building tools. In this case, Visual Studio.
 
-I DO NOT use multiple building tools or, frankly, multiple platforms. I target only windows
-and I use MS Visual Studio to build evertyhing that I do.
+I DO NOT use multiple building tools or, frankly, multiple platforms in my Open source projects.
+I target only windows and I use MS Visual Studio to build all of these (again, as far as my Open 
+Source projects go,of course, I use any tool (and platform) required for the boatloads of other stuff I do).
 
 I have nothing specifically against other tools or platforms, I just don't really have the desire
 to complicate my life with them, I am, thank you very much, busy and happy with the volume of stuff
