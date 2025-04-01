@@ -1,5 +1,36 @@
 # Building OpenSource projects from EnVisioNateSW
 
+> ## Running Visual Studio "As Administrator" is recommended.
+>I'm putting this information at the top so it doesn't get missed.
+>
+>One of the things I like to do to create a confusion, and error, free environment is to
+use one and only one place. You'll see that below.
+>
+>However, you're probably not building "one and only one" *flavor* of the system. My projects 
+always contain both a Debug and Release *configuration*, and each of these for both
+a Win32 and x64 *platform*. I don't mess with any special configurations, these two suffice
+for everyhing I've ever needed.
+
+>So, that's four places not one. First never mix configurations or platforms in the same physical
+disk location - please. That is guaranteed confusion.
+
+>One excellent solution to this is to let the system point you to the binary artifacts you want to 
+interopate with, and for this there is a two pronged approach, 1) use COM Objects as your '.dlls, 
+and 2) register these upon *every* build. Thus, the need for running VS As Administrator.
+
+>I understand if you don't want to use COM, it is, afterall, not strictly required even if your
+artifacts are equpped to work in that environment. Specifically, there is nothing stopping you from
+calling LoadLibrary on these artifacts, or just linking to them directly.
+
+>If you don't run VS as administrator (i.e. you don't register your builds), and you DO use COM, just 
+be aware that you might be using your Debug version when you shift the client to Release. You'll 
+probably detect that when you realize the recent changes don't seem to be "taking", it's happened
+to me.
+
+>Also, you should be aware that Compiler Options.props file that I use religiously on every project, 
+specifies the location of your binaries for all 4 possibilities, so if you follow the directories
+specified in the project properties, you can minimize crossups.
+
 I have developed a software building process that I believe minimizes crossups that happen
 when different projects are in different places and there may be a number of "locations" 
 where artifacts might be found and used by the building tools. In this case, Visual Studio.
