@@ -9,7 +9,7 @@ use one and only one place. You'll see that below.
 >However, you're probably not building "one and only one" *flavor* of the system. My projects 
 always contain both a Debug and Release *configuration*, and each of these for both
 a Win32 and x64 *platform*. I don't mess with any special configurations, these two suffice
-for everyhing I've ever needed.
+for everything I've ever needed.
 >
 >So, that's four places not one. First never mix configurations or platforms in the same physical
 disk location - please. That is guaranteed confusion.
@@ -27,7 +27,7 @@ be aware that you might be using your Debug version when you shift the client to
 probably detect that when you realize the recent changes don't seem to be "taking", it's happened
 to me.
 >
->Also, you should be aware that Compiler Options.props file that I use religiously on every project, 
+>Also, you should be aware that the Compiler Options.props file that I use religiously on every project, 
 specifies the location of your binaries for all 4 possibilities, so if you follow the directories
 specified in the project properties, you can minimize crossups.
 >
@@ -98,12 +98,13 @@ actually matters. At least to the extent that it's the "latest" or pretty near s
 
 A consistent and rock solid software development environment is a difficult thing to achieve, and is not that commonly 
 reached. I believe that this one technique, creating a location and pointing to it with the GSYSTEM_HOME_ environment variable
-is the easiest way to have you get configured as quickly as possible.
+is the easiest way to have you get configured as quickly as possible. 
 
 **Note**: Visual Studio has what I consider to be  bug. If you navigate properties which involve a disc location in your 
 GSYSTEM_HOME folder tree, VS may include relative (to the project file) paths to that location in the project file. 
 You will need to "unload" the project, manually edit the project file, and change those relative paths to your location 
 (hopefully using the $(GSYSTEM_HOME) environment variable expansion where appropriate). 
+
 I assume it's the same moron VS developer who limited the File MRU list to a whopping 10 entries who caused this bug.
 
 If you look at any of my projects in the "Property Manager" pane of Visual Studio, you will see that the very first thing I do
@@ -130,8 +131,11 @@ file and every project immediately sees the change (though I have to rebuild the
 
 ## Run as administrator
 
-There, I said it. Many of my projects are COM (Component Object Model) objects that should automatically register on 
-successful build. If you don't want to have dll hell, register your objects every time you build them.
+There, I said it and discuss at length at the top.
+
+To reiterate, many of my projects are COM (Component Object Model) objects that are set to automatically register on 
+successful build. If you don't want to have dll hell, register your objects every time you build them (which requires VS has the privileges
+since it launches regsvr32.exe).
 
 If, for example, your corporate environment won't allow you to run as administrator, you'll need to keep in mind that registration 
 makes it easier to ensure you're working with the latest. True, it works to simply overwrite the file, *however* don't forget that 
@@ -151,6 +155,14 @@ For example:
 &nbsp;&nbsp;&nbsp;&nbsp;"C:\Development\Common\Artifacts\Win32\Release`
 
 asdsuming, for example, GSYSTEM_HOME=C:\Development
+
+If you just can't run VS as administrator, then one thing you can do is launch a DOS prompt as administrator, cd to the location of 
+your artifacts, as above, and issue the command:
+
+&nbsp;&nbsp;&nbsp;&nbsp;for %f in (*.dll) do call regsvr32 %f
+
+doesn't matter if some of them aren't COM centric, no harm's done.
+
 
 [^1]: Common files are the header files important to more than one project, the lib files, the Type Library Files, if any, 
 the generated files, and yes, even the built binary artifacts, that is '.dlls and '.exes
