@@ -69,6 +69,13 @@ typedef interface IGraphicParameters IGraphicParameters;
 #endif 	/* __IGraphicParameters_FWD_DEFINED__ */
 
 
+#ifndef __IRendererNotifications_FWD_DEFINED__
+#define __IRendererNotifications_FWD_DEFINED__
+typedef interface IRendererNotifications IRendererNotifications;
+
+#endif 	/* __IRendererNotifications_FWD_DEFINED__ */
+
+
 #ifndef __Renderer_FWD_DEFINED__
 #define __Renderer_FWD_DEFINED__
 
@@ -124,6 +131,12 @@ EXTERN_C const IID IID_IRenderer;
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_Origin( 
             POINTF origin) = 0;
         
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE SetRenderLive( 
+            HDC hdc,
+            RECT *pDrawingRect) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE UnSetRenderLive( void) = 0;
+        
         virtual HRESULT STDMETHODCALLTYPE Render( 
             HDC hdc,
             RECT *pDrawingRect) = 0;
@@ -135,13 +148,17 @@ EXTERN_C const IID IID_IRenderer;
             RECT *pRect,
             COLORREF theColor) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE WhereAmI( 
+            long xPixels,
+            long yPixels,
+            FLOAT *pX,
+            FLOAT *pY) = 0;
+        
         virtual HRESULT STDMETHODCALLTYPE Reset( void) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE GetParametersBundle( 
-            UINT_PTR **pptrBundleStorage) = 0;
+        virtual HRESULT STDMETHODCALLTYPE SaveState( void) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE SetParametersBundle( 
-            UINT_PTR *ptrBundleStorage) = 0;
+        virtual HRESULT STDMETHODCALLTYPE RestoreState( void) = 0;
         
     };
     
@@ -182,6 +199,16 @@ EXTERN_C const IID IID_IRenderer;
             IRenderer * This,
             POINTF origin);
         
+        DECLSPEC_XFGVIRT(IRenderer, SetRenderLive)
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *SetRenderLive )( 
+            IRenderer * This,
+            HDC hdc,
+            RECT *pDrawingRect);
+        
+        DECLSPEC_XFGVIRT(IRenderer, UnSetRenderLive)
+        HRESULT ( STDMETHODCALLTYPE *UnSetRenderLive )( 
+            IRenderer * This);
+        
         DECLSPEC_XFGVIRT(IRenderer, Render)
         HRESULT ( STDMETHODCALLTYPE *Render )( 
             IRenderer * This,
@@ -199,19 +226,25 @@ EXTERN_C const IID IID_IRenderer;
             RECT *pRect,
             COLORREF theColor);
         
+        DECLSPEC_XFGVIRT(IRenderer, WhereAmI)
+        HRESULT ( STDMETHODCALLTYPE *WhereAmI )( 
+            IRenderer * This,
+            long xPixels,
+            long yPixels,
+            FLOAT *pX,
+            FLOAT *pY);
+        
         DECLSPEC_XFGVIRT(IRenderer, Reset)
         HRESULT ( STDMETHODCALLTYPE *Reset )( 
             IRenderer * This);
         
-        DECLSPEC_XFGVIRT(IRenderer, GetParametersBundle)
-        HRESULT ( STDMETHODCALLTYPE *GetParametersBundle )( 
-            IRenderer * This,
-            UINT_PTR **pptrBundleStorage);
+        DECLSPEC_XFGVIRT(IRenderer, SaveState)
+        HRESULT ( STDMETHODCALLTYPE *SaveState )( 
+            IRenderer * This);
         
-        DECLSPEC_XFGVIRT(IRenderer, SetParametersBundle)
-        HRESULT ( STDMETHODCALLTYPE *SetParametersBundle )( 
-            IRenderer * This,
-            UINT_PTR *ptrBundleStorage);
+        DECLSPEC_XFGVIRT(IRenderer, RestoreState)
+        HRESULT ( STDMETHODCALLTYPE *RestoreState )( 
+            IRenderer * This);
         
         END_INTERFACE
     } IRendererVtbl;
@@ -245,6 +278,12 @@ EXTERN_C const IID IID_IRenderer;
 #define IRenderer_put_Origin(This,origin)	\
     ( (This)->lpVtbl -> put_Origin(This,origin) ) 
 
+#define IRenderer_SetRenderLive(This,hdc,pDrawingRect)	\
+    ( (This)->lpVtbl -> SetRenderLive(This,hdc,pDrawingRect) ) 
+
+#define IRenderer_UnSetRenderLive(This)	\
+    ( (This)->lpVtbl -> UnSetRenderLive(This) ) 
+
 #define IRenderer_Render(This,hdc,pDrawingRect)	\
     ( (This)->lpVtbl -> Render(This,hdc,pDrawingRect) ) 
 
@@ -254,14 +293,17 @@ EXTERN_C const IID IID_IRenderer;
 #define IRenderer_ClearRect(This,hdc,pRect,theColor)	\
     ( (This)->lpVtbl -> ClearRect(This,hdc,pRect,theColor) ) 
 
+#define IRenderer_WhereAmI(This,xPixels,yPixels,pX,pY)	\
+    ( (This)->lpVtbl -> WhereAmI(This,xPixels,yPixels,pX,pY) ) 
+
 #define IRenderer_Reset(This)	\
     ( (This)->lpVtbl -> Reset(This) ) 
 
-#define IRenderer_GetParametersBundle(This,pptrBundleStorage)	\
-    ( (This)->lpVtbl -> GetParametersBundle(This,pptrBundleStorage) ) 
+#define IRenderer_SaveState(This)	\
+    ( (This)->lpVtbl -> SaveState(This) ) 
 
-#define IRenderer_SetParametersBundle(This,ptrBundleStorage)	\
-    ( (This)->lpVtbl -> SetParametersBundle(This,ptrBundleStorage) ) 
+#define IRenderer_RestoreState(This)	\
+    ( (This)->lpVtbl -> RestoreState(This) ) 
 
 #endif /* COBJMACROS */
 
@@ -285,7 +327,7 @@ EXTERN_C const IID IID_IGraphicElements;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
-    MIDL_INTERFACE("7731A10E-25F9-4234-BB4C-188512965193")
+    MIDL_INTERFACE("CC9F95CD-24F1-450A-8883-02B5314B1C82")
     IGraphicElements : public IUnknown
     {
     public:
@@ -313,14 +355,27 @@ EXTERN_C const IID IID_IGraphicElements;
             FLOAT x,
             FLOAT y) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE ArcTo( 
+        virtual HRESULT STDMETHODCALLTYPE Arc( 
             FLOAT xCenter,
             FLOAT yCenter,
             FLOAT radius,
-            FLOAT angle1,
-            FLOAT angle2) = 0;
+            FLOAT startAngle,
+            FLOAT endAngle) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE CubicBezierTo( 
+        virtual HRESULT STDMETHODCALLTYPE Ellipse( 
+            FLOAT xCenter,
+            FLOAT yCenter,
+            FLOAT xRadius,
+            FLOAT yRadius) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Circle( 
+            FLOAT xCenter,
+            FLOAT yCenter,
+            FLOAT radius) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE CubicBezier( 
+            FLOAT x0,
+            FLOAT y0,
             FLOAT x1,
             FLOAT y1,
             FLOAT x2,
@@ -328,18 +383,43 @@ EXTERN_C const IID IID_IGraphicElements;
             FLOAT x3,
             FLOAT y3) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE QuadraticBezierTo( 
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE QuadraticBezier( 
             FLOAT x1,
             FLOAT y1,
             FLOAT x2,
             FLOAT y2) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE Image( 
+        virtual HRESULT STDMETHODCALLTYPE PostScriptImage( 
             HDC hdc,
             HBITMAP hBitmap,
             UINT_PTR pPSCurrentCTM,
             FLOAT width,
             FLOAT height) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE PostScriptJpegImage( 
+            HDC hdc,
+            UINT_PTR pJpegData,
+            long dataSize,
+            UINT_PTR pPSCurrentCTM,
+            FLOAT width,
+            FLOAT height) = 0;
+        
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE NonPostScriptImage( 
+            HDC hdc,
+            HBITMAP hBitmap,
+            FLOAT x0,
+            FLOAT y0,
+            FLOAT displayWidth,
+            FLOAT displayHeight) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE NonPostScriptJPegImage( 
+            HDC hdc,
+            UINT_PTR pJpegData,
+            long dataSize,
+            FLOAT x0,
+            FLOAT y0,
+            FLOAT displayWidth,
+            FLOAT displayHeight) = 0;
         
     };
     
@@ -405,18 +485,35 @@ EXTERN_C const IID IID_IGraphicElements;
             FLOAT x,
             FLOAT y);
         
-        DECLSPEC_XFGVIRT(IGraphicElements, ArcTo)
-        HRESULT ( STDMETHODCALLTYPE *ArcTo )( 
+        DECLSPEC_XFGVIRT(IGraphicElements, Arc)
+        HRESULT ( STDMETHODCALLTYPE *Arc )( 
             IGraphicElements * This,
             FLOAT xCenter,
             FLOAT yCenter,
             FLOAT radius,
-            FLOAT angle1,
-            FLOAT angle2);
+            FLOAT startAngle,
+            FLOAT endAngle);
         
-        DECLSPEC_XFGVIRT(IGraphicElements, CubicBezierTo)
-        HRESULT ( STDMETHODCALLTYPE *CubicBezierTo )( 
+        DECLSPEC_XFGVIRT(IGraphicElements, Ellipse)
+        HRESULT ( STDMETHODCALLTYPE *Ellipse )( 
             IGraphicElements * This,
+            FLOAT xCenter,
+            FLOAT yCenter,
+            FLOAT xRadius,
+            FLOAT yRadius);
+        
+        DECLSPEC_XFGVIRT(IGraphicElements, Circle)
+        HRESULT ( STDMETHODCALLTYPE *Circle )( 
+            IGraphicElements * This,
+            FLOAT xCenter,
+            FLOAT yCenter,
+            FLOAT radius);
+        
+        DECLSPEC_XFGVIRT(IGraphicElements, CubicBezier)
+        HRESULT ( STDMETHODCALLTYPE *CubicBezier )( 
+            IGraphicElements * This,
+            FLOAT x0,
+            FLOAT y0,
             FLOAT x1,
             FLOAT y1,
             FLOAT x2,
@@ -424,22 +521,53 @@ EXTERN_C const IID IID_IGraphicElements;
             FLOAT x3,
             FLOAT y3);
         
-        DECLSPEC_XFGVIRT(IGraphicElements, QuadraticBezierTo)
-        HRESULT ( STDMETHODCALLTYPE *QuadraticBezierTo )( 
+        DECLSPEC_XFGVIRT(IGraphicElements, QuadraticBezier)
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *QuadraticBezier )( 
             IGraphicElements * This,
             FLOAT x1,
             FLOAT y1,
             FLOAT x2,
             FLOAT y2);
         
-        DECLSPEC_XFGVIRT(IGraphicElements, Image)
-        HRESULT ( STDMETHODCALLTYPE *Image )( 
+        DECLSPEC_XFGVIRT(IGraphicElements, PostScriptImage)
+        HRESULT ( STDMETHODCALLTYPE *PostScriptImage )( 
             IGraphicElements * This,
             HDC hdc,
             HBITMAP hBitmap,
             UINT_PTR pPSCurrentCTM,
             FLOAT width,
             FLOAT height);
+        
+        DECLSPEC_XFGVIRT(IGraphicElements, PostScriptJpegImage)
+        HRESULT ( STDMETHODCALLTYPE *PostScriptJpegImage )( 
+            IGraphicElements * This,
+            HDC hdc,
+            UINT_PTR pJpegData,
+            long dataSize,
+            UINT_PTR pPSCurrentCTM,
+            FLOAT width,
+            FLOAT height);
+        
+        DECLSPEC_XFGVIRT(IGraphicElements, NonPostScriptImage)
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *NonPostScriptImage )( 
+            IGraphicElements * This,
+            HDC hdc,
+            HBITMAP hBitmap,
+            FLOAT x0,
+            FLOAT y0,
+            FLOAT displayWidth,
+            FLOAT displayHeight);
+        
+        DECLSPEC_XFGVIRT(IGraphicElements, NonPostScriptJPegImage)
+        HRESULT ( STDMETHODCALLTYPE *NonPostScriptJPegImage )( 
+            IGraphicElements * This,
+            HDC hdc,
+            UINT_PTR pJpegData,
+            long dataSize,
+            FLOAT x0,
+            FLOAT y0,
+            FLOAT displayWidth,
+            FLOAT displayHeight);
         
         END_INTERFACE
     } IGraphicElementsVtbl;
@@ -488,17 +616,32 @@ EXTERN_C const IID IID_IGraphicElements;
 #define IGraphicElements_LineToRelative(This,x,y)	\
     ( (This)->lpVtbl -> LineToRelative(This,x,y) ) 
 
-#define IGraphicElements_ArcTo(This,xCenter,yCenter,radius,angle1,angle2)	\
-    ( (This)->lpVtbl -> ArcTo(This,xCenter,yCenter,radius,angle1,angle2) ) 
+#define IGraphicElements_Arc(This,xCenter,yCenter,radius,startAngle,endAngle)	\
+    ( (This)->lpVtbl -> Arc(This,xCenter,yCenter,radius,startAngle,endAngle) ) 
 
-#define IGraphicElements_CubicBezierTo(This,x1,y1,x2,y2,x3,y3)	\
-    ( (This)->lpVtbl -> CubicBezierTo(This,x1,y1,x2,y2,x3,y3) ) 
+#define IGraphicElements_Ellipse(This,xCenter,yCenter,xRadius,yRadius)	\
+    ( (This)->lpVtbl -> Ellipse(This,xCenter,yCenter,xRadius,yRadius) ) 
 
-#define IGraphicElements_QuadraticBezierTo(This,x1,y1,x2,y2)	\
-    ( (This)->lpVtbl -> QuadraticBezierTo(This,x1,y1,x2,y2) ) 
+#define IGraphicElements_Circle(This,xCenter,yCenter,radius)	\
+    ( (This)->lpVtbl -> Circle(This,xCenter,yCenter,radius) ) 
 
-#define IGraphicElements_Image(This,hdc,hBitmap,pPSCurrentCTM,width,height)	\
-    ( (This)->lpVtbl -> Image(This,hdc,hBitmap,pPSCurrentCTM,width,height) ) 
+#define IGraphicElements_CubicBezier(This,x0,y0,x1,y1,x2,y2,x3,y3)	\
+    ( (This)->lpVtbl -> CubicBezier(This,x0,y0,x1,y1,x2,y2,x3,y3) ) 
+
+#define IGraphicElements_QuadraticBezier(This,x1,y1,x2,y2)	\
+    ( (This)->lpVtbl -> QuadraticBezier(This,x1,y1,x2,y2) ) 
+
+#define IGraphicElements_PostScriptImage(This,hdc,hBitmap,pPSCurrentCTM,width,height)	\
+    ( (This)->lpVtbl -> PostScriptImage(This,hdc,hBitmap,pPSCurrentCTM,width,height) ) 
+
+#define IGraphicElements_PostScriptJpegImage(This,hdc,pJpegData,dataSize,pPSCurrentCTM,width,height)	\
+    ( (This)->lpVtbl -> PostScriptJpegImage(This,hdc,pJpegData,dataSize,pPSCurrentCTM,width,height) ) 
+
+#define IGraphicElements_NonPostScriptImage(This,hdc,hBitmap,x0,y0,displayWidth,displayHeight)	\
+    ( (This)->lpVtbl -> NonPostScriptImage(This,hdc,hBitmap,x0,y0,displayWidth,displayHeight) ) 
+
+#define IGraphicElements_NonPostScriptJPegImage(This,hdc,pJpegData,dataSize,x0,y0,displayWidth,displayHeight)	\
+    ( (This)->lpVtbl -> NonPostScriptJPegImage(This,hdc,pJpegData,dataSize,x0,y0,displayWidth,displayHeight) ) 
 
 #endif /* COBJMACROS */
 
@@ -522,14 +665,10 @@ EXTERN_C const IID IID_IGraphicParameters;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
-    MIDL_INTERFACE("7731A10E-25F9-4234-BB4C-188512965194")
+    MIDL_INTERFACE("CC9F95CD-24F1-450A-8883-02B5314B1C83")
     IGraphicParameters : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE SaveState( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE RestoreState( void) = 0;
-        
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_LineWidth( 
             FLOAT lw) = 0;
         
@@ -569,14 +708,6 @@ EXTERN_C const IID IID_IGraphicParameters;
         
         DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
-            IGraphicParameters * This);
-        
-        DECLSPEC_XFGVIRT(IGraphicParameters, SaveState)
-        HRESULT ( STDMETHODCALLTYPE *SaveState )( 
-            IGraphicParameters * This);
-        
-        DECLSPEC_XFGVIRT(IGraphicParameters, RestoreState)
-        HRESULT ( STDMETHODCALLTYPE *RestoreState )( 
             IGraphicParameters * This);
         
         DECLSPEC_XFGVIRT(IGraphicParameters, put_LineWidth)
@@ -629,12 +760,6 @@ EXTERN_C const IID IID_IGraphicParameters;
     ( (This)->lpVtbl -> Release(This) ) 
 
 
-#define IGraphicParameters_SaveState(This)	\
-    ( (This)->lpVtbl -> SaveState(This) ) 
-
-#define IGraphicParameters_RestoreState(This)	\
-    ( (This)->lpVtbl -> RestoreState(This) ) 
-
 #define IGraphicParameters_put_LineWidth(This,lw)	\
     ( (This)->lpVtbl -> put_LineWidth(This,lw) ) 
 
@@ -661,11 +786,126 @@ EXTERN_C const IID IID_IGraphicParameters;
 #endif 	/* __IGraphicParameters_INTERFACE_DEFINED__ */
 
 
+#ifndef __IRendererNotifications_INTERFACE_DEFINED__
+#define __IRendererNotifications_INTERFACE_DEFINED__
+
+/* interface IRendererNotifications */
+/* [object][unique][nonextensible][helpstring][uuid] */ 
+
+
+EXTERN_C const IID IID_IRendererNotifications;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("CC9F95CD-24F1-450A-8883-02B5314B1C84")
+    IRendererNotifications : public IUnknown
+    {
+    public:
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE ErrorNotification( 
+            UINT_PTR errorMessage) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE StatusNotification( 
+            UINT_PTR statusMessage) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE LogNotification( 
+            UINT_PTR logMessage) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE Clear( void) = 0;
+        
+    };
+    
+    
+#else 	/* C style interface */
+
+    typedef struct IRendererNotificationsVtbl
+    {
+        BEGIN_INTERFACE
+        
+        DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            IRendererNotifications * This,
+            /* [in] */ REFIID riid,
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
+        
+        DECLSPEC_XFGVIRT(IUnknown, AddRef)
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            IRendererNotifications * This);
+        
+        DECLSPEC_XFGVIRT(IUnknown, Release)
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            IRendererNotifications * This);
+        
+        DECLSPEC_XFGVIRT(IRendererNotifications, ErrorNotification)
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *ErrorNotification )( 
+            IRendererNotifications * This,
+            UINT_PTR errorMessage);
+        
+        DECLSPEC_XFGVIRT(IRendererNotifications, StatusNotification)
+        HRESULT ( STDMETHODCALLTYPE *StatusNotification )( 
+            IRendererNotifications * This,
+            UINT_PTR statusMessage);
+        
+        DECLSPEC_XFGVIRT(IRendererNotifications, LogNotification)
+        HRESULT ( STDMETHODCALLTYPE *LogNotification )( 
+            IRendererNotifications * This,
+            UINT_PTR logMessage);
+        
+        DECLSPEC_XFGVIRT(IRendererNotifications, Clear)
+        HRESULT ( STDMETHODCALLTYPE *Clear )( 
+            IRendererNotifications * This);
+        
+        END_INTERFACE
+    } IRendererNotificationsVtbl;
+
+    interface IRendererNotifications
+    {
+        CONST_VTBL struct IRendererNotificationsVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IRendererNotifications_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define IRendererNotifications_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define IRendererNotifications_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#define IRendererNotifications_ErrorNotification(This,errorMessage)	\
+    ( (This)->lpVtbl -> ErrorNotification(This,errorMessage) ) 
+
+#define IRendererNotifications_StatusNotification(This,statusMessage)	\
+    ( (This)->lpVtbl -> StatusNotification(This,statusMessage) ) 
+
+#define IRendererNotifications_LogNotification(This,logMessage)	\
+    ( (This)->lpVtbl -> LogNotification(This,logMessage) ) 
+
+#define IRendererNotifications_Clear(This)	\
+    ( (This)->lpVtbl -> Clear(This) ) 
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IRendererNotifications_INTERFACE_DEFINED__ */
+
+
 EXTERN_C const CLSID CLSID_Renderer;
 
 #ifdef __cplusplus
 
-class DECLSPEC_UUID("CC9F95CD-24F1-450A-8883-02B5314B1C82")
+class DECLSPEC_UUID("CC9F95CD-24F1-450A-8883-02B5314B1C90")
 Renderer;
 #endif
 #endif /* __Renderer_LIBRARY_DEFINED__ */

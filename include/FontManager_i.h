@@ -177,7 +177,6 @@ EXTERN_C const IID IID_IFont_EVNSW;
             UINT_PTR *pAvailableScripts) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE RenderGlyph( 
-            HDC hdc,
             unsigned short bGlyph,
             UINT_PTR pPSXform,
             UINT_PTR pXformToDeviceSpace,
@@ -306,7 +305,6 @@ EXTERN_C const IID IID_IFont_EVNSW;
         DECLSPEC_XFGVIRT(IFont_EVNSW, RenderGlyph)
         HRESULT ( STDMETHODCALLTYPE *RenderGlyph )( 
             IFont_EVNSW * This,
-            HDC hdc,
             unsigned short bGlyph,
             UINT_PTR pPSXform,
             UINT_PTR pXformToDeviceSpace,
@@ -389,8 +387,8 @@ EXTERN_C const IID IID_IFont_EVNSW;
 #define IFont_EVNSW_GetCharacteristics(This,cbName,pszName,cbStyle,pszStyle,cbScript,pszScript,pFontWeight,pSize,pAvailableFonts,pAvailableNames,pAvailableStyles,pAvailableScripts)	\
     ( (This)->lpVtbl -> GetCharacteristics(This,cbName,pszName,cbStyle,pszStyle,cbScript,pszScript,pFontWeight,pSize,pAvailableFonts,pAvailableNames,pAvailableStyles,pAvailableScripts) ) 
 
-#define IFont_EVNSW_RenderGlyph(This,hdc,bGlyph,pPSXform,pXformToDeviceSpace,pStartPoint,pNextPoint)	\
-    ( (This)->lpVtbl -> RenderGlyph(This,hdc,bGlyph,pPSXform,pXformToDeviceSpace,pStartPoint,pNextPoint) ) 
+#define IFont_EVNSW_RenderGlyph(This,bGlyph,pPSXform,pXformToDeviceSpace,pStartPoint,pNextPoint)	\
+    ( (This)->lpVtbl -> RenderGlyph(This,bGlyph,pPSXform,pXformToDeviceSpace,pStartPoint,pNextPoint) ) 
 
 #define IFont_EVNSW_SaveState(This)	\
     ( (This)->lpVtbl -> SaveState(This) ) 
@@ -444,7 +442,6 @@ EXTERN_C const IID IID_IFontManager;
             IFont_EVNSW **ppIFont) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE RenderGlyph( 
-            HDC hdc,
             unsigned short bGlyph,
             UINT_PTR pPSXform,
             UINT_PTR pXformToDeviceSpace,
@@ -517,7 +514,6 @@ EXTERN_C const IID IID_IFontManager;
         DECLSPEC_XFGVIRT(IFontManager, RenderGlyph)
         HRESULT ( STDMETHODCALLTYPE *RenderGlyph )( 
             IFontManager * This,
-            HDC hdc,
             unsigned short bGlyph,
             UINT_PTR pPSXform,
             UINT_PTR pXformToDeviceSpace,
@@ -579,8 +575,8 @@ EXTERN_C const IID IID_IFontManager;
 #define IFontManager_ChooseFont(This,hdc,ppIFont)	\
     ( (This)->lpVtbl -> ChooseFont(This,hdc,ppIFont) ) 
 
-#define IFontManager_RenderGlyph(This,hdc,bGlyph,pPSXform,pXformToDeviceSpace,pStartPoint,pNextPoint)	\
-    ( (This)->lpVtbl -> RenderGlyph(This,hdc,bGlyph,pPSXform,pXformToDeviceSpace,pStartPoint,pNextPoint) ) 
+#define IFontManager_RenderGlyph(This,bGlyph,pPSXform,pXformToDeviceSpace,pStartPoint,pNextPoint)	\
+    ( (This)->lpVtbl -> RenderGlyph(This,bGlyph,pPSXform,pXformToDeviceSpace,pStartPoint,pNextPoint) ) 
 
 #define IFontManager_ScaleFont(This,scaleFactor)	\
     ( (This)->lpVtbl -> ScaleFont(This,scaleFactor) ) 

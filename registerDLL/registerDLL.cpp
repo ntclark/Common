@@ -7,7 +7,7 @@
 
     HRESULT (__stdcall *dllRegisterServer)();
 
-    dllRegisterServer = (HRESULT (__stdcall *)())GetProcAddress(hGS,"DllUnregisterServer");
+    dllRegisterServer = (HRESULT (__stdcall *)())GetProcAddress(hGS,"RegisterServer");
 
     dllRegisterServer();
 

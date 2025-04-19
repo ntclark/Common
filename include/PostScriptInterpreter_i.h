@@ -48,25 +48,25 @@
 
 /* Forward Declarations */ 
 
-#ifndef __IPostScript_FWD_DEFINED__
-#define __IPostScript_FWD_DEFINED__
-typedef interface IPostScript IPostScript;
+#ifndef __IPostScriptInterpreter_FWD_DEFINED__
+#define __IPostScriptInterpreter_FWD_DEFINED__
+typedef interface IPostScriptInterpreter IPostScriptInterpreter;
 
-#endif 	/* __IPostScript_FWD_DEFINED__ */
-
-
-#ifndef __IPostScriptTakeText_FWD_DEFINED__
-#define __IPostScriptTakeText_FWD_DEFINED__
-typedef interface IPostScriptTakeText IPostScriptTakeText;
-
-#endif 	/* __IPostScriptTakeText_FWD_DEFINED__ */
+#endif 	/* __IPostScriptInterpreter_FWD_DEFINED__ */
 
 
-#ifndef __IPostScriptEvents_FWD_DEFINED__
-#define __IPostScriptEvents_FWD_DEFINED__
-typedef interface IPostScriptEvents IPostScriptEvents;
+#ifndef __IPostScriptInterpreterTakeText_FWD_DEFINED__
+#define __IPostScriptInterpreterTakeText_FWD_DEFINED__
+typedef interface IPostScriptInterpreterTakeText IPostScriptInterpreterTakeText;
 
-#endif 	/* __IPostScriptEvents_FWD_DEFINED__ */
+#endif 	/* __IPostScriptInterpreterTakeText_FWD_DEFINED__ */
+
+
+#ifndef __IPostScriptInterpreterEvents_FWD_DEFINED__
+#define __IPostScriptInterpreterEvents_FWD_DEFINED__
+typedef interface IPostScriptInterpreterEvents IPostScriptInterpreterEvents;
+
+#endif 	/* __IPostScriptInterpreterEvents_FWD_DEFINED__ */
 
 
 #ifndef __PostScriptInterpreter_FWD_DEFINED__
@@ -103,19 +103,19 @@ enum logLevel
 
 EXTERN_C const IID LIBID_PostScriptInterpreter;
 
-#ifndef __IPostScript_INTERFACE_DEFINED__
-#define __IPostScript_INTERFACE_DEFINED__
+#ifndef __IPostScriptInterpreter_INTERFACE_DEFINED__
+#define __IPostScriptInterpreter_INTERFACE_DEFINED__
 
-/* interface IPostScript */
+/* interface IPostScriptInterpreter */
 /* [object][uuid] */ 
 
 
-EXTERN_C const IID IID_IPostScript;
+EXTERN_C const IID IID_IPostScriptInterpreter;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
     MIDL_INTERFACE("AC9B7C38-86E1-4c17-8BE2-897AA5535A6B")
-    IPostScript : public IUnknown
+    IPostScriptInterpreter : public IUnknown
     {
     public:
         virtual HRESULT STDMETHODCALLTYPE SetSource( 
@@ -125,12 +125,7 @@ EXTERN_C const IID IID_IPostScript;
             /* [defaultvalue] */ char *pszFileName = 0) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE ParseText( 
-            char *pszText,
-            long length,
-            void *pvIPdfPage,
-            void *pvIPostScriptTakeText,
-            HDC hdc,
-            RECT *prcWindowsClip) = 0;
+            char *pszText) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE GetLastError( 
             char **ppszError) = 0;
@@ -138,66 +133,87 @@ EXTERN_C const IID IID_IPostScript;
         virtual HRESULT STDMETHODCALLTYPE LogLevel( 
             logLevel theLogLevel) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE RendererLogLevel( 
+            logLevel theLogLevel) = 0;
+        
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE GetPeristableProperties( 
+            UINT_PTR *pProperties,
+            long *pSize) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE SetPeristableProperties( 
+            UINT_PTR pProperties) = 0;
+        
     };
     
     
 #else 	/* C style interface */
 
-    typedef struct IPostScriptVtbl
+    typedef struct IPostScriptInterpreterVtbl
     {
         BEGIN_INTERFACE
         
         DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
-            IPostScript * This,
+            IPostScriptInterpreter * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
         DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
-            IPostScript * This);
+            IPostScriptInterpreter * This);
         
         DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
-            IPostScript * This);
+            IPostScriptInterpreter * This);
         
-        DECLSPEC_XFGVIRT(IPostScript, SetSource)
+        DECLSPEC_XFGVIRT(IPostScriptInterpreter, SetSource)
         HRESULT ( STDMETHODCALLTYPE *SetSource )( 
-            IPostScript * This,
+            IPostScriptInterpreter * This,
             char *pszFileName);
         
-        DECLSPEC_XFGVIRT(IPostScript, Parse)
+        DECLSPEC_XFGVIRT(IPostScriptInterpreter, Parse)
         HRESULT ( STDMETHODCALLTYPE *Parse )( 
-            IPostScript * This,
+            IPostScriptInterpreter * This,
             /* [defaultvalue] */ char *pszFileName);
         
-        DECLSPEC_XFGVIRT(IPostScript, ParseText)
+        DECLSPEC_XFGVIRT(IPostScriptInterpreter, ParseText)
         HRESULT ( STDMETHODCALLTYPE *ParseText )( 
-            IPostScript * This,
-            char *pszText,
-            long length,
-            void *pvIPdfPage,
-            void *pvIPostScriptTakeText,
-            HDC hdc,
-            RECT *prcWindowsClip);
+            IPostScriptInterpreter * This,
+            char *pszText);
         
-        DECLSPEC_XFGVIRT(IPostScript, GetLastError)
+        DECLSPEC_XFGVIRT(IPostScriptInterpreter, GetLastError)
         HRESULT ( STDMETHODCALLTYPE *GetLastError )( 
-            IPostScript * This,
+            IPostScriptInterpreter * This,
             char **ppszError);
         
-        DECLSPEC_XFGVIRT(IPostScript, LogLevel)
+        DECLSPEC_XFGVIRT(IPostScriptInterpreter, LogLevel)
         HRESULT ( STDMETHODCALLTYPE *LogLevel )( 
-            IPostScript * This,
+            IPostScriptInterpreter * This,
             logLevel theLogLevel);
         
+        DECLSPEC_XFGVIRT(IPostScriptInterpreter, RendererLogLevel)
+        HRESULT ( STDMETHODCALLTYPE *RendererLogLevel )( 
+            IPostScriptInterpreter * This,
+            logLevel theLogLevel);
+        
+        DECLSPEC_XFGVIRT(IPostScriptInterpreter, GetPeristableProperties)
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *GetPeristableProperties )( 
+            IPostScriptInterpreter * This,
+            UINT_PTR *pProperties,
+            long *pSize);
+        
+        DECLSPEC_XFGVIRT(IPostScriptInterpreter, SetPeristableProperties)
+        HRESULT ( STDMETHODCALLTYPE *SetPeristableProperties )( 
+            IPostScriptInterpreter * This,
+            UINT_PTR pProperties);
+        
         END_INTERFACE
-    } IPostScriptVtbl;
+    } IPostScriptInterpreterVtbl;
 
-    interface IPostScript
+    interface IPostScriptInterpreter
     {
-        CONST_VTBL struct IPostScriptVtbl *lpVtbl;
+        CONST_VTBL struct IPostScriptInterpreterVtbl *lpVtbl;
     };
 
     
@@ -205,30 +221,39 @@ EXTERN_C const IID IID_IPostScript;
 #ifdef COBJMACROS
 
 
-#define IPostScript_QueryInterface(This,riid,ppvObject)	\
+#define IPostScriptInterpreter_QueryInterface(This,riid,ppvObject)	\
     ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
 
-#define IPostScript_AddRef(This)	\
+#define IPostScriptInterpreter_AddRef(This)	\
     ( (This)->lpVtbl -> AddRef(This) ) 
 
-#define IPostScript_Release(This)	\
+#define IPostScriptInterpreter_Release(This)	\
     ( (This)->lpVtbl -> Release(This) ) 
 
 
-#define IPostScript_SetSource(This,pszFileName)	\
+#define IPostScriptInterpreter_SetSource(This,pszFileName)	\
     ( (This)->lpVtbl -> SetSource(This,pszFileName) ) 
 
-#define IPostScript_Parse(This,pszFileName)	\
+#define IPostScriptInterpreter_Parse(This,pszFileName)	\
     ( (This)->lpVtbl -> Parse(This,pszFileName) ) 
 
-#define IPostScript_ParseText(This,pszText,length,pvIPdfPage,pvIPostScriptTakeText,hdc,prcWindowsClip)	\
-    ( (This)->lpVtbl -> ParseText(This,pszText,length,pvIPdfPage,pvIPostScriptTakeText,hdc,prcWindowsClip) ) 
+#define IPostScriptInterpreter_ParseText(This,pszText)	\
+    ( (This)->lpVtbl -> ParseText(This,pszText) ) 
 
-#define IPostScript_GetLastError(This,ppszError)	\
+#define IPostScriptInterpreter_GetLastError(This,ppszError)	\
     ( (This)->lpVtbl -> GetLastError(This,ppszError) ) 
 
-#define IPostScript_LogLevel(This,theLogLevel)	\
+#define IPostScriptInterpreter_LogLevel(This,theLogLevel)	\
     ( (This)->lpVtbl -> LogLevel(This,theLogLevel) ) 
+
+#define IPostScriptInterpreter_RendererLogLevel(This,theLogLevel)	\
+    ( (This)->lpVtbl -> RendererLogLevel(This,theLogLevel) ) 
+
+#define IPostScriptInterpreter_GetPeristableProperties(This,pProperties,pSize)	\
+    ( (This)->lpVtbl -> GetPeristableProperties(This,pProperties,pSize) ) 
+
+#define IPostScriptInterpreter_SetPeristableProperties(This,pProperties)	\
+    ( (This)->lpVtbl -> SetPeristableProperties(This,pProperties) ) 
 
 #endif /* COBJMACROS */
 
@@ -238,22 +263,22 @@ EXTERN_C const IID IID_IPostScript;
 
 
 
-#endif 	/* __IPostScript_INTERFACE_DEFINED__ */
+#endif 	/* __IPostScriptInterpreter_INTERFACE_DEFINED__ */
 
 
-#ifndef __IPostScriptTakeText_INTERFACE_DEFINED__
-#define __IPostScriptTakeText_INTERFACE_DEFINED__
+#ifndef __IPostScriptInterpreterTakeText_INTERFACE_DEFINED__
+#define __IPostScriptInterpreterTakeText_INTERFACE_DEFINED__
 
-/* interface IPostScriptTakeText */
+/* interface IPostScriptInterpreterTakeText */
 /* [uuid] */ 
 
 
-EXTERN_C const IID IID_IPostScriptTakeText;
+EXTERN_C const IID IID_IPostScriptInterpreterTakeText;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
     MIDL_INTERFACE("AC9B7C38-86E1-4c17-8BE2-897AA5535A6C")
-    IPostScriptTakeText
+    IPostScriptInterpreterTakeText
     {
     public:
         BEGIN_INTERFACE
@@ -267,22 +292,22 @@ EXTERN_C const IID IID_IPostScriptTakeText;
     
 #else 	/* C style interface */
 
-    typedef struct IPostScriptTakeTextVtbl
+    typedef struct IPostScriptInterpreterTakeTextVtbl
     {
         BEGIN_INTERFACE
         
-        DECLSPEC_XFGVIRT(IPostScriptTakeText, TakeText)
+        DECLSPEC_XFGVIRT(IPostScriptInterpreterTakeText, TakeText)
         HRESULT ( STDMETHODCALLTYPE *TakeText )( 
-            IPostScriptTakeText * This,
+            IPostScriptInterpreterTakeText * This,
             RECT *pLocationPDF,
             char *pszText);
         
         END_INTERFACE
-    } IPostScriptTakeTextVtbl;
+    } IPostScriptInterpreterTakeTextVtbl;
 
-    interface IPostScriptTakeText
+    interface IPostScriptInterpreterTakeText
     {
-        CONST_VTBL struct IPostScriptTakeTextVtbl *lpVtbl;
+        CONST_VTBL struct IPostScriptInterpreterTakeTextVtbl *lpVtbl;
     };
 
     
@@ -290,7 +315,7 @@ EXTERN_C const IID IID_IPostScriptTakeText;
 #ifdef COBJMACROS
 
 
-#define IPostScriptTakeText_TakeText(This,pLocationPDF,pszText)	\
+#define IPostScriptInterpreterTakeText_TakeText(This,pLocationPDF,pszText)	\
     ( (This)->lpVtbl -> TakeText(This,pLocationPDF,pszText) ) 
 
 #endif /* COBJMACROS */
@@ -301,22 +326,22 @@ EXTERN_C const IID IID_IPostScriptTakeText;
 
 
 
-#endif 	/* __IPostScriptTakeText_INTERFACE_DEFINED__ */
+#endif 	/* __IPostScriptInterpreterTakeText_INTERFACE_DEFINED__ */
 
 
-#ifndef __IPostScriptEvents_INTERFACE_DEFINED__
-#define __IPostScriptEvents_INTERFACE_DEFINED__
+#ifndef __IPostScriptInterpreterEvents_INTERFACE_DEFINED__
+#define __IPostScriptInterpreterEvents_INTERFACE_DEFINED__
 
-/* interface IPostScriptEvents */
+/* interface IPostScriptInterpreterEvents */
 /* [object][uuid] */ 
 
 
-EXTERN_C const IID IID_IPostScriptEvents;
+EXTERN_C const IID IID_IPostScriptInterpreterEvents;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
     MIDL_INTERFACE("AC9B7C38-86E1-4c17-8BE2-897AA5535A6D")
-    IPostScriptEvents : public IUnknown
+    IPostScriptInterpreterEvents : public IUnknown
     {
     public:
         virtual HRESULT STDMETHODCALLTYPE RenderChar( 
@@ -327,48 +352,56 @@ EXTERN_C const IID IID_IPostScriptEvents;
             POINT *pPoint,
             char *pszString) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE ErrorNotification( 
+            UINT_PTR pszError) = 0;
+        
     };
     
     
 #else 	/* C style interface */
 
-    typedef struct IPostScriptEventsVtbl
+    typedef struct IPostScriptInterpreterEventsVtbl
     {
         BEGIN_INTERFACE
         
         DECLSPEC_XFGVIRT(IUnknown, QueryInterface)
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
-            IPostScriptEvents * This,
+            IPostScriptInterpreterEvents * This,
             /* [in] */ REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
         DECLSPEC_XFGVIRT(IUnknown, AddRef)
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
-            IPostScriptEvents * This);
+            IPostScriptInterpreterEvents * This);
         
         DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
-            IPostScriptEvents * This);
+            IPostScriptInterpreterEvents * This);
         
-        DECLSPEC_XFGVIRT(IPostScriptEvents, RenderChar)
+        DECLSPEC_XFGVIRT(IPostScriptInterpreterEvents, RenderChar)
         HRESULT ( STDMETHODCALLTYPE *RenderChar )( 
-            IPostScriptEvents * This,
+            IPostScriptInterpreterEvents * This,
             POINT *pPoint,
             char theChar);
         
-        DECLSPEC_XFGVIRT(IPostScriptEvents, RenderString)
+        DECLSPEC_XFGVIRT(IPostScriptInterpreterEvents, RenderString)
         HRESULT ( STDMETHODCALLTYPE *RenderString )( 
-            IPostScriptEvents * This,
+            IPostScriptInterpreterEvents * This,
             POINT *pPoint,
             char *pszString);
         
+        DECLSPEC_XFGVIRT(IPostScriptInterpreterEvents, ErrorNotification)
+        HRESULT ( STDMETHODCALLTYPE *ErrorNotification )( 
+            IPostScriptInterpreterEvents * This,
+            UINT_PTR pszError);
+        
         END_INTERFACE
-    } IPostScriptEventsVtbl;
+    } IPostScriptInterpreterEventsVtbl;
 
-    interface IPostScriptEvents
+    interface IPostScriptInterpreterEvents
     {
-        CONST_VTBL struct IPostScriptEventsVtbl *lpVtbl;
+        CONST_VTBL struct IPostScriptInterpreterEventsVtbl *lpVtbl;
     };
 
     
@@ -376,21 +409,24 @@ EXTERN_C const IID IID_IPostScriptEvents;
 #ifdef COBJMACROS
 
 
-#define IPostScriptEvents_QueryInterface(This,riid,ppvObject)	\
+#define IPostScriptInterpreterEvents_QueryInterface(This,riid,ppvObject)	\
     ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
 
-#define IPostScriptEvents_AddRef(This)	\
+#define IPostScriptInterpreterEvents_AddRef(This)	\
     ( (This)->lpVtbl -> AddRef(This) ) 
 
-#define IPostScriptEvents_Release(This)	\
+#define IPostScriptInterpreterEvents_Release(This)	\
     ( (This)->lpVtbl -> Release(This) ) 
 
 
-#define IPostScriptEvents_RenderChar(This,pPoint,theChar)	\
+#define IPostScriptInterpreterEvents_RenderChar(This,pPoint,theChar)	\
     ( (This)->lpVtbl -> RenderChar(This,pPoint,theChar) ) 
 
-#define IPostScriptEvents_RenderString(This,pPoint,pszString)	\
+#define IPostScriptInterpreterEvents_RenderString(This,pPoint,pszString)	\
     ( (This)->lpVtbl -> RenderString(This,pPoint,pszString) ) 
+
+#define IPostScriptInterpreterEvents_ErrorNotification(This,pszError)	\
+    ( (This)->lpVtbl -> ErrorNotification(This,pszError) ) 
 
 #endif /* COBJMACROS */
 
@@ -400,7 +436,7 @@ EXTERN_C const IID IID_IPostScriptEvents;
 
 
 
-#endif 	/* __IPostScriptEvents_INTERFACE_DEFINED__ */
+#endif 	/* __IPostScriptInterpreterEvents_INTERFACE_DEFINED__ */
 
 
 EXTERN_C const CLSID CLSID_PostScriptInterpreter;
