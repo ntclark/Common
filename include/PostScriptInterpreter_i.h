@@ -122,7 +122,8 @@ EXTERN_C const IID IID_IPostScriptInterpreter;
             char *pszFileName) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE Parse( 
-            /* [defaultvalue] */ char *pszFileName = 0) = 0;
+            /* [defaultvalue] */ char *pszFileName = 0,
+            /* [defaultvalue] */ BOOL autoStart = TRUE) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE ParseText( 
             char *pszText) = 0;
@@ -136,7 +137,7 @@ EXTERN_C const IID IID_IPostScriptInterpreter;
         virtual HRESULT STDMETHODCALLTYPE RendererLogLevel( 
             logLevel theLogLevel) = 0;
         
-        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE GetPeristableProperties( 
+        virtual HRESULT STDMETHODCALLTYPE GetPeristableProperties( 
             UINT_PTR *pProperties,
             long *pSize) = 0;
         
@@ -175,7 +176,8 @@ EXTERN_C const IID IID_IPostScriptInterpreter;
         DECLSPEC_XFGVIRT(IPostScriptInterpreter, Parse)
         HRESULT ( STDMETHODCALLTYPE *Parse )( 
             IPostScriptInterpreter * This,
-            /* [defaultvalue] */ char *pszFileName);
+            /* [defaultvalue] */ char *pszFileName,
+            /* [defaultvalue] */ BOOL autoStart);
         
         DECLSPEC_XFGVIRT(IPostScriptInterpreter, ParseText)
         HRESULT ( STDMETHODCALLTYPE *ParseText )( 
@@ -198,7 +200,7 @@ EXTERN_C const IID IID_IPostScriptInterpreter;
             logLevel theLogLevel);
         
         DECLSPEC_XFGVIRT(IPostScriptInterpreter, GetPeristableProperties)
-        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *GetPeristableProperties )( 
+        HRESULT ( STDMETHODCALLTYPE *GetPeristableProperties )( 
             IPostScriptInterpreter * This,
             UINT_PTR *pProperties,
             long *pSize);
@@ -234,8 +236,8 @@ EXTERN_C const IID IID_IPostScriptInterpreter;
 #define IPostScriptInterpreter_SetSource(This,pszFileName)	\
     ( (This)->lpVtbl -> SetSource(This,pszFileName) ) 
 
-#define IPostScriptInterpreter_Parse(This,pszFileName)	\
-    ( (This)->lpVtbl -> Parse(This,pszFileName) ) 
+#define IPostScriptInterpreter_Parse(This,pszFileName,autoStart)	\
+    ( (This)->lpVtbl -> Parse(This,pszFileName,autoStart) ) 
 
 #define IPostScriptInterpreter_ParseText(This,pszText)	\
     ( (This)->lpVtbl -> ParseText(This,pszText) ) 

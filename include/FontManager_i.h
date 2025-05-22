@@ -97,6 +97,22 @@ extern "C"{
 /* library FontManager */
 /* [version][lcid][helpstring][uuid] */ 
 
+typedef 
+enum FontType
+    {
+        type0	= 0,
+        type1	= 1,
+        type2	= 2,
+        type3	= 3,
+        type9	= 9,
+        type10	= 10,
+        type11	= 11,
+        type14	= 14,
+        type32	= 32,
+        type42	= 42,
+        typeUnspecified	= 99
+    } 	FontType;
+
 
 EXTERN_C const IID LIBID_FontManager;
 
@@ -150,7 +166,10 @@ EXTERN_C const IID IID_IFont_EVNSW;
             /* [retval][out] */ UINT_PTR *pCookie) = 0;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_FontType( 
-            /* [retval][out] */ int *pFontType) = 0;
+            /* [retval][out] */ enum FontType *pFontType) = 0;
+        
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_FontType( 
+            /* [in] */ enum FontType fontType) = 0;
         
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_GlyphIndex( 
             unsigned short charCode,
@@ -268,7 +287,12 @@ EXTERN_C const IID IID_IFont_EVNSW;
         DECLSPEC_XFGVIRT(IFont_EVNSW, get_FontType)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_FontType )( 
             IFont_EVNSW * This,
-            /* [retval][out] */ int *pFontType);
+            /* [retval][out] */ enum FontType *pFontType);
+        
+        DECLSPEC_XFGVIRT(IFont_EVNSW, put_FontType)
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_FontType )( 
+            IFont_EVNSW * This,
+            /* [in] */ enum FontType fontType);
         
         DECLSPEC_XFGVIRT(IFont_EVNSW, get_GlyphIndex)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_GlyphIndex )( 
@@ -375,6 +399,9 @@ EXTERN_C const IID IID_IFont_EVNSW;
 #define IFont_EVNSW_get_FontType(This,pFontType)	\
     ( (This)->lpVtbl -> get_FontType(This,pFontType) ) 
 
+#define IFont_EVNSW_put_FontType(This,fontType)	\
+    ( (This)->lpVtbl -> put_FontType(This,fontType) ) 
+
 #define IFont_EVNSW_get_GlyphIndex(This,charCode,pGlyphId)	\
     ( (This)->lpVtbl -> get_GlyphIndex(This,charCode,pGlyphId) ) 
 
@@ -460,6 +487,8 @@ EXTERN_C const IID IID_IFontManager;
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_CurrentFont( 
             IFont_EVNSW *ppIFont_Current) = 0;
         
+        virtual HRESULT STDMETHODCALLTYPE Reset( void) = 0;
+        
     };
     
     
@@ -540,6 +569,10 @@ EXTERN_C const IID IID_IFontManager;
             IFontManager * This,
             IFont_EVNSW *ppIFont_Current);
         
+        DECLSPEC_XFGVIRT(IFontManager, Reset)
+        HRESULT ( STDMETHODCALLTYPE *Reset )( 
+            IFontManager * This);
+        
         END_INTERFACE
     } IFontManagerVtbl;
 
@@ -589,6 +622,9 @@ EXTERN_C const IID IID_IFontManager;
 
 #define IFontManager_put_CurrentFont(This,ppIFont_Current)	\
     ( (This)->lpVtbl -> put_CurrentFont(This,ppIFont_Current) ) 
+
+#define IFontManager_Reset(This)	\
+    ( (This)->lpVtbl -> Reset(This) ) 
 
 #endif /* COBJMACROS */
 

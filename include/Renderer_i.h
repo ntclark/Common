@@ -122,8 +122,14 @@ EXTERN_C const IID IID_IRenderer;
     IRenderer : public IUnknown
     {
     public:
-        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_TransformMatrix( 
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_ToDeviceTransform( 
             UINT_PTR pXformToDeviceSpace) = 0;
+        
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_ToPageTransform( 
+            UINT_PTR pXForm) = 0;
+        
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_ScaleTransform( 
+            UINT_PTR pXForm) = 0;
         
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_DownScale( 
             FLOAT downScale) = 0;
@@ -154,8 +160,6 @@ EXTERN_C const IID IID_IRenderer;
             FLOAT *pX,
             FLOAT *pY) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE Reset( void) = 0;
-        
         virtual HRESULT STDMETHODCALLTYPE SaveState( void) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE RestoreState( void) = 0;
@@ -184,10 +188,20 @@ EXTERN_C const IID IID_IRenderer;
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IRenderer * This);
         
-        DECLSPEC_XFGVIRT(IRenderer, put_TransformMatrix)
-        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_TransformMatrix )( 
+        DECLSPEC_XFGVIRT(IRenderer, put_ToDeviceTransform)
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ToDeviceTransform )( 
             IRenderer * This,
             UINT_PTR pXformToDeviceSpace);
+        
+        DECLSPEC_XFGVIRT(IRenderer, put_ToPageTransform)
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ToPageTransform )( 
+            IRenderer * This,
+            UINT_PTR pXForm);
+        
+        DECLSPEC_XFGVIRT(IRenderer, put_ScaleTransform)
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_ScaleTransform )( 
+            IRenderer * This,
+            UINT_PTR pXForm);
         
         DECLSPEC_XFGVIRT(IRenderer, put_DownScale)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_DownScale )( 
@@ -234,10 +248,6 @@ EXTERN_C const IID IID_IRenderer;
             FLOAT *pX,
             FLOAT *pY);
         
-        DECLSPEC_XFGVIRT(IRenderer, Reset)
-        HRESULT ( STDMETHODCALLTYPE *Reset )( 
-            IRenderer * This);
-        
         DECLSPEC_XFGVIRT(IRenderer, SaveState)
         HRESULT ( STDMETHODCALLTYPE *SaveState )( 
             IRenderer * This);
@@ -269,8 +279,14 @@ EXTERN_C const IID IID_IRenderer;
     ( (This)->lpVtbl -> Release(This) ) 
 
 
-#define IRenderer_put_TransformMatrix(This,pXformToDeviceSpace)	\
-    ( (This)->lpVtbl -> put_TransformMatrix(This,pXformToDeviceSpace) ) 
+#define IRenderer_put_ToDeviceTransform(This,pXformToDeviceSpace)	\
+    ( (This)->lpVtbl -> put_ToDeviceTransform(This,pXformToDeviceSpace) ) 
+
+#define IRenderer_put_ToPageTransform(This,pXForm)	\
+    ( (This)->lpVtbl -> put_ToPageTransform(This,pXForm) ) 
+
+#define IRenderer_put_ScaleTransform(This,pXForm)	\
+    ( (This)->lpVtbl -> put_ScaleTransform(This,pXForm) ) 
 
 #define IRenderer_put_DownScale(This,downScale)	\
     ( (This)->lpVtbl -> put_DownScale(This,downScale) ) 
@@ -295,9 +311,6 @@ EXTERN_C const IID IID_IRenderer;
 
 #define IRenderer_WhereAmI(This,xPixels,yPixels,pX,pY)	\
     ( (This)->lpVtbl -> WhereAmI(This,xPixels,yPixels,pX,pY) ) 
-
-#define IRenderer_Reset(This)	\
-    ( (This)->lpVtbl -> Reset(This) ) 
 
 #define IRenderer_SaveState(This)	\
     ( (This)->lpVtbl -> SaveState(This) ) 
@@ -420,6 +433,14 @@ EXTERN_C const IID IID_IGraphicElements;
             FLOAT y0,
             FLOAT displayWidth,
             FLOAT displayHeight) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE GetCurrentPoint( 
+            FLOAT *pX,
+            FLOAT *pY) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE SetCurrentPoint( 
+            FLOAT *pX,
+            FLOAT *pY) = 0;
         
     };
     
@@ -569,6 +590,18 @@ EXTERN_C const IID IID_IGraphicElements;
             FLOAT displayWidth,
             FLOAT displayHeight);
         
+        DECLSPEC_XFGVIRT(IGraphicElements, GetCurrentPoint)
+        HRESULT ( STDMETHODCALLTYPE *GetCurrentPoint )( 
+            IGraphicElements * This,
+            FLOAT *pX,
+            FLOAT *pY);
+        
+        DECLSPEC_XFGVIRT(IGraphicElements, SetCurrentPoint)
+        HRESULT ( STDMETHODCALLTYPE *SetCurrentPoint )( 
+            IGraphicElements * This,
+            FLOAT *pX,
+            FLOAT *pY);
+        
         END_INTERFACE
     } IGraphicElementsVtbl;
 
@@ -642,6 +675,12 @@ EXTERN_C const IID IID_IGraphicElements;
 
 #define IGraphicElements_NonPostScriptJPegImage(This,hdc,pJpegData,dataSize,x0,y0,displayWidth,displayHeight)	\
     ( (This)->lpVtbl -> NonPostScriptJPegImage(This,hdc,pJpegData,dataSize,x0,y0,displayWidth,displayHeight) ) 
+
+#define IGraphicElements_GetCurrentPoint(This,pX,pY)	\
+    ( (This)->lpVtbl -> GetCurrentPoint(This,pX,pY) ) 
+
+#define IGraphicElements_SetCurrentPoint(This,pX,pY)	\
+    ( (This)->lpVtbl -> SetCurrentPoint(This,pX,pY) ) 
 
 #endif /* COBJMACROS */
 

@@ -103,7 +103,8 @@
 
       public:
 
-         _IOleInPlaceFrame(EMBEDDED_OBJECT_EMBEDDER_CLASS *pp,HWND hostWindow) : pParent(pp), hwndHost(hostWindow) { pParent -> AddRef(); };
+         _IOleInPlaceFrame(EMBEDDED_OBJECT_EMBEDDER_CLASS *pp,HWND hostWindow) : 
+                pParent(pp), hwndHost(hostWindow) { pParent -> AddRef(); };
 
          STDMETHOD(QueryInterface)(REFIID riid,void **ppv);
 
@@ -133,4 +134,4 @@
 
          HWND hwndHost{NULL};
 
-      } * pIOleInPlaceFrame_HTML_Host{NULL};
+      } *pIOleInPlaceFrame_HTML_Host{NULL};
