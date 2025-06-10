@@ -1,0 +1,145 @@
+
+//IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES "When CursiVision starts, should it show these properties ?"
+IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES "When Tax United starts, should it show these properties ?"
+
+//IDDI_DISPOSITION_OPEN_LAST_DOCUMENT "When CursiVision starts, should it open the document that was last open ?"
+IDDI_DISPOSITION_OPEN_LAST_DOCUMENT "When Tax United starts, should it open the document that was last open ?"
+
+//IDDI_DISPLAY_WAITING_SHOW_LABEL "Notify me when CursiVision is waiting for the signing location"
+IDDI_DISPLAY_WAITING_SHOW_LABEL "Notify me when Tax United is waiting for the signing location"
+
+//IDDI_DISPLAY_WAITING_SHOW "When you are using a signature pad and when CursiVision is waiting for you to define the signing location(s) \
+//with the mouse, this option will cause a beep and message to remind you to select the signing location."
+IDDI_DISPLAY_WAITING_SHOW "When you are using a signature pad and when Tax United is waiting for you to define the signing location(s) \
+with the mouse, this option will cause a beep and message to remind you to select the signing location."
+
+//IDDI_DISPOSITION_APPEND "Should CursiVision append any of the following\rto the name of the document before saving it ?"
+IDDI_DISPOSITION_APPEND "Should Tax United append any of the following\rto the name of the document before saving it ?"
+
+IDDI_DISPOSITION_SUFFIX "You can append any value to the file name of the signed documents\rto distinguish them as signed copies of this particular document, for example."
+IDDI_DISPOSITION_APPEND_DATE "Append the current date to the name of the signed document"
+IDDI_DISPOSITION_APPEND_TIME "Append the current time to the name of the signed document"
+
+//IDDI_DISPOSITION_SAVE "Should CursiVision save the signed document ?\r\rYou may choose not to save the document if a back-end process handles it."
+IDDI_DISPOSITION_SAVE "Should Tax United save the signed document ?\r\rYou may choose not to save the document if a back-end process handles it."
+
+//IDDI_DISPOSITION_REPLACE "Should CursiVision automatically replace a file\rwith the same name if it is already there ?"
+IDDI_DISPOSITION_REPLACE "Should Tax United automatically replace a file\rwith the same name if it is already there ?"
+
+//IDDI_DISPOSITION_SEQUENCE "Should CursiVision calculate and append an integer\rto the signed document name before saving it ?"
+IDDI_DISPOSITION_SEQUENCE "Should Tax United calculate and append an integer\rto the signed document name before saving it ?"
+
+//IDDI_DISPOSITION_SAVE_MY_DOCUMENTS "Should CursiVision save your signed documents in the\rMy Signed Documents folder in your Documents folder ?"
+IDDI_DISPOSITION_SAVE_MY_DOCUMENTS "Should Tax United save your signed documents in the\rMy Signed Documents folder in your Documents folder ?"
+
+//IDDI_DISPOSITION_SAVE_BY_ORIGINAL "Should CursiVision save the signed document in the same folder as the original ?\r\rNote that if you also do not append anything to the name,\ror use Sequence, you will overwrite your original document."
+IDDI_DISPOSITION_SAVE_BY_ORIGINAL "Should Tax United save the signed document in the same folder as the original ?\r\rNote that if you also do not append anything to the name,\ror use Sequence, you will overwrite your original document."
+
+//IDDI_DISPOSITION_SAVE_IN "You can specify the directory where CursiVision\rwill save the signed copies of this file."
+IDDI_DISPOSITION_SAVE_IN "You can specify the directory where Tax United\rwill save the signed copies of this file."
+
+
+//IDS_PRINTDRIVER_NAME "CursiVision Printer"
+IDS_PRINTDRIVER_NAME "Tax United Printer"
+
+
+IDDI_DISPOSITION_PRINT ""
+
+//IDDI_DISPOSITION_SAVE_VALIDATION "With Topaz signature pads, CursiVision can save a file containing the Topaz Signature Validation data\r\
+//This file is saved with the same name as the signed document using the extension '.sig\r\r\
+//the file is placed in the same folder as the signed document"
+
+IDDI_DISPOSITION_SHOW_PROPERTIES "Select this option if you need to adjust these settings\rafter the document is signed but before it is processed."
+
+//IDDI_DISPOSITION_RETAIN_SIGNED "After the signed document has been saved or processed,\rshould CursiVision remain open with the signed document in view ?"
+IDDI_DISPOSITION_RETAIN_SIGNED "After the signed document has been saved or processed,\rshould Tax United remain open with the signed document in view ?"
+
+//IDDI_DISPOSITION_REOPEN_ORIGINAL "After the signed document has been saved or processed,\rshould CursiVision reopen the original document ?"
+IDDI_DISPOSITION_REOPEN_ORIGINAL "After the signed document has been saved or processed,\rshould Tax United reopen the original document ?"
+
+//IDDI_DISPOSITION_CLOSE_DOCUMENT "After the signed document has been saved or processed,\rshould CursiVision close the document and remain running ?"
+IDDI_DISPOSITION_CLOSE_DOCUMENT "After the signed document has been saved or processed,\rshould Tax United close the document and remain running ?"
+
+IDDI_DISPOSITION_KEEP_RUNNING_AND_AWAIT_JOB "After the signed document has been saved or processed,\rshould Tax United remain running and wait for the next print job ?"
+
+IDDI_DISPOSITION_AWAIT_JOB_MINIMIZE "If so, should the system minimize to the taskbar while waiting?"
+
+//IDDI_DISPOSITION_EXIT "After the signed document has been processed, exit CursiVision.\r\rUse this option to automate the signature process for this file."
+IDDI_DISPOSITION_EXIT "After the signed document has been processed, exit Tax United.\r\rUse this option to automate the signature process for this file."
+
+IDDI_DISPOSITION_WHILE_SIGNING_SHOW_PAD " provide text "
+
+//IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF 
+//"When not in Continuous writing mode, CursiVision will remember a single location on the document to sign.\r\r\
+//Changing to this value for a document that has multiple locations defined will cause the system to forget those locations\r\
+//so that you can redefine the one location."
+
+IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF 
+"When not in Continuous writing mode, Tax United will remember a single location on the document to sign.\r\r\
+Changing to this value for a document that has multiple locations defined will cause the system to forget those locations\r\
+so that you can redefine the one location."
+
+//IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON 
+//"With Continous writing, CursiVision remembers multiple locations on this document to sign.\r\r\
+//Click the mouse on the document and sign for each location. When all are defined, press the Escape ([esc]) key.\r\r\
+//Changing this value for a document that has a single location to sign will cause the system to forget that \r\
+//location so you can then define multiple locations."
+
+IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON 
+"With Continous writing, Tax United remembers multiple locations on this document to sign.\r\r\
+Click the mouse on the document and sign for each location. When all are defined, press the Escape ([esc]) key.\r\r\
+Changing this value for a document that has a single location to sign will cause the system to forget that \r\
+location so you can then define multiple locations."
+
+//IDDI_DISPOSITION_REMEMBER
+//"CursiVision normally remembers the location(s) you sign a particular document (with a given name\r\
+//and from a particular folder).\r\
+//You can choose not to remember these location(s) if the signing locations will vary."
+
+IDDI_DISPOSITION_REMEMBER
+"Tax United normally remembers the location(s) you sign a particular document (with a given name\r\
+and from a particular folder).\r\
+You can choose not to remember these location(s) if the signing locations will vary."
+
+IDDI_DISPOSITION_SAVE_LOCATION "This is the location where signed copies of this document will be stored."
+IDDI_DISPOSITION_PRINTER " provide text "
+
+//IDDI_DISPOSITION_MORE "You can direct CursiVision to save the signed documents in a Month-Year\r\
+//and/or a Day-Month sub-directory in addition to the options on the left."
+IDDI_DISPOSITION_MORE "You can direct Tax United to save the signed documents in a Month-Year\r\
+and/or a Day-Month sub-directory in addition to the options on the left."
+
+IDS_PAD_NOT_CONNECTED
+"There is no signature pad connected to your computer or, if it is, it is not responding.\r\r\
+If a pad is connected, please disconnect and reconnect it. Otherwise, please attach the signature pad to the computer"
+
+IDDI_CV_RECOGNITION_INSTRUCTIONS "Click on locations in the document used to identify this document type\r\
+Or, click and drag to select a region. Use the CTRL key to add multiple locations.\r\
+Potential locations have a green border under the mouse. Selected locations have a blue border."
+
+IDDI_CV_LOCATIONS_INSTRUCTIONS "Right-click and choose Add to create signing location(s)\r\
+You can move the locations with click-drag."
+
+IDDI_DATA_FIELDS_INSTRUCTIONS "Click on locations in the document used as fields for data. Selected fields contain a blue border (red when active).\r\
+Move the mouse over the text, potential fields will be green, click to select them.\r\
+when red, right click each field and supply a label for the field.\r\
+Click a field again to remove it."
+
+IDDI_CV_LIMIT_REACHED "The maximum number of entries has already been selected"
+
+//IDDI_HEADER_TEXT "When CursiVision saves this document it should:"
+IDDI_HEADER_TEXT_A "When Tax United saves this document it should:"
+//IDDI_HEADER_TEXT_B "When CursiVision processes a document it should:");
+IDDI_HEADER_TEXT_B "When Tax United processes a document it should:");
+
+IDDI_DISPOSITION_POST_PROCESSING_LABEL "Post processing options are not available because Tax United E-Signatures is configured to continue running and wait \
+for the next print job. The document is therefore automatically closed when a new document is printed."
+
+IDS_CANT_CREATE_FILE "CursiVision is unable to create the file: %s"
+
+//IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL "When CursiVision starts it should:"
+IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES_LABEL "When Tax United starts it should:"
+
+//IDS_CURSIVISION_PRINTING "CursiVision is printing: %s"
+IDS_CURSIVISION_PRINTING "Tax United is printing: %s"
+

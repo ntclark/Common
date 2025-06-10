@@ -1,0 +1,84 @@
+
+IDS_HOME_PAGE "http://www.taxunited.com"
+
+IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES "Cuando Tax United comience, ¿debería mostrar estas propiedades?"
+
+IDDI_DISPOSITION_OPEN_LAST_DOCUMENT "Cuando Tax United se inicia, ¿debería abrir el documento que se abrió por última vez?"
+
+IDDI_DISPLAY_WAITING_SHOW_LABEL "Notificarme cuando Tax United esté esperando el lugar para firmar"
+
+IDDI_DISPLAY_WAITING_SHOW "Cuando está utilizando un panel de firma y cuando Tax United está esperando que usted defina las ubicaciones de firma \
+con el mouse, esta opción provocará un pitido y un mensaje para recordarle que seleccione la ubicación de firma"
+
+IDS_PRINTDRIVER_NAME "Impresora de Tax United"
+
+IDS_REGISTRATION_PRODUCT "Firmas electrónicas de Tax United"
+
+IDDI_DISPOSITION_RETAIN_SIGNED "Después de guardar o procesar el documento firmado, ¿Tax United debe permanecer abierto con el documento firmado a la vista?"
+
+IDDI_DISPOSITION_REOPEN_ORIGINAL "Después de guardar o procesar el documento firmado, ¿Tax United debería reabrir el documento original?"
+
+IDDI_DISPOSITION_CLOSE_DOCUMENT "Después de guardar o procesar el documento firmado, ¿Tax United debería cerrar el documento y seguir ejecutándolo?"
+
+IDDI_DISPOSITION_KEEP_RUNNING_AND_AWAIT_JOB "AfDespués de guardar o procesar el documento firmado, ¿Tax United debe seguir funcionando y esperar el siguiente trabajo de impresión?"
+
+IDDI_DISPOSITION_EXIT "Después de que se haya procesado el documento firmado, salga de Tax United.\r\rUtilice esta opción para automatizar el proceso de firma de este archivo."
+
+IDDI_DISPOSITION_CONTINUOUS_DOODLE_OFF
+"Cuando no esté en modo de escritura continua, Tax United recordará una única ubicación en el documento para firmar.\r\r\
+Cambiar a este valor para un documento que tiene varias ubicaciones definidas hará que el sistema olvide esas ubicaciones\r\
+para que puedas redefinir la única ubicación"
+
+IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON
+"Con la escritura continua, Tax United recuerda varias ubicaciones de este documento para firmar.\r\r\
+Haga clic con el mouse en el documento y firme en cada ubicación. Cuando todos estén definidos, presione la tecla Escape ([esc]).\r\r\
+Cambiar este valor para un documento que tiene una única ubicación para firmar hará que el sistema olvide que \r\
+ubicación para que luego puedas definir múltiples ubicaciones"
+
+IDDI_DISPOSITION_REMEMBER
+"Tax United normalmente recuerda las ubicaciones donde firma un documento en particular (con un nombre de pila\r\
+y de una carpeta en particular).\r\
+Puede optar por no recordar estas ubicaciones si las ubicaciones de firma varían"
+
+IDDI_DISPOSITION_MORE "Puede indicarle a Tax United que guarde los documentos firmados en un mes-año\r\
+y/o un subdirectorio Día-Mes además de las opciones de la izquierda"
+
+IDDI_DISPOSITION_POST_PROCESSING_LABEL "Las opciones de posprocesamiento no están disponibles porque Tax United E-Signatures está configurado para continuar ejecutándose y esperando\
+para el próximo trabajo de impresión. Por lo tanto, el documento se cierra automáticamente cuando se imprime un documento nuevo."
+
+IDS_CURSIVISION_PRINTING "Tax United está imprimiendo: %s"
+
+IDDI_DISPOSITION_RESET_LABEL "Restablecer restaura la configuración anterior a los valores definidos en la configuración global.\r\
+Si ha cambiado alguna de las configuraciones globales en esta sesión de configuración, primero cierre estos cuadros de diálogo para confirmar esas configuraciones."
+
+IDDI_DISPOSITION_RESET_LABEL_SPECIFIC_DOC "Restablecer restaura la configuración anterior a los valores definidos en la configuración global."
+IDDI_DISPOSITION_SUFFIX "Puede agregar cualquier valor al nombre de archivo de los documentos firmados para distinguirlos como copias firmadas de este documento en particular, por ejemplo."
+IDDI_DISPOSITION_APPEND_DATE "Agregar la fecha actual al nombre del documento firmado"
+IDDI_DISPOSITION_APPEND_TIME "Agregar la hora actual al nombre del documento firmado"
+
+IDDI_DISPOSITION_PRINT ""
+IDDI_DISPOSITION_SHOW_PROPERTIES "Seleccione esta opción si necesita ajustar estas configuraciones después de firmar el documento pero antes de procesarlo."
+
+IDDI_DISPOSITION_WHILE_SIGNING_SHOW_PAD "proporcionar texto"
+
+IDDI_DISPOSITION_AWAIT_JOB_MINIMIZE "Si es así, ¿el sistema debería minimizarse en la barra de tareas mientras espera?"
+
+IDDI_DISPOSITION_SAVE_LOCATION "Esta es la ubicación donde se almacenarán las copias firmadas de este documento."
+IDDI_DISPOSITION_PRINTER "proporcionar texto"
+
+IDS_PAD_NOT_CONNECTED
+"No hay ningún panel de firma conectado a su computadora o, si lo hay, no responde.\r\r\
+Si hay una almohadilla conectada, desconéctela y vuelva a conectarla. De lo contrario, adjunte el pad de firma a la computadora"
+
+IDDI_CV_RECOGNITION_INSTRUCTIONS "Haga clic en las ubicaciones del documento utilizadas para identificar este tipo de documento\r\
+O haga clic y arrastre para seleccionar una región. Utilice la tecla CTRL para agregar varias ubicaciones.\r\
+Las ubicaciones potenciales tienen un borde verde debajo del mouse. Las ubicaciones seleccionadas tienen un borde azul."
+
+IDDI_CV_LIMIT_REACHED "Ya se ha seleccionado el número máximo de entradas"
+
+IDS_CANT_CREATE_FILE "CursiVision no puede crear el archivo: %s"
+
+IDDI_REGISTRATION_INFO_OTHER_MACHINE "Esta información de contacto ha sido registrada.\nSin embargo, está registrada en una computadora diferente.\nPuedes elegir Mover para registrarte en esta computadora"
+
+IDDI_REGISTRATION_LABEL1 "Bienvenido a "
+IDDI_REGISTRATION_LABEL2 "Le ofrecemos una potente captura de firmas y gestión de documentos"
