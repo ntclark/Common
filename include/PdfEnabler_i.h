@@ -1,4 +1,5 @@
 
+
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
@@ -96,7 +97,7 @@ extern "C"{
 /* [version][lcid][helpstring][helpfile][uuid] */ 
 
 
-EXTERN_C const IID LIBID_PdfEnabler;
+DEFINE_GUID(LIBID_PdfEnabler,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x15);
 
 #ifndef __IPdfPage_INTERFACE_DEFINED__
 #define __IPdfPage_INTERFACE_DEFINED__
@@ -105,7 +106,7 @@ EXTERN_C const IID LIBID_PdfEnabler;
 /* [object][unique][nonextensible][oleautomation][dual][helpstring][uuid] */ 
 
 
-EXTERN_C const IID IID_IPdfPage;
+DEFINE_GUID(IID_IPdfPage,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x16);
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -445,7 +446,7 @@ EXTERN_C const IID IID_IPdfPage;
 /* [object][unique][nonextensible][oleautomation][dual][helpstring][uuid] */ 
 
 
-EXTERN_C const IID IID_IPdfDocument;
+DEFINE_GUID(IID_IPdfDocument,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x17);
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -892,7 +893,7 @@ EXTERN_C const IID IID_IPdfDocument;
 /* [object][unique][nonextensible][oleautomation][dual][helpstring][uuid] */ 
 
 
-EXTERN_C const IID IID_IPdfEnabler;
+DEFINE_GUID(IID_IPdfEnabler,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x18);
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -1023,7 +1024,7 @@ EXTERN_C const IID IID_IPdfEnabler;
 #endif 	/* __IPdfEnabler_INTERFACE_DEFINED__ */
 
 
-EXTERN_C const CLSID CLSID_PdfEnabler;
+DEFINE_GUID(CLSID_PdfEnabler,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x19);
 
 #ifdef __cplusplus
 

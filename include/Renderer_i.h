@@ -404,18 +404,31 @@ EXTERN_C const IID IID_IGraphicElements;
         
         virtual HRESULT STDMETHODCALLTYPE PostScriptImage( 
             HDC hdc,
-            HBITMAP hBitmap,
+            UINT_PTR pbBits,
+            UINT_PTR pImageXForm,
             UINT_PTR pPSCurrentCTM,
-            FLOAT width,
-            FLOAT height) = 0;
+            long width,
+            long height,
+            long bitsPerComponent) = 0;
         
         virtual HRESULT STDMETHODCALLTYPE PostScriptJpegImage( 
             HDC hdc,
             UINT_PTR pJpegData,
             long dataSize,
+            UINT_PTR pImageXForm,
             UINT_PTR pPSCurrentCTM,
-            FLOAT width,
-            FLOAT height) = 0;
+            long width,
+            long height) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE PostScriptStencilMask( 
+            long cbMaskingBytes,
+            UINT_PTR pbMaskingBytes,
+            BOOL polarity,
+            COLORREF currentColor,
+            UINT_PTR pImageXForm,
+            UINT_PTR pPSCurrentCTM,
+            long width,
+            long height) = 0;
         
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE NonPostScriptImage( 
             HDC hdc,
@@ -554,10 +567,12 @@ EXTERN_C const IID IID_IGraphicElements;
         HRESULT ( STDMETHODCALLTYPE *PostScriptImage )( 
             IGraphicElements * This,
             HDC hdc,
-            HBITMAP hBitmap,
+            UINT_PTR pbBits,
+            UINT_PTR pImageXForm,
             UINT_PTR pPSCurrentCTM,
-            FLOAT width,
-            FLOAT height);
+            long width,
+            long height,
+            long bitsPerComponent);
         
         DECLSPEC_XFGVIRT(IGraphicElements, PostScriptJpegImage)
         HRESULT ( STDMETHODCALLTYPE *PostScriptJpegImage )( 
@@ -565,9 +580,22 @@ EXTERN_C const IID IID_IGraphicElements;
             HDC hdc,
             UINT_PTR pJpegData,
             long dataSize,
+            UINT_PTR pImageXForm,
             UINT_PTR pPSCurrentCTM,
-            FLOAT width,
-            FLOAT height);
+            long width,
+            long height);
+        
+        DECLSPEC_XFGVIRT(IGraphicElements, PostScriptStencilMask)
+        HRESULT ( STDMETHODCALLTYPE *PostScriptStencilMask )( 
+            IGraphicElements * This,
+            long cbMaskingBytes,
+            UINT_PTR pbMaskingBytes,
+            BOOL polarity,
+            COLORREF currentColor,
+            UINT_PTR pImageXForm,
+            UINT_PTR pPSCurrentCTM,
+            long width,
+            long height);
         
         DECLSPEC_XFGVIRT(IGraphicElements, NonPostScriptImage)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *NonPostScriptImage )( 
@@ -664,11 +692,14 @@ EXTERN_C const IID IID_IGraphicElements;
 #define IGraphicElements_QuadraticBezier(This,x1,y1,x2,y2)	\
     ( (This)->lpVtbl -> QuadraticBezier(This,x1,y1,x2,y2) ) 
 
-#define IGraphicElements_PostScriptImage(This,hdc,hBitmap,pPSCurrentCTM,width,height)	\
-    ( (This)->lpVtbl -> PostScriptImage(This,hdc,hBitmap,pPSCurrentCTM,width,height) ) 
+#define IGraphicElements_PostScriptImage(This,hdc,pbBits,pImageXForm,pPSCurrentCTM,width,height,bitsPerComponent)	\
+    ( (This)->lpVtbl -> PostScriptImage(This,hdc,pbBits,pImageXForm,pPSCurrentCTM,width,height,bitsPerComponent) ) 
 
-#define IGraphicElements_PostScriptJpegImage(This,hdc,pJpegData,dataSize,pPSCurrentCTM,width,height)	\
-    ( (This)->lpVtbl -> PostScriptJpegImage(This,hdc,pJpegData,dataSize,pPSCurrentCTM,width,height) ) 
+#define IGraphicElements_PostScriptJpegImage(This,hdc,pJpegData,dataSize,pImageXForm,pPSCurrentCTM,width,height)	\
+    ( (This)->lpVtbl -> PostScriptJpegImage(This,hdc,pJpegData,dataSize,pImageXForm,pPSCurrentCTM,width,height) ) 
+
+#define IGraphicElements_PostScriptStencilMask(This,cbMaskingBytes,pbMaskingBytes,polarity,currentColor,pImageXForm,pPSCurrentCTM,width,height)	\
+    ( (This)->lpVtbl -> PostScriptStencilMask(This,cbMaskingBytes,pbMaskingBytes,polarity,currentColor,pImageXForm,pPSCurrentCTM,width,height) ) 
 
 #define IGraphicElements_NonPostScriptImage(This,hdc,hBitmap,x0,y0,displayWidth,displayHeight)	\
     ( (This)->lpVtbl -> NonPostScriptImage(This,hdc,hBitmap,x0,y0,displayWidth,displayHeight) ) 
@@ -711,11 +742,26 @@ EXTERN_C const IID IID_IGraphicParameters;
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_LineWidth( 
             FLOAT lw) = 0;
         
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_LineWidth( 
+            /* [retval][out] */ FLOAT *plw) = 0;
+        
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_LineJoin( 
             long lj) = 0;
         
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_LineJoin( 
+            /* [retval][out] */ long *plj) = 0;
+        
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_LineCap( 
             long lc) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_LineCap( 
+            /* [retval][out] */ long *plc) = 0;
+        
+        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_MiterLimit( 
+            FLOAT ml) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_MiterLimit( 
+            /* [retval][out] */ FLOAT *pml) = 0;
         
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_LineDash( 
             FLOAT *pValues,
@@ -724,6 +770,9 @@ EXTERN_C const IID IID_IGraphicParameters;
         
         virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_RGBColor( 
             COLORREF rgb) = 0;
+        
+        virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_RGBColor( 
+            /* [retval][out] */ COLORREF *pRGB) = 0;
         
     };
     
@@ -754,15 +803,40 @@ EXTERN_C const IID IID_IGraphicParameters;
             IGraphicParameters * This,
             FLOAT lw);
         
+        DECLSPEC_XFGVIRT(IGraphicParameters, get_LineWidth)
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_LineWidth )( 
+            IGraphicParameters * This,
+            /* [retval][out] */ FLOAT *plw);
+        
         DECLSPEC_XFGVIRT(IGraphicParameters, put_LineJoin)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_LineJoin )( 
             IGraphicParameters * This,
             long lj);
         
+        DECLSPEC_XFGVIRT(IGraphicParameters, get_LineJoin)
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_LineJoin )( 
+            IGraphicParameters * This,
+            /* [retval][out] */ long *plj);
+        
         DECLSPEC_XFGVIRT(IGraphicParameters, put_LineCap)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_LineCap )( 
             IGraphicParameters * This,
             long lc);
+        
+        DECLSPEC_XFGVIRT(IGraphicParameters, get_LineCap)
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_LineCap )( 
+            IGraphicParameters * This,
+            /* [retval][out] */ long *plc);
+        
+        DECLSPEC_XFGVIRT(IGraphicParameters, put_MiterLimit)
+        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_MiterLimit )( 
+            IGraphicParameters * This,
+            FLOAT ml);
+        
+        DECLSPEC_XFGVIRT(IGraphicParameters, get_MiterLimit)
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_MiterLimit )( 
+            IGraphicParameters * This,
+            /* [retval][out] */ FLOAT *pml);
         
         DECLSPEC_XFGVIRT(IGraphicParameters, put_LineDash)
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_LineDash )( 
@@ -775,6 +849,11 @@ EXTERN_C const IID IID_IGraphicParameters;
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_RGBColor )( 
             IGraphicParameters * This,
             COLORREF rgb);
+        
+        DECLSPEC_XFGVIRT(IGraphicParameters, get_RGBColor)
+        /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_RGBColor )( 
+            IGraphicParameters * This,
+            /* [retval][out] */ COLORREF *pRGB);
         
         END_INTERFACE
     } IGraphicParametersVtbl;
@@ -802,17 +881,35 @@ EXTERN_C const IID IID_IGraphicParameters;
 #define IGraphicParameters_put_LineWidth(This,lw)	\
     ( (This)->lpVtbl -> put_LineWidth(This,lw) ) 
 
+#define IGraphicParameters_get_LineWidth(This,plw)	\
+    ( (This)->lpVtbl -> get_LineWidth(This,plw) ) 
+
 #define IGraphicParameters_put_LineJoin(This,lj)	\
     ( (This)->lpVtbl -> put_LineJoin(This,lj) ) 
 
+#define IGraphicParameters_get_LineJoin(This,plj)	\
+    ( (This)->lpVtbl -> get_LineJoin(This,plj) ) 
+
 #define IGraphicParameters_put_LineCap(This,lc)	\
     ( (This)->lpVtbl -> put_LineCap(This,lc) ) 
+
+#define IGraphicParameters_get_LineCap(This,plc)	\
+    ( (This)->lpVtbl -> get_LineCap(This,plc) ) 
+
+#define IGraphicParameters_put_MiterLimit(This,ml)	\
+    ( (This)->lpVtbl -> put_MiterLimit(This,ml) ) 
+
+#define IGraphicParameters_get_MiterLimit(This,pml)	\
+    ( (This)->lpVtbl -> get_MiterLimit(This,pml) ) 
 
 #define IGraphicParameters_put_LineDash(This,pValues,countValues,offset)	\
     ( (This)->lpVtbl -> put_LineDash(This,pValues,countValues,offset) ) 
 
 #define IGraphicParameters_put_RGBColor(This,rgb)	\
     ( (This)->lpVtbl -> put_RGBColor(This,rgb) ) 
+
+#define IGraphicParameters_get_RGBColor(This,pRGB)	\
+    ( (This)->lpVtbl -> get_RGBColor(This,pRGB) ) 
 
 #endif /* COBJMACROS */
 

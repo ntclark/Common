@@ -48,6 +48,13 @@
 
 /* Forward Declarations */ 
 
+#ifndef __IFMClient_ProvideFontData_FWD_DEFINED__
+#define __IFMClient_ProvideFontData_FWD_DEFINED__
+typedef interface IFMClient_ProvideFontData IFMClient_ProvideFontData;
+
+#endif 	/* __IFMClient_ProvideFontData_FWD_DEFINED__ */
+
+
 #ifndef __IFont_EVNSW_FWD_DEFINED__
 #define __IFont_EVNSW_FWD_DEFINED__
 typedef interface IFont_EVNSW IFont_EVNSW;
@@ -116,6 +123,69 @@ enum FontType
 
 EXTERN_C const IID LIBID_FontManager;
 
+#ifndef __IFMClient_ProvideFontData_INTERFACE_DEFINED__
+#define __IFMClient_ProvideFontData_INTERFACE_DEFINED__
+
+/* interface IFMClient_ProvideFontData */
+/* [unique][nonextensible][helpstring][uuid] */ 
+
+
+EXTERN_C const IID IID_IFMClient_ProvideFontData;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("1FC20340-4355-4347-8A32-A82E2FB89891")
+    IFMClient_ProvideFontData
+    {
+    public:
+        BEGIN_INTERFACE
+        virtual HRESULT STDMETHODCALLTYPE GetGlyphData( 
+            unsigned short bGlyph,
+            UINT_PTR *ppGlyphData) = 0;
+        
+        END_INTERFACE
+    };
+    
+    
+#else 	/* C style interface */
+
+    typedef struct IFMClient_ProvideFontDataVtbl
+    {
+        BEGIN_INTERFACE
+        
+        DECLSPEC_XFGVIRT(IFMClient_ProvideFontData, GetGlyphData)
+        HRESULT ( STDMETHODCALLTYPE *GetGlyphData )( 
+            IFMClient_ProvideFontData * This,
+            unsigned short bGlyph,
+            UINT_PTR *ppGlyphData);
+        
+        END_INTERFACE
+    } IFMClient_ProvideFontDataVtbl;
+
+    interface IFMClient_ProvideFontData
+    {
+        CONST_VTBL struct IFMClient_ProvideFontDataVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IFMClient_ProvideFontData_GetGlyphData(This,bGlyph,ppGlyphData)	\
+    ( (This)->lpVtbl -> GetGlyphData(This,bGlyph,ppGlyphData) ) 
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IFMClient_ProvideFontData_INTERFACE_DEFINED__ */
+
+
 #ifndef __IFont_EVNSW_INTERFACE_DEFINED__
 #define __IFont_EVNSW_INTERFACE_DEFINED__
 
@@ -127,7 +197,7 @@ EXTERN_C const IID IID_IFont_EVNSW;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
-    MIDL_INTERFACE("1FC20340-4355-4347-8A32-A82E2FB89891")
+    MIDL_INTERFACE("1FC20340-4355-4347-8A32-A82E2FB89892")
     IFont_EVNSW : public IUnknown
     {
     public:
@@ -168,18 +238,13 @@ EXTERN_C const IID IID_IFont_EVNSW;
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_FontType( 
             /* [retval][out] */ enum FontType *pFontType) = 0;
         
-        virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_FontType( 
-            /* [in] */ enum FontType fontType) = 0;
-        
         virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_GlyphIndex( 
             unsigned short charCode,
             /* [retval][out] */ unsigned short *pGlyphId) = 0;
         
-        virtual HRESULT STDMETHODCALLTYPE SetEncoding( 
-            UINT_PTR encoding) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetCharStrings( 
-            UINT_PTR charStrings) = 0;
+        virtual HRESULT STDMETHODCALLTYPE SetFontData( 
+            long cbData,
+            UINT_PTR pSfntsData) = 0;
         
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE GetCharacteristics( 
             long cbName,
@@ -197,8 +262,8 @@ EXTERN_C const IID IID_IFont_EVNSW;
         
         virtual HRESULT STDMETHODCALLTYPE RenderGlyph( 
             unsigned short bGlyph,
+            UINT_PTR pIFMClient_ProvideFontData,
             UINT_PTR pPSXform,
-            UINT_PTR pXformToDeviceSpace,
             POINTF *pStartPoint,
             POINTF *pNextPoint) = 0;
         
@@ -289,26 +354,17 @@ EXTERN_C const IID IID_IFont_EVNSW;
             IFont_EVNSW * This,
             /* [retval][out] */ enum FontType *pFontType);
         
-        DECLSPEC_XFGVIRT(IFont_EVNSW, put_FontType)
-        /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_FontType )( 
-            IFont_EVNSW * This,
-            /* [in] */ enum FontType fontType);
-        
         DECLSPEC_XFGVIRT(IFont_EVNSW, get_GlyphIndex)
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_GlyphIndex )( 
             IFont_EVNSW * This,
             unsigned short charCode,
             /* [retval][out] */ unsigned short *pGlyphId);
         
-        DECLSPEC_XFGVIRT(IFont_EVNSW, SetEncoding)
-        HRESULT ( STDMETHODCALLTYPE *SetEncoding )( 
+        DECLSPEC_XFGVIRT(IFont_EVNSW, SetFontData)
+        HRESULT ( STDMETHODCALLTYPE *SetFontData )( 
             IFont_EVNSW * This,
-            UINT_PTR encoding);
-        
-        DECLSPEC_XFGVIRT(IFont_EVNSW, SetCharStrings)
-        HRESULT ( STDMETHODCALLTYPE *SetCharStrings )( 
-            IFont_EVNSW * This,
-            UINT_PTR charStrings);
+            long cbData,
+            UINT_PTR pSfntsData);
         
         DECLSPEC_XFGVIRT(IFont_EVNSW, GetCharacteristics)
         /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *GetCharacteristics )( 
@@ -330,8 +386,8 @@ EXTERN_C const IID IID_IFont_EVNSW;
         HRESULT ( STDMETHODCALLTYPE *RenderGlyph )( 
             IFont_EVNSW * This,
             unsigned short bGlyph,
+            UINT_PTR pIFMClient_ProvideFontData,
             UINT_PTR pPSXform,
-            UINT_PTR pXformToDeviceSpace,
             POINTF *pStartPoint,
             POINTF *pNextPoint);
         
@@ -399,23 +455,17 @@ EXTERN_C const IID IID_IFont_EVNSW;
 #define IFont_EVNSW_get_FontType(This,pFontType)	\
     ( (This)->lpVtbl -> get_FontType(This,pFontType) ) 
 
-#define IFont_EVNSW_put_FontType(This,fontType)	\
-    ( (This)->lpVtbl -> put_FontType(This,fontType) ) 
-
 #define IFont_EVNSW_get_GlyphIndex(This,charCode,pGlyphId)	\
     ( (This)->lpVtbl -> get_GlyphIndex(This,charCode,pGlyphId) ) 
 
-#define IFont_EVNSW_SetEncoding(This,encoding)	\
-    ( (This)->lpVtbl -> SetEncoding(This,encoding) ) 
-
-#define IFont_EVNSW_SetCharStrings(This,charStrings)	\
-    ( (This)->lpVtbl -> SetCharStrings(This,charStrings) ) 
+#define IFont_EVNSW_SetFontData(This,cbData,pSfntsData)	\
+    ( (This)->lpVtbl -> SetFontData(This,cbData,pSfntsData) ) 
 
 #define IFont_EVNSW_GetCharacteristics(This,cbName,pszName,cbStyle,pszStyle,cbScript,pszScript,pFontWeight,pSize,pAvailableFonts,pAvailableNames,pAvailableStyles,pAvailableScripts)	\
     ( (This)->lpVtbl -> GetCharacteristics(This,cbName,pszName,cbStyle,pszStyle,cbScript,pszScript,pFontWeight,pSize,pAvailableFonts,pAvailableNames,pAvailableStyles,pAvailableScripts) ) 
 
-#define IFont_EVNSW_RenderGlyph(This,bGlyph,pPSXform,pXformToDeviceSpace,pStartPoint,pNextPoint)	\
-    ( (This)->lpVtbl -> RenderGlyph(This,bGlyph,pPSXform,pXformToDeviceSpace,pStartPoint,pNextPoint) ) 
+#define IFont_EVNSW_RenderGlyph(This,bGlyph,pIFMClient_ProvideFontData,pPSXform,pStartPoint,pNextPoint)	\
+    ( (This)->lpVtbl -> RenderGlyph(This,bGlyph,pIFMClient_ProvideFontData,pPSXform,pStartPoint,pNextPoint) ) 
 
 #define IFont_EVNSW_SaveState(This)	\
     ( (This)->lpVtbl -> SaveState(This) ) 
@@ -445,7 +495,7 @@ EXTERN_C const IID IID_IFontManager;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
-    MIDL_INTERFACE("1FC20340-4355-4347-8A32-A82E2FB89892")
+    MIDL_INTERFACE("1FC20340-4355-4347-8A32-A82E2FB89893")
     IFontManager : public IUnknown
     {
     public:
@@ -470,8 +520,8 @@ EXTERN_C const IID IID_IFontManager;
         
         virtual HRESULT STDMETHODCALLTYPE RenderGlyph( 
             unsigned short bGlyph,
+            UINT_PTR pGlyphData,
             UINT_PTR pPSXform,
-            UINT_PTR pXformToDeviceSpace,
             POINTF *pStartPoint,
             POINTF *pNextPoint) = 0;
         
@@ -544,8 +594,8 @@ EXTERN_C const IID IID_IFontManager;
         HRESULT ( STDMETHODCALLTYPE *RenderGlyph )( 
             IFontManager * This,
             unsigned short bGlyph,
+            UINT_PTR pGlyphData,
             UINT_PTR pPSXform,
-            UINT_PTR pXformToDeviceSpace,
             POINTF *pStartPoint,
             POINTF *pNextPoint);
         
@@ -608,8 +658,8 @@ EXTERN_C const IID IID_IFontManager;
 #define IFontManager_ChooseFont(This,hdc,ppIFont)	\
     ( (This)->lpVtbl -> ChooseFont(This,hdc,ppIFont) ) 
 
-#define IFontManager_RenderGlyph(This,bGlyph,pPSXform,pXformToDeviceSpace,pStartPoint,pNextPoint)	\
-    ( (This)->lpVtbl -> RenderGlyph(This,bGlyph,pPSXform,pXformToDeviceSpace,pStartPoint,pNextPoint) ) 
+#define IFontManager_RenderGlyph(This,bGlyph,pGlyphData,pPSXform,pStartPoint,pNextPoint)	\
+    ( (This)->lpVtbl -> RenderGlyph(This,bGlyph,pGlyphData,pPSXform,pStartPoint,pNextPoint) ) 
 
 #define IFontManager_ScaleFont(This,scaleFactor)	\
     ( (This)->lpVtbl -> ScaleFont(This,scaleFactor) ) 
@@ -648,7 +698,7 @@ EXTERN_C const IID IID_IFontManagerNotifications;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
-    MIDL_INTERFACE("1FC20340-4355-4347-8A32-A82E2FB89893")
+    MIDL_INTERFACE("1FC20340-4355-4347-8A32-A82E2FB89894")
     IFontManagerNotifications : public IUnknown
     {
     public:
