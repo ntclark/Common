@@ -6,7 +6,7 @@
  /* File created by MIDL compiler version 8.01.0628 */
 /* at Mon Jan 18 22:14:07 2038
  */
-/* Compiler settings for C:\Development\Common\source\SignaturePad.odl:
+/* Compiler settings for D:\Development\Common\source\SignaturePad.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
@@ -90,7 +90,7 @@ extern "C"{
 /* [version][lcid][helpstring][helpfile][uuid] */ 
 
 
-DEFINE_GUID(LIBID_CursiVisionSignaturePad,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x20);
+EXTERN_C const IID LIBID_CursiVisionSignaturePad;
 
 #ifndef __ISignaturePad_INTERFACE_DEFINED__
 #define __ISignaturePad_INTERFACE_DEFINED__
@@ -99,7 +99,7 @@ DEFINE_GUID(LIBID_CursiVisionSignaturePad,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x5
 /* [object][unique][nonextensible][helpstring][uuid] */ 
 
 
-DEFINE_GUID(IID_ISignaturePad,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x21);
+EXTERN_C const IID IID_ISignaturePad;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -872,7 +872,7 @@ DEFINE_GUID(IID_ISignaturePad,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,
 /* [object][uuid] */ 
 
 
-DEFINE_GUID(IID_ISignaturePadEvents,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x22);
+EXTERN_C const IID IID_ISignaturePadEvents;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
@@ -995,7 +995,7 @@ DEFINE_GUID(IID_ISignaturePadEvents,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE
 #endif 	/* __ISignaturePadEvents_INTERFACE_DEFINED__ */
 
 
-DEFINE_GUID(CLSID_CursiVisionSignaturePad,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xFE,0x99,0x57,0x03,0x23);
+EXTERN_C const CLSID CLSID_CursiVisionSignaturePad;
 
 #ifdef __cplusplus
 

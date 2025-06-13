@@ -89,3 +89,12 @@ while ( *p && ! strchr(PSZ_WHITE_SPACE_AND_EOL,*p) ) { \
 #define ARRAY_DELIMITER_BEGIN       "["
 #define ARRAY_DELIMITER_END         "]"
 
+#define ADVANCE_THRU_EOL(p)               \
+{                                         \
+while ( *p != 0x0A && *p != 0x0D )        \
+   p++;                                   \
+if ( *p == 0x0A || *p == 0x0D )           \
+   p++;                                   \
+if ( *p == 0x0A || *p == 0x0D )           \
+   p++;                                   \
+}

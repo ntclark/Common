@@ -8,7 +8,7 @@
  /* File created by MIDL compiler version 8.01.0628 */
 /* at Mon Jan 18 22:14:07 2038
  */
-/* Compiler settings for C:\Development\Common\source\SignaturePad.odl:
+/* Compiler settings for D:\Development\Common\source\SignaturePad.odl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
