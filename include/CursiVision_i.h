@@ -7,8 +7,8 @@
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for CursiVision.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
-    protocol : dce , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
+    protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -871,6 +871,8 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
         
         virtual ULONG_PTR STDMETHODCALLTYPE GetDefaultPackagesResultDisposition( void) = 0;
         
+        virtual HMODULE STDMETHODCALLTYPE ResourcesModule( void) = 0;
+        
     };
     
     
@@ -1248,6 +1250,10 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
         ULONG_PTR ( STDMETHODCALLTYPE *GetDefaultPackagesResultDisposition )( 
             ICursiVisionServices * This);
         
+        DECLSPEC_XFGVIRT(ICursiVisionServices, ResourcesModule)
+        HMODULE ( STDMETHODCALLTYPE *ResourcesModule )( 
+            ICursiVisionServices * This);
+        
         END_INTERFACE
     } ICursiVisionServicesVtbl;
 
@@ -1465,6 +1471,9 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
 
 #define ICursiVisionServices_GetDefaultPackagesResultDisposition(This)	\
     ( (This)->lpVtbl -> GetDefaultPackagesResultDisposition(This) ) 
+
+#define ICursiVisionServices_ResourcesModule(This)	\
+    ( (This)->lpVtbl -> ResourcesModule(This) ) 
 
 #endif /* COBJMACROS */
 

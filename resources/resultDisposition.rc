@@ -14,7 +14,7 @@ BEGIN
    LTEXT "", IDD_INHERITED_DOCUMENT + 16388,    16, 132, 256, 32
 //
 //NTC: 04-25-2014: I attempted to launch properties from properties.
-// There are a while lot of issues - doing this, not the least of which is the templateDocument::tdUI object in all the
+// There are a whole lot of issues - doing this, not the least of which is the templateDocument::tdUI object in all the
 // editors is a static object that get's trounced when you try to launch a new instance of the property pages.
 // It would be nice to do this in the future (for example, to look at a parent document's properties)
 //

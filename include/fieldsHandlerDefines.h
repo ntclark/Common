@@ -39,6 +39,7 @@
 
    static LRESULT CALLBACK labelHandler(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam);
    static void removeField(long foundIndex,templateDocument::tdUI *);
+   static void drawFields(HDC hdc,templateDocument::tdUI *pDocument);
 
 #include "drawBoxDefines.h"
 

@@ -59,6 +59,7 @@
         long resourceIds[] = {IDDI_CV_LOCATIONS_RESET,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,
                                 IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,
                                 IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER};
+
         for ( long k = 0; k < sizeof(resourceIds) / sizeof(long); k++ ) {
             LoadString(hModuleResources,resourceIds[k],szInstructions,1024);
             SetDlgItemText(hwnd,resourceIds[k],szInstructions);

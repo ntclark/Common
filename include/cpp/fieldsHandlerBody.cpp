@@ -47,10 +47,10 @@
 
         commitChanges = false;
 
-        if ( NULL == pObject -> pTemplateDocument || 
-                NULL == pObject -> pTemplateDocument -> pszDocumentName || 
-                '\0' == pObject -> pTemplateDocument -> pszDocumentName[0] )
-            SendMessage(hwnd,WM_CLEAR_TEMPLATE_DOC_VIEW,0L,0L);
+        //if ( NULL == pObject -> pTemplateDocument || 
+        //        NULL == pObject -> pTemplateDocument -> pszDocumentName || 
+        //        '\0' == pObject -> pTemplateDocument -> pszDocumentName[0] )
+        //    SendMessage(hwnd,WM_CLEAR_TEMPLATE_DOC_VIEW,0L,0L);
 
 #ifdef ADDITIONAL_INITIALIZATION
       ADDITIONAL_INITIALIZATION
@@ -117,9 +117,8 @@
 
             SetWindowPos(hwnd,HWND_TOP,0,0,cxTotal,cyTotal,SWP_NOMOVE);
 
-            pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwnd,cxMargin,rcInfo.bottom - rcDialog.top + 16,false,NULL);
+            pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwnd,cxMargin,rcInfo.bottom - rcDialog.top + 16,false,drawFields);
 
-            pTemplateDocumentUI -> HiliteTextAreas(true,RGB(0,0,255),prcSelectedFields,pPageNumbers,countSelectedFields);
         }
 
         ShowWindow(GetDlgItem(hwnd,IDDI_DATA_FIELDS_RESET),SW_SHOW);
@@ -500,18 +499,17 @@
 
             break;
 
-        } else {
-
-            //The mouse is NOT in a selected field
-
-            if ( -1L < oldActiveSelectedIndex ) 
-                // The mouse has left the last selected field
-                pTemplateDocumentUI -> UnHiliteArea(&pTemplateDocumentUI -> hilitedSelectedField);
-
-            pTemplateDocumentUI -> hilitedSelectedField = GUID_NULL;
-
-            oldActiveSelectedIndex = -1L;
         }
+
+        //The mouse is NOT in a selected field
+
+        if ( -1L < oldActiveSelectedIndex ) 
+            // The mouse has left the last selected field
+            pTemplateDocumentUI -> UnHiliteArea(&pTemplateDocumentUI -> hilitedSelectedField);
+
+        pTemplateDocumentUI -> hilitedSelectedField = GUID_NULL;
+
+        oldActiveSelectedIndex = -1L;
 
         pEntry = prcPotentialFields;
       
@@ -544,18 +542,19 @@
 
             oldActivePotentialIndex = activePotentialIndex;
 
-        } else {
+            break;
 
-            //The mouse is NOT in a potential field
-
-            if ( -1L < oldActivePotentialIndex ) 
-                // The mouse has left the last potential field
-                pTemplateDocumentUI -> UnHiliteArea(&pTemplateDocumentUI -> hilitedPotentialField);
-
-            pTemplateDocumentUI -> hilitedPotentialField = GUID_NULL;
-
-            oldActivePotentialIndex = -1L;
         }
+
+        //The mouse is NOT in a potential field
+
+        if ( -1L < oldActivePotentialIndex ) 
+            // The mouse has left the last potential field
+            pTemplateDocumentUI -> UnHiliteArea(&pTemplateDocumentUI -> hilitedPotentialField);
+
+        pTemplateDocumentUI -> hilitedPotentialField = GUID_NULL;
+
+        oldActivePotentialIndex = -1L;
 
       }
       break;

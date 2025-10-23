@@ -100,6 +100,10 @@ EXTERN_C const IID IID_ICVScanner;
     ICVScanner : public IUnknown
     {
     public:
+        virtual HRESULT STDMETHODCALLTYPE IsOnline( void) = 0;
+        
+        virtual HRESULT STDMETHODCALLTYPE IsOffline( void) = 0;
+        
         virtual HRESULT STDMETHODCALLTYPE RegisterComputer( 
             char *szContactInfoString,
             char *szRegisteredProduct,
@@ -276,6 +280,14 @@ EXTERN_C const IID IID_ICVScanner;
         
         DECLSPEC_XFGVIRT(IUnknown, Release)
         ULONG ( STDMETHODCALLTYPE *Release )( 
+            ICVScanner * This);
+        
+        DECLSPEC_XFGVIRT(ICVScanner, IsOnline)
+        HRESULT ( STDMETHODCALLTYPE *IsOnline )( 
+            ICVScanner * This);
+        
+        DECLSPEC_XFGVIRT(ICVScanner, IsOffline)
+        HRESULT ( STDMETHODCALLTYPE *IsOffline )( 
             ICVScanner * This);
         
         DECLSPEC_XFGVIRT(ICVScanner, RegisterComputer)
@@ -520,6 +532,12 @@ EXTERN_C const IID IID_ICVScanner;
 #define ICVScanner_Release(This)	\
     ( (This)->lpVtbl -> Release(This) ) 
 
+
+#define ICVScanner_IsOnline(This)	\
+    ( (This)->lpVtbl -> IsOnline(This) ) 
+
+#define ICVScanner_IsOffline(This)	\
+    ( (This)->lpVtbl -> IsOffline(This) ) 
 
 #define ICVScanner_RegisterComputer(This,szContactInfoString,szRegisteredProduct,szRegisteredVersion,pszID,cbBuffer)	\
     ( (This)->lpVtbl -> RegisterComputer(This,szContactInfoString,szRegisteredProduct,szRegisteredVersion,pszID,cbBuffer) ) 

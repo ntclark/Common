@@ -40,6 +40,6 @@ This is the MIT License
     bitMapInfo.bmiHeader.biCompression = BI_RGB;
 
     HBITMAP hBitmap = CreateDIBSection(NULL,&bitMapInfo,DIB_RGB_COLORS,NULL,NULL,0L);
-    SetDIBits(NULL,hBitmap,0,abs(cy),pBits,&bitMapInfo,DIB_RGB_COLORS);
+    SetDIBits(NULL,hBitmap,0,labs(cy),pBits,&bitMapInfo,DIB_RGB_COLORS);
     return hBitmap;
     }
