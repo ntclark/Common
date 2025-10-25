@@ -6,6 +6,19 @@
     if ( p ) 
         pObject = (OBJECT_WITH_PROPERTIES *)p -> pParent;
 
+    if ( WM_MOUSEFIRST <= msg && msg <= WM_MOUSELAST && ! ( NULL == pTemplateDocumentUI ) ) {
+        POINTL ptlMouse{LOWORD(lParam),HIWORD(lParam)};
+        if ( xHWNDPDFPane > ptlMouse.x || yHWNDPDFPane > ptlMouse.y || (xHWNDPDFPane + cxHWNDPDFPane) < ptlMouse.x || (yHWNDPDFPane + cyHWNDPDFPane) < ptlMouse.y ) 
+            return (LRESULT)0L;
+#ifndef CURSIVISION_BUILD
+#ifdef IDDI_SIGNING_LOCATIONS_SKIP_SIGNING
+        if ( pObject -> skipSignatureCapture )
+            return (LRESULT)0L;
+#endif
+#endif
+        lParam = MAKELPARAM(ptlMouse.x - xHWNDPDFPane,ptlMouse.y - yHWNDPDFPane);
+    }
+
     switch ( msg ) {
 
     case WM_INITDIALOG: {
@@ -18,16 +31,17 @@
 
         hwndInstructions = GetDlgItem(hwnd,IDDI_CV_LOCATIONS_INSTRUCTIONS);
 
-        char szInstructions[1024];
-        LoadString(hModuleResources,IDDI_CV_LOCATIONS_INSTRUCTIONS,szInstructions,1024);
-        SetWindowText(hwndInstructions,szInstructions);
-
         DOODLE_PROPERTIES_PTR
 
         memcpy(keepLocations,pDoodleOptionProps -> theLocations,sizeof(pDoodleOptionProps -> theLocations));
 
         pCurrentLocations = pDoodleOptionProps -> theLocations;
-        countLocations = pDoodleOptionProps -> countRects;
+        writingLocation *pr = pCurrentLocations;
+        countLocations = 0L;
+        while ( ! ( pr -> documentRect.left == pr -> documentRect.right ) ) {
+            countLocations++;
+            pr++;
+        }
         entryDoRemember = pDoodleOptionProps -> processingDisposition.doRemember;
 
         SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_SETCHECK,0 == countLocations ? BST_CHECKED : BST_UNCHECKED,0L);
@@ -56,13 +70,33 @@
 
         setLearnControls(pObject,hwnd);
 
-        long resourceIds[] = {IDDI_CV_LOCATIONS_RESET,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,
-                                IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,
-                                IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER};
+        long resourceIds[] = {IDDI_CV_LOCATIONS_RESET,IDDI_CV_LOCATIONS_INSTRUCTIONS,
+#ifndef CURSIVISION_BUILD
+#ifdef IDDI_SIGNING_LOCATIONS_SKIP_SIGNING
+                                IDDI_SIGNING_LOCATIONS_SKIP_SIGNING,IDDI_SIGNING_LOCATIONS_SKIP_SIGNING_2,
+#endif
+#endif
+              IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN_2,
+              IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,
+              IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN_3};
 
+        long upAdjust = 0L;
         for ( long k = 0; k < sizeof(resourceIds) / sizeof(long); k++ ) {
             LoadString(hModuleResources,resourceIds[k],szInstructions,1024);
             SetDlgItemText(hwnd,resourceIds[k],szInstructions);
+            if ( '\0' == szInstructions[0] ) {
+                RECT rc;
+                GetWindowRect(GetDlgItem(hwnd,resourceIds[k]),&rc);
+                upAdjust += rc.bottom - rc.top - 4;
+                ShowWindow(GetDlgItem(hwnd,resourceIds[k]),SW_HIDE);
+                continue;
+            }
+            if ( 0 < upAdjust ) {
+                RECT rcDialog,rc;
+                GetWindowRect(GetDlgItem(hwnd,resourceIds[k]),&rc);
+                GetWindowRect(hwnd,&rcDialog);
+                SetWindowPos(GetDlgItem(hwnd,resourceIds[k]),HWND_TOP,rc.left - rcDialog.left,rc.top - rcDialog.top - upAdjust,0,0,SWP_NOSIZE);
+            }
         }
 
         }
@@ -75,29 +109,28 @@
 
         if ( NULL == pTemplateDocumentUI ) {
 
-            RECT rcParent,rcReset,rcInfo,rcDialog;
+            hwndPDFPane = GetDlgItem(hwnd,IDD_SIGNING_LOCATIONS + 256);
 
-            HWND hwndParent = GetParent(hwnd);
+            if ( NULL == defaultStaticHandler )
+                defaultStaticHandler = (WNDPROC)SetWindowLongPtr(hwndPDFPane,GWLP_WNDPROC,(ULONG_PTR)pdfPaneHandler);
+            else
+                SetWindowLongPtr(hwndPDFPane,GWLP_WNDPROC,(ULONG_PTR)pdfPaneHandler);
+
+            RECT rcDialog,rcPane;
 
             GetWindowRect(hwnd,&rcDialog);
-            GetWindowRect(hwndParent,&rcParent);
-            GetWindowRect(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_RESET),&rcReset);
-            GetWindowRect(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_ADDITIONAL_INFO),&rcInfo);
+            GetWindowRect(hwndPDFPane,&rcPane);
 
-            SIZEL sizelDisplay{0L,0L};
+            xHWNDPDFPane = rcPane.left - rcDialog.left;
+            yHWNDPDFPane = rcPane.top - rcDialog.top;
 
-            pObject -> pTemplateDocument -> GetSinglePagePDFDisplaySize(&sizelDisplay);
+            cxHWNDPDFPane = rcDialog.right - rcPane.left - 8;
+            cyHWNDPDFPane = rcDialog.bottom - rcDialog.top - 2 * TEMPLATE_UI_TOP_MARGIN;
 
-            double aspectRatio = (double)sizelDisplay.cx / (double)sizelDisplay.cy;
+            SetWindowPos(hwndPDFPane,HWND_TOP,0,0,cxHWNDPDFPane,cyHWNDPDFPane,SWP_NOMOVE);
 
-            long cxMargin = rcReset.left - rcDialog.left;
+            pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwndPDFPane,TEMPLATE_UI_TOP_MARGIN,TEMPLATE_UI_TOP_MARGIN,false,drawSigningAreas);
 
-            long cxTotal = rcParent.right  - rcDialog.left - cxMargin;
-            long cyTotal = (long)((double)cxTotal / aspectRatio);
-
-            SetWindowPos(hwnd,HWND_TOP,0,0,cxTotal,cyTotal,SWP_NOMOVE);
-
-            pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwnd,cxMargin,rcInfo.bottom - rcDialog.top + 16,false,drawSigningAreas);
         }
 
         }
@@ -208,7 +241,7 @@
 
             }
 
-            TrackPopupMenu(hOptionsMenu,TPM_LEFTALIGN,rcView.left + mouseMenuX,rcView.top + mouseMenuY,0,hwnd,NULL);
+            TrackPopupMenu(hOptionsMenu,TPM_LEFTALIGN,rcView.left + mouseMenuX + xHWNDPDFPane,rcView.top + mouseMenuY + yHWNDPDFPane,0,hwnd,NULL);
 
             break;
         }
@@ -270,7 +303,7 @@
 
         InsertMenuItem(hOptionsMenu,nextIndex++,MF_BYPOSITION,&menuItem);
 
-        TrackPopupMenu(hOptionsMenu,TPM_LEFTALIGN,rcView.left + mouseMenuX,rcView.top + mouseMenuY,0,hwnd,NULL);
+        TrackPopupMenu(hOptionsMenu,TPM_LEFTALIGN,rcView.left + mouseMenuX + xHWNDPDFPane,rcView.top + mouseMenuY + yHWNDPDFPane,0,hwnd,NULL);
 
         }
         break;
@@ -285,9 +318,16 @@
 
         SetDlgItemText(hwnd,IDDI_CV_LOCATIONS_ADDITIONAL_INFO,"");
 
+        if ( -1L == candidateRectIndex && ( wParam & MK_LBUTTON ) ) {
+            LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16396,szInstructions,1024);
+            SetWindowText(hwndInstructions,szInstructions);
+            break;
+        }
+
         if ( ! ( -1L == candidateRectIndex ) && ( wParam & MK_LBUTTON ) ) {
 
-            // Dragging
+            // Either way, there is an active area at this point
+            // Dragging a particular area or corner
 
             long deltaX = currentMouseX - startMouseX;
             long deltaY = currentMouseY - startMouseY;
@@ -402,17 +442,26 @@
 
         cornerGrabIndex = -2L;
 
-        if ( currentMouseX < pTemplateDocumentUI -> rcPageParentCoordinates.left || currentMouseX > pTemplateDocumentUI -> rcPageParentCoordinates.right || 
-                    currentMouseY < pTemplateDocumentUI -> rcPageParentCoordinates.top || currentMouseY > pTemplateDocumentUI -> rcPageParentCoordinates.bottom ) {
+        currentMouseX -= pTemplateDocumentUI -> rcPageParentCoordinates.left;
+        currentMouseY -= pTemplateDocumentUI -> rcPageParentCoordinates.top;
+
+        // The mouse is in MSHTML Visible View coordinates
+
+        if ( currentMouseX < pTemplateDocumentUI -> rcPDFPagePixels.left || currentMouseX > pTemplateDocumentUI -> rcPDFPagePixels.right || 
+                    currentMouseY < pTemplateDocumentUI -> rcPDFPagePixels.top || currentMouseY > pTemplateDocumentUI -> rcPDFPagePixels.bottom ) {
             candidateRectIndex = -1L;
+            LoadString(hModuleResources,IDDI_CV_LOCATIONS_INSTRUCTIONS,szInstructions,1024);
+            SetWindowText(hwndInstructions,szInstructions);
             break;
         }
+
+        // the mouse is over the document
 
         bool noteEmitted = false;
 
         long vrIndex = -1L;
 
-        POINTL ptlMouse = {currentMouseX - pTemplateDocumentUI -> rcPageParentCoordinates.left,currentMouseY - pTemplateDocumentUI -> rcPageParentCoordinates.top};
+        POINTL ptlMouse = {currentMouseX,currentMouseY};
 
         RECT *pr = &visibleRects[0];
 
@@ -482,6 +531,7 @@
             SetDlgItemText(hwnd,IDDI_CV_LOCATIONS_ADDITIONAL_INFO,"");
             candidateRectIndex = -1L;
         }
+
         }
         return (LRESULT)0;
 
@@ -513,7 +563,6 @@
         switch ( LOWORD(wParam ) ) {
 
         case IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN: {
-// This autocheckbox is acting funny, it won't stay unchecked
             doLearn = (BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_GETCHECK,0L,0L));
             }
             break;
@@ -677,15 +726,39 @@
             }
             break;
 
+        case IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON: {
+            if ( BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,BM_GETCHECK,0L,0L) )
+                SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,BM_SETCHECK,BST_UNCHECKED,0L);
+            else
+                SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,BM_SETCHECK,BST_CHECKED,0L);
+            }
+            break;
+
+        case IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF: {
+            if ( BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,BM_GETCHECK,0L,0L) )
+                SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,BM_SETCHECK,BST_UNCHECKED,0L);
+            else
+                SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,BM_SETCHECK,BST_CHECKED,0L);
+            }
+            break;
+
+#ifndef CURSIVISION_BUILD
 #ifdef IDDI_SIGNING_LOCATIONS_SKIP_SIGNING
         case IDDI_SIGNING_LOCATIONS_SKIP_SIGNING: {
             pObject -> skipSignatureCapture = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_SKIP_SIGNING,BM_GETCHECK,0L,0L);
-            enableDisableSiblings(GetDlgItem(hwnd,IDDI_SIGNING_LOCATIONS_SKIP_SIGNING),pObject -> skipSignatureCapture ? FALSE : (needsAdmin ? FALSE : TRUE)); \
+            RECT rcDialog;
+            GetWindowRect(hwnd,&rcDialog);
+            rcDialog.right = rcDialog.left + xHWNDPDFPane;
+            if ( pObject -> skipSignatureCapture )
+                disableInside(hwnd,&rcDialog);
+            else
+                enableInside(hwnd,&rcDialog);
             EnableWindow(GetDlgItem(hwnd,IDDI_SIGNING_LOCATIONS_SKIP_SIGNING),needsAdmin ? FALSE : TRUE);
+            EnableWindow(GetDlgItem(hwnd,IDDI_SIGNING_LOCATIONS_SKIP_SIGNING_2),needsAdmin ? FALSE : TRUE);
             }
             break;
 #endif
-
+#endif
         default:
             break;
 

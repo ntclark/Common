@@ -1,6 +1,13 @@
 
     resultDisposition *p = (resultDisposition *)GetWindowLongPtr(hwnd,GWLP_USERDATA);
 
+    if ( WM_MOUSEFIRST <= msg && msg <= WM_MOUSELAST && ! ( NULL == pTemplateDocumentUI ) ) {
+        POINTL ptlMouse{LOWORD(lParam),HIWORD(lParam)};
+        if ( xHWNDPDFPane > ptlMouse.x || yHWNDPDFPane > ptlMouse.y || (xHWNDPDFPane + cxHWNDPDFPane) < ptlMouse.x || (yHWNDPDFPane + cyHWNDPDFPane) < ptlMouse.y ) 
+            return (LRESULT)0L;
+        lParam = MAKELPARAM(ptlMouse.x - xHWNDPDFPane,ptlMouse.y - yHWNDPDFPane);
+    }
+
     OBJECT_WITH_PROPERTIES *pObject = NULL;
 
     if ( p ) 
@@ -88,36 +95,35 @@
 
         if ( NULL == pTemplateDocumentUI ) {
 
-            RECT rcParent,rcReset,rcInfo,rcDialog,rcParentAdd;
+            hwndPDFPane = GetDlgItem(hwnd,IDD_DATA_FIELDS + 256);
 
-            HWND hwndParent = GetParent(hwnd);
+            if ( NULL == defaultStaticHandler )
+                defaultStaticHandler = (WNDPROC)SetWindowLongPtr(hwndPDFPane,GWLP_WNDPROC,(ULONG_PTR)pdfPaneHandler);
+            else
+                SetWindowLongPtr(hwndPDFPane,GWLP_WNDPROC,(ULONG_PTR)pdfPaneHandler);
+
+            RECT rcDialog,rcPane;
 
             GetWindowRect(hwnd,&rcDialog);
-            GetWindowRect(hwndParent,&rcParent);
-            GetWindowRect(GetDlgItem(hwnd,IDDI_DATA_FIELDS_RESET),&rcReset);
-            GetWindowRect(GetDlgItem(hwnd,IDDI_DATA_FIELDS_INSTRUCTIONS),&rcInfo);
-            GetWindowRect(GetDlgItem(hwndParent,IDOK),&rcParentAdd);
+            GetWindowRect(hwndPDFPane,&rcPane);
 
-            SIZEL sizelDisplay{0L,0L};
+            xHWNDPDFPane = rcPane.left - rcDialog.left;
+            yHWNDPDFPane = rcPane.top - rcDialog.top;
 
-            pObject -> pTemplateDocument -> GetSinglePagePDFDisplaySize(&sizelDisplay);
+            cxHWNDPDFPane = rcDialog.right - rcPane.left - 8;
+            cyHWNDPDFPane = rcDialog.bottom - rcDialog.top - 2 * TEMPLATE_UI_TOP_MARGIN;
 
-            double aspectRatio = (double)sizelDisplay.cx / (double)sizelDisplay.cy;
+            SetWindowPos(hwndPDFPane,HWND_TOP,0,0,cxHWNDPDFPane,cyHWNDPDFPane,SWP_NOMOVE);
 
-            long cxMargin = rcReset.left - rcDialog.left;
+            //for ( long k = 0; 1; k++ ) {
+            //    if ( 0 == noTemplateFields[k] )
+            //        break;
+            //    ShowWindow(GetDlgItem(hwnd,noTemplateFields[k]),SW_SHOW);
+            //}
 
-            long cxTotal = rcParent.right  - rcDialog.left - cxMargin;
-            long cyTotal = (long)((double)cxTotal / aspectRatio);
+            //SetWindowPos(hwnd,HWND_TOP,0,0,cxTotal,cyTotal,SWP_NOMOVE);
 
-            for ( long k = 0; 1; k++ ) {
-                if ( 0 == noTemplateFields[k] )
-                    break;
-                ShowWindow(GetDlgItem(hwnd,noTemplateFields[k]),SW_SHOW);
-            }
-
-            SetWindowPos(hwnd,HWND_TOP,0,0,cxTotal,cyTotal,SWP_NOMOVE);
-
-            pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwnd,cxMargin,rcInfo.bottom - rcDialog.top + 16,false,drawFields);
+            pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwndPDFPane,TEMPLATE_UI_TOP_MARGIN,TEMPLATE_UI_TOP_MARGIN,false,drawFields);
 
         }
 
@@ -127,38 +133,19 @@
         }
         return (LRESULT)FALSE;
 
-    case WM_DESTROY: {
-        if ( commitChanges ) {
-            pDoodleOptionProps -> countDataFields = 0L;
-            for ( long k = 0; k < MAX_TEXT_RECT_COUNT; k++ ) {
-                if ( 0 == pDoodleOptionProps -> dataFieldRects[k].left && 0 == pDoodleOptionProps -> dataFieldRects[k].right )
-                    break;
-                pDoodleOptionProps -> countDataFields++;
-            }
-        } else {
-            memcpy(prcSelectedFields,keepFields,sizeof(keepFields));
-            memcpy(pFieldLabels,keepFieldLabels,sizeof(keepFieldLabels));
-            memcpy(pPageNumbers,keepPageNumbers,sizeof(keepPageNumbers));
-            memcpy(pFieldRequired,keepFieldRequired,sizeof(keepFieldRequired));
-        }
-        if ( pTemplateDocumentUI ) {
-            pTemplateDocumentUI -> releaseView();
-            pTemplateDocumentUI = NULL;
-        }
-        }
-        break;
-
     case WM_RBUTTONUP: {
 
         if ( -1L == activeSelectedIndex )
             break;
 
-        long currentMouseX = LOWORD(lParam);
-        long currentMouseY = HIWORD(lParam);
+        long currentMouseX = LOWORD(lParam) - pTemplateDocumentUI -> rcPageParentCoordinates.left;
+        long currentMouseY = HIWORD(lParam) - pTemplateDocumentUI -> rcPageParentCoordinates.top;
 
-        if ( currentMouseX < pTemplateDocumentUI -> rcPageParentCoordinates.left || currentMouseX > pTemplateDocumentUI -> rcPageParentCoordinates.right || 
-                    currentMouseY < pTemplateDocumentUI -> rcPageParentCoordinates.top || currentMouseY > pTemplateDocumentUI -> rcPageParentCoordinates.bottom ) 
-            break;
+        // The mouse is in MSHTML Visible View coordinates
+
+        if ( currentMouseX < pTemplateDocumentUI -> rcPDFPagePixels.left || currentMouseX > pTemplateDocumentUI -> rcPDFPagePixels.right || 
+                      currentMouseY < pTemplateDocumentUI -> rcPDFPagePixels.top || currentMouseY > pTemplateDocumentUI -> rcPDFPagePixels.bottom ) 
+           break;
 
         mouseMenuX = currentMouseX;
         mouseMenuY = currentMouseY;
@@ -192,7 +179,7 @@
 
         InsertMenuItem(hOptionsMenu,1,MF_BYPOSITION,&menuItem);
 
-        TrackPopupMenu(hOptionsMenu,TPM_LEFTALIGN,rcView.left + mouseMenuX,rcView.top + mouseMenuY,0,hwnd,NULL);
+        TrackPopupMenu(hOptionsMenu,TPM_LEFTALIGN,rcView.left + mouseMenuX + xHWNDPDFPane,rcView.top + mouseMenuY + yHWNDPDFPane,0,hwnd,NULL);
 
         }
         break;
@@ -201,15 +188,8 @@
 
         didDrag = false;
 
-        long currentMouseX = LOWORD(lParam);
-        long currentMouseY = HIWORD(lParam);
-
-        if ( currentMouseX < pTemplateDocumentUI -> rcPageParentCoordinates.left || currentMouseX > pTemplateDocumentUI -> rcPageParentCoordinates.right || 
-                      currentMouseY < pTemplateDocumentUI -> rcPageParentCoordinates.top || currentMouseY > pTemplateDocumentUI -> rcPageParentCoordinates.bottom ) 
-           break;
-
-        currentMouseX -= pTemplateDocumentUI -> rcPageParentCoordinates.left;
-        currentMouseY -= pTemplateDocumentUI -> rcPageParentCoordinates.top;
+        long currentMouseX = LOWORD(lParam) - pTemplateDocumentUI -> rcPageParentCoordinates.left;
+        long currentMouseY = HIWORD(lParam) - pTemplateDocumentUI -> rcPageParentCoordinates.top;
 
         // The mouse is in MSHTML Visible View coordinates
 
@@ -219,7 +199,6 @@
 
         startMouseX = currentMouseX;
         startMouseY = currentMouseY;
-
         lastMouseX = startMouseX;
         lastMouseY = startMouseY;
 
@@ -374,41 +353,19 @@
         if ( ! pTemplateDocumentUI )
             break;
 
-        long currentMouseX = LOWORD(lParam);
-        long currentMouseY = HIWORD(lParam);
-
-        // The mouse is in dialog page coordinates
-
-        if ( currentMouseX < pTemplateDocumentUI -> rcPageParentCoordinates.left || currentMouseX > pTemplateDocumentUI -> rcPageParentCoordinates.right || 
-                    currentMouseY < pTemplateDocumentUI -> rcPageParentCoordinates.top || currentMouseY > pTemplateDocumentUI -> rcPageParentCoordinates.bottom ) {
-
-            activePotentialIndex = -1L;
-            oldActivePotentialIndex = -1L;
-
-            activeSelectedIndex = -1L;
-            oldActiveSelectedIndex = -1L;
-
-            break;
-
-        }
-
-        currentMouseX -= pTemplateDocumentUI -> rcPageParentCoordinates.left;
-        currentMouseY -= pTemplateDocumentUI -> rcPageParentCoordinates.top;
+        long currentMouseX = LOWORD(lParam) - pTemplateDocumentUI -> rcPageParentCoordinates.left;
+        long currentMouseY = HIWORD(lParam) - pTemplateDocumentUI -> rcPageParentCoordinates.top;
 
         // The mouse is in MSHTML Visible View coordinates
 
         if ( currentMouseX < pTemplateDocumentUI -> rcPDFPagePixels.left || currentMouseX > pTemplateDocumentUI -> rcPDFPagePixels.right || 
                     currentMouseY < pTemplateDocumentUI -> rcPDFPagePixels.top || currentMouseY > pTemplateDocumentUI -> rcPDFPagePixels.bottom ) {
-
             // The mouse is in the gray area border
-
             activePotentialIndex = -1L;
             oldActivePotentialIndex = -1L;
             activeSelectedIndex = -1L;
             oldActiveSelectedIndex = -1L;
-
             break;
-
         }
 
         if ( wParam & MK_LBUTTON ) {
@@ -638,6 +595,29 @@
 
         }
 
+        }
+        break;
+
+    case WM_DESTROY: {
+        if ( ! ( NULL == hwndPDFPane ) )
+            (WNDPROC)SetWindowLongPtr(hwndPDFPane,GWLP_WNDPROC,(ULONG_PTR)defaultStaticHandler);
+        if ( commitChanges ) {
+            pDoodleOptionProps -> countDataFields = 0L;
+            for ( long k = 0; k < MAX_TEXT_RECT_COUNT; k++ ) {
+                if ( 0 == pDoodleOptionProps -> dataFieldRects[k].left && 0 == pDoodleOptionProps -> dataFieldRects[k].right )
+                    break;
+                pDoodleOptionProps -> countDataFields++;
+            }
+        } else {
+            memcpy(prcSelectedFields,keepFields,sizeof(keepFields));
+            memcpy(pFieldLabels,keepFieldLabels,sizeof(keepFieldLabels));
+            memcpy(pPageNumbers,keepPageNumbers,sizeof(keepPageNumbers));
+            memcpy(pFieldRequired,keepFieldRequired,sizeof(keepFieldRequired));
+        }
+        if ( pTemplateDocumentUI ) {
+            pTemplateDocumentUI -> releaseView();
+            pTemplateDocumentUI = NULL;
+        }
         }
         break;
 

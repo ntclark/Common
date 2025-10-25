@@ -31,6 +31,15 @@
 
    static long countSelectedFields = 0L;
 
+   static HWND hwndPDFPane = NULL;
+   static LONG xHWNDPDFPane = 0L;
+   static LONG yHWNDPDFPane = 0L;
+   static LONG cxHWNDPDFPane = 0L;
+   static LONG cyHWNDPDFPane = 0L;
+
+   static WNDPROC defaultStaticHandler = NULL;
+   static LRESULT pdfPaneHandler(HWND,UINT,WPARAM,LPARAM);
+
    static templateDocument::tdUI *pTemplateDocumentUI = NULL;
 
    static RECT rcGreenBox;

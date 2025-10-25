@@ -23,8 +23,10 @@
    static RECT visibleRects[32];
    static long visibleRectIndexes[32];
    static long inverseVisibleRectIndexes[32];
+   static long countCurrentVisibleRects;
    
    char szMessage[256];
+   char szInstructions[1024];
 
    static writingLocation keepLocations[MAX_DOODLE_RECT_COUNT];
    static writingLocation *pCurrentLocations = NULL;
@@ -37,6 +39,15 @@
    static bool needsAdmin = false;
 
    static long cornerGrabIndex = -1L;
+
+   static HWND hwndPDFPane = NULL;
+   static LONG xHWNDPDFPane = 0L;
+   static LONG yHWNDPDFPane = 0L;
+   static LONG cxHWNDPDFPane = 0L;
+   static LONG cyHWNDPDFPane = 0L;
+
+   static WNDPROC defaultStaticHandler = NULL;
+   static LRESULT pdfPaneHandler(HWND,UINT,WPARAM,LPARAM);
 
    static LRESULT CALLBACK signingLocationsOrderHandler(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam);
 

@@ -941,7 +941,7 @@ This is the MIT License
     }
 
 
-    void adjustPropertiesDialogSize(SIZEL *pSizelDesired,DLGTEMPLATEEX *pDialog,long cyReservedHeader) {
+    void adjustPropertiesDialogSize(SIZEL *pSizelDesired,DLGTEMPLATEEX *pDialog,long cyReservedHeader,boolean preserveWidth,boolean preserveHeight) {
 
     if ( ! pSizelDesired -> cx )
         return;
@@ -1021,9 +1021,11 @@ This is the MIT License
     if ( desiredCY > ( monitorInfo.rcWork.bottom - monitorInfo.rcWork.top - 128) )
         desiredCY = (short)(0.95 * (double)(monitorInfo.rcWork.bottom - monitorInfo.rcWork.top - 128));
 
-    pDialog -> cy = (short)(desiredCY * 256.0 / 408);
+    if ( ! preserveHeight )
+        pDialog -> cy = (short)(desiredCY * 256.0 / 408);
 
-    pDialog -> cx = (short)((double)pDialog -> cy * (double)pSizelDesired -> cx / (double)(pSizelDesired -> cy + cyReservedHeader));
+    if ( ! preserveWidth )
+        pDialog -> cx = (short)((double)pDialog -> cy * (double)pSizelDesired -> cx / (double)(pSizelDesired -> cy + cyReservedHeader));
 
     return;
     }

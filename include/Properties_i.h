@@ -7,8 +7,8 @@
 /* at Mon Jan 18 22:14:07 2038
  */
 /* Compiler settings for Com-Implementation\Properties.odl:
-    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.01.0628 
-    protocol : dce , ms_ext, c_ext, robust
+    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.01.0628 
+    protocol : all , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
@@ -487,6 +487,9 @@ EXTERN_C const IID IID_IGPropertyPageClient;
         virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE GetPropertySheets( 
             void *pSheets) = 0;
         
+        virtual /* [helpstring] */ HRESULT STDMETHODCALLTYPE TakePropertySheetDialogs( 
+            SAFEARRAY *pDialogHandles) = 0;
+        
     };
     
     
@@ -578,6 +581,11 @@ EXTERN_C const IID IID_IGPropertyPageClient;
             IGPropertyPageClient * This,
             void *pSheets);
         
+        DECLSPEC_XFGVIRT(IGPropertyPageClient, TakePropertySheetDialogs)
+        /* [helpstring] */ HRESULT ( STDMETHODCALLTYPE *TakePropertySheetDialogs )( 
+            IGPropertyPageClient * This,
+            SAFEARRAY *pDialogHandles);
+        
         END_INTERFACE
     } IGPropertyPageClientVtbl;
 
@@ -636,6 +644,9 @@ EXTERN_C const IID IID_IGPropertyPageClient;
 
 #define IGPropertyPageClient_GetPropertySheets(This,pSheets)	\
     ( (This)->lpVtbl -> GetPropertySheets(This,pSheets) ) 
+
+#define IGPropertyPageClient_TakePropertySheetDialogs(This,pDialogHandles)	\
+    ( (This)->lpVtbl -> TakePropertySheetDialogs(This,pDialogHandles) ) 
 
 #endif /* COBJMACROS */
 

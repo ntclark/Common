@@ -1,6 +1,13 @@
 
     resultDisposition *p = (resultDisposition *)GetWindowLongPtr(hwnd,GWLP_USERDATA);
 
+    if ( WM_MOUSEFIRST <= msg && msg <= WM_MOUSELAST && ! ( NULL == pTemplateDocumentUI ) ) {
+        POINTL ptlMouse{LOWORD(lParam),HIWORD(lParam)};
+        if ( xHWNDPDFPane > ptlMouse.x || yHWNDPDFPane > ptlMouse.y || (xHWNDPDFPane + cxHWNDPDFPane) < ptlMouse.x || (yHWNDPDFPane + cyHWNDPDFPane) < ptlMouse.y ) 
+            return (LRESULT)0L;
+        lParam = MAKELPARAM(ptlMouse.x - xHWNDPDFPane,ptlMouse.y - yHWNDPDFPane);
+    }
+
     OBJECT_WITH_PROPERTIES *pObject = NULL;
 
     if ( p )
@@ -18,27 +25,29 @@
         oldPotentialIndex = -1L;
         activePotentialIndex = -1L;
 
-        char szTemp[256];
+        char szTemp[1024];
         SendDlgItemMessage(hwnd,IDDI_CV_RECOGNITION_BYNAME,BM_SETCHECK,pObject -> recognizeByName ? BST_CHECKED : BST_UNCHECKED,0L);
         EnableWindow(GetDlgItem(hwnd,IDDI_CV_RECOGNITION_INSTRUCTIONS),pObject -> recognizeByName ? FALSE : TRUE);
         EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_RESET),pObject -> recognizeByName ? FALSE : TRUE);
 
-        LoadString(hModuleResources,IDDI_CV_RECOGNITION_INSTRUCTIONS,szTemp,256);
+        LoadString(hModuleResources,IDDI_CV_RECOGNITION_INSTRUCTIONS,szTemp,1024);
         SetDlgItemText(hwnd,IDDI_CV_RECOGNITION_INSTRUCTIONS,szTemp);
 
         LoadString(hModuleResources,IDDI_CV_LIMIT_REACHED,szMaxSelectionsReached,128);
 
-        memcpy(selections,pObject -> expectedRects,sizeof(pObject -> expectedRects));
-        memcpy(textSelections,pObject -> expectedText,sizeof(pObject -> expectedText));
-        memcpy(pageSelections,pObject -> expectedPage,sizeof(pObject -> expectedPage));
+        memcpy(selectionsRect,pObject -> expectedRects,sizeof(pObject -> expectedRects));
+        memcpy(selectionsText,pObject -> expectedText,sizeof(pObject -> expectedText));
+        memcpy(selectionsPage,pObject -> expectedPage,sizeof(pObject -> expectedPage));
+        memset(selectionsIndex,0,sizeof(selectionsIndex));
 
-        COUNT_SELECTIONS(selections,&countSelections)
+        COUNT_SELECTIONS(selectionsRect,&countSelections)
 
         commitChanges = false;
 
 #ifdef ADDITIONAL_INITIALIZATION
         ADDITIONAL_INITIALIZATION
 #endif
+        ShowWindow(GetDlgItem(hwnd,IDDI_CV_LIMIT_REACHED),SW_HIDE);
 
         }
         return LRESULT(FALSE);
@@ -50,51 +59,34 @@
 
         if ( NULL == pTemplateDocumentUI ) {
 
-            RECT rcParent,rcReset,rcInfo,rcDialog;
+            hwndPDFPane = GetDlgItem(hwnd,IDD_CURSIVISION_RECOGNITION + 256);
 
-            HWND hwndParent = GetParent(hwnd);
+            if ( NULL == defaultStaticHandler )
+                defaultStaticHandler = (WNDPROC)SetWindowLongPtr(hwndPDFPane,GWLP_WNDPROC,(ULONG_PTR)pdfPaneHandler);
+            else
+                SetWindowLongPtr(hwndPDFPane,GWLP_WNDPROC,(ULONG_PTR)pdfPaneHandler);
+
+            RECT rcDialog,rcPane;
 
             GetWindowRect(hwnd,&rcDialog);
-            GetWindowRect(hwndParent,&rcParent);
-            GetWindowRect(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_RESET),&rcReset);
-            GetWindowRect(GetDlgItem(hwnd,IDDI_CV_MORE_INFORMATION),&rcInfo);
+            GetWindowRect(hwndPDFPane,&rcPane);
 
-            SIZEL sizelDisplay{0L,0L};
+            xHWNDPDFPane = rcPane.left - rcDialog.left;
+            yHWNDPDFPane = rcPane.top - rcDialog.top;
 
-            pObject -> pTemplateDocument -> GetSinglePagePDFDisplaySize(&sizelDisplay);
+            cxHWNDPDFPane = rcDialog.right - rcPane.left - 8;
+            cyHWNDPDFPane = rcDialog.bottom - rcDialog.top - 2 * TEMPLATE_UI_TOP_MARGIN;
 
-            double aspectRatio = (double)sizelDisplay.cx / (double)sizelDisplay.cy;
+            SetWindowPos(hwndPDFPane,HWND_TOP,0,0,cxHWNDPDFPane,cyHWNDPDFPane,SWP_NOMOVE);
 
-            long cxMargin = rcReset.left - rcDialog.left;
+            pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwndPDFPane,TEMPLATE_UI_TOP_MARGIN,TEMPLATE_UI_TOP_MARGIN,false,drawSelections);
 
-            long cxTotal = rcParent.right  - rcDialog.left - cxMargin;
-            long cyTotal = (long)((double)cxTotal / aspectRatio);
-
-            SetWindowPos(hwnd,HWND_TOP,0,0,cxTotal,cyTotal,SWP_NOMOVE);
-
-            pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwnd,cxMargin,rcInfo.bottom - rcDialog.top + 16,false,drawSelections);
-
-            pageNumberOfRects = 1L;
-
-            prcPotentialFields = pTemplateDocumentUI -> pTextRects(&countPotentialFields,pageNumberOfRects);
-
-            pTemplateDocumentUI -> HiliteTextAreas(true,RGB(0,0,255),selections,pageSelections,countSelections);
+            prcPotentialFields = pTemplateDocumentUI -> pTextRects(&countPotentialFields,1);
 
         }
 
         }
         return (LRESULT)FALSE;
-
-    case WM_SIZE: {
-        if ( ! pTemplateDocumentUI )
-            break;
-        RECT rcView = {0},rcNote = {0},rcParent = {0};
-        GetWindowRect(hwnd,&rcParent);
-        GetWindowRect(pTemplateDocumentUI -> hwndPane,&rcView);
-        GetWindowRect(GetDlgItem(hwnd,IDDI_CV_MORE_INFORMATION),&rcNote);
-        SetWindowPos(GetDlgItem(hwnd,IDDI_CV_MORE_INFORMATION),HWND_TOP,rcView.left - rcParent.left,rcView.top - (rcNote.bottom - rcNote.top) - rcParent.top - 4,0,0,SWP_NOSIZE);
-        }
-        break;
 
     case WM_LBUTTONDOWN: {
 
@@ -102,18 +94,17 @@
 
         didDrag = false;
 
-        long currentMouseX = LOWORD(lParam);
-        long currentMouseY = HIWORD(lParam);
+        long currentMouseX = LOWORD(lParam) - pTemplateDocumentUI -> rcPageParentCoordinates.left;
+        long currentMouseY = HIWORD(lParam) - pTemplateDocumentUI -> rcPageParentCoordinates.top;
 
-        // The mouse is in dialog page coordinates (pixels)
+        // The mouse is in MSHTML Visible View coordinates
 
-        if ( currentMouseX < pTemplateDocumentUI -> rcPageParentCoordinates.left || currentMouseX > pTemplateDocumentUI -> rcPageParentCoordinates.right || 
-                    currentMouseY < pTemplateDocumentUI -> rcPageParentCoordinates.top || currentMouseY > pTemplateDocumentUI -> rcPageParentCoordinates.bottom ) 
+        if ( currentMouseX < pTemplateDocumentUI -> rcPDFPagePixels.left || currentMouseX > pTemplateDocumentUI -> rcPDFPagePixels.right || 
+                    currentMouseY < pTemplateDocumentUI -> rcPDFPagePixels.top || currentMouseY > pTemplateDocumentUI -> rcPDFPagePixels.bottom )
             break;
 
-        startMouseX = currentMouseX - pTemplateDocumentUI -> rcPageParentCoordinates.left;
-        startMouseY = currentMouseY - pTemplateDocumentUI -> rcPageParentCoordinates.top;
-
+        startMouseX = currentMouseX;
+        startMouseY = currentMouseY;
         lastMouseX = startMouseX;
         lastMouseY = startMouseY;
 
@@ -122,11 +113,10 @@
             break;
         }
 
-        countSelections = 0;
-        memset(selections,0,sizeof(selections));
-        memset(textSelections,0,sizeof(textSelections));
-        memset(pageSelections,0,sizeof(pageSelections));
-        SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
+        if ( -1L == activePotentialIndex )
+            break;
+
+        RESET_SELECTIONS
 
         pTemplateDocumentUI -> Repaint();
 
@@ -142,24 +132,17 @@
 
         if ( didDrag ) {
 
-            countSelections = 0;
-            memset(selections,0,sizeof(selections));
-            memset(pageSelections,0,sizeof(pageSelections));
-            memset(textSelections,0,sizeof(textSelections));
+            RESET_SELECTIONS
+
             SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
 
             for ( long k = 0; k < countPotentialFields; k++ ) {
                 if ( -1L == pEncounteredInDrag[k] ) 
                     continue;
-                strcat(textSelections,pTemplateDocumentUI -> pTextText(k));
+                strcat(&selectionsText[0],pTemplateDocumentUI -> pTextText(k));
             }
 
-            RECT r;
-
-            r.left = startMouseX;
-            r.top = startMouseY;
-            r.right = lastMouseX;
-            r.bottom = lastMouseY;
+            RECT r{startMouseX,startMouseY,lastMouseX,lastMouseY};
 
             if ( r.right < r.left ) {
                 long t = r.right;
@@ -180,8 +163,9 @@
 
             pTemplateDocumentUI -> convertToPoints(pageNumber,&r);
 
-            selections[0] = r;
-            pageSelections[0] = pageNumber;
+            selectionsRect[0] = r;
+            selectionsPage[0] = pageNumber;
+            selectionsIndex[0] = -1L;
 
             countSelections = 1;
 
@@ -208,7 +192,7 @@
             long foundIndex = -1L;
 
             for ( long j = 0; j < countSelections; j++ ) {
-                if ( 0 == memcmp(&selections[j],pEntry,sizeof(RECT)) ) {
+                if ( 0 == memcmp(&selectionsRect[j],pEntry,sizeof(RECT)) ) {
                     foundIndex = j;
                     break;
                 }
@@ -218,9 +202,10 @@
                 if ( countSelections == MAX_TEXT_RECT_COUNT - 1 ) {
                     SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,szMaxSelectionsReached);
                 } else {
-                    selections[countSelections] = *pEntry;
-                    strcat(textSelections,pTemplateDocumentUI -> pTextText(activePotentialIndex));
-                    pageSelections[countSelections] = pageNumber;
+                    selectionsRect[countSelections] = *pEntry;
+                    strcat(selectionsText,pTemplateDocumentUI -> pTextText(activePotentialIndex));
+                    selectionsPage[countSelections] = pageNumber;
+                    selectionsIndex[countSelections] = activePotentialIndex;
                     countSelections++;
                 }
             } else
@@ -228,19 +213,18 @@
 
         } else {
 
-            countSelections = 0;
-            memset(selections,0,sizeof(selections));
-            memset(textSelections,0,sizeof(textSelections));
-            SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
+            RESET_SELECTIONS
 
-            selections[0] = *pEntry;
-            strcpy(textSelections,pTemplateDocumentUI -> pTextText(activePotentialIndex));
-            pageSelections[0] = pageNumber;
+            selectionsRect[0] = *pEntry;
+            strcpy(selectionsText,pTemplateDocumentUI -> pTextText(activePotentialIndex));
+            selectionsPage[0] = pageNumber;
+            selectionsIndex[0] = activePotentialIndex;
 
             POINTFLOAT ptfLocation;
             pTemplateDocumentUI -> GetPDFLocation(pEntry,&ptfLocation,NULL);
-            char szLocation[128];
-            sprintf(szLocation,"That location is: %4.2lf inches from the left and %4.2lf inches from the top",ptfLocation.x,ptfLocation.y);
+            char szFormat[256],szLocation[256];
+            LoadString(hModuleResources,IDDI_CV_MORE_INFORMATION,szFormat,256);
+            sprintf_s<256>(szLocation,szFormat,ptfLocation.x,ptfLocation.y);
 
             SetDlgItemText(hwnd,IDDI_CV_MORE_INFORMATION,szLocation);
 
@@ -258,34 +242,20 @@
 
     case WM_MOUSEMOVE: {
 
-        if ( ! pObject )
+        if ( NULL == pObject )
             break;
 
-        if ( ! pTemplateDocumentUI )
+        if ( NULL == pTemplateDocumentUI )
             break;
 
-        long currentMouseX = LOWORD(lParam);
-        long currentMouseY = HIWORD(lParam);
-
-        // The mouse is in dialog page coordinates
-
-        if ( currentMouseX < pTemplateDocumentUI -> rcPageParentCoordinates.left || currentMouseX > pTemplateDocumentUI -> rcPageParentCoordinates.right || 
-                    currentMouseY < pTemplateDocumentUI -> rcPageParentCoordinates.top || currentMouseY > pTemplateDocumentUI -> rcPageParentCoordinates.bottom ) {
-            oldPotentialIndex = -1L;
-            activePotentialIndex = -1L;
-            break;
-        }
-
-        currentMouseX -= pTemplateDocumentUI -> rcPageParentCoordinates.left;
-        currentMouseY -= pTemplateDocumentUI -> rcPageParentCoordinates.top;
+        long currentMouseX = LOWORD(lParam) - pTemplateDocumentUI -> rcPageParentCoordinates.left;
+        long currentMouseY = HIWORD(lParam) - pTemplateDocumentUI -> rcPageParentCoordinates.top;
 
         // The mouse is in MSHTML Visible View coordinates
 
         if ( currentMouseX < pTemplateDocumentUI -> rcPDFPagePixels.left || currentMouseX > pTemplateDocumentUI -> rcPDFPagePixels.right || 
                     currentMouseY < pTemplateDocumentUI -> rcPDFPagePixels.top || currentMouseY > pTemplateDocumentUI -> rcPDFPagePixels.bottom ) {
-
             // The mouse is in the gray area border
-
             oldPotentialIndex = -1L;
             activePotentialIndex = -1L;
             break;
@@ -297,16 +267,12 @@
 
             didDrag = true;
 
-            if ( ! pEncounteredInDrag ) {
+            if ( NULL == pEncounteredInDrag ) {
                 pEncounteredInDrag = new long[countPotentialFields];
                 for ( long k = 0; k < countPotentialFields; k++ )
                     pEncounteredInDrag[k] = -1L;
                 if ( ! isAdding ) {
-                    countSelections = 0;
-                    memset(selections,0,sizeof(selections));
-                    memset(textSelections,0,sizeof(textSelections));
-                    memset(pageSelections,0,sizeof(pageSelections));
-                    SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
+                    RESET_SELECTIONS
                 }
             }
 
@@ -381,20 +347,18 @@
 
         prcPotentialFields = pTemplateDocumentUI -> pTextRects(&countPotentialFields,pageNumber);
 
-        if ( ! prcPotentialFields )
+        if ( NULL == prcPotentialFields )
             break;
 
         activePotentialIndex = -1L;
 
-        RECT rc;
-        rc.left = currentMouseX;
-        rc.top = currentMouseY;
-        rc.right = rc.left;
-        rc.bottom = rc.top;
+        RECT rc{currentMouseX,currentMouseY,currentMouseX,currentMouseY};
 
         pTemplateDocumentUI -> convertToPoints(pageNumber,&rc);
 
         RECT *pEntry = prcPotentialFields;
+
+        boolean isSelected = false;
 
         for ( long k = 0; k < countPotentialFields; k++, pEntry++ ) {
 
@@ -404,6 +368,16 @@
             if ( rc.left < pEntry -> left || rc.left > pEntry -> right ||
                     rc.top > pEntry -> top || rc.top < pEntry -> bottom ) 
                 continue;
+
+            for ( long j = 0; j < countSelections; j++ ) {
+                if ( selectionsIndex[j] == k ) {
+                    isSelected = true;
+                    break;
+                }
+            }
+
+            if ( isSelected )
+                break;
 
             activePotentialIndex = k;
 
@@ -422,7 +396,6 @@
             // The mouse is in a different potential field
 
             if ( ! ( GUID_NULL == pTemplateDocumentUI -> hilitedSelectedField ) )
-                // Is it possible that selected fields can touch ?
                 pTemplateDocumentUI -> UnHiliteArea(&pTemplateDocumentUI -> hilitedSelectedField);
 
             pTemplateDocumentUI -> hilitedSelectedField = pTemplateDocumentUI -> HiliteArea(RGB(0,255,0),pTemplateDocumentUI -> textPage(activePotentialIndex),&prcPotentialFields[activePotentialIndex]);
@@ -457,12 +430,7 @@
             break;
 
         case IDDI_CV_LOCATIONS_RESET: 
-            countSelections = 0;
-            memset(selections,0,sizeof(selections));
-            memset(textSelections,0,sizeof(textSelections));
-            memset(pageSelections,0,sizeof(pageSelections));
-            SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
-            SetDlgItemText(hwnd,IDDI_CV_MORE_INFORMATION,"");
+            RESET_SELECTIONS
             pTemplateDocumentUI -> Repaint();
             break;
 
@@ -471,14 +439,16 @@
     }
 
     case WM_DESTROY: {
+        if ( ! ( NULL == hwndPDFPane ) )
+            (WNDPROC)SetWindowLongPtr(hwndPDFPane,GWLP_WNDPROC,(ULONG_PTR)defaultStaticHandler);
         if ( ! ( NULL == pTemplateDocumentUI ) ) {
             pTemplateDocumentUI -> releaseView();
             pTemplateDocumentUI = NULL;
         }
         if ( commitChanges ) {
-            memcpy(pObject -> expectedRects,selections,sizeof(pObject -> expectedRects));
-            memcpy(pObject -> expectedText,textSelections,sizeof(textSelections));
-            memcpy(pObject -> expectedPage,pageSelections,sizeof(pageSelections));
+            memcpy(pObject -> expectedRects,selectionsRect,sizeof(pObject -> expectedRects));
+            memcpy(pObject -> expectedText,selectionsText,sizeof(selectionsText));
+            memcpy(pObject -> expectedPage,selectionsPage,sizeof(selectionsPage));
             pObject -> recognizeByName = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_RECOGNITION_BYNAME,BM_GETCHECK,0L,0L);
         }
         }

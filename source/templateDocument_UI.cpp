@@ -365,15 +365,15 @@
 
     cxHTML = rcParent.right - rcParent.left - 2 * parentOffsetX;
     cyHTML = (long)((double)cxHTML / aspectRatio);
-    long cyMaxHTML = rcParent.bottom - rcParent.top - parentOffsetY - parentOffsetX;
+    long cyMaxHTML = rcParent.bottom - rcParent.top - parentOffsetY;
 
     if ( cyHTML > cyMaxHTML ) {
-        cyHTML = rcParent.bottom - rcParent.top - parentOffsetX - parentOffsetY;
+        cyHTML = cyMaxHTML;
         cxHTML = (long)((double)cyHTML * aspectRatio);
     }
 
     long x = ((rcParent.right - rcParent.left) - cxHTML ) / 2;
-    long y = parentOffsetY + ((rcParent.bottom - rcParent.top - parentOffsetX - parentOffsetY) - cyHTML ) / 2;
+    long y = parentOffsetY + (cyMaxHTML - cyHTML ) / 2;
 
     SetWindowPos(hwndPane,HWND_TOP,x,y,cxHTML,cyHTML,0L);
 

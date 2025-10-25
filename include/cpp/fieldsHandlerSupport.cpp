@@ -1,4 +1,12 @@
 
+    static LRESULT pdfPaneHandler(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam) {
+    if ( msg < WM_MOUSEFIRST || msg > WM_MOUSELAST )
+        return defaultStaticHandler(hwnd,msg,wParam,lParam);
+    lParam = MAKELPARAM( LOWORD(lParam) + xHWNDPDFPane, HIWORD(lParam) + yHWNDPDFPane);
+    return SendMessage(GetParent(hwnd),msg,wParam,lParam);
+    }
+
+
     static void drawFields(HDC hdc,templateDocument::tdUI *pDocument) {
     pTemplateDocumentUI -> HiliteTextAreas(true,RGB(0,0,255),prcSelectedFields,pPageNumbers,countSelectedFields);
     return;

@@ -1,17 +1,33 @@
 
+    static LRESULT pdfPaneHandler(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam) {
+
+    if ( msg < WM_MOUSEFIRST || msg > WM_MOUSELAST )
+        return defaultStaticHandler(hwnd,msg,wParam,lParam);
+
+    lParam = MAKELPARAM( LOWORD(lParam) + xHWNDPDFPane, HIWORD(lParam) + yHWNDPDFPane);
+
+    return SendMessage(GetParent(hwnd),msg,wParam,lParam);
+    }
+
+
     static void setLearnControls(OBJECT_WITH_PROPERTIES *pObject,HWND hwnd) {
 
-    doLearn = (0 == countLocations);
-    SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_SETCHECK,(WPARAM)(doLearn ? BST_CHECKED : BST_UNCHECKED),0L);
+    //doLearn = (0 == countLocations);
+    //SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_SETCHECK,(WPARAM)(doLearn ? BST_CHECKED : BST_UNCHECKED),0L);
+#ifndef CURSIVISION_BUILD
 #ifdef IDDI_SIGNING_LOCATIONS_SKIP_SIGNING
     if ( ! pObject -> SkipSignatureCapture() ) {
 #endif
+#endif
     EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN),0 == countLocations);
+    EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN_2),0 == countLocations);
     EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON),doLearn && 0 == countLocations);
     EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF),doLearn && 0 == countLocations);
     EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER),0 == countLocations);
+#ifndef CURSIVISION_BUILD
 #ifdef IDDI_SIGNING_LOCATIONS_SKIP_SIGNING
     }
+#endif
 #endif
 
     }
@@ -37,6 +53,7 @@
     memset(visibleRects,0,sizeof(visibleRects));
     memset(visibleRectIndexes,0,sizeof(visibleRectIndexes));
     memset(inverseVisibleRectIndexes,0,sizeof(inverseVisibleRectIndexes));
+    countCurrentVisibleRects = 0L;
 
     long vrIndex = 0L;
     long allRectIndex = -1L;
@@ -85,6 +102,8 @@
         DrawTextEx(hdc,szIndex,(int)strlen(szIndex),&rcText,DT_CENTER | DT_VCENTER | DT_SINGLELINE,NULL);
 
     }
+
+    countCurrentVisibleRects = vrIndex;
 
     SelectObject(hdc,oldFont);
 
