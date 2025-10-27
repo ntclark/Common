@@ -121,7 +121,7 @@
 
     hwndPane = CreateWindowEx(0,"paneHandler","",WS_CHILD | WS_VISIBLE,parentOffsetX,parentOffsetY,0,0,hwndParent,NULL,hModule,(void *)this);
 
-    if ( ! pParent -> pszDocumentName ) 
+    if ( NULL == pParent -> pszDocumentName ) 
         return;
 
     setupPDFiumControl();

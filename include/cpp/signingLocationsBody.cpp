@@ -127,7 +127,7 @@
             cxHWNDPDFPane = rcDialog.right - rcPane.left - 8;
             cyHWNDPDFPane = rcDialog.bottom - rcDialog.top - 2 * TEMPLATE_UI_TOP_MARGIN;
 
-            SetWindowPos(hwndPDFPane,HWND_TOP,0,0,cxHWNDPDFPane,cyHWNDPDFPane,SWP_NOMOVE);
+            SetWindowPos(hwndPDFPane,HWND_TOP,0,0,cxHWNDPDFPane,cyHWNDPDFPane,SWP_NOMOVE | SWP_SHOWWINDOW);
 
             pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwndPDFPane,TEMPLATE_UI_TOP_MARGIN,TEMPLATE_UI_TOP_MARGIN,false,drawSigningAreas);
 

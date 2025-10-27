@@ -86,6 +86,11 @@
         return (LRESULT)FALSE;
 
     case WM_REFRESH_TEMPLATE_DOC: {
+//SetTimer(hwnd,1,1000,NULL);
+//break;
+//
+//case WM_TIMER: {
+//KillTimer(hwnd,1);
 
         if ( NULL == pObject -> pTemplateDocument )
             return (LRESULT)FALSE;
@@ -115,14 +120,6 @@
 
             SetWindowPos(hwndPDFPane,HWND_TOP,0,0,cxHWNDPDFPane,cyHWNDPDFPane,SWP_NOMOVE);
 
-            //for ( long k = 0; 1; k++ ) {
-            //    if ( 0 == noTemplateFields[k] )
-            //        break;
-            //    ShowWindow(GetDlgItem(hwnd,noTemplateFields[k]),SW_SHOW);
-            //}
-
-            //SetWindowPos(hwnd,HWND_TOP,0,0,cxTotal,cyTotal,SWP_NOMOVE);
-
             pTemplateDocumentUI = pObject -> pTemplateDocument -> createView(hwndPDFPane,TEMPLATE_UI_TOP_MARGIN,TEMPLATE_UI_TOP_MARGIN,false,drawFields);
 
         }
@@ -132,6 +129,9 @@
 
         }
         return (LRESULT)FALSE;
+
+
+break;
 
     case WM_RBUTTONUP: {
 
