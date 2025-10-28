@@ -1,17 +1,19 @@
 
     resultDisposition *p = (resultDisposition *)GetWindowLongPtr(hwnd,GWLP_USERDATA);
 
-    if ( WM_MOUSEFIRST <= msg && msg <= WM_MOUSELAST && ! ( NULL == pTemplateDocumentUI ) ) {
-        POINTL ptlMouse{LOWORD(lParam),HIWORD(lParam)};
-        if ( xHWNDPDFPane > ptlMouse.x || yHWNDPDFPane > ptlMouse.y || (xHWNDPDFPane + cxHWNDPDFPane) < ptlMouse.x || (yHWNDPDFPane + cyHWNDPDFPane) < ptlMouse.y ) 
-            return (LRESULT)0L;
-        lParam = MAKELPARAM(ptlMouse.x - xHWNDPDFPane,ptlMouse.y - yHWNDPDFPane);
-    }
-
     OBJECT_WITH_PROPERTIES *pObject = NULL;
 
     if ( p ) 
         pObject = (OBJECT_WITH_PROPERTIES *)p -> pParent;
+
+    if ( WM_MOUSEFIRST <= msg && msg <= WM_MOUSELAST && ! ( NULL == pTemplateDocumentUI ) ) {
+        POINTL ptlMouse{LOWORD(lParam),HIWORD(lParam)};
+        if ( xHWNDPDFPane > ptlMouse.x || yHWNDPDFPane > ptlMouse.y || (xHWNDPDFPane + cxHWNDPDFPane) < ptlMouse.x || (yHWNDPDFPane + cyHWNDPDFPane) < ptlMouse.y ) 
+            return (LRESULT)0L;
+        if ( pObject && NULL == pObject -> pTemplateDocument )
+            return (LRESULT)0L;
+        lParam = MAKELPARAM(ptlMouse.x - xHWNDPDFPane,ptlMouse.y - yHWNDPDFPane);
+    }
 
     switch ( msg ) {
 
@@ -23,6 +25,8 @@
         SetWindowLongPtr(hwnd,GWLP_USERDATA,(ULONG_PTR)p);
 
         DOODLE_PROPERTIES_PTR
+
+        hwndPDFPane = GetDlgItem(hwnd,IDD_DATA_FIELDS + 256);
 
         memcpy(keepFields,pDoodleOptionProps -> dataFieldRects,sizeof(keepFields));
         memcpy(keepFieldLabels,pDoodleOptionProps -> dataFieldLabels,sizeof(keepFieldLabels));
@@ -54,15 +58,16 @@
 
         commitChanges = false;
 
-        //if ( NULL == pObject -> pTemplateDocument || 
-        //        NULL == pObject -> pTemplateDocument -> pszDocumentName || 
-        //        '\0' == pObject -> pTemplateDocument -> pszDocumentName[0] )
-        //    SendMessage(hwnd,WM_CLEAR_TEMPLATE_DOC_VIEW,0L,0L);
-
 #ifdef ADDITIONAL_INITIALIZATION
       ADDITIONAL_INITIALIZATION
 #endif
 
+        if ( NULL == pObject -> pTemplateDocument ) {
+            ShowWindow(GetDlgItem(hwnd,IDDI_DATA_FIELDS_RESET),SW_HIDE);
+            ShowWindow(GetDlgItem(hwnd,IDDI_DATA_FIELDS_INSTRUCTIONS),SW_HIDE);
+            ShowWindow(GetDlgItem(hwnd,IDDI_NO_TEMPLATE_LABEL2),SW_SHOW);
+            ShowWindow(hwndPDFPane,SW_HIDE);
+        }
         }
         return LRESULT(FALSE);
 
@@ -86,11 +91,6 @@
         return (LRESULT)FALSE;
 
     case WM_REFRESH_TEMPLATE_DOC: {
-//SetTimer(hwnd,1,1000,NULL);
-//break;
-//
-//case WM_TIMER: {
-//KillTimer(hwnd,1);
 
         if ( NULL == pObject -> pTemplateDocument )
             return (LRESULT)FALSE;
@@ -99,8 +99,6 @@
         ShowWindow(GetDlgItem(hwnd,IDDI_NO_TEMPLATE_LABEL2),SW_HIDE);
 
         if ( NULL == pTemplateDocumentUI ) {
-
-            hwndPDFPane = GetDlgItem(hwnd,IDD_DATA_FIELDS + 256);
 
             if ( NULL == defaultStaticHandler )
                 defaultStaticHandler = (WNDPROC)SetWindowLongPtr(hwndPDFPane,GWLP_WNDPROC,(ULONG_PTR)pdfPaneHandler);
@@ -129,9 +127,6 @@
 
         }
         return (LRESULT)FALSE;
-
-
-break;
 
     case WM_RBUTTONUP: {
 
