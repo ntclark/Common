@@ -92,7 +92,7 @@
 
     case WM_REFRESH_TEMPLATE_DOC: {
 
-        if ( NULL == pObject -> pTemplateDocument )
+        if ( NULL == pObject -> pTemplateDocument ) 
             return (LRESULT)FALSE;
 
         ShowWindow(GetDlgItem(hwnd,IDDI_NO_TEMPLATE_LABEL),SW_HIDE);
@@ -124,6 +124,8 @@
 
         ShowWindow(GetDlgItem(hwnd,IDDI_DATA_FIELDS_RESET),SW_SHOW);
         ShowWindow(GetDlgItem(hwnd,IDDI_DATA_FIELDS_INSTRUCTIONS),SW_SHOW);
+
+        ShowWindow(hwndPDFPane,SW_SHOW);
 
         }
         return (LRESULT)FALSE;
@@ -594,8 +596,11 @@
         break;
 
     case WM_DESTROY: {
-        if ( ! ( NULL == hwndPDFPane ) )
+        if ( ! ( NULL == hwndPDFPane ) ) {
             (WNDPROC)SetWindowLongPtr(hwndPDFPane,GWLP_WNDPROC,(ULONG_PTR)defaultStaticHandler);
+            DestroyWindow(hwndPDFPane);
+            hwndPDFPane = NULL;
+        }
         if ( commitChanges ) {
             pDoodleOptionProps -> countDataFields = 0L;
             for ( long k = 0; k < MAX_TEXT_RECT_COUNT; k++ ) {

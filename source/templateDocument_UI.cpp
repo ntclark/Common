@@ -396,7 +396,7 @@
 
     long pageNumber;
 
-    if ( E_UNEXPECTED == pIPDFiumControl -> get_PDFPageInView(&pageNumber) ) {
+    if ( ! ( S_OK == pIPDFiumControl -> get_PDFPageInView(&pageNumber) ) ) {
         // The page is not resolved yet
         if ( pIOleInPlaceObject_HTML ) 
             pIOleInPlaceObject_HTML -> SetObjectRects(&rcHTML,&rcHTML);

@@ -57,7 +57,7 @@ class globalTemplateDoodleOptions;
 
             memset(siblingImageIdOrderString,0,(MAX_TEXT_RECT_COUNT * 40) * sizeof(char));
             memset(siblingImageIDs,0,MAX_TEXT_RECT_COUNT * sizeof(GUID));
-            memset(ignoreProfileIDs,0,MAX_TEXT_RECT_COUNT * sizeof(GUID));
+            memset(ignoreProfileIDs,0,MAX_PROFILES_IN_PACKAGE * sizeof(GUID));
 
             imageFieldList[pParent].push_back(this);
         }

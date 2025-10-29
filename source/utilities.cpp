@@ -1018,13 +1018,24 @@ This is the MIT License
 
     long desiredCY = (short)(pSizelDesired -> cy + cyReservedHeader); 
 
+    if ( -1 == pSizelDesired -> cy )
+        desiredCY = ( monitorInfo.rcWork.bottom - monitorInfo.rcWork.top - 128);
+
     if ( desiredCY > ( monitorInfo.rcWork.bottom - monitorInfo.rcWork.top - 128) )
         desiredCY = (short)(0.95 * (double)(monitorInfo.rcWork.bottom - monitorInfo.rcWork.top - 128));
 
-    if ( ! preserveHeight )
-        pDialog -> cy = (short)(desiredCY * 256.0 / 408);
+    short cyOld = pDialog -> cy;
 
-    if ( ! preserveWidth )
+    short cyNew = (short)(desiredCY * 256.0 / 408);
+
+    if ( ! preserveHeight || cyNew > cyOld )
+        pDialog -> cy = cyNew;
+
+    if ( preserveWidth ) {
+        double cyChange = (double)cyNew / (double)cyOld;
+        if ( 1.0 < cyChange )
+            pDialog -> cx = (short)(cyChange * (double)pDialog -> cx);
+    } else
         pDialog -> cx = (short)((double)pDialog -> cy * (double)pSizelDesired -> cx / (double)(pSizelDesired -> cy + cyReservedHeader));
 
     return;

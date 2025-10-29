@@ -81,6 +81,8 @@
 #define IDDI_PROFILE_TEMPLATE_CLEAR             4007
 #define IDDI_PROFILE_NAME_CONFLICTED            4008
 #define IDDI_PROFILE_NAME_LOADING_TEMPLATE      4009
+#define IDDI_PROFILE_NAME_LABEL                 4010
+#define IDDI_PROFILE_NO_TEMPLATE_LABEL2B        4011
 
 #define IDC_EXIT                 200
 #define IDC_GETFILE              300
