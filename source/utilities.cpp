@@ -595,7 +595,7 @@ This is the MIT License
     GetWindowRect(hwndTest,&rcCurrent);
     AdjustWindowRectEx(&rcAdjust,(DWORD)GetWindowLongPtr(hwndParent,GWL_STYLE),FALSE,(DWORD)GetWindowLongPtr(hwndParent,GWL_EXSTYLE));
     SetWindowPos(hwndTest,HWND_TOP,rcCurrent.left - rcParent.left - rcAdjust.right,
-                                rcCurrent.top - rcParent.top + rcAdjust.top - moveUpAmount,0,0,SWP_NOSIZE);
+                                rcCurrent.top - rcParent.top + rcAdjust.top - moveUpAmount,0,0,SWP_NOSIZE | SWP_NOZORDER);
     return TRUE;
     }
 
