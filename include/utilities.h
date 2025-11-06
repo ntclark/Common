@@ -117,7 +117,7 @@ void ASCIIHexEncodeToString(char *pszInput,long valueSize,char *pszString,long c
 int pixelsToHiMetric(SIZEL *pPixels,SIZEL *phiMetric);
 int hiMetricToPixels(SIZEL *phiMetric,SIZEL *pPixels);
 
-void adjustPropertiesDialogSize(SIZEL *pSizelDesired,DLGTEMPLATEEX *pDialog,long cyReservedHeader,boolean preserveWidth = false,boolean preserveHeight = false);
+void adjustPropertiesDialogSize(DLGTEMPLATEEX *pDialog,long cyReservedHeader);
 
 char *strFromGUID(GUID &theGuid);
 WCHAR *wideStrFromGUID(GUID &theGuid);

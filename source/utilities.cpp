@@ -941,11 +941,9 @@ This is the MIT License
     }
 
 
-    void adjustPropertiesDialogSize(SIZEL *pSizelDesired,DLGTEMPLATEEX *pDialog,long cyReservedHeader,boolean preserveWidth,boolean preserveHeight) {
+    void adjustPropertiesDialogSize(DLGTEMPLATEEX *pDialog,long cyReservedHeader) {
 
-    if ( ! pSizelDesired -> cx )
-        return;
-
+#if 0
     BYTE *pMenuInfo = (BYTE *)pDialog + sizeof(DLGTEMPLATEEX);
 
     BYTE *pWindowClass = NULL;
@@ -956,7 +954,7 @@ This is the MIT License
     else if ( 0xFF == pMenuInfo[0] && 0xFF == pMenuInfo[1] ) 
         pWindowClass = pMenuInfo + 4;
 
-    else  
+    else
         pWindowClass = pMenuInfo + (2 * (wcslen((WCHAR *)pMenuInfo) + 1));
 
     BYTE *pTitle = NULL;
@@ -965,7 +963,7 @@ This is the MIT License
         pTitle = pWindowClass + 2;
     else if ( 0xFF == pWindowClass[0] && 0xFF == pWindowClass[1] ) 
         pTitle = pWindowClass + 4;
-    else  
+    else
         pTitle = pWindowClass + (2 * (wcslen((WCHAR *)pWindowClass) + 1));
 
     BYTE *pPointSize = NULL;
@@ -1009,6 +1007,7 @@ This is the MIT License
     long yPixelsPerInch = GetDeviceCaps(hdc,LOGPIXELSY);
 
     ReleaseDC(NULL,hdc);
+#endif
 
     MONITORINFO monitorInfo = {0};
 
@@ -1016,27 +1015,10 @@ This is the MIT License
 
     GetMonitorInfo(MonitorFromWindow(GetForegroundWindow(),MONITOR_DEFAULTTONEAREST),&monitorInfo);
 
-    long desiredCY = (short)(pSizelDesired -> cy + cyReservedHeader); 
+    long cyDesired = (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top - cyReservedHeader - 128);
 
-    if ( -1 == pSizelDesired -> cy )
-        desiredCY = ( monitorInfo.rcWork.bottom - monitorInfo.rcWork.top - 128);
-
-    if ( desiredCY > ( monitorInfo.rcWork.bottom - monitorInfo.rcWork.top - 128) )
-        desiredCY = (short)(0.95 * (double)(monitorInfo.rcWork.bottom - monitorInfo.rcWork.top - 128));
-
-    short cyOld = pDialog -> cy;
-
-    short cyNew = (short)(desiredCY * 256.0 / 408);
-
-    if ( ! preserveHeight || cyNew > cyOld )
-        pDialog -> cy = cyNew;
-
-    if ( preserveWidth ) {
-        double cyChange = (double)cyNew / (double)cyOld;
-        if ( 1.0 < cyChange )
-            pDialog -> cx = (short)(cyChange * (double)pDialog -> cx);
-    } else
-        pDialog -> cx = (short)((double)pDialog -> cy * (double)pSizelDesired -> cx / (double)(pSizelDesired -> cy + cyReservedHeader));
+    pDialog -> cx = (short)((double)cyDesired * (double)pDialog -> cx / (double)pDialog -> cy);
+    pDialog -> cy = (short)cyDesired;
 
     return;
     }
