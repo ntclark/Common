@@ -26,14 +26,14 @@
         activePotentialIndex = -1L;
 
         char szTemp[1024];
-        SendDlgItemMessage(hwnd,IDDI_CV_RECOGNITION_BYNAME,BM_SETCHECK,pObject -> recognizeByName ? BST_CHECKED : BST_UNCHECKED,0L);
-        EnableWindow(GetDlgItem(hwnd,IDDI_CV_RECOGNITION_INSTRUCTIONS),pObject -> recognizeByName ? FALSE : TRUE);
-        EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_RESET),pObject -> recognizeByName ? FALSE : TRUE);
+        SendDlgItemMessage(hwnd,IDDI_DOCUMENT_RECOGNITION_BYNAME,BM_SETCHECK,pObject -> recognizeByName ? BST_CHECKED : BST_UNCHECKED,0L);
+        EnableWindow(GetDlgItem(hwnd,IDDI_DOCUMENT_RECOGNITION_INSTRUCTIONS),pObject -> recognizeByName ? FALSE : TRUE);
+        EnableWindow(GetDlgItem(hwnd,IDDI_DOCUMENT_RECOGNITION_LOCATIONS_RESET),pObject -> recognizeByName ? FALSE : TRUE);
 
-        LoadString(hModuleResources,IDDI_CV_RECOGNITION_INSTRUCTIONS,szTemp,1024);
-        SetDlgItemText(hwnd,IDDI_CV_RECOGNITION_INSTRUCTIONS,szTemp);
+        LoadString(hModuleResources,IDDI_DOCUMENT_RECOGNITION_INSTRUCTIONS,szTemp,1024);
+        SetDlgItemText(hwnd,IDDI_DOCUMENT_RECOGNITION_INSTRUCTIONS,szTemp);
 
-        LoadString(hModuleResources,IDDI_CV_LIMIT_REACHED,szMaxSelectionsReached,128);
+        LoadString(hModuleResources,IDDI_DOCUMENT_RECOGNITION_LIMIT_REACHED,szMaxSelectionsReached,128);
 
         memcpy(selectionsRect,pObject -> expectedRects,sizeof(pObject -> expectedRects));
         memcpy(selectionsText,pObject -> expectedText,sizeof(pObject -> expectedText));
@@ -47,7 +47,7 @@
 #ifdef ADDITIONAL_INITIALIZATION
         ADDITIONAL_INITIALIZATION
 #endif
-        ShowWindow(GetDlgItem(hwnd,IDDI_CV_LIMIT_REACHED),SW_HIDE);
+        ShowWindow(GetDlgItem(hwnd,IDDI_DOCUMENT_RECOGNITION_LIMIT_REACHED),SW_HIDE);
 
         }
         return LRESULT(FALSE);
@@ -59,7 +59,7 @@
 
         if ( NULL == pTemplateDocumentUI ) {
 
-            hwndPDFPane = GetDlgItem(hwnd,IDD_CURSIVISION_RECOGNITION + 256);
+            hwndPDFPane = GetDlgItem(hwnd,IDD_DOCUMENT_RECOGNITION + 256);
 
             if ( NULL == defaultStaticHandler )
                 defaultStaticHandler = (WNDPROC)SetWindowLongPtr(hwndPDFPane,GWLP_WNDPROC,(ULONG_PTR)pdfPaneHandler);
@@ -134,7 +134,7 @@
 
             RESET_SELECTIONS
 
-            SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
+            SetDlgItemText(hwnd,IDDI_DOCUMENT_RECOGNITION_LIMIT_REACHED,"");
 
             for ( long k = 0; k < countPotentialFields; k++ ) {
                 if ( -1L == pEncounteredInDrag[k] ) 
@@ -200,7 +200,7 @@
 
             if ( -1L == foundIndex ) {
                 if ( countSelections == MAX_TEXT_RECT_COUNT - 1 ) {
-                    SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,szMaxSelectionsReached);
+                    SetDlgItemText(hwnd,IDDI_DOCUMENT_RECOGNITION_LIMIT_REACHED,szMaxSelectionsReached);
                 } else {
                     selectionsRect[countSelections] = *pEntry;
                     strcat(selectionsText,pTemplateDocumentUI -> pTextText(activePotentialIndex));
@@ -223,10 +223,10 @@
             POINTFLOAT ptfLocation;
             pTemplateDocumentUI -> GetPDFLocation(pEntry,&ptfLocation,NULL);
             char szFormat[256],szLocation[256];
-            LoadString(hModuleResources,IDDI_CV_MORE_INFORMATION,szFormat,256);
+            LoadString(hModuleResources,IDDI_SIGNING_LOCATIONS_MORE_INFORMATION,szFormat,256);
             sprintf_s<256>(szLocation,szFormat,ptfLocation.x,ptfLocation.y);
 
-            SetDlgItemText(hwnd,IDDI_CV_MORE_INFORMATION,szLocation);
+            SetDlgItemText(hwnd,IDDI_SIGNING_LOCATIONS_MORE_INFORMATION,szLocation);
 
             countSelections = 1;
 
@@ -422,14 +422,14 @@
     case WM_COMMAND: {
 
         switch ( LOWORD(wParam) ) {
-        case IDDI_CV_RECOGNITION_BYNAME: {
-            BOOL isChecked = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_RECOGNITION_BYNAME,BM_GETCHECK,0L,0L);
-            EnableWindow(GetDlgItem(hwnd,IDDI_CV_RECOGNITION_INSTRUCTIONS),isChecked ? FALSE : TRUE);
-            EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_RESET),isChecked ? FALSE : TRUE);
+        case IDDI_DOCUMENT_RECOGNITION_BYNAME: {
+            BOOL isChecked = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_DOCUMENT_RECOGNITION_BYNAME,BM_GETCHECK,0L,0L);
+            EnableWindow(GetDlgItem(hwnd,IDDI_DOCUMENT_RECOGNITION_INSTRUCTIONS),isChecked ? FALSE : TRUE);
+            EnableWindow(GetDlgItem(hwnd,IDDI_DOCUMENT_RECOGNITION_LOCATIONS_RESET),isChecked ? FALSE : TRUE);
             }
             break;
 
-        case IDDI_CV_LOCATIONS_RESET: 
+        case IDDI_DOCUMENT_RECOGNITION_LOCATIONS_RESET: 
             RESET_SELECTIONS
             pTemplateDocumentUI -> Repaint();
             break;
@@ -449,7 +449,7 @@
             memcpy(pObject -> expectedRects,selectionsRect,sizeof(pObject -> expectedRects));
             memcpy(pObject -> expectedText,selectionsText,sizeof(selectionsText));
             memcpy(pObject -> expectedPage,selectionsPage,sizeof(selectionsPage));
-            pObject -> recognizeByName = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_RECOGNITION_BYNAME,BM_GETCHECK,0L,0L);
+            pObject -> recognizeByName = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_DOCUMENT_RECOGNITION_BYNAME,BM_GETCHECK,0L,0L);
         }
         }
         break;

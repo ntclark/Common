@@ -55,27 +55,27 @@
 
     char szTranslation[64];
 
-    LoadString(hModuleResources,IDD_DATA_FIELDS_LABEL + 16384,szTranslation,64);
-    SetDlgItemText(hwnd,IDD_DATA_FIELDS_LABEL + 16384,szTranslation);
+    LoadString(hModuleResources,IDDI_DATA_FIELDS_LABEL,szTranslation,64);
+    SetDlgItemText(hwnd,IDDI_DATA_FIELDS_LABEL,szTranslation);
 
-    LoadString(hModuleResources,IDDI_FIELDS_VALUE_REQUIRED,szTranslation,64);
-    SetDlgItemText(hwnd,IDDI_FIELDS_VALUE_REQUIRED,szTranslation);
+    LoadString(hModuleResources,IDDI_DATA_FIELDS_VALUE_REQUIRED,szTranslation,64);
+    SetDlgItemText(hwnd,IDDI_DATA_FIELDS_VALUE_REQUIRED,szTranslation);
 
-    LoadString(hModuleResources,IDDI_FIELDS_LABEL_OK,szTranslation,64);
-    SetDlgItemText(hwnd,IDDI_FIELDS_LABEL_OK,szTranslation);
+    LoadString(hModuleResources,IDDI_DATA_FIELDS_LABEL_OK,szTranslation,64);
+    SetDlgItemText(hwnd,IDDI_DATA_FIELDS_LABEL_OK,szTranslation);
 
-    LoadString(hModuleResources,IDDI_FIELDS_LABEL_CANCEL,szTranslation,64);
-    SetDlgItemText(hwnd,IDDI_FIELDS_LABEL_CANCEL,szTranslation);
+    LoadString(hModuleResources,IDDI_DATA_FIELDS_LABEL_CANCEL,szTranslation,64);
+    SetDlgItemText(hwnd,IDDI_DATA_FIELDS_LABEL_CANCEL,szTranslation);
 
     POINT ptlMouse;
     GetCursorPos(&ptlMouse);
     SetWindowPos(hwnd,HWND_TOP,ptlMouse.x - 64,ptlMouse.y - 32,0,0,SWP_NOSIZE);
     if ( ! ( -1L == fieldIndex ) ) {
-        SetWindowText(GetDlgItem(hwnd,IDDI_FIELDS_LABEL_LABEL),&pFieldLabels[fieldIndex * 32]);
-        SendMessage(GetDlgItem(hwnd,IDDI_FIELDS_VALUE_REQUIRED),BM_SETCHECK, pFieldRequired[fieldIndex] ? BST_CHECKED : BST_UNCHECKED,0L);
+        SetWindowText(GetDlgItem(hwnd,IDDI_DATA_FIELDS_LABEL_LABEL_VAL),&pFieldLabels[fieldIndex * 32]);
+        SendMessage(GetDlgItem(hwnd,IDDI_DATA_FIELDS_VALUE_REQUIRED),BM_SETCHECK, pFieldRequired[fieldIndex] ? BST_CHECKED : BST_UNCHECKED,0L);
     }
     }
-    return (LRESULT)IDDI_FIELDS_LABEL_LABEL;
+    return (LRESULT)IDDI_DATA_FIELDS_LABEL_LABEL_VAL;
 
 
     case WM_DESTROY:
@@ -85,14 +85,14 @@
     case WM_COMMAND: {
 
     switch ( LOWORD(wParam) ) {
-    case IDDI_FIELDS_LABEL_OK: {
-        GetWindowText(GetDlgItem(hwnd,IDDI_FIELDS_LABEL_LABEL),&pFieldLabels[fieldIndex * 32],32);
-        pFieldRequired[fieldIndex] = (BST_CHECKED == SendMessage(GetDlgItem(hwnd,IDDI_FIELDS_VALUE_REQUIRED),BM_GETCHECK,0L,0L));
+    case IDDI_DATA_FIELDS_LABEL_OK: {
+        GetWindowText(GetDlgItem(hwnd,IDDI_DATA_FIELDS_LABEL_LABEL_VAL),&pFieldLabels[fieldIndex * 32],32);
+        pFieldRequired[fieldIndex] = (BST_CHECKED == SendMessage(GetDlgItem(hwnd,IDDI_DATA_FIELDS_VALUE_REQUIRED),BM_GETCHECK,0L,0L));
         EndDialog(hwnd,1L);
         }
         break;
 
-    case IDDI_FIELDS_LABEL_CANCEL: {
+    case IDDI_DATA_FIELDS_LABEL_CANCEL: {
         EndDialog(hwnd,0L);
         }
         break;

@@ -89,7 +89,7 @@
       long nextBottomIndex = 0L;
 
       char szTranslation[64];
-      LoadString(hModuleResources,IDD_BACKENDS + 16384,szTranslation,64);
+      LoadString(hModuleResources,IDDI_BACKENDS_INFO1,szTranslation,64);
 
       {
 
@@ -104,7 +104,7 @@
          SendMessage(hwndTopList,LVM_INSERTCOLUMN,0,(LPARAM)&lvColumn);
       SendMessage(hwndBottomList,LVM_INSERTCOLUMN,0,(LPARAM)&lvColumn);
 
-      LoadString(hModuleResources,IDD_BACKENDS + 16385,szTranslation,64);
+      LoadString(hModuleResources,IDDI_BACKENDS_INFO2,szTranslation,64);
 
       if ( hwndTopList )
          SendMessage(hwndTopList,LVM_INSERTCOLUMN,++nextTopIndex,(LPARAM)&lvColumn);
@@ -114,12 +114,12 @@
       SendMessage(hwndBottomList,LVM_INSERTCOLUMN,++nextBottomIndex,(LPARAM)&lvColumn);
 #endif
 
-      LoadString(hModuleResources,IDD_BACKENDS + 16386,szTranslation,64);
+      LoadString(hModuleResources,IDDI_BACKENDS_INFO3,szTranslation,64);
 
       SendMessage(hwndTopList,LVM_INSERTCOLUMN,++nextTopIndex,(LPARAM)&lvColumn);
       SendMessage(hwndBottomList,LVM_INSERTCOLUMN,++nextBottomIndex,(LPARAM)&lvColumn);
 
-      LoadString(hModuleResources,IDD_BACKENDS + 16387,szTranslation,64);
+      LoadString(hModuleResources,IDDI_BACKENDS_INFO4,szTranslation,64);
 
       SendMessage(hwndTopList,LVM_INSERTCOLUMN,++nextTopIndex,(LPARAM)&lvColumn);
 

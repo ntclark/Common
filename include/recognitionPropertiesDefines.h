@@ -56,8 +56,8 @@
     memset(selectionsPage,0,sizeof(selectionsPage));    \
     memset(selectionsText,0,sizeof(selectionsText));    \
     memset(selectionsIndex,0,sizeof(selectionsIndex));  \
-    SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");      \
-    SetDlgItemText(hwnd,IDDI_CV_MORE_INFORMATION,"");
+    SetDlgItemText(hwnd,IDDI_DOCUMENT_RECOGNITION_LIMIT_REACHED,"");      \
+    SetDlgItemText(hwnd,IDDI_SIGNING_LOCATIONS_MORE_INFORMATION,"");
 
 
 

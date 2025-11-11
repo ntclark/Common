@@ -247,9 +247,9 @@
                 pFieldRequired[countSelectedFields] = 0L;
                 pPageNumbers[countSelectedFields] = pageNumber;
                 countSelectedFields++;
-                SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
+                SetDlgItemText(hwnd,IDDI_DATA_FIELDS_LIMIT_REACHED,"");
             } else
-                SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"Max");
+                SetDlgItemText(hwnd,IDDI_DATA_FIELDS_LIMIT_REACHED,"Max");
 
             activeSelectedIndex = -1L;
             oldActiveSelectedIndex = -1L;
@@ -323,13 +323,13 @@
 
                 countSelectedFields++;
 
-                SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
+                SetDlgItemText(hwnd,IDDI_DATA_FIELDS_LIMIT_REACHED,"");
 
                 break;
 
             } 
 
-            SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"Max");
+            SetDlgItemText(hwnd,IDDI_DATA_FIELDS_LIMIT_REACHED,"Max");
 
         }
 
@@ -523,7 +523,7 @@
             memset(pFieldLabels,0,sizeof(keepFieldLabels));
             memset(pFieldRequired,0,sizeof(keepFieldRequired));
             memset(pPageNumbers,0,sizeof(keepPageNumbers));
-            SetDlgItemText(hwnd,IDDI_CV_LIMIT_REACHED,"");
+            SetDlgItemText(hwnd,IDDI_DATA_FIELDS_LIMIT_REACHED,"");
             pTemplateDocumentUI -> HiliteTextAreas(false);
          }
          break;

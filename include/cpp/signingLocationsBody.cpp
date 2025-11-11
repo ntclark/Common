@@ -29,7 +29,7 @@
 
         SetWindowLongPtr(hwnd,GWLP_USERDATA,(ULONG_PTR)p);
 
-        hwndInstructions = GetDlgItem(hwnd,IDDI_CV_LOCATIONS_INSTRUCTIONS);
+        hwndInstructions = GetDlgItem(hwnd,IDDI_SIGNING_LOCATIONS_INSTRUCTIONS);
 
         DOODLE_PROPERTIES_PTR
 
@@ -44,14 +44,14 @@
         }
         entryDoRemember = pDoodleOptionProps -> processingDisposition.doRemember;
 
-        SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_SETCHECK,0 == countLocations ? BST_CHECKED : BST_UNCHECKED,0L);
+        SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_SETCHECK,0 == countLocations ? BST_CHECKED : BST_UNCHECKED,0L);
 
         if ( 0 == countLocations ) 
             doLearn = true;
 
-        SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,BM_SETCHECK,pDoodleOptionProps -> processingDisposition.doContinuousDoodle ? BST_CHECKED : BST_UNCHECKED,0L);
-        SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,BM_SETCHECK,pDoodleOptionProps -> processingDisposition.doContinuousDoodle ? BST_UNCHECKED : BST_CHECKED,0L);
-        SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER,BM_SETCHECK,pDoodleOptionProps -> processingDisposition.doRemember ? BST_CHECKED : BST_UNCHECKED,0L);
+        SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_ON,BM_SETCHECK,pDoodleOptionProps -> processingDisposition.doContinuousDoodle ? BST_CHECKED : BST_UNCHECKED,0L);
+        SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_OFF,BM_SETCHECK,pDoodleOptionProps -> processingDisposition.doContinuousDoodle ? BST_UNCHECKED : BST_CHECKED,0L);
+        SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER,BM_SETCHECK,pDoodleOptionProps -> processingDisposition.doRemember ? BST_CHECKED : BST_UNCHECKED,0L);
 
         commitChanges = false;
 
@@ -70,15 +70,15 @@
 
         setLearnControls(pObject,hwnd);
 
-        long resourceIds[] = {IDDI_CV_LOCATIONS_RESET,IDDI_CV_LOCATIONS_INSTRUCTIONS,
+        long resourceIds[] = {IDDI_DOCUMENT_RECOGNITION_LOCATIONS_RESET,IDDI_SIGNING_LOCATIONS_INSTRUCTIONS,
 #ifndef CURSIVISION_BUILD
 #ifdef IDDI_SIGNING_LOCATIONS_SKIP_SIGNING
                                 IDDI_SIGNING_LOCATIONS_SKIP_SIGNING,IDDI_SIGNING_LOCATIONS_SKIP_SIGNING_2,
 #endif
 #endif
-              IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN_2,
-              IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,
-              IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN_3};
+              IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_LEARN,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_LEARN_2,
+              IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_OFF,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_ON,
+              IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_LEARN_3};
 
         long upAdjust = 0L;
         for ( long k = 0; k < sizeof(resourceIds) / sizeof(long); k++ ) {
@@ -316,7 +316,7 @@
         long currentMouseX = LOWORD(lParam);
         long currentMouseY = HIWORD(lParam);
 
-        SetDlgItemText(hwnd,IDDI_CV_LOCATIONS_ADDITIONAL_INFO,"");
+        SetDlgItemText(hwnd,IDDI_SIGNING_LOCATIONS_ADDITIONAL_INFO,"");
 
         if ( -1L == candidateRectIndex && ( wParam & MK_LBUTTON ) ) {
             LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16396,szInstructions,1024);
@@ -432,7 +432,7 @@
 
             }
 
-            SetDlgItemText(hwnd,IDDI_CV_LOCATIONS_ADDITIONAL_INFO,szMessage);
+            SetDlgItemText(hwnd,IDDI_SIGNING_LOCATIONS_ADDITIONAL_INFO,szMessage);
 
             DRAW_COLORED_BOX_IN_PIXELS(pTemplateDocumentUI,PS_SOLID,DB_GREEN,(&visibleRects[sourceIndex]),BORDER_WEIGHT)
 
@@ -450,7 +450,7 @@
         if ( currentMouseX < pTemplateDocumentUI -> rcPDFPagePixels.left || currentMouseX > pTemplateDocumentUI -> rcPDFPagePixels.right || 
                     currentMouseY < pTemplateDocumentUI -> rcPDFPagePixels.top || currentMouseY > pTemplateDocumentUI -> rcPDFPagePixels.bottom ) {
             candidateRectIndex = -1L;
-            LoadString(hModuleResources,IDDI_CV_LOCATIONS_INSTRUCTIONS,szInstructions,1024);
+            LoadString(hModuleResources,IDDI_SIGNING_LOCATIONS_INSTRUCTIONS,szInstructions,1024);
             SetWindowText(hwndInstructions,szInstructions);
             break;
         }
@@ -493,7 +493,7 @@
 
             sprintf_s<256>(szMessage,szFormat,ptlLocation.x,ptlLocation.y);
 
-            SetDlgItemText(hwnd,IDDI_CV_LOCATIONS_ADDITIONAL_INFO,szMessage);
+            SetDlgItemText(hwnd,IDDI_SIGNING_LOCATIONS_ADDITIONAL_INFO,szMessage);
 
             LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16393,szFormat,256);
 
@@ -528,7 +528,7 @@
             char szCommand[64];
             LoadString(hModuleResources,IDD_SIGNING_LOCATIONS + 16394,szCommand,64);
             SetWindowText(hwndInstructions,szCommand);
-            SetDlgItemText(hwnd,IDDI_CV_LOCATIONS_ADDITIONAL_INFO,"");
+            SetDlgItemText(hwnd,IDDI_SIGNING_LOCATIONS_ADDITIONAL_INFO,"");
             candidateRectIndex = -1L;
         }
 
@@ -562,12 +562,12 @@
 
         switch ( LOWORD(wParam ) ) {
 
-        case IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN: {
-            doLearn = (BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_GETCHECK,0L,0L));
+        case IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_LEARN: {
+            doLearn = (BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_GETCHECK,0L,0L));
             }
             break;
 
-        case IDDI_CV_LOCATIONS_RESET: {
+        case IDDI_DOCUMENT_RECOGNITION_LOCATIONS_RESET: {
             memset(pCurrentLocations,0,sizeof(pDoodleOptionProps -> theLocations));
             countLocations = 0L;
             pTemplateDocumentUI -> Repaint();
@@ -726,19 +726,19 @@
             }
             break;
 
-        case IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON: {
-            if ( BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,BM_GETCHECK,0L,0L) )
-                SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,BM_SETCHECK,BST_UNCHECKED,0L);
+        case IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_ON: {
+            if ( BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_ON,BM_GETCHECK,0L,0L) )
+                SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_OFF,BM_SETCHECK,BST_UNCHECKED,0L);
             else
-                SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,BM_SETCHECK,BST_CHECKED,0L);
+                SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_OFF,BM_SETCHECK,BST_CHECKED,0L);
             }
             break;
 
-        case IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF: {
-            if ( BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF,BM_GETCHECK,0L,0L) )
-                SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,BM_SETCHECK,BST_UNCHECKED,0L);
+        case IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_OFF: {
+            if ( BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_OFF,BM_GETCHECK,0L,0L) )
+                SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_ON,BM_SETCHECK,BST_UNCHECKED,0L);
             else
-                SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON,BM_SETCHECK,BST_CHECKED,0L);
+                SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_ON,BM_SETCHECK,BST_CHECKED,0L);
             }
             break;
 
@@ -803,7 +803,7 @@
         if ( doLearn ) {
 
             pDoodleOptionProps -> processingDisposition.doContinuousDoodle = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_DISPOSITION_CONTINUOUS_DOODLE_ON,BM_GETCHECK,0L,0L);
-            pDoodleOptionProps -> processingDisposition.doRemember = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER,BM_GETCHECK,0L,0L);
+            pDoodleOptionProps -> processingDisposition.doRemember = BST_CHECKED == SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER,BM_GETCHECK,0L,0L);
 
         } else {
 

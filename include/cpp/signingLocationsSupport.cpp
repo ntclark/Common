@@ -13,17 +13,17 @@
     static void setLearnControls(OBJECT_WITH_PROPERTIES *pObject,HWND hwnd) {
 
     //doLearn = (0 == countLocations);
-    //SendDlgItemMessage(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_SETCHECK,(WPARAM)(doLearn ? BST_CHECKED : BST_UNCHECKED),0L);
+    //SendDlgItemMessage(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_LEARN,BM_SETCHECK,(WPARAM)(doLearn ? BST_CHECKED : BST_UNCHECKED),0L);
 #ifndef CURSIVISION_BUILD
 #ifdef IDDI_SIGNING_LOCATIONS_SKIP_SIGNING
     if ( ! pObject -> SkipSignatureCapture() ) {
 #endif
 #endif
-    EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN),0 == countLocations);
-    EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_LEARN_2),0 == countLocations);
-    EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_ON),doLearn && 0 == countLocations);
-    EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_OFF),doLearn && 0 == countLocations);
-    EnableWindow(GetDlgItem(hwnd,IDDI_CV_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER),doLearn && 0 == countLocations);
+    EnableWindow(GetDlgItem(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_LEARN),0 == countLocations);
+    EnableWindow(GetDlgItem(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_LEARN_2),0 == countLocations);
+    EnableWindow(GetDlgItem(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_ON),doLearn && 0 == countLocations);
+    EnableWindow(GetDlgItem(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_OFF),doLearn && 0 == countLocations);
+    EnableWindow(GetDlgItem(hwnd,IDDI_SIGNING_LOCATIONS_CONTINUOUS_DOODLE_REMEMBER),doLearn && 0 == countLocations);
 #ifndef CURSIVISION_BUILD
 #ifdef IDDI_SIGNING_LOCATIONS_SKIP_SIGNING
     }
