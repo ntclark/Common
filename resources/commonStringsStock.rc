@@ -71,11 +71,9 @@ IDS_PAD_NOT_CONNECTED
 "There is no signature pad connected to your computer or, if it is, it is not responding.\r\r\
 If a pad is connected, please disconnect and reconnect it. Otherwise, please attach the signature pad to the computer"
 
-IDDI_CV_RECOGNITION_INSTRUCTIONS "Click on locations in the document used to identify this document type\r\
+IDDI_DOCUMENT_RECOGNITION_INSTRUCTIONS "Click on locations in the document used to identify this document type\r\
 Or, click and drag to select a region. Use the CTRL key to add multiple locations.\r\
 Potential locations have a green border under the mouse. Selected locations have a blue border."
-
-IDDI_CV_LIMIT_REACHED "The maximum number of entries has already been selected"
 
 IDS_CANT_CREATE_FILE "CursiVision is unable to create the file: %s"
 
