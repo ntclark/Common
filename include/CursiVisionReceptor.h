@@ -45,7 +45,6 @@ void launchProcess(char *pszArguments);
 BOOL LaunchProcess(char *pszCommandLine);
 
 unsigned int __stdcall serviceLoopNamedPipes(void *);
-unsigned int __stdcall serviceLoop(void *);
 
 void resetCommands();
 

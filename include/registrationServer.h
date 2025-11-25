@@ -1,6 +1,6 @@
 
-#define REGISTRATION_SERVER "cursivision.com"
-#define REGISTRATION_SERVERW L"cursivision.com"
+#define REGISTRATION_SERVER "envisionatesw.com"
+#define REGISTRATION_SERVERW L"envisionatesw.com"
 //#define REGISTRATION_SERVER "blade"
 //#define REGISTRATION_SERVERW L"blade"
 #define REGISTRATION_PORT 8080
