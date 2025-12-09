@@ -97,10 +97,7 @@
 #define IDS_MAIN_PAGE_MORE       3
 #define IDS_IMAGE_PAGE           4
 #define IDS_IMAGE_PAGE_MORE      5
-#define IDS_PROPERTIES           6
 #define IDS_PROPERTYPAGES        7
-#define IDS_PDF_ENABLER          8
-#define IDS_PRINTING_SUPPORT     10
 #define IDS_FILE_ASSOCIATION_1   16
 #define IDS_FILE_ASSOCIATION_2   17
 #define IDS_IS_ASSOCIATED        18
