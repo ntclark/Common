@@ -17,6 +17,8 @@
 
 #define UNREG_GRACE_PERIOD 14
 
+#define MS_STORE_EXE_PACKAGE
+
 //#define USE_GLOBAL_TEMPLATE_FOLDER
 
 #define MAX_TEXT_RECT_COUNT   256
@@ -87,7 +89,6 @@
 #define MATCH_STRATEGY_INDEX 0
 
 #define ENCODED_STRING_VERSION  "V_1.0.0"
-
 
     struct guidHash {
         bool operator()(const GUID &lhs) const {

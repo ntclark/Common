@@ -289,15 +289,17 @@
 #define IDDI_ABOUT_REGISTRATION_INFO                        2005
 #define IDDI_ABOUT_REGISTRATION_INFO_COPY                   2006
 #define IDDI_ABOUT_REGISTRATION_INFO_REGISTER               2007
-#define IDDI_ABOUT_CHECK_FOR_PRF_UPDATES                    2008
-#define IDDI_ABOUT_CHECK_FOR_UPDATES_NO                     2009
-#define IDDI_ABOUT_CHECK_FOR_UPDATES_YES                    2010
-#define IDDI_ABOUT_CHECK_FOR_UPDATES_DONE                   2011
-#define IDDI_ABOUT_CHECK_FOR_VERSION_UPDATE                 2012
-#define IDDI_ABOUT_CHECK_FOR_VERSION_UPD_YES                2013
-#define IDDI_ABOUT_CHECK_FOR_VERSION_UPD_NO                 2014
-#define IDDI_ABOUT_OK                                       2015
-#define IDDI_ABOUT_ICON                                     2016
+#define IDDI_ABOUT_REGISTRATION_INFO_PURCHASE               2008
+#define IDDI_ABOUT_CHECK_FOR_PRF_UPDATES                    2009
+#define IDDI_ABOUT_CHECK_FOR_UPDATES_NO                     2010
+#define IDDI_ABOUT_CHECK_FOR_UPDATES_YES                    2011
+#define IDDI_ABOUT_CHECK_FOR_UPDATES_DONE                   2012
+#define IDDI_ABOUT_CHECK_FOR_VERSION_UPDATE                 2013
+#define IDDI_ABOUT_CHECK_FOR_VERSION_UPD_YES                2014
+#define IDDI_ABOUT_CHECK_FOR_VERSION_UPD_NO                 2015
+#define IDDI_ABOUT_USAGE_INFO                               2016
+#define IDDI_ABOUT_OK                                       2017
+#define IDDI_ABOUT_ICON                                     2018
 
 // Global Template Dialogs
 
@@ -713,4 +715,5 @@
 #define IDS_REGISTRATION_SERVER_OFFLINE                             16483
 #define IDS_REGISTRATION_OTHER_MACHINE                              16484
 #define IDS_REGISTRATION_TRIAL_USER                                 16485
-
+#define IDS_REGISTRATION_PURCHASE                                   16486
+#define IDS_PURCHASING_LABEL3                                       16487
