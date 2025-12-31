@@ -64,4 +64,6 @@
 #define WM_SIGNING_CONTROL_SETUP_REPLICATION                WM_USER + 236
 #define WM_SIGNING_CONTROL_SET_DESCRIPTION                  WM_USER + 237
 
-#define WM_USER_MAX                                     WM_USER + 237
+#define WM_LAUNCH_PURCHASING                                WM_USER + 238
+
+#define WM_USER_MAX                                     WM_USER + 238

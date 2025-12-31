@@ -873,6 +873,12 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
         
         virtual HMODULE STDMETHODCALLTYPE ResourcesModule( void) = 0;
         
+        virtual char *STDMETHODCALLTYPE GetEncodedContactString( 
+            char *pszContact,
+            char *pszOrganization,
+            char *pszPhone,
+            char *pszEmail) = 0;
+        
     };
     
     
@@ -1254,6 +1260,14 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
         HMODULE ( STDMETHODCALLTYPE *ResourcesModule )( 
             ICursiVisionServices * This);
         
+        DECLSPEC_XFGVIRT(ICursiVisionServices, GetEncodedContactString)
+        char *( STDMETHODCALLTYPE *GetEncodedContactString )( 
+            ICursiVisionServices * This,
+            char *pszContact,
+            char *pszOrganization,
+            char *pszPhone,
+            char *pszEmail);
+        
         END_INTERFACE
     } ICursiVisionServicesVtbl;
 
@@ -1474,6 +1488,9 @@ DEFINE_GUID(IID_ICursiVisionServices,0xA64AB7AF,0x8A26,0x4f07,0x88,0x77,0x56,0xF
 
 #define ICursiVisionServices_ResourcesModule(This)	\
     ( (This)->lpVtbl -> ResourcesModule(This) ) 
+
+#define ICursiVisionServices_GetEncodedContactString(This,pszContact,pszOrganization,pszPhone,pszEmail)	\
+    ( (This)->lpVtbl -> GetEncodedContactString(This,pszContact,pszOrganization,pszPhone,pszEmail) ) 
 
 #endif /* COBJMACROS */
 
