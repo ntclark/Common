@@ -717,3 +717,4 @@
 #define IDS_REGISTRATION_TRIAL_USER                                 16485
 #define IDS_REGISTRATION_PURCHASE                                   16486
 #define IDS_PURCHASING_LABEL3                                       16487
+#define IDS_REGISTRATION_REGISTERED_NOT_PAID                        16488
