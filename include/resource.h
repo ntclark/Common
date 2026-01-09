@@ -499,6 +499,10 @@
 #define IDDI_GLOBAL_TEMPLATE_PROFILE_COL5                   2964
 #define IDDI_GLOBAL_TEMPLATE_PROFILE_COL6                   2965
 
+#define IDD_THANK_YOU_FOR_PURCHASING                        3000
+#define IDDI_THANK_YOU_INFO                                 3001
+#define IDDI_THANK_YOU_INFO2                                3002
+
 // Dialogs in the PrintingSupport project
 
 #define IDD_PROFILE_NAME                                    4000
@@ -582,6 +586,8 @@
 #define IDSTR_FOUND_COMPANION_LOCATOR_AREA                  4057
 #define IDSTR_SELECTED_PROFILE_IS_IMAGE_RECOGNITION         4058
 #define IDSTR_SELECTED_PROFILE_IS_LEGACY                    4059
+
+
 
 #define IDICON_ICON                     32768
 #define IDICON_PROPERTIES               32769
@@ -718,3 +724,4 @@
 #define IDS_REGISTRATION_PURCHASE                                   16486
 #define IDS_PURCHASING_LABEL3                                       16487
 #define IDS_REGISTRATION_REGISTERED_NOT_PAID                        16488
+#define IDS_PURCHASING_THANK_YOU                                    16489

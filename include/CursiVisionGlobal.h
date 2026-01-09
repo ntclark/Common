@@ -18,8 +18,23 @@
 #define UNREG_GRACE_PERIOD 14
 
 #define MS_STORE_EXE_PACKAGE
-//#define PAYPAL_PURCHASING
+
 #define STRIPE_PURCHASING
+
+#define STRIPE_SANDBOX_PUBLISH_KEY "pk_test_51Sjge57zKmtwXqrUc9Cw9r22Cvkw7hqXdlKAAJfrNDldqc1GfHgr9iK2GHA0Yt6zg6W7gkYOXfpbf3BbIFq0aqcb00KkMlHifS"
+#define STRIPE_SANDBOX_SECRET_KEY "sk_test_51Sjge57zKmtwXqrUjihLmQcfF1R5kuZZqwkD0VqsdPITu7ZhjW5DFZ2yTNZxuX0srObENNGS1p1hz4IDcbEEYvTU00alpFPySP"
+#define STRIPE_SANDBOX_BUY  "https://buy.stripe.com/test_cNifZbeZA69JeiIgVo3ks01?client_reference_id="
+
+//#define STRIPE_TEST_PURCHASE_URL "https://buy.stripe.com/eVqbJ0eI87XLde59EGfQI01?client_reference_id="
+//#define STRIPE_PURCHASE_URL STRIPE_TEST_PURCHASE_URL
+
+
+//#define STRIPE_LIVE_KEY    "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"
+#define STRIPE_GET_SESSION_ID_URL "https://%s:%s@api.stripe.com/v1/checkout/sessions?created[gte]=%lld"
+#define STRIPE_EXPIRE_SESSION_URL "api.stripe.com/v1/checkout/sessions/%s/expire"
+
+#define STRIPE_POST_AUTHORIZATION "Authorization: Bearer %s"
+#define STRIPE_PASSWORD "Pubfly123!"
 
 //#define USE_GLOBAL_TEMPLATE_FOLDER
 
