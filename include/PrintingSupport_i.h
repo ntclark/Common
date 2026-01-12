@@ -214,9 +214,6 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         
         virtual BOOL STDMETHODCALLTYPE DoSignatureCapture( void) = 0;
         
-        virtual void STDMETHODCALLTYPE SetAllowTemplateDocumentChange( 
-            boolean v) = 0;
-        
         virtual void STDMETHODCALLTYPE SetAllowDocumentRecognitionSettings( 
             boolean v) = 0;
         
@@ -426,11 +423,6 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
         BOOL ( STDMETHODCALLTYPE *DoSignatureCapture )( 
             IPrintingSupportProfile * This);
         
-        DECLSPEC_XFGVIRT(IPrintingSupportProfile, SetAllowTemplateDocumentChange)
-        void ( STDMETHODCALLTYPE *SetAllowTemplateDocumentChange )( 
-            IPrintingSupportProfile * This,
-            boolean v);
-        
         DECLSPEC_XFGVIRT(IPrintingSupportProfile, SetAllowDocumentRecognitionSettings)
         void ( STDMETHODCALLTYPE *SetAllowDocumentRecognitionSettings )( 
             IPrintingSupportProfile * This,
@@ -596,9 +588,6 @@ EXTERN_C const IID IID_IPrintingSupportProfile;
 
 #define IPrintingSupportProfile_DoSignatureCapture(This)	\
     ( (This)->lpVtbl -> DoSignatureCapture(This) ) 
-
-#define IPrintingSupportProfile_SetAllowTemplateDocumentChange(This,v)	\
-    ( (This)->lpVtbl -> SetAllowTemplateDocumentChange(This,v) ) 
 
 #define IPrintingSupportProfile_SetAllowDocumentRecognitionSettings(This,v)	\
     ( (This)->lpVtbl -> SetAllowDocumentRecognitionSettings(This,v) ) 
