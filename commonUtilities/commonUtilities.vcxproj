@@ -26,6 +26,7 @@
     <ClCompile Include="$(GSYSTEM_HOME)\Common\Utils\registryUtils.cpp" />
     <ClCompile Include="$(GSYSTEM_HOME)\Common\Utils\Utils.cpp" />
     <ClCompile Include="$(GSYSTEM_HOME)\Common\Utils\VariantUtils.cpp" />
+    <ClCompile Include="..\source\bcryptUtilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(GSYSTEM_HOME)\Common\include\imageUtilities.h" />

@@ -140,3 +140,6 @@ long countSafeArrayItems(SAFEARRAY* pSafeArray);
 BOOL archiveFolder(char *pszSource,char *pszTarget);
 
 long getActualTabsHeight(HWND hwndTabControl);
+
+BYTE *encryptKey(BOOL doEncrypt,BYTE *pbPassword,DWORD cbPassword,BYTE *pbData,DWORD cbData,DWORD *pcbResult);
+

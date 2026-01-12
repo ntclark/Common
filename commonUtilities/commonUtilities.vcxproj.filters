@@ -36,13 +36,16 @@
     <ClCompile Include="$(GSYSTEM_HOME)\Common\Utils\VariantUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\bcryptUtilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Common\include\imageUtilities.h">
+    <ClInclude Include="$(GSYSTEM_HOME)\Common\include\imageUtilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Common\include\utilities.h">
-      <Filter>Resource Files</Filter>
+    <ClInclude Include="$(GSYSTEM_HOME)\Common\include\utilities.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
