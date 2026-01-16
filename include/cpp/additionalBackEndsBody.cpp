@@ -725,6 +725,9 @@
 
          OBJECT_WITH_PROPERTIES *pObject = (OBJECT_WITH_PROPERTIES *)(p -> pParent);
 
+#ifdef ADDITIONAL_APPLY
+         ADDITIONAL_APPLY
+#endif
          if ( pNotify -> lParam && ! needsAdmin ) {
 
             p -> countBackEnds = (long)SendMessage(hwndTopList,LVM_GETITEMCOUNT,0L,0L);
