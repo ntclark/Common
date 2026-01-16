@@ -36,7 +36,7 @@
     <ClCompile Include="$(GSYSTEM_HOME)\Common\Utils\VariantUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\bcryptUtilities.cpp">
+    <ClCompile Include="..\Utils\bcryptUtilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
