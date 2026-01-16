@@ -1,6 +1,4 @@
 
-IDS_HOME_PAGE "http://www.cursivision.com"
-
 IDDI_DISPOSITION_SHOW_STARTUP_PROPERTIES "When CursiVision starts, should it show these properties ?"
 
 IDDI_DISPOSITION_OPEN_LAST_DOCUMENT "When CursiVision starts, should it open the document that was last open ?"

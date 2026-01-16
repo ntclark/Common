@@ -30,6 +30,7 @@
 #define IDC_LANG_SPANISH                10404
 #define IDC_LANG_BUILTIN                10405
 #define IDC_ABOUT                       10406
+#define IDC_CURSIVISION_ONLINE_NEWS     10407
 
 // Commands added dynamically
 
@@ -632,7 +633,7 @@
 #define IDS_WELCOME_PAGE                                            16393
 #define IDS_PRINTDRIVER_NAME                                        16394
 #define IDS_REGISTRATION_PRODUCT                                    16395
-#define IDS_HOME_PAGE                                               16396
+#define IDS_CURSIVISION_ONLINE_CONTACT_US                           16396
 #define IDS_BACKENDS_LIST_LABEL                                     16397
 #define IDS_ADMIN_PRIV_REQUIRED                                     16398
 #define IDS_ALLOW_ADMIN_CHANGES                                     16399
