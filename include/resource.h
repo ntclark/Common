@@ -301,6 +301,7 @@
 #define IDDI_ABOUT_USAGE_INFO                               2016
 #define IDDI_ABOUT_OK                                       2017
 #define IDDI_ABOUT_ICON                                     2018
+#define IDDI_ABOUT_REGISTER                                 2019
 
 // Global Template Dialogs
 
