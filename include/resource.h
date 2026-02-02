@@ -216,17 +216,6 @@
 #define IDDI_DISPLAY_WAITING_SHOW                           1304
 
 
-#define IDD_INHERITED_DOCUMENT                              1400
-#define IDDI_INHERITED_DOCUMENT_INFO1                       1401
-#define IDDI_INHERITED_DOCUMENT_INFO2                       1402
-#define IDDI_INHERITED_DOCUMENT_INFO3                       1403
-#define IDDI_INHERITED_DOCUMENT_INFO4                       1404
-#define IDDI_INHERITED_DOCUMENT_INFO5                       1405
-#define IDDI_INHERITED_DOCUMENT_INFO6                       1406
-#define IDDI_INHERITED_DOCUMENT_TEXT                        1407
-#define IDDI_INHERITED_DOCUMENT_PROPERTIES                  1408
-
-
 #define IDD_DOCUMENT_RECOGNITION                            1700
 #define IDDI_DOCUMENT_RECOGNITION_BYNAME                    1701
 #define IDDI_DOCUMENT_RECOGNITION_INSTRUCTIONS              1702

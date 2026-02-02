@@ -1,31 +1,4 @@
 
-IDD_INHERITED_DOCUMENT DIALOGEX 0, 0, 640, 128 + 64 + 64
-STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
-EXSTYLE WS_EX_CONTROLPARENT
-FONT 8, "MS Shell Dlg", 0, 0, 0x0
-BEGIN
-
-   LTEXT "", IDDI_INHERITED_DOCUMENT_INFO1,    16, 24, 256, 12
-   LTEXT "", IDDI_INHERITED_DOCUMENT_INFO2,    16, 48, 256, 30
-   LTEXT "", IDDI_INHERITED_DOCUMENT_INFO3,    16, 78, 256, 12
-   LTEXT "", IDDI_INHERITED_DOCUMENT_TEXT,     28, 94, 256 - 12, 24
-   LTEXT "", IDDI_INHERITED_DOCUMENT_INFO4     16, 118, 256, 12
-
-   LTEXT "", IDDI_INHERITED_DOCUMENT_INFO6,    16, 132, 256, 32
-//
-//NTC: 04-25-2014: I attempted to launch properties from properties.
-// There are a whole lot of issues - doing this, not the least of which is the templateDocument::tdUI object in all the
-// editors is a static object that get's trounced when you try to launch a new instance of the property pages.
-// It would be nice to do this in the future (for example, to look at a parent document's properties)
-//
-#if 0
-   LTEXT "To set the properties for that document, select Parent",-1,16, 160, 256, 12
-   PUSHBUTTON "Parent",IDDI_INHERITED_DOCUMENT_PROPERTIES, 16 + 16, 160 + 12, 0,0
-#endif
-
-END
-
-
 IDD_BACKENDS DIALOGEX 0,0, 320, 256 + 128
 STYLE DS_SETFONT | DS_3DLOOK | WS_CHILD | WS_VISIBLE
 EXSTYLE WS_EX_CONTROLPARENT
