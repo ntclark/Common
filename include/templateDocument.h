@@ -126,7 +126,7 @@
             void RemoveHilitedTextArea(RECT *pRect,long pageNumber = -1L);
             void ConfigureHilitedTextAreas();
 
-            void size();
+            void size(long pageNumber = -1L);
 
             long PDFPageWidth() { return pParent -> pdfPageWidth; };
             long PDFPageHeight() { return pParent -> pdfPageHeight; };

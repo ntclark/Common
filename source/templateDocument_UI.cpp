@@ -355,7 +355,7 @@
     }
 
 
-    void templateDocument::tdUI::size() {
+    void templateDocument::tdUI::size(long desiredPageNumber) {
 
     RECT rcParent{0};
 
@@ -394,9 +394,9 @@
     rcPageParentCoordinates.top = y;
     rcPageParentCoordinates.bottom = y + cyHTML;
 
-    long pageNumber;
+    long pageNumber = desiredPageNumber;
 
-    if ( ! ( S_OK == pIPDFiumControl -> get_PDFPageInView(&pageNumber) ) ) {
+    if ( -1L == pageNumber && ! ( S_OK == pIPDFiumControl -> get_PDFPageInView(&pageNumber) ) ) {
         // The page is not resolved yet
         if ( pIOleInPlaceObject_HTML ) 
             pIOleInPlaceObject_HTML -> SetObjectRects(&rcHTML,&rcHTML);
