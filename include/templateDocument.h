@@ -159,6 +159,7 @@
 
             void convertToPoints(long pageNumber,RECT *pRect) { pIPDFiumControl -> ConvertVisiblePanePixelsToPoints(pageNumber,pRect); }
             void convertToPixels(long pageNumber,RECT *pRect) { pIPDFiumControl -> ConvertPointsToVisiblePanePixels(pageNumber,pRect); }
+            void convertToClippedPixels(long pageNumber,RECT *pRect) { pIPDFiumControl -> ConvertPointsToClippedVisiblePanePixels(pageNumber,pRect); }
             void convertToPoints(long pageNumber,POINTL *pPoint) {
                 RECT rc{pPoint -> x,pPoint -> y,0,0};
                 convertToPoints(pageNumber,&rc);
