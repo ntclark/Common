@@ -34,6 +34,11 @@
 
     pParent -> pIPDFiumControl -> ConvertPointsToVisiblePanePixels(pageNumber,&pixelsRect);
 
+    pixelsRect.left -= TEMPLATE_UI_HILITE_PADDING;
+    pixelsRect.right += TEMPLATE_UI_HILITE_PADDING;
+    pixelsRect.top -= TEMPLATE_UI_HILITE_PADDING / 2;
+    pixelsRect.bottom += 3 * TEMPLATE_UI_HILITE_PADDING / 2;
+
     width = pixelsRect.right - pixelsRect.left;
     height = pixelsRect.bottom - pixelsRect.top;
 

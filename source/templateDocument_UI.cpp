@@ -630,7 +630,7 @@
     long countEntries = 0L;
     boolean doGenerate = false;
 
-    if ( pParent-> pszProfileFileName && ! ( '\0' == pParent -> pszProfileFileName[0] ) ) {
+    if ( ! ( NULL == pParent-> pszProfileFileName ) && ! ( '\0' == pParent -> pszProfileFileName[0] ) ) {
         strcpy(szTempFile,pParent-> pszProfileFileName);
         FILE *fProfile = fopen(szTempFile,"rb");
         if ( ! fProfile ) 
@@ -645,7 +645,7 @@
     if ( doGenerate ) {
         pParent -> pICursiVisionServices -> GenerateOutlines(pParent -> pszDocumentName,szTempFile,1,1,&countEntries);
         if ( 0 == countEntries ) {
-            if ( ! pParent-> pszProfileFileName )
+            if ( ! pParent-> pszProfileFileName || '\0' == pParent -> pszProfileFileName[0] )
                 DeleteFile(szTempFile);
             return NULL;
         }

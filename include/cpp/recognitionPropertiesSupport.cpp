@@ -28,12 +28,16 @@
 
         pDocument -> convertToPixels(selectionsPage[k],&r);
 
-
         if ( r.bottom < pDocument -> rcPDFPagePixels.top )
             continue;
 
         if ( r.top > pDocument -> rcPDFPagePixels.bottom )
             continue;
+
+        r.left -= TEMPLATE_UI_HILITE_PADDING;
+        r.right += TEMPLATE_UI_HILITE_PADDING;
+        r.top -= TEMPLATE_UI_HILITE_PADDING / 2;
+        r.bottom += 3 * TEMPLATE_UI_HILITE_PADDING / 2;
 
         RECT rcText = r;
 
