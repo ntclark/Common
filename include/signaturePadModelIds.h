@@ -15,7 +15,7 @@
 
 #define IDDI_PAD_MODEL_MAX             816
 
-#define STR_PHABLET_MODEL "InnoVisioNate Phablet Signature Pad"
+#define STR_PHABLET_MODEL "EnVisioNate Phablet Signature Pad"
 #define STR_SIGNOTEC_MODEL "signotec"
 #define STR_WACOM_MODEL "Wacom"
 #define STR_SCRIPTEL_MODEL "Scriptel"

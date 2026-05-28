@@ -1015,7 +1015,7 @@ This is the MIT License
 
     GetMonitorInfo(MonitorFromWindow(GetForegroundWindow(),MONITOR_DEFAULTTONEAREST),&monitorInfo);
 
-    long cyDesired = (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top - cyReservedHeader - 128);
+    long cyDesired = (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top - cyReservedHeader - 128 - 64);
 
     pDialog -> cx = (short)((double)cyDesired * (double)pDialog -> cx / (double)pDialog -> cy);
     pDialog -> cy = (short)cyDesired;
